@@ -1,0 +1,32 @@
+Feature Request Summary - Customer Feedback (March 2026)
+Compiled by: Rachel Summers, Customer Success
+
+---
+
+REQUEST 1: Automated Review Collection
+From: Simone Baker, Armadale Day Nursery (Premium)
+
+"We have amazing Google reviews but they don't show up on our Care for Kids profile. Could you pull in our Google reviews automatically? Parents trust reviews more than anything we write about ourselves. If you could aggregate reviews from Google, Facebook, and your platform into one place, that would be incredibly powerful."
+
+Impact: High - reviews are a top factor in parent decision-making
+Effort estimate: Medium (API integration with Google Places)
+
+---
+
+REQUEST 2: Waitlist Management
+From: Liam Murphy, South Yarra Early Learning (Premium)
+
+"We're at capacity most of the year. What we need is a smart waitlist. Parents register interest, we can see demand by age group and start date, and when a spot opens we can notify the right parents automatically. Right now I'm managing a waitlist in a spreadsheet and it's a nightmare."
+
+Impact: High - solves a real operational pain point for full centres
+Effort estimate: High (new feature build)
+
+---
+
+REQUEST 3: Competitor Benchmarking Dashboard
+From: Isabelle Roy, Prahran Children's Centre (Premium)
+
+"I'd love to see how we compare to other centres in our area. Not by name necessarily, but things like: average fees in Prahran, typical staff-to-child ratios, what programs other centres are offering. It would help me position our centre and justify our fee increases to parents."
+
+Impact: Medium - valuable but complex data sourcing
+Effort estimate: High (requires aggregated anonymised data pipeline)

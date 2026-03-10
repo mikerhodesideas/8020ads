@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thunderbolt Electricals - Your Local Sparky</title>
+    <style>
+        body { font-family: Comic Sans MS, cursive; background: #ffffcc; margin: 0; }
+        .header { background: linear-gradient(to right, #ff0000, #0000ff); padding: 20px; text-align: center; }
+        .header h1 { color: yellow; font-size: 48px; text-shadow: 3px 3px black; margin: 0; }
+        .header p { color: white; font-size: 14px; }
+        .nav { background: #333; padding: 10px; text-align: center; }
+        .nav a { color: lime; margin: 0 15px; text-decoration: none; font-size: 18px; }
+        .nav a:hover { color: red; }
+        .hero { text-align: center; padding: 40px 20px; }
+        .hero img { width: 100%; max-width: 400px; border: 5px solid red; }
+        .hero h2 { color: red; font-size: 36px; }
+        .content { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .services { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .service-box { background: #ff9900; border: 3px dashed blue; padding: 20px; width: 200px; text-align: center; border-radius: 20px; }
+        .service-box h3 { color: white; text-decoration: underline; }
+        .testimonial { background: #ccffcc; border: 2px solid green; padding: 15px; margin: 10px 0; }
+        .cta { background: red; color: white; font-size: 24px; padding: 20px; text-align: center; margin: 20px 0; border: 5px solid yellow; }
+        .cta a { color: yellow; }
+        .footer { background: black; color: gray; text-align: center; padding: 20px; font-size: 11px; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        .marquee { background: navy; color: white; padding: 5px; overflow: hidden; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        td, th { border: 2px solid purple; padding: 8px; background: #ffe0e0; }
+        .counter { font-size: 12px; color: gray; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <marquee>*** SPECIAL OFFER: 15% OFF ALL REWIRING JOBS THIS MONTH! CALL NOW! *** FREE QUOTES *** BEST PRICES GUARANTEED ***</marquee>
+    </div>
+
+    <div class="header">
+        <h1>THUNDERBOLT ELECTRICALS</h1>
+        <p>Est. 2003 - ABN 12 345 678 901 - Lic. No. EC12345</p>
+    </div>
+
+    <div class="nav">
+        <a href="#">HOME</a>
+        <a href="#">SERVICES</a>
+        <a href="#">ABOUT US</a>
+        <a href="#">GALLERY</a>
+        <a href="#">CONTACT</a>
+    </div>
+
+    <div class="hero">
+        <h2 class="blink">WELCOME TO THUNDERBOLT ELECTRICALS!</h2>
+        <p style="font-size: 20px; color: #333;">Melbourne's Most Trusted Electrician Since 2003</p>
+        <p>We do all kinds of electrical work. Big jobs, small jobs, medium jobs. If it's got wires, we're your guys!</p>
+    </div>
+
+    <div class="content">
+        <h2 style="color: blue; text-align: center;">OUR SERVICES</h2>
+        <div class="services">
+            <div class="service-box">
+                <h3>House Rewiring</h3>
+                <p>Old wires? We'll replace em!</p>
+                <p><b>From $2,500</b></p>
+            </div>
+            <div class="service-box">
+                <h3>Hot Water</h3>
+                <p>Electric hot water systems installed</p>
+                <p><b>From $800</b></p>
+            </div>
+            <div class="service-box">
+                <h3>Ceiling Fans</h3>
+                <p>Beat the heat mate!</p>
+                <p><b>From $150</b></p>
+            </div>
+            <div class="service-box">
+                <h3>Switchboard Upgrades</h3>
+                <p>Safety switches and RCDs</p>
+                <p><b>From $450</b></p>
+            </div>
+            <div class="service-box">
+                <h3>LED Lighting</h3>
+                <p>Save money on your bill!</p>
+                <p><b>From $50/light</b></p>
+            </div>
+            <div class="service-box">
+                <h3>Emergency Call Out</h3>
+                <p>24/7 - we never sleep</p>
+                <p><b>From $180</b></p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <p class="blink">CALL BRUCE NOW: 0412 345 678</p>
+            <p>or email: <a href="#">bruce@thunderboltelectricals.com.au</a></p>
+        </div>
+
+        <h2 style="color: green;">WHY CHOOSE US?</h2>
+        <table>
+            <tr><th>Feature</th><th>Us</th><th>Other Guys</th></tr>
+            <tr><td>Licensed</td><td>YES!</td><td>Maybe?</td></tr>
+            <tr><td>Insured</td><td>Fully</td><td>Who knows</td></tr>
+            <tr><td>On Time</td><td>Always*</td><td>Rarely</td></tr>
+            <tr><td>Clean Up</td><td>Spotless</td><td>Don't count on it</td></tr>
+            <tr><td>Price</td><td>Fair dinkum</td><td>Through the roof</td></tr>
+        </table>
+        <p style="font-size: 10px;">*Subject to traffic conditions and acts of God</p>
+
+        <h2 style="color: purple;">HAPPY CUSTOMERS</h2>
+        <div class="testimonial">
+            <p><i>"Bruce fixed our switchboard in no time. Top bloke!"</i></p>
+            <p><b>- Margaret T., Kew</b></p>
+        </div>
+        <div class="testimonial">
+            <p><i>"They showed up when they said they would. That's rare for a tradie!"</i></p>
+            <p><b>- Dave S., Richmond</b></p>
+        </div>
+        <div class="testimonial">
+            <p><i>"Not the cheapest but definitely the best. Would recommend."</i></p>
+            <p><b>- Jenny L., Hawthorn</b></p>
+        </div>
+
+        <h2 style="color: red; text-align: center;">SERVICE AREAS</h2>
+        <p style="text-align: center;">We cover all of Melbourne's inner east: Kew, Hawthorn, Richmond, Camberwell, Balwyn, Surrey Hills, Canterbury, Box Hill, Glen Iris, Malvern, and surrounding suburbs. For outer suburbs, give us a bell and we'll see what we can do!</p>
+    </div>
+
+    <div class="cta">
+        <p>DON'T GET LEFT IN THE DARK!</p>
+        <p>CALL THUNDERBOLT ELECTRICALS TODAY</p>
+        <p style="font-size: 36px;">0412 345 678</p>
+    </div>
+
+    <div class="footer">
+        <p>Copyright 2019 Thunderbolt Electricals. All rights reserved. Website designed by Bruce's nephew.</p>
+        <p class="counter">You are visitor number: 004,721</p>
+        <p>Best viewed in Internet Explorer 6 at 800x600 resolution</p>
+    </div>
+</body>
+</html>

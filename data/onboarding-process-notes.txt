@@ -1,0 +1,47 @@
+Centre Onboarding Process - rough notes
+(from Ellie's brain dump, January 2026)
+
+when new centre signs up:
+- get signed agreement back (usually email, sometimes they want to print and sign physically which slows everything down)
+- add them to hubspot as customer, update deal stage
+- send welcome email with login credentials
+- set up their account in admin panel - need centre name, ABN, contact details, ACECQA service ID
+- pull their ACECQA data manually (go to acecqa.gov.au, search for the service, copy the rating, service type, approval status) - this takes ages and is error prone, Tom says he can automate it but hasn't yet
+
+profile creation:
+- we create their initial profile - need: centre description (usually have to write this for them because what they give us is terrible), operating hours, age groups, programs offered, fees
+- photos - this is the biggest bottleneck. We ask for 10-15 photos. They send us 3 blurry phone pics or nothing at all. We end up going back and forth 3-4 times. Sometimes we send a photographer which costs us $500 but the profiles look way better
+- staff bios - similar problem, they don't want to write bios. We sometimes write them based on a quick phone call
+- fees and availability - need current fee schedule and vacancy info. They sometimes give us outdated info
+
+technical setup:
+- configure their notification preferences (email, SMS, or both for new enquiries)
+- set up parent messaging (they need to approve the welcome message template)
+- connect their google business profile if they have one (optional but recommended)
+- test the enquiry flow end to end - submit a test enquiry, make sure they receive it, confirm they can respond
+
+training:
+- schedule onboarding call (usually 1 hour, sometimes need 2 sessions for less tech-savvy centres)
+- walk through dashboard: how to check enquiries, respond to parents, update availability, read analytics
+- show them the mobile app
+- give them the "getting started" PDF guide
+- set up weekly check-in calls for first month
+
+go-live:
+- activate their profile on the platform
+- send announcement to parents in their area (automated but we review the targeting)
+- monitor first week of enquiries
+- day 7 check-in call
+- day 30 review call - go through analytics, first month results, any adjustments needed
+
+common problems:
+- centres don't respond to parent enquiries quickly enough (we set up nudge notifications but some still ignore them)
+- photos never arrive - need to be more aggressive about this upfront
+- some centres want to approve every single parent message individually which defeats the purpose
+- ACECQA data sometimes doesn't match what the centre tells us
+- centres in regional areas have different expectations about enquiry volume
+- some directors are great with tech, others struggle with basic email
+
+whole process currently takes about 3 weeks which is too long
+ash wants it under 10 days
+main time wasters: waiting for photos, manual ACECQA lookup, back and forth on profile content

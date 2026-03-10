@@ -1,0 +1,144 @@
+Date,Channel,Campaign,Impressions,Clicks,Cost,Conversions,Revenue
+2026-01-01,Google Ads,Brand Search,2850,285,342.00,18,2700
+2026-01-01,Google Ads,Childcare Near Me,4200,168,504.00,8,1200
+2026-01-01,Google Ads,Centre Onboarding,1800,72,288.00,3,450
+2026-01-01,Facebook,Parent Awareness,8500,170,255.00,4,600
+2026-01-01,Facebook,Centre Owner Lead Gen,3200,96,192.00,2,300
+2026-01-01,Instagram,Finding the Right Fit,6200,186,148.80,1,150
+2026-01-01,Email,Monthly Newsletter,12000,1440,0.00,12,1800
+2026-01-02,Google Ads,Brand Search,2920,292,350.40,19,2850
+2026-01-02,Google Ads,Childcare Near Me,4350,174,522.00,9,1350
+2026-01-02,Google Ads,Centre Onboarding,1750,70,280.00,2,300
+2026-01-02,Facebook,Parent Awareness,8200,164,246.00,3,450
+2026-01-02,Facebook,Centre Owner Lead Gen,3100,93,186.00,2,300
+2026-01-02,Instagram,Finding the Right Fit,5800,174,139.20,1,150
+2026-01-05,Google Ads,Brand Search,3100,310,372.00,21,3150
+2026-01-05,Google Ads,Childcare Near Me,4500,180,540.00,10,1500
+2026-01-05,Google Ads,Centre Onboarding,1900,76,304.00,3,450
+2026-01-05,Facebook,Parent Awareness,8800,176,264.00,4,600
+2026-01-05,Facebook,Centre Owner Lead Gen,3400,102,204.00,3,450
+2026-01-05,Instagram,Finding the Right Fit,6500,195,156.00,2,300
+2026-01-08,Google Ads,Brand Search,3050,305,366.00,20,3000
+2026-01-08,Google Ads,Childcare Near Me,4150,166,498.00,8,1200
+2026-01-08,Google Ads,Centre Onboarding,1850,74,296.00,3,450
+2026-01-08,Facebook,Parent Awareness,8400,168,252.00,3,450
+2026-01-08,Facebook,Centre Owner Lead Gen,3300,99,198.00,2,300
+2026-01-08,Instagram,Finding the Right Fit,6100,183,146.40,1,150
+2026-01-12,Google Ads,Brand Search,2980,298,357.60,19,2850
+2026-01-12,Google Ads,Childcare Near Me,4280,171,513.00,9,1350
+2026-01-12,Google Ads,Centre Onboarding,1820,73,292.00,3,450
+2026-01-12,Facebook,Parent Awareness,8600,172,258.00,4,600
+2026-01-12,Facebook,Centre Owner Lead Gen,3250,98,196.00,2,300
+2026-01-12,Instagram,Finding the Right Fit,6300,189,151.20,1,150
+2026-01-15,Google Ads,Brand Search,3200,320,384.00,22,3300
+2026-01-15,Google Ads,Childcare Near Me,4600,184,552.00,10,1500
+2026-01-15,Google Ads,Centre Onboarding,1950,78,312.00,4,600
+2026-01-15,Facebook,Parent Awareness,8900,178,267.00,5,750
+2026-01-15,Facebook,Centre Owner Lead Gen,3500,105,210.00,3,450
+2026-01-15,Instagram,Finding the Right Fit,6800,204,163.20,2,300
+2026-01-15,Email,Feature Update,14000,1820,0.00,15,2250
+2026-01-19,Google Ads,Brand Search,3150,315,378.00,21,3150
+2026-01-19,Google Ads,Childcare Near Me,4400,176,528.00,9,1350
+2026-01-19,Google Ads,Centre Onboarding,1880,75,300.00,3,450
+2026-01-19,Facebook,Parent Awareness,8700,174,261.00,4,600
+2026-01-19,Facebook,Centre Owner Lead Gen,3350,101,202.00,2,300
+2026-01-19,Instagram,Finding the Right Fit,6400,192,153.60,1,150
+2026-01-22,Google Ads,Brand Search,3080,308,369.60,20,3000
+2026-01-22,Google Ads,Childcare Near Me,4320,173,519.00,9,1350
+2026-01-22,Google Ads,Centre Onboarding,1860,74,296.00,3,450
+2026-01-22,Facebook,Parent Awareness,8500,170,255.00,3,450
+2026-01-22,Facebook,Centre Owner Lead Gen,3200,96,192.00,2,300
+2026-01-22,Instagram,Finding the Right Fit,6200,186,148.80,1,150
+2026-01-26,Google Ads,Brand Search,2900,290,348.00,18,2700
+2026-01-26,Google Ads,Childcare Near Me,4100,164,492.00,7,1050
+2026-01-26,Google Ads,Centre Onboarding,1780,71,284.00,2,300
+2026-01-26,Facebook,Parent Awareness,7800,156,234.00,3,450
+2026-01-26,Facebook,Centre Owner Lead Gen,2900,87,174.00,1,150
+2026-01-26,Instagram,Finding the Right Fit,5600,168,134.40,1,150
+2026-01-29,Google Ads,Brand Search,3250,325,390.00,23,3450
+2026-01-29,Google Ads,Childcare Near Me,4650,186,558.00,11,1650
+2026-01-29,Google Ads,Centre Onboarding,2000,80,320.00,4,600
+2026-01-29,Facebook,Parent Awareness,9000,180,270.00,5,750
+2026-01-29,Facebook,Centre Owner Lead Gen,3600,108,216.00,3,450
+2026-01-29,Instagram,Finding the Right Fit,7000,210,168.00,2,300
+2026-02-02,Google Ads,Brand Search,3300,330,396.00,22,3300
+2026-02-02,Google Ads,Childcare Near Me,4700,188,564.00,10,1500
+2026-02-02,Google Ads,Centre Onboarding,2020,81,324.00,4,600
+2026-02-02,Facebook,Parent Awareness,9100,182,273.00,5,750
+2026-02-02,Facebook,Centre Owner Lead Gen,3650,110,220.00,3,450
+2026-02-02,Instagram,Finding the Right Fit,7100,213,170.40,2,300
+2026-02-02,Email,Monthly Newsletter,12500,1500,0.00,13,1950
+2026-02-05,Google Ads,Brand Search,3180,318,381.60,21,3150
+2026-02-05,Google Ads,Childcare Near Me,4550,182,546.00,10,1500
+2026-02-05,Google Ads,Centre Onboarding,1980,79,316.00,3,450
+2026-02-05,Facebook,Parent Awareness,8800,176,264.00,4,600
+2026-02-05,Facebook,Centre Owner Lead Gen,3400,102,204.00,2,300
+2026-02-05,Instagram,Finding the Right Fit,6600,198,158.40,1,150
+2026-02-09,Google Ads,Brand Search,3350,335,402.00,23,3450
+2026-02-09,Google Ads,Childcare Near Me,4800,192,576.00,11,1650
+2026-02-09,Google Ads,Centre Onboarding,2050,82,328.00,4,600
+2026-02-09,Facebook,Parent Awareness,9200,184,276.00,5,750
+2026-02-09,Facebook,Centre Owner Lead Gen,3700,111,222.00,3,450
+2026-02-09,Instagram,Finding the Right Fit,7200,216,172.80,2,300
+2026-02-12,Google Ads,Brand Search,3400,340,408.00,24,3600
+2026-02-12,Google Ads,Childcare Near Me,4850,194,582.00,11,1650
+2026-02-12,Google Ads,Centre Onboarding,2080,83,332.00,4,600
+2026-02-12,Facebook,Parent Awareness,9300,186,279.00,5,750
+2026-02-12,Facebook,Centre Owner Lead Gen,3750,113,226.00,3,450
+2026-02-12,Instagram,Finding the Right Fit,7300,219,175.20,2,300
+2026-02-16,Google Ads,Brand Search,3280,328,393.60,22,3300
+2026-02-16,Google Ads,Childcare Near Me,4650,186,558.00,10,1500
+2026-02-16,Google Ads,Centre Onboarding,2000,80,320.00,3,450
+2026-02-16,Facebook,Parent Awareness,9000,180,270.00,4,600
+2026-02-16,Facebook,Centre Owner Lead Gen,3500,105,210.00,2,300
+2026-02-16,Instagram,Finding the Right Fit,6900,207,165.60,2,300
+2026-02-19,Google Ads,Brand Search,3450,345,414.00,24,3600
+2026-02-19,Google Ads,Childcare Near Me,4900,196,588.00,12,1800
+2026-02-19,Google Ads,Centre Onboarding,2100,84,336.00,4,600
+2026-02-19,Facebook,Parent Awareness,9400,188,282.00,5,750
+2026-02-19,Facebook,Centre Owner Lead Gen,3800,114,228.00,3,450
+2026-02-19,Instagram,Finding the Right Fit,7400,222,177.60,2,300
+2026-02-19,Email,Feature Update,14500,1885,0.00,16,2400
+2026-02-23,Google Ads,Brand Search,3380,338,405.60,23,3450
+2026-02-23,Google Ads,Childcare Near Me,4750,190,570.00,11,1650
+2026-02-23,Google Ads,Centre Onboarding,2060,82,328.00,4,600
+2026-02-23,Facebook,Parent Awareness,9200,184,276.00,5,750
+2026-02-23,Facebook,Centre Owner Lead Gen,3650,110,220.00,3,450
+2026-02-23,Instagram,Finding the Right Fit,7200,216,172.80,2,300
+2026-02-26,Google Ads,Brand Search,3500,350,420.00,25,3750
+2026-02-26,Google Ads,Childcare Near Me,5000,200,600.00,12,1800
+2026-02-26,Google Ads,Centre Onboarding,2150,86,344.00,5,750
+2026-02-26,Facebook,Parent Awareness,9500,190,285.00,5,750
+2026-02-26,Facebook,Centre Owner Lead Gen,3900,117,234.00,3,450
+2026-02-26,Instagram,Finding the Right Fit,7500,225,180.00,2,300
+2026-03-01,Google Ads,Brand Search,3550,355,426.00,25,3750
+2026-03-01,Google Ads,Childcare Near Me,5100,204,612.00,13,1950
+2026-03-01,Google Ads,Centre Onboarding,2180,87,348.00,5,750
+2026-03-01,Facebook,Parent Awareness,9600,192,288.00,6,900
+2026-03-01,Facebook,Centre Owner Lead Gen,3950,119,238.00,4,600
+2026-03-01,Instagram,Finding the Right Fit,7600,228,182.40,2,300
+2026-03-01,Email,Monthly Newsletter,13000,1560,0.00,14,2100
+2026-03-05,Google Ads,Brand Search,3480,348,417.60,24,3600
+2026-03-05,Google Ads,Childcare Near Me,5050,202,606.00,12,1800
+2026-03-05,Google Ads,Centre Onboarding,2120,85,340.00,4,600
+2026-03-05,Facebook,Parent Awareness,9400,188,282.00,5,750
+2026-03-05,Facebook,Centre Owner Lead Gen,3850,116,232.00,3,450
+2026-03-05,Instagram,Finding the Right Fit,7400,222,177.60,2,300
+2026-03-08,Google Ads,Brand Search,3600,360,432.00,26,3900
+2026-03-08,Google Ads,Childcare Near Me,5200,208,624.00,13,1950
+2026-03-08,Google Ads,Centre Onboarding,2200,88,352.00,5,750
+2026-03-08,Facebook,Parent Awareness,9700,194,291.00,6,900
+2026-03-08,Facebook,Centre Owner Lead Gen,4000,120,240.00,4,600
+2026-03-08,Instagram,Finding the Right Fit,7700,231,184.80,3,450
+2026-03-12,Google Ads,Brand Search,3520,352,422.40,24,3600
+2026-03-12,Google Ads,Childcare Near Me,5150,206,618.00,12,1800
+2026-03-12,Google Ads,Centre Onboarding,2160,86,344.00,4,600
+2026-03-12,Facebook,Parent Awareness,9500,190,285.00,5,750
+2026-03-12,Facebook,Centre Owner Lead Gen,3900,117,234.00,3,450
+2026-03-12,Instagram,Finding the Right Fit,7500,225,180.00,2,300
+2026-03-15,Google Ads,Brand Search,3650,365,438.00,26,3900
+2026-03-15,Google Ads,Childcare Near Me,5300,212,636.00,14,2100
+2026-03-15,Google Ads,Centre Onboarding,2250,90,360.00,5,750
+2026-03-15,Facebook,Parent Awareness,9800,196,294.00,6,900
+2026-03-15,Facebook,Centre Owner Lead Gen,4100,123,246.00,4,600
+2026-03-15,Instagram,Finding the Right Fit,7800,234,187.20,3,450
