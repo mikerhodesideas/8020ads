@@ -15,7 +15,7 @@ export default function DataPreview({ data }: DataPreviewProps) {
               {data.headers.map((h, i) => (
                 <th
                   key={i}
-                  className="text-left py-2 px-2 text-xs font-semibold text-[var(--color-faint)] uppercase tracking-wide"
+                  className="text-left py-2 px-2 text-xs font-semibold text-[var(--color-faint)] uppercase tracking-wide font-heading"
                 >
                   {h}
                 </th>
@@ -49,7 +49,7 @@ export default function DataPreview({ data }: DataPreviewProps) {
     return (
       <div className="space-y-2">
         {data.label && (
-          <p className="text-xs font-semibold text-[var(--color-faint)] uppercase tracking-wide mb-3">
+          <p className="text-xs font-semibold text-[var(--color-faint)] uppercase tracking-wide mb-3 font-heading">
             {data.label}
           </p>
         )}

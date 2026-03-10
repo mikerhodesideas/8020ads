@@ -18,8 +18,8 @@ const roles = [
   {
     title: 'Trekkers',
     accent: '#1B8C3A',
-    badge: 'Claude CoWork',
-    desc: "Rest of team uses skills daily in CoWork. Drag, type, done. No coding, no prompt engineering.",
+    badge: 'Claude Cowork',
+    desc: "Rest of team uses skills daily in Cowork. Drag, type, done. No coding, no prompt engineering.",
   },
 ]
 
@@ -33,7 +33,7 @@ export default function SSTSlide({ onBack }: SSTSlideProps) {
         &#8592; Back to problems
       </button>
 
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 font-[family-name:var(--font-heading)]">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-2 font-heading">
         How it works
       </h2>
       <p className="text-[var(--color-muted)] text-center mb-12 max-w-lg">
@@ -47,7 +47,7 @@ export default function SSTSlide({ onBack }: SSTSlideProps) {
             className="bg-white border border-[var(--color-border)] rounded-[2px] p-6"
             style={{ borderTop: `3px solid ${role.accent}` }}
           >
-            <h3 className="text-xl font-bold mb-1 font-[family-name:var(--font-heading)]">
+            <h3 className="text-xl font-bold mb-1 font-heading">
               {role.title}
             </h3>
             <span
@@ -73,7 +73,7 @@ export default function SSTSlide({ onBack }: SSTSlideProps) {
           backgroundColor: 'var(--color-brand-orange-faint)',
         }}
       >
-        <p className="text-lg md:text-xl font-medium text-[var(--color-ink)] leading-relaxed font-[family-name:var(--font-heading)]">
+        <p className="text-lg md:text-xl font-medium text-[var(--color-ink)] leading-relaxed font-heading">
           &ldquo;Your scouts build the machine.
           <br />
           Your trekkers run it.

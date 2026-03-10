@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Oxanium, Inter } from 'next/font/google'
+import Navbar from '@/components/navbar'
+import { DemoProvider } from '@/components/demo-provider'
 import './globals.css'
 
 const oxanium = Oxanium({
@@ -15,8 +17,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: '8020ads - AI Demo',
-  description: 'See AI solve real business problems in real time',
+  title: 'Cowork26 - Live AI Demo',
+  description: 'See AI solve real business problems live in Claude Cowork',
 }
 
 export default function RootLayout({
@@ -27,7 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${oxanium.variable} ${inter.variable} antialiased`}>
-        {children}
+        <DemoProvider>
+          <Navbar />
+          <main>{children}</main>
+          <div className="fixed bottom-2 right-3 text-[10px] text-[var(--color-faint)] opacity-50 font-heading">
+            v{process.env.NEXT_PUBLIC_VERSION}
+          </div>
+        </DemoProvider>
       </body>
     </html>
   )
