@@ -366,20 +366,142 @@ h3 { font-family: 'Oxanium', sans-serif; font-weight: 600; font-size: 1.1rem; co
 }
 
 .key-hint { position: fixed; bottom: 60px; right: 40px; font-size: 0.7rem; color: var(--text-muted); z-index: 100; }
+
+/* ---- PATH CHOOSER ---- */
+.path-chooser {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.path-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  padding: 36px 32px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  position: relative;
+}
+
+.path-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.path-card.agency { border-color: var(--blue); }
+.path-card.agency:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.12); }
+
+.path-card.business { border-color: var(--green); }
+.path-card.business:hover { box-shadow: 0 4px 20px rgba(27,140,58,0.12); }
+
+.path-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+.path-card.agency::before { background: var(--blue); }
+.path-card.business::before { background: var(--green); }
+
+.path-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+
+.path-card.agency .path-avatar { background: var(--blue-bg); }
+.path-card.business .path-avatar { background: var(--green-bg); }
+
+.path-card .path-title {
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.path-card .path-desc {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.path-card .path-tagline {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.path-btn {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.path-btn:hover { opacity: 0.9; }
+.path-card.agency .path-btn { background: var(--blue); }
+.path-card.business .path-btn { background: var(--green); }
+
+/* Hidden cards */
+.problem-card.hidden { display: none; }
+
+/* Switch path link */
+.switch-path {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+.switch-path:hover { color: var(--orange); }
 </style>
 </head>
 <body>
 
 <div class="deck">
 
-  <!-- SLIDE 0: TITLE -->
+  <!-- SLIDE 0: PATH CHOOSER -->
   <div class="slide active" data-slide="0">
     <div class="slide-inner" style="text-align: center;">
       <div class="label">Live Demo</div>
       <h1>What problem are<br>you solving today?</h1>
-      <p class="subtitle">Every business has the same dozen headaches.<br>Pick one. Watch it disappear.</p>
-      <div style="margin-top: 40px;">
-        <button class="nav-btn primary" onclick="goToSlide(1)">Let's go</button>
+      <p class="subtitle">Choose your path. We'll show you the problems that matter most.</p>
+
+      <div class="path-chooser">
+        <div class="path-card agency" onclick="choosePath('agency')">
+          <div class="path-avatar">📈</div>
+          <div class="path-title">"I run an agency"</div>
+          <div class="path-desc">See how AI handles search terms, campaign reporting, competitor analysis, and client deliverables.</div>
+          <div class="path-tagline">"From manual grind to strategic clarity"</div>
+          <button class="path-btn">Agency Demo</button>
+        </div>
+        <div class="path-card business" onclick="choosePath('business')">
+          <div class="path-avatar">🏢</div>
+          <div class="path-title">"I run a business"</div>
+          <div class="path-desc">See how AI tackles inbox overload, meeting follow-ups, financial reporting, and team onboarding.</div>
+          <div class="path-tagline">"From operational chaos to running smoothly"</div>
+          <button class="path-btn">Business Demo</button>
+        </div>
       </div>
     </div>
   </div>
@@ -387,65 +509,65 @@ h3 { font-family: 'Oxanium', sans-serif; font-weight: 600; font-size: 1.1rem; co
   <!-- SLIDE 1: PROBLEM GRID -->
   <div class="slide" data-slide="1">
     <div class="slide-inner">
-      <div class="label">Pick a problem</div>
-      <h2>Sound familiar?</h2>
+      <div class="label" id="gridLabel">Pick a problem</div>
+      <h2 style="display: flex; align-items: baseline; gap: 16px;">Sound familiar? <span class="switch-path" onclick="goToSlide(0)">switch path</span></h2>
       <div class="problem-grid" id="problemGrid">
-        <div class="problem-card" onclick="goToSlide(3)" data-problem="1">
+        <div class="problem-card" onclick="goToSlide(3)" data-problem="1" data-path="agency business">
           <div class="card-icon">🌐</div>
           <div class="card-title">"Our website looks amateur"</div>
           <div class="card-sub">Embarrassing design, losing credibility with every visit</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(4)" data-problem="2">
+        <div class="problem-card" onclick="goToSlide(4)" data-problem="2" data-path="agency">
           <div class="card-icon">🔍</div>
           <div class="card-title">"I'm drowning in search terms"</div>
           <div class="card-sub">Thousands of rows. Which ones are wasting money?</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(5)" data-problem="3">
+        <div class="problem-card" onclick="goToSlide(5)" data-problem="3" data-path="business">
           <div class="card-icon">📋</div>
           <div class="card-title">"Meetings vanish into thin air"</div>
           <div class="card-sub">Great discussion, zero follow-through</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(6)" data-problem="4">
+        <div class="problem-card" onclick="goToSlide(6)" data-problem="4" data-path="business">
           <div class="card-icon">📬</div>
           <div class="card-title">"Monday inbox owns me"</div>
           <div class="card-sub">50 items, no idea what's actually urgent</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(7)" data-problem="5">
+        <div class="problem-card" onclick="goToSlide(7)" data-problem="5" data-path="agency business">
           <div class="card-icon">👤</div>
           <div class="card-title">"Customers are slipping away"</div>
           <div class="card-sub">Haven't talked to key accounts in months</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(8)" data-problem="6">
+        <div class="problem-card" onclick="goToSlide(8)" data-problem="6" data-path="agency">
           <div class="card-icon">📊</div>
           <div class="card-title">"Can't see what's working"</div>
           <div class="card-sub">Campaign data everywhere, insights nowhere</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(9)" data-problem="7">
+        <div class="problem-card" onclick="goToSlide(9)" data-problem="7" data-path="business">
           <div class="card-icon">💰</div>
           <div class="card-title">"P&L is just numbers"</div>
           <div class="card-sub">The spreadsheet exists. The understanding doesn't.</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(10)" data-problem="8">
+        <div class="problem-card" onclick="goToSlide(10)" data-problem="8" data-path="agency">
           <div class="card-icon">✍️</div>
           <div class="card-title">"Need content, no time to write"</div>
           <div class="card-sub">Know what to say, never find time to say it</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(11)" data-problem="9">
+        <div class="problem-card" onclick="goToSlide(11)" data-problem="9" data-path="agency">
           <div class="card-icon">🕵️</div>
           <div class="card-title">"What are competitors doing?"</div>
           <div class="card-sub">They changed something. You found out too late.</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(12)" data-problem="10">
+        <div class="problem-card" onclick="goToSlide(12)" data-problem="10" data-path="business">
           <div class="card-icon">📑</div>
           <div class="card-title">"Onboarding is chaos"</div>
           <div class="card-sub">Every new hire gets a different experience</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(13)" data-problem="11">
+        <div class="problem-card" onclick="goToSlide(13)" data-problem="11" data-path="agency business">
           <div class="card-icon">🛡️</div>
           <div class="card-title">"Can I actually trust AI?"</div>
           <div class="card-sub">What if it leaks data or follows bad instructions?</div>
         </div>
-        <div class="problem-card" onclick="goToSlide(14)" data-problem="12">
+        <div class="problem-card" onclick="goToSlide(14)" data-problem="12" data-path="agency">
           <div class="card-icon">🤖</div>
           <div class="card-title">"Client asked about AI. I froze."</div>
           <div class="card-sub">Everyone's asking. You need an answer.</div>
@@ -1066,8 +1188,35 @@ h3 { font-family: 'Oxanium', sans-serif; font-weight: 600; font-size: 1.1rem; co
 
 <script>
 let currentSlide = 0;
+let currentPath = null; // 'agency' or 'business'
 const slides = document.querySelectorAll('.slide');
 const completedProblems = new Set();
+const grid = document.getElementById('problemGrid');
+
+function choosePath(path) {
+  currentPath = path;
+  completedProblems.clear();
+
+  // Show/hide cards based on path
+  document.querySelectorAll('.problem-card').forEach(card => {
+    const paths = (card.dataset.path || '').split(' ');
+    if (paths.includes(path)) {
+      card.classList.remove('hidden', 'done');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  // Update grid columns for fewer cards
+  const visibleCount = document.querySelectorAll('.problem-card:not(.hidden)').length;
+  grid.style.gridTemplateColumns = visibleCount <= 6 ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)';
+
+  // Update label
+  const label = document.getElementById('gridLabel');
+  label.textContent = path === 'agency' ? 'Agency problems' : 'Business problems';
+
+  goToSlide(1);
+}
 
 function goToSlide(n) {
   slides[currentSlide].classList.remove('active');
@@ -1104,14 +1253,18 @@ function markDone(problemNum) {
 
 function updateNav() {
   const counter = document.getElementById('slideCounter');
+  const visibleCount = currentPath
+    ? document.querySelectorAll('.problem-card:not(.hidden)').length
+    : 12;
+
   if (currentSlide === 0) {
     counter.textContent = '';
   } else if (currentSlide === 1) {
-    counter.textContent = completedProblems.size > 0 ? `${completedProblems.size} of 12 done` : '';
+    counter.textContent = completedProblems.size > 0 ? `${completedProblems.size} of ${visibleCount} done` : '';
   } else if (currentSlide === 2) {
     counter.textContent = '';
   } else {
-    counter.textContent = `Problem ${currentSlide - 2} of 12`;
+    counter.textContent = '';
   }
 }
 
@@ -1121,9 +1274,8 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
   if (e.key === 'h' || e.key === 'H' || e.key === 'Home') { goToSlide(1); }
   if (e.key === 'Escape') { goToSlide(0); }
-  // Number keys 1-9 jump to that problem
-  if (e.key >= '1' && e.key <= '9' && currentSlide === 1) { goToSlide(parseInt(e.key) + 2); }
-  if (e.key === '0' && currentSlide === 1) { goToSlide(12); } // 0 = problem 10
+  if (e.key === 'a' && currentSlide === 0) { choosePath('agency'); }
+  if (e.key === 'b' && currentSlide === 0) { choosePath('business'); }
 });
 
 // Drag and drop for file cards
