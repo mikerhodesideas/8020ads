@@ -1,10 +1,14 @@
-modules = ["nodejs-20:v8-20230920-bd784b9"]
+modules = ["nodejs-20"]
 run = "node server.js"
-
-[deployment]
-run = ["sh", "-c", "node server.js"]
-build = ["sh", "-c", "echo 'No build needed'"]
-deploymentTarget = "cloudrun"
 
 [nix]
 channel = "stable-24_05"
+
+[[ports]]
+localPort = 3333
+externalPort = 80
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["npm", "run", "start"]
+build = ["sh", "-c", "echo 'Build complete'"]
