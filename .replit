@@ -9,6 +9,6 @@ localPort = 3333
 externalPort = 80
 
 [deployment]
-deploymentTarget = "autoscale"
-run = ["npm", "run", "start"]
-build = ["sh", "-c", "echo 'Build complete'"]
+deploymentTarget = "gce"
+run = ["node", "server.js"]
+build = ["sh", "-c", "npm install --production 2>/dev/null || true"]
