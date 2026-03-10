@@ -1,8 +1,12 @@
 {
   "name": "8020ads",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "mkdir -p dist && cp server.js index.html dist/ && cp -r data dist/data && cp -r demo-assets dist/demo-assets"
   }
 }
