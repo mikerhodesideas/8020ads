@@ -1,14 +1,13 @@
-modules = ["nodejs-20"]
-run = "node server.js"
+modules = ["nodejs-20", "web"]
 
 [nix]
-channel = "stable-24_05"
+channel = "stable-25_05"
 
 [[ports]]
-localPort = 3333
+localPort = 3000
 externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["node", "dist/server.js"]
+run = ["npm", "run", "start"]
 build = ["npm", "run", "build"]

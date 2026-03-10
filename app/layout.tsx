@@ -1,0 +1,34 @@
+import type { Metadata } from 'next'
+import { Oxanium, Inter } from 'next/font/google'
+import './globals.css'
+
+const oxanium = Oxanium({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-oxanium',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
+})
+
+export const metadata: Metadata = {
+  title: '8020ads - AI Demo',
+  description: 'See AI solve real business problems in real time',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={`${oxanium.variable} ${inter.variable} antialiased`}>
+        {children}
+      </body>
+    </html>
+  )
+}
