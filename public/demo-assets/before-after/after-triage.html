@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox Triage Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 900px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .header-stats { display: flex; gap: 32px; margin-top: 20px; }
+        .header-stat .val { font-size: 28px; font-weight: 700; }
+        .header-stat .lbl { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+        .val-red { color: #ef4444; }
+        .val-amber { color: #f59e0b; }
+        .val-green { color: #22c55e; }
+        .val-gray { color: #64748b; }
+
+        /* Priority bar */
+        .priority-bar { display: flex; height: 6px; margin: 20px 0 4px; border-radius: 2px; overflow: hidden; }
+        .pb-red { background: #ef4444; }
+        .pb-amber { background: #f59e0b; }
+        .pb-green { background: #22c55e; }
+        .pb-gray { background: #cbd5e1; }
+        .priority-legend { display: flex; gap: 16px; font-size: 11px; color: #64748b; }
+
+        /* Cards */
+        .card { background: white; border: 1px solid #e2e8f0; margin-bottom: 12px; border-radius: 2px; overflow: hidden; }
+        .card-urgent { border-left: 4px solid #ef4444; }
+        .card-important { border-left: 4px solid #f59e0b; }
+        .card-normal { border-left: 4px solid #22c55e; }
+        .card-low { border-left: 4px solid #cbd5e1; }
+
+        .card-body { padding: 16px 20px; }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+        .card-from { font-weight: 700; font-size: 14px; }
+        .card-time { font-size: 12px; color: #94a3b8; }
+        .card-subject { font-size: 14px; color: #334155; margin-bottom: 8px; }
+        .card-summary { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 10px; }
+        .card-action { display: flex; gap: 8px; align-items: center; }
+        .action-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 2px; }
+        .tag-reply { background: #eff6ff; color: #2563eb; }
+        .tag-review { background: #fef3c7; color: #92400e; }
+        .tag-act { background: #fef2f2; color: #dc2626; }
+        .tag-file { background: #f0fdf4; color: #16a34a; }
+        .tag-skip { background: #f1f5f9; color: #64748b; }
+        .tag-schedule { background: #faf5ff; color: #7c3aed; }
+        .time-est { font-size: 11px; color: #94a3b8; margin-left: auto; }
+
+        .priority-label { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
+        .pl-urgent { background: #fef2f2; color: #dc2626; }
+        .pl-important { background: #fffbeb; color: #d97706; }
+        .pl-normal { background: #f0fdf4; color: #16a34a; }
+        .pl-low { background: #f1f5f9; color: #94a3b8; }
+
+        .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; padding: 12px 0 8px; }
+
+        .bottom-summary { background: #0f172a; color: white; padding: 24px; margin-top: 24px; border-radius: 2px; }
+        .bottom-summary h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+        .plan-steps { list-style: none; }
+        .plan-steps li { padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .plan-steps li:last-child { border-bottom: none; }
+        .step-num { background: #f59e0b; color: #0f172a; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; border-radius: 2px; flex-shrink: 0; }
+        .step-time { color: #94a3b8; font-size: 12px; margin-left: auto; }
+    </style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>Monday Morning Inbox Triage</h1>
+        <p>12 emails analyzed and prioritized | Recommended processing order below</p>
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="val val-red">2</div>
+                <div class="lbl">Urgent</div>
+            </div>
+            <div class="header-stat">
+                <div class="val val-amber">3</div>
+                <div class="lbl">Important</div>
+            </div>
+            <div class="header-stat">
+                <div class="val val-green">3</div>
+                <div class="lbl">Normal</div>
+            </div>
+            <div class="header-stat">
+                <div class="val val-gray">4</div>
+                <div class="lbl">Low / Auto</div>
+            </div>
+        </div>
+        <div class="priority-bar">
+            <div class="pb-red" style="width:17%"></div>
+            <div class="pb-amber" style="width:25%"></div>
+            <div class="pb-green" style="width:25%"></div>
+            <div class="pb-gray" style="width:33%"></div>
+        </div>
+        <div class="priority-legend">
+            <span>&#9632; Urgent (act now)</span>
+            <span>&#9632; Important (today)</span>
+            <span>&#9632; Normal (this week)</span>
+            <span>&#9632; Low (batch/skip)</span>
+        </div>
+    </div>
+
+    <!-- URGENT -->
+    <div class="section-label" style="color:#ef4444;">Urgent - Handle First</div>
+
+    <div class="card card-urgent">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Tom Bradley</span><span class="priority-label pl-urgent">URGENT</span></div>
+                <div class="card-time">Today 6:58am</div>
+            </div>
+            <div class="card-subject"><strong>Urgent: Website is down</strong></div>
+            <div class="card-summary">Production website outage reported. Tom flagged client-facing pages returning 503 errors since ~6:30am. This is revenue-impacting and customer-visible. Needs immediate investigation.</div>
+            <div class="card-action">
+                <span class="action-tag tag-act">Investigate now</span>
+                <span class="action-tag tag-reply">Reply to Tom</span>
+                <span class="time-est">~15 min to acknowledge + escalate</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-urgent">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Mike Johnson (Acme Corp)</span><span class="priority-label pl-urgent">URGENT</span></div>
+                <div class="card-time">Today 8:15am</div>
+            </div>
+            <div class="card-subject"><strong>RE: Contract Renewal Discussion</strong></div>
+            <div class="card-summary">Client contract renewal thread. Acme Corp is a top-tier client ($54k ARR). Mike is asking for updated pricing before their board meeting this Wednesday. Missing this deadline risks losing the renewal.</div>
+            <div class="card-action">
+                <span class="action-tag tag-reply">Reply with pricing</span>
+                <span class="action-tag tag-review">Review contract terms</span>
+                <span class="time-est">~20 min to draft proposal</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT -->
+    <div class="section-label" style="color:#d97706;">Important - Handle Today</div>
+
+    <div class="card card-important">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Sarah Chen</span><span class="priority-label pl-important">IMPORTANT</span></div>
+                <div class="card-time">Today 8:42am</div>
+            </div>
+            <div class="card-subject"><strong>Q1 Budget Review Meeting - Need Your Input</strong></div>
+            <div class="card-summary">Sarah needs your department's Q1 budget figures for a review meeting tomorrow at 2pm. She's compiling the deck and needs numbers by end of day. Internal but time-sensitive.</div>
+            <div class="card-action">
+                <span class="action-tag tag-reply">Reply with figures</span>
+                <span class="time-est">~30 min to pull data + reply</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-important">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">David Park</span><span class="priority-label pl-important">IMPORTANT</span></div>
+                <div class="card-time">Sun 11:20pm</div>
+            </div>
+            <div class="card-subject"><strong>Proposal Draft - Ready for Review</strong></div>
+            <div class="card-summary">David completed the proposal for the Henderson account. Needs your review and sign-off before sending to the client. He mentioned they're expecting it by Wednesday. Review today to stay ahead.</div>
+            <div class="card-action">
+                <span class="action-tag tag-review">Review document</span>
+                <span class="action-tag tag-reply">Send feedback</span>
+                <span class="time-est">~25 min to review + annotate</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-important">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Karen Wells (Pinnacle Inc)</span><span class="priority-label pl-important">IMPORTANT</span></div>
+                <div class="card-time">Sat 3:15pm</div>
+            </div>
+            <div class="card-subject"><strong>Partnership Opportunity - Let's Chat</strong></div>
+            <div class="card-summary">Inbound partnership enquiry from Pinnacle Inc (mid-market SaaS, ~200 employees). Karen is VP of Marketing. Potential channel partnership. Worth a 15-minute call to explore fit.</div>
+            <div class="card-action">
+                <span class="action-tag tag-reply">Reply + suggest time</span>
+                <span class="action-tag tag-schedule">Book call</span>
+                <span class="time-est">~5 min to reply</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NORMAL -->
+    <div class="section-label" style="color:#22c55e;">Normal - This Week</div>
+
+    <div class="card card-normal">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Jira</span><span class="priority-label pl-normal">NORMAL</span></div>
+                <div class="card-time">Sun 4:30pm</div>
+            </div>
+            <div class="card-subject"><strong>[PROJ-234] Bug assigned to you</strong></div>
+            <div class="card-summary">Medium-priority bug in the dashboard reporting module. User-reported: export CSV generates incorrect date headers. Not blocking but affects reporting accuracy.</div>
+            <div class="card-action">
+                <span class="action-tag tag-review">Triage in Jira</span>
+                <span class="time-est">~5 min to triage</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-normal">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Calendly</span><span class="priority-label pl-normal">NORMAL</span></div>
+                <div class="card-time">Sat 11:00am</div>
+            </div>
+            <div class="card-subject"><strong>New booking: Strategy Call with Lisa Tran</strong></div>
+            <div class="card-summary">Strategy call booked for Thursday 10am. Lisa Tran, Operations Manager at GreenLeaf Co. Prep needed: review their current setup and recent support tickets before the call.</div>
+            <div class="card-action">
+                <span class="action-tag tag-schedule">Add prep block Wed PM</span>
+                <span class="action-tag tag-file">File for Thursday</span>
+                <span class="time-est">~2 min to note</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-normal">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">Stripe</span><span class="priority-label pl-normal">NORMAL</span></div>
+                <div class="card-time">Fri 6:30pm</div>
+            </div>
+            <div class="card-subject"><strong>Payment received: $4,500.00</strong></div>
+            <div class="card-summary">Payment from Henderson Group for February retainer. Confirms they're paid up. No action needed unless you want to send a thank-you or check it posted to accounting.</div>
+            <div class="card-action">
+                <span class="action-tag tag-file">File to accounting</span>
+                <span class="time-est">~1 min</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOW -->
+    <div class="section-label" style="color:#94a3b8;">Low Priority - Batch or Skip</div>
+
+    <div class="card card-low">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">AWS</span><span class="priority-label pl-low">LOW</span></div>
+                <div class="card-time">Today 7:12am</div>
+            </div>
+            <div class="card-subject">Your January Invoice is Ready</div>
+            <div class="card-summary">Monthly AWS bill. Forward to accounting for processing. No anomalies expected unless infrastructure costs spiked.</div>
+            <div class="card-action">
+                <span class="action-tag tag-file">Forward to accounting</span>
+                <span class="time-est">~1 min</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-low">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">HR Department</span><span class="priority-label pl-low">LOW</span></div>
+                <div class="card-time">Today 6:45am</div>
+            </div>
+            <div class="card-subject">Reminder: Submit Your Timesheet</div>
+            <div class="card-summary">Weekly timesheet reminder. Due by Friday. Add to your Friday afternoon routine. Takes 5 minutes.</div>
+            <div class="card-action">
+                <span class="action-tag tag-schedule">Schedule for Friday</span>
+                <span class="action-tag tag-skip">Archive</span>
+                <span class="time-est">~0 min now</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-low">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">LinkedIn</span><span class="priority-label pl-low">LOW</span></div>
+                <div class="card-time">Today 7:30am</div>
+            </div>
+            <div class="card-subject">You have 3 new connection requests</div>
+            <div class="card-summary">Automated notification. Batch-process LinkedIn during a low-energy slot. Not time-sensitive.</div>
+            <div class="card-action">
+                <span class="action-tag tag-skip">Batch later</span>
+                <span class="time-est">~0 min now</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-low">
+        <div class="card-body">
+            <div class="card-top">
+                <div><span class="card-from">MarketingBrew Newsletter</span><span class="priority-label pl-low">LOW</span></div>
+                <div class="card-time">Sun 10:00pm</div>
+            </div>
+            <div class="card-subject">This week in marketing</div>
+            <div class="card-summary">Industry newsletter. Read during a break or commute. No action required.</div>
+            <div class="card-action">
+                <span class="action-tag tag-skip">Read later</span>
+                <span class="time-est">~0 min now</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended plan -->
+    <div class="bottom-summary">
+        <h3>Recommended Processing Order</h3>
+        <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">Estimated total time: 1 hour 44 minutes. Start with urgent, batch the rest.</p>
+        <ol class="plan-steps">
+            <li><span class="step-num">1</span> Reply to Tom Bradley re: website outage (acknowledge + investigate) <span class="step-time">15 min</span></li>
+            <li><span class="step-num">2</span> Reply to Mike Johnson with contract renewal pricing <span class="step-time">20 min</span></li>
+            <li><span class="step-num">3</span> Reply to Sarah Chen with Q1 budget figures <span class="step-time">30 min</span></li>
+            <li><span class="step-num">4</span> Review David Park's proposal draft <span class="step-time">25 min</span></li>
+            <li><span class="step-num">5</span> Reply to Karen Wells, suggest partnership call <span class="step-time">5 min</span></li>
+            <li><span class="step-num">6</span> Quick batch: triage Jira bug, note Calendly call, file Stripe + AWS <span class="step-time">9 min</span></li>
+            <li><span class="step-num">7</span> Archive: LinkedIn, Newsletter, HR reminder (handle later) <span class="step-time">0 min</span></li>
+        </ol>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by Inbox Commander Skill | 12 emails triaged in 8 seconds
+    </div>
+
+</div>
+</body>
+</html>

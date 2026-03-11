@@ -1,0 +1,9 @@
+{
+  "name": "gallery-level-2",
+  "prompt": "Entrance to an enchanted forest cavern, massive tree roots forming a natural archway, teal bioluminescent moss and amber lanterns hanging from branches, a winding path leading deeper into mysterious woods, dappled light filtering through thick canopy, oil painting style, visible brushstrokes, deep teal and warm amber palette, Belle Epoque aesthetic, rich atmospheric depth, no text, no people, no words, no letters",
+  "seed": 1487742425,
+  "image_url": "https://v3b.fal.media/files/b/0a91b268/d-5_4FTYz972k3tfLcVbh_9f2225c8ebda45188036ab2d5394cfd7.png",
+  "generated": "2026-03-11T16:05:33.017956",
+  "model": "fal-ai/bytedance/seedream/v4.5/text-to-image",
+  "size": "landscape_16_9"
+}

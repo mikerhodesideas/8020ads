@@ -1,85 +1,86 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useGame } from '@/components/game-provider'
 import { cn } from '@/lib/utils'
+import type { PlayerType } from '@/lib/game-data'
 
 const paths = [
   {
-    id: 'agency',
+    id: 'agency' as PlayerType,
     title: 'I run an agency',
     desc: 'Client reporting, competitor analysis, deliverables',
     image: '/images/business-persona.png',
     accent: '#2563EB',
+    key: 'A',
   },
   {
-    id: 'employee',
+    id: 'employee' as PlayerType,
     title: 'I work in an agency',
     desc: 'Campaign management, search terms, content',
     image: '/images/employee-persona.png',
     accent: '#0D9488',
+    key: 'E',
   },
   {
-    id: 'freelancer',
+    id: 'freelancer' as PlayerType,
     title: "I'm a freelancer",
     desc: 'Solo client work, prospecting, reporting',
     image: '/images/freelancer-persona.png',
     accent: '#7C3AED',
+    key: 'F',
   },
   {
-    id: 'business',
+    id: 'business' as PlayerType,
     title: 'I run a business',
     desc: 'Inbox, meetings, financials, onboarding',
     image: '/images/business-owner-persona.png',
     accent: '#1B8C3A',
+    key: 'B',
   },
 ]
 
 export default function PathChooser() {
   const router = useRouter()
+  const { setType } = useGame()
 
-  const handleClick = (e: React.MouseEvent, pathId: string) => {
-    const seen = localStorage.getItem('cowork-seen')
-    if (seen) {
-      e.preventDefault()
-      router.push(`/${pathId}`)
-    }
-    // If not seen, the Link navigates to /cowork?path=... normally
+  const handleClick = (typeId: PlayerType) => {
+    setType(typeId)
+    router.push('/world')
   }
 
   return (
     <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
       <div className="text-center mb-14">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)] mb-4 font-heading">
-          Live AI Demo
+          8020skill - The AI Game
         </p>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] mb-5 font-heading text-[var(--color-ink)]">
-          Watch AI solve
+          See what AI
           <br />
           <span className="text-[var(--color-brand-orange)]">
-            real problems
+            can really do
           </span>
         </h1>
         <p className="text-base sm:text-lg text-[var(--color-muted)] max-w-md mx-auto leading-relaxed">
-          Pick your world. Every problem gets solved live in Claude Cowork,
-          right in front of you.
+          Pick your world. Level up through real business challenges solved live by AI.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl w-full">
         {paths.map((p) => (
-          <Link
+          <button
             key={p.id}
-            href={`/cowork?path=${p.id}`}
-            onClick={(e) => handleClick(e, p.id)}
+            onClick={() => handleClick(p.id)}
             className={cn(
               'group relative text-left overflow-hidden',
               'border border-[var(--color-border)]',
               'rounded-[2px] transition-all duration-300 ease-out',
               'hover:shadow-lg hover:-translate-y-1',
               'cursor-pointer block',
-              'aspect-[3/4]'
+              'aspect-[3/4]',
+              'focus:outline-none'
             )}
           >
             {/* Background image */}
@@ -121,34 +122,27 @@ export default function PathChooser() {
                 )}
                 style={{ backgroundColor: p.accent }}
               >
-                Start Demo
+                Play
                 <span className="transition-transform duration-200 group-hover:translate-x-0.5">
                   &#8594;
                 </span>
               </div>
             </div>
-          </Link>
+          </button>
         ))}
       </div>
 
       <p className="mt-10 text-[10px] text-[var(--color-faint)] tracking-wide font-heading">
         Press{' '}
-        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
-          A
-        </kbd>{' '}
-        agency &middot;{' '}
-        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
-          E
-        </kbd>{' '}
-        employee &middot;{' '}
-        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
-          F
-        </kbd>{' '}
-        freelancer &middot;{' '}
-        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
-          B
-        </kbd>{' '}
-        business
+        {paths.map((p, i) => (
+          <span key={p.key}>
+            <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
+              {p.key}
+            </kbd>{' '}
+            {p.id}
+            {i < paths.length - 1 ? ' \u00b7 ' : ''}
+          </span>
+        ))}
       </p>
     </div>
   )

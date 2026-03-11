@@ -1,0 +1,209 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useGame } from '@/components/game-provider'
+import { cn } from '@/lib/utils'
+
+// Badge definitions
+export interface BadgeDef {
+  id: string
+  name: string
+  description: string
+}
+
+export const BADGE_DEFS: BadgeDef[] = [
+  { id: 'first-skill', name: 'First Skill', description: 'Complete your first demo' },
+  { id: 'skill-collector', name: 'Skill Collector', description: 'Unlock all 3 Level 1 skills' },
+  { id: 'speed-demon', name: 'Speed Demon', description: 'Complete a demo in under 20 seconds' },
+  { id: 'explorer', name: 'Explorer', description: 'Play in both Gallery and Arcade worlds' },
+  { id: 'level-up', name: 'Level Up', description: 'Complete all demos in a level' },
+  { id: 'full-clear', name: 'Full Clear', description: 'Complete all 9 demos' },
+  { id: 'transformer', name: 'The Transformer', description: 'View all 3 before/after comparisons' },
+  { id: 'replay-master', name: 'Replay Master', description: 'Replay a completed demo' },
+]
+
+// SVG icons for each badge
+function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
+  const s = size
+  const props = { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+
+  switch (id) {
+    case 'first-skill':
+      // Wrench
+      return (
+        <svg {...props}>
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
+      )
+    case 'skill-collector':
+      // Three stars
+      return (
+        <svg {...props}>
+          <path d="M12 2l1.5 4.5H18l-3.5 2.5L16 13.5 12 11l-4 2.5 1.5-4.5L6 6.5h4.5z" />
+          <circle cx="5" cy="18" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="19" cy="18" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+      )
+    case 'speed-demon':
+      // Lightning bolt
+      return (
+        <svg {...props}>
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="none" />
+        </svg>
+      )
+    case 'explorer':
+      // Compass
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
+        </svg>
+      )
+    case 'level-up':
+      // Shield
+      return (
+        <svg {...props}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      )
+    case 'full-clear':
+      // Crown
+      return (
+        <svg {...props}>
+          <path d="M2 17l3-8 4 4 3-6 3 6 4-4 3 8z" fill="currentColor" stroke="none" />
+          <rect x="2" y="17" width="20" height="3" rx="1" fill="currentColor" stroke="none" />
+        </svg>
+      )
+    case 'transformer':
+      // Split screen with arrow
+      return (
+        <svg {...props}>
+          <rect x="2" y="4" width="8" height="16" rx="1" />
+          <rect x="14" y="4" width="8" height="16" rx="1" />
+          <path d="M12 9l2 3-2 3" strokeWidth="1.5" />
+        </svg>
+      )
+    case 'replay-master':
+      // Loop arrow
+      return (
+        <svg {...props}>
+          <path d="M17 2l4 4-4 4" />
+          <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
+          <path d="M7 22l-4-4 4-4" />
+          <path d="M21 13v1a4 4 0 0 1-4 4H3" />
+        </svg>
+      )
+    default:
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="8" />
+        </svg>
+      )
+  }
+}
+
+// Badge tray for the level map
+export function BadgeTray({ isGallery }: { isGallery: boolean }) {
+  const { badges } = useGame()
+
+  return (
+    <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
+      {BADGE_DEFS.map((def) => {
+        const earned = !!badges[def.id]
+        return (
+          <div
+            key={def.id}
+            className="group relative"
+          >
+            <div
+              className={cn(
+                'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-[2px] border transition-all duration-300',
+                earned
+                  ? isGallery
+                    ? 'bg-amber-50 border-amber-400 text-amber-700 badge-earned-glow-gallery'
+                    : 'bg-blue-50 border-blue-400 text-blue-700 badge-earned-glow-arcade'
+                  : 'bg-gray-50 border-gray-200 text-gray-300'
+              )}
+            >
+              <BadgeIcon id={def.id} size={18} />
+            </div>
+            {/* Tooltip */}
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--color-ink)] text-white text-[10px] font-heading rounded-[2px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+              {def.name}
+              {!earned && <span className="text-white/50"> (locked)</span>}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// Badge grid for victory screen
+export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
+  const { badges } = useGame()
+
+  return (
+    <div className="grid grid-cols-4 gap-3 sm:gap-4">
+      {BADGE_DEFS.map((def) => {
+        const earned = !!badges[def.id]
+        return (
+          <div
+            key={def.id}
+            className={cn(
+              'flex flex-col items-center gap-1.5 p-3 rounded-[2px] border transition-all',
+              earned
+                ? isGallery
+                  ? 'bg-amber-50 border-amber-300 text-amber-700'
+                  : 'bg-blue-50 border-blue-300 text-blue-700'
+                : 'bg-gray-50 border-gray-200 text-gray-300'
+            )}
+          >
+            <BadgeIcon id={def.id} size={22} />
+            <span className={cn(
+              'text-[9px] sm:text-[10px] font-heading font-semibold text-center leading-tight',
+              earned ? '' : 'text-gray-400'
+            )}>
+              {def.name}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// Toast notification for newly earned badges
+export function BadgeToast() {
+  const { badgeToastQueue, dismissBadgeToast } = useGame()
+
+  const currentBadgeId = badgeToastQueue[0]
+  const def = currentBadgeId ? BADGE_DEFS.find((b) => b.id === currentBadgeId) : null
+
+  useEffect(() => {
+    if (!currentBadgeId) return
+    const timer = setTimeout(dismissBadgeToast, 3000)
+    return () => clearTimeout(timer)
+  }, [currentBadgeId, dismissBadgeToast])
+
+  if (!def) return null
+
+  return (
+    <div className="fixed top-16 right-4 z-[60] badge-toast-enter">
+      <div className="flex items-center gap-3 px-4 py-3 bg-white border border-[var(--color-border)] shadow-lg rounded-[2px] min-w-[220px]">
+        <div className="text-amber-600">
+          <BadgeIcon id={def.id} size={24} />
+        </div>
+        <div>
+          <p className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--color-faint)]">
+            Achievement Unlocked
+          </p>
+          <p className="text-sm font-heading font-bold text-[var(--color-ink)]">
+            {def.name}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,10 +1,8 @@
 'use client'
 
 import { useCallback } from 'react'
-import type { DragFile as DragFileType } from '@/lib/problems'
-
 interface DragFileProps {
-  file: DragFileType
+  file: { name: string; path: string; mime: string }
 }
 
 export default function DragFile({ file }: DragFileProps) {

@@ -1,0 +1,9 @@
+{
+  "name": "gallery-level-1",
+  "prompt": "Dawn breaking over a wide fantasy valley, warm golden morning light spilling across rolling hills, ancient stone footbridge crossing a gentle stream, wildflowers catching first light, distant Belle Epoque towers on the horizon, oil painting style, visible brushstrokes, deep teal and warm amber palette, Belle Epoque aesthetic, rich atmospheric depth, no text, no people, no words, no letters",
+  "seed": 282471734,
+  "image_url": "https://v3b.fal.media/files/b/0a91b265/G1xo5Z6GbDHv_MZq7DorX_cbd80044b02e46228c301abcd28b49be.png",
+  "generated": "2026-03-11T16:04:59.265376",
+  "model": "fal-ai/bytedance/seedream/v4.5/text-to-image",
+  "size": "landscape_16_9"
+}

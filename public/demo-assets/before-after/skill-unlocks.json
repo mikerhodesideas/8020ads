@@ -1,0 +1,66 @@
+{
+  "skills": [
+    {
+      "id": "website-designer",
+      "name": "Website Designer",
+      "icon": "layout",
+      "demo": "website-redesign",
+      "capabilities": [
+        "Layout understanding",
+        "Visual hierarchy",
+        "Conversion optimization",
+        "Mobile-first responsive design",
+        "Brand-consistent styling"
+      ],
+      "unlockMessage": "Your AI now understands what makes a website convert.",
+      "wowStat": {
+        "metric": "Complete redesign in 47 seconds",
+        "detail": "1 crappy website transformed into a professional, conversion-ready landing page",
+        "timeSaved": "4+ hours of design work"
+      }
+    },
+    {
+      "id": "data-analyst",
+      "name": "Data Analyst",
+      "icon": "search",
+      "demo": "search-term-analysis",
+      "capabilities": [
+        "Pattern recognition across datasets",
+        "Waste detection and cost savings",
+        "Actionable recommendations",
+        "Statistical segmentation",
+        "Negative keyword mining"
+      ],
+      "unlockMessage": "Your AI now sees what humans miss in the data.",
+      "wowStat": {
+        "metric": "210 search terms classified in 12 seconds",
+        "detail": "3 categories identified, 15 negative keywords found, $4,700 wasted spend flagged",
+        "timeSaved": "2+ hours of manual analysis"
+      }
+    },
+    {
+      "id": "inbox-commander",
+      "name": "Inbox Commander",
+      "icon": "mail",
+      "demo": "email-triage",
+      "capabilities": [
+        "Priority scoring by urgency and impact",
+        "Context-aware summarization",
+        "Action extraction per email",
+        "Time estimation per task",
+        "Optimal processing order"
+      ],
+      "unlockMessage": "Your AI now triages your inbox like a chief of staff.",
+      "wowStat": {
+        "metric": "12 emails triaged in 8 seconds",
+        "detail": "2 urgent flagged, 3 actions extracted, optimal processing order generated",
+        "timeSaved": "30+ minutes of inbox scanning"
+      }
+    }
+  ],
+  "levelComplete": {
+    "message": "Level 1 Complete! You've unlocked 3 skills.",
+    "totalTimeSaved": "~6.5 hours of manual work, done in under 2 minutes",
+    "nextLevel": "Level 2 introduces multi-step workflows: contact follow-ups, cross-channel reports, and content creation."
+  }
+}

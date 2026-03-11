@@ -1,0 +1,9 @@
+{
+  "name": "gallery-level-3",
+  "prompt": "Grand Belle Epoque city at golden hour, ornate towers and domed buildings with warm amber facades, wide boulevard leading to a magnificent central palace, warm light reflecting off glass and copper domes, deep teal sky with dramatic clouds. Oil painting style, visible brushstrokes, deep teal and warm amber palette, Belle Epoque aesthetic, rich atmospheric lighting, no text, no people, no words, no letters",
+  "seed": 1846332460,
+  "url": "https://v3b.fal.media/files/b/0a91b26c/cnuHXT45SAPLYt5o3k2SA_9b823cd9f10b4f519ee99968b0f882a2.png",
+  "size": "landscape_16_9",
+  "timestamp": "2026-03-11T16:06:12.320080",
+  "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
+}

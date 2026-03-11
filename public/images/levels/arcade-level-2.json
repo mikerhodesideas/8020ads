@@ -1,0 +1,9 @@
+{
+  "name": "arcade-level-2",
+  "prompt": "Mid-level adventure terrain with colorful rope bridges crossing between floating islands, crystal caves with glowing gems, bouncy platforms and spinning gears, waterfalls flowing between levels, increased complexity and moving parts. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and whimsical, no text, no people, no words, no letters",
+  "seed": 614036528,
+  "url": "https://v3b.fal.media/files/b/0a91b26f/_I4udG8a3HOPsUvuFTi0U_2c70dad55340468e8d5e3ed574bbb70a.png",
+  "size": "landscape_16_9",
+  "timestamp": "2026-03-11T16:06:38.588161",
+  "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
+}

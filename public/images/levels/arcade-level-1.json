@@ -1,0 +1,9 @@
+{
+  "name": "arcade-level-1",
+  "prompt": "A bright cheerful meadow with a small starting village, cute mushroom houses, a rainbow arching across a blue sky, colorful flowers and butterflies, a winding path leading to adventure, green rolling hills in the background. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and cheerful, no text, no people, no words, no letters",
+  "seed": 1233296409,
+  "url": "https://v3b.fal.media/files/b/0a91b26b/ue-BAx8xdEEtswS-OgWoa_c8b0e6b92ccc47a78afb6f1998fc71a2.png",
+  "size": "landscape_16_9",
+  "timestamp": "2026-03-11T16:05:56.645973",
+  "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
+}
