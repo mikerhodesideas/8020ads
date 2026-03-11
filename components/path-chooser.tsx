@@ -2,30 +2,52 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const paths = [
   {
     id: 'agency',
     title: 'I run an agency',
-    desc: 'Google Ads, SEO, campaign reporting, competitor analysis, client deliverables.',
-    tagline: 'From manual grind to strategic clarity',
-    image: '/images/agency-persona.png',
+    desc: 'Client reporting, competitor analysis, deliverables',
+    image: '/images/business-persona.png',
     accent: '#2563EB',
-    gradient: 'from-blue-50 to-white',
+  },
+  {
+    id: 'employee',
+    title: 'I work in an agency',
+    desc: 'Campaign management, search terms, content',
+    image: '/images/employee-persona.png',
+    accent: '#0D9488',
+  },
+  {
+    id: 'freelancer',
+    title: "I'm a freelancer",
+    desc: 'Solo client work, prospecting, reporting',
+    image: '/images/freelancer-persona.png',
+    accent: '#7C3AED',
   },
   {
     id: 'business',
     title: 'I run a business',
-    desc: 'Inbox overload, meeting follow-ups, financial reporting, team onboarding.',
-    tagline: 'From operational chaos to running smoothly',
-    image: '/images/business-persona.png',
+    desc: 'Inbox, meetings, financials, onboarding',
+    image: '/images/business-owner-persona.png',
     accent: '#1B8C3A',
-    gradient: 'from-green-50 to-white',
   },
 ]
 
 export default function PathChooser() {
+  const router = useRouter()
+
+  const handleClick = (e: React.MouseEvent, pathId: string) => {
+    const seen = localStorage.getItem('cowork-seen')
+    if (seen) {
+      e.preventDefault()
+      router.push(`/${pathId}`)
+    }
+    // If not seen, the Link navigates to /cowork?path=... normally
+  }
+
   return (
     <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
       <div className="text-center mb-14">
@@ -45,59 +67,54 @@ export default function PathChooser() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl w-full">
         {paths.map((p) => (
           <Link
             key={p.id}
             href={`/cowork?path=${p.id}`}
+            onClick={(e) => handleClick(e, p.id)}
             className={cn(
               'group relative text-left overflow-hidden',
-              'bg-white border border-[var(--color-border)]',
+              'border border-[var(--color-border)]',
               'rounded-[2px] transition-all duration-300 ease-out',
               'hover:shadow-lg hover:-translate-y-1',
-              'cursor-pointer block'
+              'cursor-pointer block',
+              'aspect-[3/4]'
             )}
-            style={{
-              borderTop: `3px solid ${p.accent}`,
-            }}
           >
-            <div
-              className={cn(
-                'relative w-full aspect-[4/3] overflow-hidden',
-                `bg-gradient-to-b ${p.gradient}`
-              )}
-            >
-              <Image
-                src={p.image}
-                alt={p.title}
-                fill
-                className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-              />
-              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
-            </div>
+            {/* Background image */}
+            <Image
+              src={p.image}
+              alt={p.title}
+              fill
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              priority
+            />
 
-            <div className="px-6 pb-6 pt-1">
-              <h2 className="text-xl sm:text-2xl font-bold mb-2 font-heading text-[var(--color-ink)]">
+            {/* Dark gradient overlay from bottom */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+            {/* Accent top border line */}
+            <div
+              className="absolute top-0 inset-x-0 h-[3px]"
+              style={{ backgroundColor: p.accent }}
+            />
+
+            {/* Text content at bottom */}
+            <div className="absolute inset-x-0 bottom-0 px-5 pb-5">
+              <h2 className="text-lg sm:text-xl font-bold mb-1.5 font-heading text-white leading-tight">
                 {p.title}
               </h2>
 
-              <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-4">
+              <p className="text-xs text-white/70 leading-relaxed mb-4">
                 {p.desc}
-              </p>
-
-              <p
-                className="text-[10px] font-bold uppercase tracking-[0.15em] mb-5 font-heading"
-                style={{ color: p.accent }}
-              >
-                {p.tagline}
               </p>
 
               <div
                 className={cn(
-                  'inline-flex items-center gap-2 px-6 py-2.5',
-                  'text-white text-sm font-semibold',
+                  'inline-flex items-center gap-2 px-4 py-2',
+                  'text-white text-xs font-semibold',
                   'rounded-[2px] transition-all duration-200',
                   'group-hover:gap-3',
                   'font-heading'
@@ -119,11 +136,19 @@ export default function PathChooser() {
         <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
           A
         </kbd>{' '}
-        for agency &middot;{' '}
+        agency &middot;{' '}
+        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
+          E
+        </kbd>{' '}
+        employee &middot;{' '}
+        <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
+          F
+        </kbd>{' '}
+        freelancer &middot;{' '}
         <kbd className="px-1.5 py-0.5 bg-white border border-[var(--color-border)] rounded-[2px] text-[10px] font-mono">
           B
         </kbd>{' '}
-        for business
+        business
       </p>
     </div>
   )

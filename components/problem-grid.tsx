@@ -36,7 +36,7 @@ export default function ProblemGrid({ path }: ProblemGridProps) {
     <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center px-4 sm:px-6 py-12 sm:py-16">
       <div className="text-center mb-10 sm:mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold mb-2 font-heading">
-          Pick a problem. See it solved.
+          Pick a problem. Watch it get solved with AI.
         </h2>
         <p className="text-sm text-[var(--color-muted)] font-heading">
           {doneCount} of {filtered.length} completed

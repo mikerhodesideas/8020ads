@@ -10,13 +10,19 @@ const links = [
   { href: '/how-it-works', label: 'How It Works' },
 ]
 
+const pathLabels: Record<string, string> = {
+  agency: 'Agency Owner',
+  employee: 'Agency Employee',
+  freelancer: 'Freelancer',
+  business: 'Business Owner',
+}
+
 export default function Navbar() {
   const pathname = usePathname()
 
-  // Detect if we're on an agency or business route
-  const isAgency = pathname.startsWith('/agency')
-  const isBusiness = pathname.startsWith('/business')
-  const activePath = isAgency ? 'agency' : isBusiness ? 'business' : null
+  const activePath = Object.keys(pathLabels).find((p) =>
+    pathname.startsWith(`/${p}`)
+  ) || null
 
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[var(--color-border)]">
@@ -40,7 +46,7 @@ export default function Navbar() {
                   : 'text-[var(--color-ink)] hover:text-[var(--color-brand-orange)]'
               )}
             >
-              {activePath === 'agency' ? 'Agency' : 'Business'} Demos
+              {pathLabels[activePath]} Demos
             </Link>
           )}
           {links.map((link) => (

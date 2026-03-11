@@ -1,4 +1,4 @@
-export type Path = 'agency' | 'business'
+export type Path = 'agency' | 'employee' | 'freelancer' | 'business'
 
 export interface DragFile {
   name: string
@@ -41,11 +41,11 @@ export const problems: Problem[] = [
     title: 'My website is embarrassing',
     subtitle:
       "Every day it stays live, you're losing deals you'll never know about",
-    paths: ['agency', 'business'],
+    paths: ['agency', 'employee', 'freelancer', 'business'],
     pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Comic Sans. Stock photos from 2012. A "Under Construction" gif that\'s been there for three years. Every day it stays live, you\'re losing deals you\'ll never know about.',
     fix: 'Drop the current site into AI and get a complete teardown with specific fixes, priority-ranked. Then get a rebuilt version in minutes, not months.',
     tryThis:
-      'Review this website and rebuild it as a clean, modern single page. Keep the same content but make it professional.',
+      'Use the frontend-design skill to review this website and rebuild it as a clean, modern single page. Keep the same content but make it professional.',
     data: {
       type: 'html-preview',
       label: 'Current Website',
@@ -71,11 +71,11 @@ export const problems: Problem[] = [
     title: '2,000 search terms sitting untouched',
     subtitle:
       "The wasted spend is in there somewhere. You just can't find it.",
-    paths: ['agency'],
+    paths: ['agency', 'employee', 'freelancer'],
     pain: 'You exported 2,000 search terms last Tuesday. They\'re still sitting in the spreadsheet, untouched. Somewhere in there, "emergency plumber near me" is converting at $12 a lead while "how to fix a leaky tap DIY" burns $40 a click. You just don\'t know which is which.',
     fix: 'AI reads every row, flags the waste, finds the winners, and gives you the exact negatives to add and keywords to scale. In about 60 seconds.',
     tryThis:
-      'Analyse these search terms. Find the wasted spend and give me a negative keyword list, plus the top performers to scale.',
+      'Use the search-term-analyzer skill to analyse these search terms. Find the wasted spend and give me a negative keyword list, plus the top performers to scale.',
     data: {
       type: 'table',
       headers: ['Search term', 'Clicks', 'Cost', 'Conv.'],
@@ -117,7 +117,7 @@ export const problems: Problem[] = [
     pain: "Forty-two minutes of gold. Your electrician client just told you they're expanding into air conditioning, doubling their budget, and want to launch next month. Three weeks later, nobody's acted on it because the notes were 'I'll remember, it was a good chat.'",
     fix: "Drop the transcript in and get structured notes, action items with owners, a follow-up email draft, and a timeline. The meeting actually happened, because now there's a paper trail.",
     tryThis:
-      'Extract action items from this meeting transcript, draft a follow-up email to the client, and create a project timeline.',
+      'Use the post-meeting skill to extract action items from this meeting transcript, draft a follow-up email to the client, and create a project timeline.',
     data: {
       type: 'text',
       label: 'Meeting Transcript (42 min)',
@@ -147,7 +147,7 @@ export const problems: Problem[] = [
     pain: "It's 8:47am Monday. You've got 50 unread emails. Somewhere in there is a client escalation that needed a response Friday, a board meeting agenda you haven't read, and a sales report with numbers you need for a 10am call. You're scrolling, scanning, guessing.",
     fix: "AI triages everything: what's urgent, what's informational, what can wait. You get a priority list with summaries so you can act on the right things first.",
     tryThis:
-      "Triage these 5 messages. Tell me what's urgent, what needs action today, and what can wait. Give me a priority order.",
+      "Use the inboxy skill to triage these 5 messages. Tell me what's urgent, what needs action today, and what can wait. Give me a priority order.",
     data: {
       type: 'file-list',
       label: 'Monday Inbox (5 items)',
@@ -170,11 +170,11 @@ export const problems: Problem[] = [
     icon: '\u{1F47B}',
     title: 'When did you last call your best client?',
     subtitle: 'Relationships are dying in silence',
-    paths: ['agency', 'business'],
+    paths: ['agency', 'employee', 'freelancer', 'business'],
     pain: "Sarah Mitchell signed up in December and you haven't spoken to her since the onboarding call. Marcus Lee's been quiet since October \u2014 is he happy or shopping around? You've got 50 contacts in a CRM you never open. The relationships are dying in silence.",
     fix: "AI scans your contact list, flags who you haven't spoken to recently, drafts personalised check-in messages, and builds a simple outreach schedule so nobody falls through the cracks.",
     tryThis:
-      "Analyse this contact list. Flag anyone I haven't contacted in 60+ days. Draft a short, personal check-in message for the top 5 most neglected.",
+      "Use the followups skill to analyse this contact list. Flag anyone I haven't contacted in 60+ days. Draft a short, personal check-in message for the top 5 most neglected.",
     data: {
       type: 'table',
       headers: ['Name', 'Company', 'Last Contact', 'Status'],
@@ -209,11 +209,11 @@ export const problems: Problem[] = [
     icon: '\u{1F9E9}',
     title: 'Four dashboards open. Still no clear story.',
     subtitle: 'More time building the report than finding insights',
-    paths: ['agency'],
+    paths: ['agency', 'employee', 'freelancer'],
     pain: "Google Ads says one thing, Facebook says another, your client says 'just tell me what's working.' You've got three months of data across four channels and you're spending more time making the report than finding the insights. By the time you've formatted the spreadsheet, the data's stale.",
     fix: "AI crunches all channels together, finds the actual patterns, spots the anomalies you'd miss, and builds a clear narrative your client can understand in 30 seconds.",
     tryThis:
-      "Analyse this multi-channel campaign data. Find what's working, what's wasting budget, and give me 3 specific recommendations.",
+      "Use the csv-analyzer skill to analyse this multi-channel campaign data. Find what's working, what's wasting budget, and give me 3 specific recommendations.",
     data: {
       type: 'table',
       headers: ['Channel', 'Spend', 'Conv.', 'CPA', 'Trend'],
@@ -266,7 +266,7 @@ export const problems: Problem[] = [
     pain: "Your accountant sends the P&L every month. You open it, see rows of numbers, nod wisely, and close it. Revenue's up but profit's down and you're not sure why. The spreadsheet has the answers but you'd need an MBA to decode it.",
     fix: "AI reads your P&L like a CFO, explains what's actually happening in plain English, spots the trends you'd miss, and tells you the three things you should do about it.",
     tryThis:
-      "Analyse this P&L. Tell me in plain English: are we healthy? What's the trend? What should I be worried about? Give me 3 actions.",
+      "Use the csv-analyzer skill to analyse this P&L. Tell me in plain English: are we healthy? What's the trend? What should I be worried about? Give me 3 actions.",
     data: {
       type: 'table',
       headers: ['Month', 'Revenue', 'Expenses', 'Profit', 'Margin'],
@@ -293,11 +293,11 @@ export const problems: Problem[] = [
     icon: '\u{23F0}',
     title: 'Three weeks since your last post',
     subtitle: '7 drafts in your notes app. Zero published.',
-    paths: ['agency'],
+    paths: ['agency', 'employee', 'freelancer'],
     pain: "Your last LinkedIn post was three weeks ago. You've got seven draft ideas in your notes app, a podcast episode you never summarised, and a client win story you keep meaning to write up. Meanwhile, your competitor posts every day and just hit 10k followers.",
     fix: "Tell AI your topic, your angle, your voice. Get a draft that sounds like you, not a robot. Edit for 5 minutes instead of staring at a blank page for 45.",
     tryThis:
-      'Write a LinkedIn post about how AI is changing Google Ads management. Tone: practical, no hype. Include a specific example. Keep it under 200 words.',
+      'Use the draft-post skill to write a LinkedIn post about how AI is changing Google Ads management. Tone: practical, no hype. Include a specific example. Keep it under 200 words.',
     data: {
       type: 'table',
       headers: ['Metric', 'Current State'],
@@ -316,11 +316,11 @@ export const problems: Problem[] = [
     icon: '\u{1FA9E}',
     title: 'Competitor changed ads. Client noticed first.',
     subtitle: 'You found out when they asked about it on the call',
-    paths: ['agency'],
+    paths: ['agency', 'employee', 'freelancer'],
     pain: "Your biggest client just asked 'Why does [competitor] show up above us now?' You didn't know they'd changed their ads. You check \u2014 new headlines, different offer, they're running a promotion you missed. Now you're reactive instead of proactive.",
     fix: "AI monitors competitor ads, spots changes, and alerts you before your client does. You go from 'I didn't know' to 'I noticed and here's our response.'",
     tryThis:
-      'I manage Google Ads for a plumbing company. What would a competitor monitoring system look like? Draft me a weekly check process.',
+      'Use the competitor-scraper skill to pull the current ads for my top 3 plumbing competitors. Then draft me a weekly competitor monitoring process.',
     data: {
       type: 'table',
       headers: ['Signal', 'What You Know'],
@@ -381,7 +381,7 @@ export const problems: Problem[] = [
     icon: '\u{26A0}\u{FE0F}',
     title: 'What happens when AI gets it wrong?',
     subtitle: 'Watch it face a real prompt injection attack',
-    paths: ['agency', 'business'],
+    paths: ['agency', 'employee', 'freelancer', 'business'],
     pain: "You've heard the horror stories. AI that leaked customer data. Chatbots that went rogue. You want to use it but your compliance team (or your gut) says 'what if?' What if it sends an email it shouldn't? What if someone injects a prompt into a document?",
     fix: "This isn't theoretical. Watch AI encounter a real prompt injection attack hidden in a newsletter \u2014 and see how proper guardrails catch it. Trust is built by testing, not hoping.",
     tryThis:
@@ -411,7 +411,7 @@ export const problems: Problem[] = [
     icon: '\u{1F636}',
     title: "'So what are you doing with AI?'",
     subtitle: 'You mumbled about ChatGPT. Credibility left the room.',
-    paths: ['agency'],
+    paths: ['agency', 'employee', 'freelancer'],
     pain: 'The call was going well until they said: "So... what should we be doing with AI?" You mumbled something about ChatGPT and automation. They nodded politely. You could feel the credibility leaving the room. They\'re going to ask the next agency too \u2014 and someone will have a better answer.',
     fix: "In the next 15 minutes, you'll see exactly how AI handles real agency problems. That's your answer. Not theory \u2014 a live demonstration of what's possible right now.",
     tryThis:

@@ -57,12 +57,12 @@ export default function ProblemDetailPage() {
   }, [handleBack, id, hasNext, markComplete, problem, router, path])
 
   useEffect(() => {
-    if (path !== 'agency' && path !== 'business') {
+    if (!['agency', 'employee', 'freelancer', 'business'].includes(path)) {
       router.replace('/')
     }
   }, [path, router])
 
-  if (path !== 'agency' && path !== 'business') return null
+  if (!['agency', 'employee', 'freelancer', 'business'].includes(path)) return null
   if (!problem) {
     router.replace(`/${path}`)
     return null
