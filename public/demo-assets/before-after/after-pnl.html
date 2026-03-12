@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Dashboard - P&L Analysis</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1000px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 24px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; margin-top: 2px; font-size: 13px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+        tr:hover { background: #fafbfc; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .good { color: #16a34a; font-weight: 600; }
+        .bad { color: #dc2626; font-weight: 600; }
+        .warn { color: #d97706; font-weight: 600; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+        .trend-chart { position: relative; height: 180px; margin: 16px 0; }
+        .chart-bar-group { display: flex; align-items: flex-end; gap: 2px; height: 160px; }
+        .chart-bar { width: 100%; border-radius: 2px 2px 0 0; position: relative; transition: all 0.3s; }
+        .chart-bar:hover { opacity: 0.8; }
+        .chart-labels { display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; margin-top: 4px; }
+
+        .action { padding: 16px; border-left: 3px solid #f59e0b; background: #fffbeb; margin-bottom: 12px; border-radius: 0 2px 2px 0; }
+        .action-num { font-weight: 700; color: #d97706; font-size: 13px; }
+        .action-title { font-weight: 700; font-size: 14px; margin-top: 2px; }
+        .action-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .action-impact { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; background: #fef3c7; color: #92400e; margin-top: 6px; border-radius: 2px; }
+
+        .summary-stat { text-align: center; padding: 16px; }
+        .summary-stat .big { font-size: 28px; font-weight: 800; }
+        .summary-stat .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        .health-indicator { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 2px; }
+        .health-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .health-label { font-weight: 700; font-size: 14px; }
+        .health-detail { font-size: 13px; color: #64748b; }
+    </style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>Financial Performance Dashboard</h1>
+        <p>Thunderbolt Electricals | 12-month P&L Analysis (Apr 2025 - Mar 2026)</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">$1.04M</div>
+                <div class="lbl">Total Revenue</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">$132K</div>
+                <div class="lbl">Total Profit</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">12.6%</div>
+                <div class="lbl">Avg Margin</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">+25.6%</div>
+                <div class="lbl">Revenue Growth</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue & Profit Trend -->
+    <div class="card">
+        <h2>Revenue & Profit Trend <span class="badge badge-green">+25.6% YoY Revenue</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th class="num">Revenue</th>
+                    <th class="num">Expenses</th>
+                    <th class="num">Profit</th>
+                    <th class="num">Margin</th>
+                    <th class="num">MoM Growth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Apr 2025</td><td class="num">$82,000</td><td class="num">$71,000</td><td class="num">$11,000</td><td class="num">13.4%</td><td class="num">-</td></tr>
+                <tr><td>May 2025</td><td class="num">$85,000</td><td class="num">$74,000</td><td class="num">$11,000</td><td class="num">12.9%</td><td class="num good">+3.7%</td></tr>
+                <tr style="background:#fef2f2;"><td>Jun 2025</td><td class="num">$79,000</td><td class="num">$76,000</td><td class="num bad">$3,000</td><td class="num bad">3.8%</td><td class="num bad">-7.1%</td></tr>
+                <tr><td>Jul 2025</td><td class="num">$91,000</td><td class="num">$78,000</td><td class="num good">$13,000</td><td class="num good">14.3%</td><td class="num good">+15.2%</td></tr>
+                <tr><td>Aug 2025</td><td class="num">$88,000</td><td class="num">$77,000</td><td class="num">$11,000</td><td class="num">12.5%</td><td class="num bad">-3.3%</td></tr>
+                <tr><td>Sep 2025</td><td class="num">$86,000</td><td class="num">$75,000</td><td class="num">$11,000</td><td class="num">12.8%</td><td class="num bad">-2.3%</td></tr>
+                <tr><td>Oct 2025</td><td class="num">$92,000</td><td class="num">$80,000</td><td class="num">$12,000</td><td class="num">13.0%</td><td class="num good">+7.0%</td></tr>
+                <tr><td>Nov 2025</td><td class="num">$95,000</td><td class="num">$82,000</td><td class="num good">$13,000</td><td class="num good">13.7%</td><td class="num good">+3.3%</td></tr>
+                <tr><td>Dec 2025</td><td class="num">$84,000</td><td class="num">$74,000</td><td class="num">$10,000</td><td class="num">11.9%</td><td class="num bad">-11.6%</td></tr>
+                <tr><td>Jan 2026</td><td class="num">$89,000</td><td class="num">$78,000</td><td class="num">$11,000</td><td class="num">12.4%</td><td class="num good">+6.0%</td></tr>
+                <tr><td>Feb 2026</td><td class="num">$97,000</td><td class="num">$84,000</td><td class="num good">$13,000</td><td class="num good">13.4%</td><td class="num good">+9.0%</td></tr>
+                <tr><td>Mar 2026</td><td class="num">$103,000</td><td class="num">$89,000</td><td class="num good">$14,000</td><td class="num">13.6%</td><td class="num good">+6.2%</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Margin Analysis</h2>
+            <div class="grid-3">
+                <div class="summary-stat">
+                    <div class="big">13.6%</div>
+                    <div class="desc">Current Month Margin</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="big warn">3.8%</div>
+                    <div class="desc">Worst Month (Jun)</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="big good">14.3%</div>
+                    <div class="desc">Best Month (Jul)</div>
+                </div>
+            </div>
+            <div style="margin-top:12px;padding:12px;background:#f8fafc;border-radius:2px;">
+                <div style="font-size:13px;color:#64748b;">Margins have stabilized in the 12-14% range after the June dip. Current trajectory is positive, but the gap between revenue growth (+25.6%) and profit growth (+27.3%) is narrow, meaning expenses are scaling almost 1:1 with revenue.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Cash Flow Health <span class="badge badge-amber">Monitor</span></h2>
+            <div class="health-indicator" style="background:#fffbeb;">
+                <div class="health-dot" style="background:#d97706;"></div>
+                <div>
+                    <div class="health-label" style="color:#92400e;">Stable but tight</div>
+                    <div class="health-detail">Consistent profitability, but margins leave little buffer for unexpected costs. One bad month (like June) can nearly wipe out a quarter's gains.</div>
+                </div>
+            </div>
+            <div style="margin-top:16px;">
+                <div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:8px;">RUNWAY INDICATOR</div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <div style="flex:1;height:8px;background:#e2e8f0;border-radius:2px;overflow:hidden;">
+                        <div style="width:63%;height:100%;background:linear-gradient(90deg, #22c55e, #f59e0b);border-radius:2px;"></div>
+                    </div>
+                    <span style="font-size:12px;font-weight:600;color:#d97706;">63%</span>
+                </div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:4px;">Based on current profit rate vs fixed costs. Target: 80%+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Breakdown -->
+    <div class="card">
+        <h2>Expense Growth vs Revenue <span class="badge badge-red">Expenses outpacing in 3 categories</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th class="num">Apr 2025</th>
+                    <th class="num">Mar 2026</th>
+                    <th class="num">Growth</th>
+                    <th class="num">% of Rev</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Staff costs</strong></td><td class="num">$38,000</td><td class="num">$48,000</td><td class="num bad">+26.3%</td><td class="num">46.6%</td><td><span class="badge badge-red">Outpacing revenue</span></td></tr>
+                <tr><td><strong>Materials</strong></td><td class="num">$14,000</td><td class="num">$17,000</td><td class="num warn">+21.4%</td><td class="num">16.5%</td><td><span class="badge badge-green">In line</span></td></tr>
+                <tr><td><strong>Vehicle / fuel</strong></td><td class="num">$6,000</td><td class="num">$8,000</td><td class="num bad">+33.3%</td><td class="num">7.8%</td><td><span class="badge badge-red">Outpacing revenue</span></td></tr>
+                <tr><td><strong>Marketing</strong></td><td class="num">$5,000</td><td class="num">$7,000</td><td class="num bad">+40.0%</td><td class="num">6.8%</td><td><span class="badge badge-red">Outpacing revenue</span></td></tr>
+                <tr><td><strong>Insurance</strong></td><td class="num">$3,500</td><td class="num">$3,800</td><td class="num good">+8.6%</td><td class="num">3.7%</td><td><span class="badge badge-green">Under control</span></td></tr>
+                <tr><td><strong>Other overhead</strong></td><td class="num">$4,500</td><td class="num">$5,200</td><td class="num warn">+15.6%</td><td class="num">5.0%</td><td><span class="badge badge-amber">Watch</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Key Findings -->
+    <div class="card">
+        <h2>The Story These Numbers Are Telling</h2>
+        <div class="grid-3">
+            <div class="summary-stat">
+                <div class="big good">+25.6%</div>
+                <div class="desc">Revenue growth is strong, driven by Q1 2026 momentum</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big warn">86.4%</div>
+                <div class="desc">Expense ratio barely improved from 86.6% a year ago</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big bad">$3K</div>
+                <div class="desc">June's near-miss shows how thin the buffer really is</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card">
+        <h2>Three Priority Actions</h2>
+
+        <div class="action">
+            <div class="action-num">Action 1</div>
+            <div class="action-title">Audit staff utilisation before the next hire</div>
+            <div class="action-detail">Staff costs grew 26.3% while revenue grew 25.6%. You are adding people faster than you are adding revenue. Before hiring anyone else, measure billable hours per tech. If utilisation is below 75%, optimize scheduling before adding headcount. Target: staff costs at 44% of revenue, not 47%.</div>
+            <span class="action-impact">Save ~$3,000/month at current revenue</span>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 2</div>
+            <div class="action-title">Investigate and fix the June pattern</div>
+            <div class="action-detail">June 2025 nearly wiped out the quarter ($3K profit vs $11K average). If this was seasonal (winter slowdown for electricians), build a cash buffer in Q4/Q1 to cover it. If it was a one-off cost blowout, identify exactly what happened so it does not repeat. One month like June per quarter would cut annual profit by 40%.</div>
+            <span class="action-impact">Protect $32K in annual profit</span>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 3</div>
+            <div class="action-title">Marketing spend: measure or cut</div>
+            <div class="action-detail">Marketing grew 40% ($5K to $7K) but there is no attribution data here showing whether that drove the revenue increase. Set up conversion tracking per channel within 30 days. If you cannot prove marketing is generating $3+ for every $1 spent, cap it at $5K/month and reallocate the $2K to margin.</div>
+            <span class="action-impact">Either prove $21K+ in attributed revenue or save $24K/year</span>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by Data Analyst Skill | 12-month P&L processed in 8 seconds
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,11 +1,17 @@
 'use client'
 
 import { useCallback } from 'react'
+import { useGame } from '@/components/game-provider'
+import { cn } from '@/lib/utils'
+
 interface DragFileProps {
   file: { name: string; path: string; mime: string }
 }
 
 export default function DragFile({ file }: DragFileProps) {
+  const { world } = useGame()
+  const isArcade = world === 'arcade'
+
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
       const fullUrl = `${window.location.origin}${file.path}`
@@ -27,27 +33,42 @@ export default function DragFile({ file }: DragFileProps) {
   }, [file])
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div
         draggable
         onDragStart={handleDragStart}
         onClick={handleDownload}
-        className="flex items-center gap-3 px-4 py-3 border-2 border-dashed border-[var(--color-brand-orange)]
-          bg-[var(--color-brand-orange-faint)] rounded-[2px] cursor-grab active:cursor-grabbing
-          active:scale-[0.98] transition-transform select-none hover:bg-[#fff8f3]"
+        className={cn(
+          'flex items-center gap-4 px-6 py-5 border-2 border-dashed rounded-[2px] cursor-grab active:cursor-grabbing active:scale-[0.98] transition-transform select-none',
+          isArcade
+            ? 'border-[var(--mario-coin)] hover:bg-white/5'
+            : 'border-[var(--color-brand-orange)] bg-[var(--color-brand-orange-faint)] hover:bg-[#fff8f3]'
+        )}
+        style={isArcade ? { background: 'rgba(255,215,0,0.08)' } : undefined}
       >
-        <span className="text-[var(--color-brand-orange)] text-lg shrink-0">
+        <span className={cn('text-2xl shrink-0', isArcade ? '' : 'text-[var(--color-brand-orange)]')}>
           &#128196;
         </span>
-        <span className="text-sm font-medium text-[var(--color-ink)] truncate font-heading">
+        <span className={cn(
+          'text-base font-medium truncate font-heading',
+          isArcade ? 'text-white' : 'text-[var(--color-ink)]'
+        )}>
           {file.name}
         </span>
-        <span className="ml-auto text-xs text-[var(--color-brand-orange)] font-heading font-semibold shrink-0">
-          &#8595; Save
+        <span className={cn(
+          'ml-auto text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px]',
+          isArcade ? 'text-white' : 'text-white'
+        )}
+        style={isArcade ? { background: 'var(--mario-pipe)' } : { background: 'var(--color-brand-orange)' }}
+        >
+          &#8595; Save File
         </span>
       </div>
-      <p className="text-[10px] text-[var(--color-faint)] leading-relaxed">
-        Click to save this file, then drag it from your desktop into Cowork.
+      <p className={cn(
+        'text-xs leading-relaxed',
+        isArcade ? 'text-white/40' : 'text-[var(--color-faint)]'
+      )}>
+        Click to save this file. Then drag it from your desktop into CoWork to get started.
       </p>
     </div>
   )

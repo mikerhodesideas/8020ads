@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross-Channel Marketing Analysis</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1000px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 24px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; margin-top: 2px; font-size: 13px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+        .badge-blue { background: #eff6ff; color: #2563eb; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+        tr:hover { background: #fafbfc; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .good { color: #16a34a; font-weight: 600; }
+        .bad { color: #dc2626; font-weight: 600; }
+        .warn { color: #d97706; font-weight: 600; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 12px; }
+
+        .channel-card { padding: 16px; border: 1px solid #e2e8f0; border-radius: 2px; background: #fff; }
+        .channel-card .ch-name { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .channel-card .ch-cpa { font-size: 22px; font-weight: 800; margin: 8px 0 4px; }
+        .channel-card .ch-trend { font-size: 12px; font-weight: 600; }
+        .trend-up { color: #dc2626; }
+        .trend-down { color: #16a34a; }
+
+        .bar-container { height: 24px; background: #f1f5f9; border-radius: 2px; overflow: hidden; margin: 4px 0; }
+        .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 600; color: white; }
+
+        .realloc { padding: 16px; border: 2px solid #2563eb; background: #eff6ff; border-radius: 2px; margin-bottom: 12px; }
+        .realloc-title { font-weight: 700; color: #1e40af; font-size: 14px; margin-bottom: 8px; }
+        .realloc-detail { font-size: 13px; color: #334155; }
+        .realloc-arrow { display: flex; align-items: center; gap: 12px; margin-top: 10px; font-size: 13px; font-weight: 600; }
+        .realloc-from { color: #dc2626; }
+        .realloc-to { color: #16a34a; }
+
+        .action { padding: 16px; border-left: 3px solid #f59e0b; background: #fffbeb; margin-bottom: 12px; border-radius: 0 2px 2px 0; }
+        .action-num { font-weight: 700; color: #d97706; font-size: 13px; }
+        .action-title { font-weight: 700; font-size: 14px; margin-top: 2px; }
+        .action-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .action-impact { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; background: #fef3c7; color: #92400e; margin-top: 6px; border-radius: 2px; }
+
+        .summary-stat { text-align: center; padding: 16px; }
+        .summary-stat .big { font-size: 28px; font-weight: 800; }
+        .summary-stat .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        .segment-bar { height: 8px; display: flex; border-radius: 2px; overflow: hidden; margin: 8px 0; }
+        .seg { height: 100%; }
+    </style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>Cross-Channel Marketing Analysis</h1>
+        <p>5 channels analyzed | Last 30 days | Revenue attribution included</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">$14,190</div>
+                <div class="lbl">Total Spend</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">274</div>
+                <div class="lbl">Conversions</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">$51.79</div>
+                <div class="lbl">Blended CPA</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">4.8x</div>
+                <div class="lbl">Blended ROAS</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CPA comparison -->
+    <div class="card">
+        <h2>Cost Per Acquisition by Channel</h2>
+        <div class="grid-5">
+            <div class="channel-card" style="border-top: 3px solid #16a34a;">
+                <div class="ch-name">Email</div>
+                <div class="ch-cpa good">$2.31</div>
+                <div class="ch-trend trend-down">-12% vs last month</div>
+            </div>
+            <div class="channel-card" style="border-top: 3px solid #16a34a;">
+                <div class="ch-name">Google Brand</div>
+                <div class="ch-cpa good">$26.29</div>
+                <div class="ch-trend trend-down">-8% vs last month</div>
+            </div>
+            <div class="channel-card" style="border-top: 3px solid #d97706;">
+                <div class="ch-name">Facebook</div>
+                <div class="ch-cpa warn">$78.05</div>
+                <div class="ch-trend trend-up">+15% vs last month</div>
+            </div>
+            <div class="channel-card" style="border-top: 3px solid #d97706;">
+                <div class="ch-name">Google Non-Brand</div>
+                <div class="ch-cpa warn">$109.04</div>
+                <div class="ch-trend trend-up">+3% vs last month</div>
+            </div>
+            <div class="channel-card" style="border-top: 3px solid #dc2626;">
+                <div class="ch-name">LinkedIn</div>
+                <div class="ch-cpa bad">$200.00</div>
+                <div class="ch-trend trend-up">+22% vs last month</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full performance table -->
+    <div class="card">
+        <h2>Channel Performance Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Channel</th>
+                    <th class="num">Spend</th>
+                    <th class="num">Clicks</th>
+                    <th class="num">Conv</th>
+                    <th class="num">CPA</th>
+                    <th class="num">Revenue</th>
+                    <th class="num">ROAS</th>
+                    <th>Verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Email Campaigns</strong></td>
+                    <td class="num">$180</td>
+                    <td class="num">6,320</td>
+                    <td class="num">78</td>
+                    <td class="num good">$2.31</td>
+                    <td class="num">$19,500</td>
+                    <td class="num good">108.3x</td>
+                    <td><span class="badge badge-green">Star</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Ads - Brand</strong></td>
+                    <td class="num">$2,340</td>
+                    <td class="num">4,210</td>
+                    <td class="num">89</td>
+                    <td class="num good">$26.29</td>
+                    <td class="num">$22,250</td>
+                    <td class="num good">9.5x</td>
+                    <td><span class="badge badge-green">Scale up</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Facebook Ads</strong></td>
+                    <td class="num">$3,200</td>
+                    <td class="num">8,450</td>
+                    <td class="num">41</td>
+                    <td class="num warn">$78.05</td>
+                    <td class="num">$14,350</td>
+                    <td class="num">4.5x</td>
+                    <td><span class="badge badge-amber">Optimize</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Ads - Non-Brand</strong></td>
+                    <td class="num">$5,670</td>
+                    <td class="num">3,890</td>
+                    <td class="num">52</td>
+                    <td class="num warn">$109.04</td>
+                    <td class="num">$10,400</td>
+                    <td class="num warn">1.8x</td>
+                    <td><span class="badge badge-amber">Review</span></td>
+                </tr>
+                <tr>
+                    <td><strong>LinkedIn Ads</strong></td>
+                    <td class="num">$2,800</td>
+                    <td class="num">1,120</td>
+                    <td class="num">14</td>
+                    <td class="num bad">$200.00</td>
+                    <td class="num">$1,400</td>
+                    <td class="num bad">0.5x</td>
+                    <td><span class="badge badge-red">Cut spend</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Spend distribution bar -->
+        <div class="segment-bar" style="margin-top:16px;">
+            <div class="seg" style="width:1%;background:#22c55e;" title="Email"></div>
+            <div class="seg" style="width:17%;background:#16a34a;" title="Google Brand"></div>
+            <div class="seg" style="width:23%;background:#f59e0b;" title="Facebook"></div>
+            <div class="seg" style="width:40%;background:#d97706;" title="Google Non-Brand"></div>
+            <div class="seg" style="width:19%;background:#ef4444;" title="LinkedIn"></div>
+        </div>
+        <div style="display:flex;gap:12px;font-size:11px;color:#64748b;margin-top:4px;flex-wrap:wrap;">
+            <span style="color:#22c55e;">&#9632; Email 1%</span>
+            <span style="color:#16a34a;">&#9632; Google Brand 17%</span>
+            <span style="color:#f59e0b;">&#9632; Facebook 23%</span>
+            <span style="color:#d97706;">&#9632; Google Non-Brand 40%</span>
+            <span style="color:#ef4444;">&#9632; LinkedIn 19%</span>
+        </div>
+    </div>
+
+    <!-- Revenue attribution -->
+    <div class="card">
+        <h2>Revenue Attribution</h2>
+        <div style="font-size:13px;color:#64748b;margin-bottom:16px;">Revenue share by channel vs spend share</div>
+
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><strong>Email</strong> (29% of revenue, 1% of spend)</span><span class="good">$19,500</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width:29%;background:#16a34a;">29%</div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><strong>Google Brand</strong> (33% of revenue, 17% of spend)</span><span class="good">$22,250</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width:33%;background:#16a34a;">33%</div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><strong>Facebook</strong> (21% of revenue, 23% of spend)</span><span>$14,350</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width:21%;background:#f59e0b;">21%</div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><strong>Google Non-Brand</strong> (15% of revenue, 40% of spend)</span><span class="warn">$10,400</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width:15%;background:#d97706;">15%</div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span><strong>LinkedIn</strong> (2% of revenue, 19% of spend)</span><span class="bad">$1,400</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width:2%;background:#ef4444;">2%</div></div>
+        </div>
+    </div>
+
+    <!-- Budget reallocation -->
+    <div class="card">
+        <h2>Budget Reallocation Recommendation <span class="badge badge-blue">Projected +31% ROAS</span></h2>
+
+        <div class="realloc">
+            <div class="realloc-title">Move $500/month from LinkedIn to Google Ads Brand</div>
+            <div class="realloc-detail">LinkedIn is generating $0.50 for every $1 spent. Google Brand returns $9.50 per $1. Reallocating $500 projects an additional 19 conversions/month at $26 CPA instead of 2.5 at $200 CPA.</div>
+            <div class="realloc-arrow">
+                <span class="realloc-from">LinkedIn $2,800 &rarr; $2,300</span>
+                <span>|</span>
+                <span class="realloc-to">Google Brand $2,340 &rarr; $2,840</span>
+            </div>
+        </div>
+
+        <div class="realloc">
+            <div class="realloc-title">Shift $1,000/month from Google Non-Brand to Facebook retargeting</div>
+            <div class="realloc-detail">Non-Brand CPA ($109) is 4x higher than Brand. Facebook's audience data suggests retargeting campaigns convert at $45 CPA (vs $78 for prospecting). Create a dedicated retargeting audience from site visitors.</div>
+            <div class="realloc-arrow">
+                <span class="realloc-from">Google Non-Brand $5,670 &rarr; $4,670</span>
+                <span>|</span>
+                <span class="realloc-to">Facebook Retargeting $0 &rarr; $1,000</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key stats -->
+    <div class="card">
+        <h2>Key Findings</h2>
+        <div class="grid-3">
+            <div class="summary-stat">
+                <div class="big bad">$2,800</div>
+                <div class="desc">LinkedIn spend generating only $1,400 revenue (0.5x ROAS)</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big good">108x</div>
+                <div class="desc">Email ROAS, your most efficient channel by far</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big warn">40%</div>
+                <div class="desc">Of budget on Non-Brand Google generating only 15% of revenue</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card">
+        <h2>Recommended Actions</h2>
+
+        <div class="action">
+            <div class="action-num">Action 1</div>
+            <div class="action-title">Reallocate $500 from LinkedIn to Google Brand this week</div>
+            <div class="action-detail">Immediate ROI improvement. Google Brand has proven conversion data and room to scale. LinkedIn's 0.5x ROAS makes every dollar there a net loss. Start with $500 and evaluate after 2 weeks.</div>
+            <span class="action-impact">Projected: +19 conversions/month, +$4,750 revenue</span>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 2</div>
+            <div class="action-title">Launch Facebook retargeting campaign with $1,000 from Non-Brand</div>
+            <div class="action-detail">Build a custom audience from the 23,990 site visitors (all channels). Retargeting typically converts at 2-3x the rate of prospecting. Use top-performing email subject lines as ad copy, since email is your highest-converting channel.</div>
+            <span class="action-impact">Projected: 22 additional conversions at ~$45 CPA</span>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 3</div>
+            <div class="action-title">Double email send frequency</div>
+            <div class="action-detail">Email is your best channel at 108x ROAS and $2.31 CPA. If you're sending 2x/month, test 4x/month. Even with a 50% drop in per-email conversion rate, you'd still be at 54x ROAS. The cost is nearly zero.</div>
+            <span class="action-impact">Projected: +39 conversions/month at negligible cost</span>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by Marketing Analyst Skill | 5 channels, 30-day window | Revenue data from CRM attribution
+    </div>
+
+</div>
+</body>
+</html>

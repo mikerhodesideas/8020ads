@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Oxanium, Inter } from 'next/font/google'
 import Navbar from '@/components/navbar'
 import { GameProvider } from '@/components/game-provider'
+import { TransitionProvider } from '@/components/transition-overlay'
 import './globals.css'
 
 const oxanium = Oxanium({
@@ -30,8 +31,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${oxanium.variable} ${inter.variable} antialiased`}>
         <GameProvider>
-          <Navbar />
-          <main>{children}</main>
+          <TransitionProvider>
+            <Navbar />
+            <main>{children}</main>
+          </TransitionProvider>
         </GameProvider>
       </body>
     </html>

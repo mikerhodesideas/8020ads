@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { PlayerType, WorldId } from '@/lib/game-data'
-import { getLevel1Demos, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, LEVEL_1_SKILL_IDS, DEMO_SKILLS } from '@/lib/game-data'
+import { getLevel1Demos, getLevel2Demos, getLevel3Demos, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS, LEVEL_1_SKILL_IDS, LEVEL_2_SKILL_IDS, LEVEL_3_SKILL_IDS, DEMO_SKILLS } from '@/lib/game-data'
 
 interface GameState {
   type: PlayerType | null
@@ -23,6 +23,10 @@ interface GameState {
   replays: Set<number>
   beforeAfterViews: Set<number>
   hasSpeedComplete: boolean
+  playerChoices: Record<number, string>
+  promptChoices: Record<number, string>
+  choiceScores: Record<number, number> // demo ID -> stars 1-3
+  openedGlossary: Set<string> // glossary term IDs opened by the player
 }
 
 interface GameContextType extends GameState {
@@ -36,10 +40,16 @@ interface GameContextType extends GameState {
   startDemoTimer: (demoId: number) => void
   recordReplay: (demoId: number) => void
   recordBeforeAfterView: (demoId: number) => void
+  setPlayerChoice: (demoId: number, choiceId: string) => void
+  setPromptChoice: (demoId: number, strategyId: string) => void
+  setChoiceScore: (demoId: number, stars: number) => void
+  openGlossaryTerm: (termId: string) => void
   badgeToastQueue: string[]
   dismissBadgeToast: () => void
   allAvailableComplete: boolean
   totalTimeSaved: number
+  totalStars: number
+  maxStars: number
 }
 
 const defaultState: GameState = {
@@ -52,6 +62,10 @@ const defaultState: GameState = {
   replays: new Set(),
   beforeAfterViews: new Set(),
   hasSpeedComplete: false,
+  playerChoices: {},
+  promptChoices: {},
+  choiceScores: {},
+  openedGlossary: new Set(),
 }
 
 const GameContext = createContext<GameContextType>({
@@ -65,10 +79,16 @@ const GameContext = createContext<GameContextType>({
   startDemoTimer: () => {},
   recordReplay: () => {},
   recordBeforeAfterView: () => {},
+  setPlayerChoice: () => {},
+  setPromptChoice: () => {},
+  setChoiceScore: () => {},
+  openGlossaryTerm: () => {},
   badgeToastQueue: [],
   dismissBadgeToast: () => {},
   allAvailableComplete: false,
   totalTimeSaved: 0,
+  totalStars: 0,
+  maxStars: 0,
 })
 
 const STORAGE_KEY = 'cowork-game'
@@ -89,9 +109,13 @@ function loadState(): GameState {
       replays: new Set(parsed.replays || []),
       beforeAfterViews: new Set(parsed.beforeAfterViews || []),
       hasSpeedComplete: parsed.hasSpeedComplete || false,
+      playerChoices: parsed.playerChoices || {},
+      promptChoices: parsed.promptChoices || {},
+      choiceScores: parsed.choiceScores || {},
+      openedGlossary: new Set(parsed.openedGlossary || []),
     }
   } catch {
-    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set() }
+    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), openedGlossary: new Set() }
   }
 }
 
@@ -109,6 +133,10 @@ function saveState(state: GameState) {
       replays: Array.from(state.replays),
       beforeAfterViews: Array.from(state.beforeAfterViews),
       hasSpeedComplete: state.hasSpeedComplete,
+      playerChoices: state.playerChoices,
+      promptChoices: state.promptChoices,
+      choiceScores: state.choiceScores,
+      openedGlossary: Array.from(state.openedGlossary),
     })
   )
 }
@@ -136,8 +164,10 @@ function evaluateBadges(state: GameState): string[] {
   const l1Done = Array.from(state.completed).filter((id) => ALL_LEVEL_1_IDS.has(id))
   if (l1Done.length >= 3) shouldHave.push('level-up')
 
-  // Full Clear: all 9 demos (currently only 3 exist, so only achievable when L2/L3 added)
-  if (state.completed.size >= 9) shouldHave.push('full-clear')
+  // Full Clear: all 9 available demos (L1 + L2 + L3)
+  const l2Done = Array.from(state.completed).filter((id) => ALL_LEVEL_2_IDS.has(id))
+  const l3Done = Array.from(state.completed).filter((id) => ALL_LEVEL_3_IDS.has(id))
+  if (l1Done.length >= 3 && l2Done.length >= 3 && l3Done.length >= 3) shouldHave.push('full-clear')
 
   // The Transformer: viewed all 3 before/after comparisons
   if (state.beforeAfterViews.size >= 3) shouldHave.push('transformer')
@@ -156,6 +186,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     worldsVisited: new Set(),
     replays: new Set(),
     beforeAfterViews: new Set(),
+    openedGlossary: new Set(),
   })
   const [loaded, setLoaded] = useState(false)
   const [badgeToastQueue, setBadgeToastQueue] = useState<string[]>([])
@@ -247,6 +278,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       replays: new Set(),
       beforeAfterViews: new Set(),
       hasSpeedComplete: false,
+      playerChoices: {},
+      promptChoices: {},
+      choiceScores: {},
+      openedGlossary: new Set(),
     }
     setState(fresh)
     setBadgeToastQueue([])
@@ -261,6 +296,18 @@ export function GameProvider({ children }: { children: ReactNode }) {
           ALL_LEVEL_1_IDS.has(id)
         )
         return l1Done.length >= 3
+      }
+      if (levelId === 2) {
+        const l2Done = Array.from(state.completed).filter((id) =>
+          ALL_LEVEL_2_IDS.has(id)
+        )
+        return l2Done.length >= 3
+      }
+      if (levelId === 3) {
+        const l3Done = Array.from(state.completed).filter((id) =>
+          ALL_LEVEL_3_IDS.has(id)
+        )
+        return l3Done.length >= 3
       }
       return false
     },
@@ -292,14 +339,45 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  const setPlayerChoice = useCallback((demoId: number, choiceId: string) => {
+    setState((prev) => ({
+      ...prev,
+      playerChoices: { ...prev.playerChoices, [demoId]: choiceId },
+    }))
+  }, [])
+
+  const setPromptChoice = useCallback((demoId: number, strategyId: string) => {
+    setState((prev) => ({
+      ...prev,
+      promptChoices: { ...prev.promptChoices, [demoId]: strategyId },
+    }))
+  }, [])
+
+  const setChoiceScore = useCallback((demoId: number, stars: number) => {
+    setState((prev) => ({
+      ...prev,
+      choiceScores: { ...prev.choiceScores, [demoId]: stars },
+    }))
+  }, [])
+
+  const openGlossaryTerm = useCallback((termId: string) => {
+    setState((prev) => ({
+      ...prev,
+      openedGlossary: new Set(prev.openedGlossary).add(termId),
+    }))
+  }, [])
+
   const dismissBadgeToast = useCallback(() => {
     setBadgeToastQueue((prev) => prev.slice(1))
   }, [])
 
   const allAvailableComplete = useMemo(() => {
     if (!state.type) return false
-    const demos = getLevel1Demos(state.type)
-    return demos.every((d) => state.completed.has(d.id))
+    const l1Demos = getLevel1Demos(state.type)
+    const l2Demos = getLevel2Demos()
+    const l3Demos = getLevel3Demos()
+    const allDemos = [...l1Demos, ...l2Demos, ...l3Demos]
+    return allDemos.every((d) => state.completed.has(d.id))
   }, [state.type, state.completed])
 
   const totalTimeSaved = useMemo(() => {
@@ -309,6 +387,21 @@ export function GameProvider({ children }: { children: ReactNode }) {
     })
     return total
   }, [state.completed])
+
+  const totalStars = useMemo(() => {
+    return Object.values(state.choiceScores).reduce((sum, s) => sum + s, 0)
+  }, [state.choiceScores])
+
+  // Level 1 demos don't have prompt strategies, so they get 3 stars automatically when completed
+  // Level 2+ demos earn 1-3 stars based on prompt quality
+  // Max = 9 demos * 3 stars = 27
+  const maxStars = useMemo(() => {
+    if (!state.type) return 0
+    const l1Demos = getLevel1Demos(state.type)
+    const l2Demos = getLevel2Demos()
+    const l3Demos = getLevel3Demos()
+    return (l1Demos.length + l2Demos.length + l3Demos.length) * 3
+  }, [state.type])
 
   if (!loaded) return null
 
@@ -325,10 +418,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
         startDemoTimer,
         recordReplay,
         recordBeforeAfterView,
+        setPlayerChoice,
+        setPromptChoice,
+        setChoiceScore,
+        openGlossaryTerm,
         badgeToastQueue,
         dismissBadgeToast,
         allAvailableComplete,
         totalTimeSaved,
+        totalStars,
+        maxStars,
       }}
     >
       {children}

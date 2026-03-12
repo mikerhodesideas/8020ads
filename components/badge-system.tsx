@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useGame } from '@/components/game-provider'
 import { cn } from '@/lib/utils'
+import { playSound } from '@/lib/sounds'
 
 // Badge definitions
 export interface BadgeDef {
@@ -118,13 +119,23 @@ export function BadgeTray({ isGallery }: { isGallery: boolean }) {
           >
             <div
               className={cn(
-                'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-[2px] border transition-all duration-300',
+                'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center border transition-all duration-300',
+                isGallery ? 'rounded-[2px]' : '',
                 earned
                   ? isGallery
                     ? 'bg-amber-50 border-amber-400 text-amber-700 badge-earned-glow-gallery'
-                    : 'bg-blue-50 border-blue-400 text-blue-700 badge-earned-glow-arcade'
-                  : 'bg-gray-50 border-gray-200 text-gray-300'
+                    : 'border-[2px] badge-earned-glow-mario'
+                  : isGallery
+                    ? 'bg-gray-50 border-gray-200 text-gray-300'
+                    : 'border-[2px] border-gray-600 text-gray-500'
               )}
+              style={!isGallery && earned ? {
+                background: 'rgba(232,160,0,0.15)',
+                borderColor: 'var(--mario-coin)',
+                color: 'var(--mario-coin)',
+              } : !isGallery ? {
+                background: 'rgba(255,255,255,0.05)',
+              } : undefined}
             >
               <BadgeIcon id={def.id} size={18} />
             </div>
@@ -152,13 +163,23 @@ export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
           <div
             key={def.id}
             className={cn(
-              'flex flex-col items-center gap-1.5 p-3 rounded-[2px] border transition-all',
+              'flex flex-col items-center gap-1.5 p-3 border transition-all',
+              isGallery ? 'rounded-[2px]' : 'border-[2px]',
               earned
                 ? isGallery
                   ? 'bg-amber-50 border-amber-300 text-amber-700'
-                  : 'bg-blue-50 border-blue-300 text-blue-700'
-                : 'bg-gray-50 border-gray-200 text-gray-300'
+                  : ''
+                : isGallery
+                  ? 'bg-gray-50 border-gray-200 text-gray-300'
+                  : 'border-gray-600 text-gray-500'
             )}
+            style={!isGallery && earned ? {
+              background: 'rgba(232,160,0,0.15)',
+              borderColor: 'var(--mario-coin)',
+              color: 'var(--mario-coin)',
+            } : !isGallery ? {
+              background: 'rgba(255,255,255,0.05)',
+            } : undefined}
           >
             <BadgeIcon id={def.id} size={22} />
             <span className={cn(
@@ -176,30 +197,47 @@ export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
 
 // Toast notification for newly earned badges
 export function BadgeToast() {
-  const { badgeToastQueue, dismissBadgeToast } = useGame()
+  const { badgeToastQueue, dismissBadgeToast, world } = useGame()
 
   const currentBadgeId = badgeToastQueue[0]
   const def = currentBadgeId ? BADGE_DEFS.find((b) => b.id === currentBadgeId) : null
 
   useEffect(() => {
     if (!currentBadgeId) return
+    if (world === 'arcade') playSound('oneUp')
     const timer = setTimeout(dismissBadgeToast, 3000)
     return () => clearTimeout(timer)
-  }, [currentBadgeId, dismissBadgeToast])
+  }, [currentBadgeId, dismissBadgeToast, world])
 
   if (!def) return null
 
   return (
     <div className="fixed top-16 right-4 z-[60] badge-toast-enter">
-      <div className="flex items-center gap-3 px-4 py-3 bg-white border border-[var(--color-border)] shadow-lg rounded-[2px] min-w-[220px]">
-        <div className="text-amber-600">
+      <div
+        className="flex items-center gap-3 px-4 py-3 shadow-lg min-w-[220px]"
+        style={world === 'arcade' ? {
+          background: 'var(--mario-dark)',
+          border: '3px solid var(--mario-coin)',
+        } : {
+          background: 'white',
+          border: '1px solid var(--color-border)',
+          borderRadius: '2px',
+        }}
+      >
+        <div style={world === 'arcade' ? { color: 'var(--mario-coin)' } : { color: '#B8860B' }}>
           <BadgeIcon id={def.id} size={24} />
         </div>
         <div>
-          <p className="text-[10px] font-heading font-semibold uppercase tracking-wider text-[var(--color-faint)]">
-            Achievement Unlocked
+          <p className={cn(
+            'text-[10px] font-heading font-semibold uppercase tracking-wider',
+            world === 'arcade' ? 'text-white/50' : 'text-[var(--color-faint)]'
+          )}>
+            {world === 'arcade' ? 'POWER-UP!' : 'Achievement Unlocked'}
           </p>
-          <p className="text-sm font-heading font-bold text-[var(--color-ink)]">
+          <p className={cn(
+            'text-sm font-heading font-bold',
+            world === 'arcade' ? 'text-white' : 'text-[var(--color-ink)]'
+          )}>
             {def.name}
           </p>
         </div>

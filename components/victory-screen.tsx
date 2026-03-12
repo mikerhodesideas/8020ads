@@ -1,19 +1,75 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useGame } from '@/components/game-provider'
 import { BadgeGrid } from '@/components/badge-system'
 import { cn } from '@/lib/utils'
+import { playSound } from '@/lib/sounds'
+
+function useAnimatedCounter(target: number, duration: number = 1200): number {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    const start = performance.now()
+    let raf: number
+    const tick = (now: number) => {
+      const pct = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - pct, 3)
+      setValue(Math.round(eased * target))
+      if (pct < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [target, duration])
+  return value
+}
 
 export default function VictoryScreen() {
   const router = useRouter()
-  const { world, completed, skills, totalTimeSaved, resetGame } = useGame()
+  const { world, completed, skills, totalTimeSaved, totalStars, maxStars, isLevelComplete, resetGame } = useGame()
 
   const isGallery = world === 'gallery'
+  const isArcade = world === 'arcade'
   const victoryImage = isGallery
     ? '/images/victory/gallery-victory.png'
     : '/images/victory/arcade-victory.png'
+
+  // AI Readiness Score calculation (arcade only)
+  const readinessScore = useMemo(() => {
+    if (!isArcade) return 0
+    // Each demo completed: 8 points (max 72)
+    const demoPoints = completed.size * 8
+    // Each unique skill installed: 2 points (cap at 16)
+    const skillPoints = Math.min(skills.size * 2, 16)
+    // Level completion bonus: 4 points per level (max 12)
+    let levelBonus = 0
+    if (isLevelComplete(1)) levelBonus += 4
+    if (isLevelComplete(2)) levelBonus += 4
+    if (isLevelComplete(3)) levelBonus += 4
+    return Math.min(demoPoints + skillPoints + levelBonus, 100)
+  }, [isArcade, completed.size, skills.size, isLevelComplete])
+
+  const animatedScore = useAnimatedCounter(isArcade ? readinessScore : 0, 1500)
+
+  const scoreLabel = useMemo(() => {
+    if (readinessScore >= 90) return 'AI-First Ready. You get it.'
+    if (readinessScore >= 70) return 'AI-Amplified. Almost there.'
+    if (readinessScore >= 50) return 'AI-Assisted. Good foundation.'
+    return 'Getting Started. Keep exploring.'
+  }, [readinessScore])
+
+  // Weekly time projection
+  const weeklyTimeSaved = totalTimeSaved * 5
+
+  // Play fanfare on mount for arcade
+  useEffect(() => {
+    if (isArcade) {
+      const t = setTimeout(() => playSound('fanfare'), 400)
+      return () => clearTimeout(t)
+    }
+  }, [isArcade])
 
   const handleTryAnotherWorld = () => {
     router.push('/world')
@@ -24,21 +80,76 @@ export default function VictoryScreen() {
     router.push('/')
   }
 
+  // Arcade firework particles
+  const fireworks = useMemo(() => {
+    if (!isArcade) return []
+    const colors = ['#FFD700', '#FF0000', '#00A800', '#5C94FC', '#FF6B1A']
+    return Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: 10 + Math.random() * 80,
+      delay: Math.random() * 3,
+      color: colors[i % colors.length],
+      size: 3 + Math.random() * 4,
+    }))
+  }, [isArcade])
+
   return (
     <div
       className={cn(
-        'min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 py-12',
+        'page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden',
         isGallery
           ? 'bg-gradient-to-b from-[#f8f0e3] via-[#faf6ef] to-[#f5ece0]'
-          : 'bg-gradient-to-b from-[#e8f4ff] via-[#f0f8ff] to-[#e0f0ff]'
+          : 'skin-arcade arcade-ground arcade-scanlines'
       )}
+      style={isArcade ? { background: 'var(--mario-dark)' } : undefined}
     >
-      <div className="max-w-lg w-full flex flex-col items-center gap-8">
+      {/* Arcade: starfield background + fireworks */}
+      {isArcade && (
+        <>
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {Array.from({ length: 40 }, (_, i) => (
+              <div
+                key={i}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: 1 + Math.random() * 2,
+                  height: 1 + Math.random() * 2,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  opacity: 0.3 + Math.random() * 0.5,
+                }}
+              />
+            ))}
+          </div>
+          {fireworks.map((fw) => (
+            <div
+              key={fw.id}
+              className="absolute pointer-events-none"
+              style={{
+                left: `${fw.x}%`,
+                bottom: '10%',
+                animation: `firework-rise 2s ease-out ${fw.delay}s infinite`,
+              }}
+            >
+              <div
+                style={{
+                  width: fw.size,
+                  height: fw.size,
+                  background: fw.color,
+                  borderRadius: 0,
+                }}
+              />
+            </div>
+          ))}
+        </>
+      )}
+
+      <div className={cn('max-w-lg w-full flex flex-col items-center gap-8 relative z-10', isArcade && 'pb-12')}>
         {/* Victory image */}
         <div className="w-40 h-40 sm:w-52 sm:h-52 relative victory-image-entrance">
           <Image
             src={victoryImage}
-            alt="Journey Complete"
+            alt={isArcade ? 'Game Clear' : 'Journey Complete'}
             fill
             className="object-contain drop-shadow-2xl"
           />
@@ -48,30 +159,40 @@ export default function VictoryScreen() {
         <h1
           className={cn(
             'text-3xl sm:text-4xl font-extrabold font-heading text-center victory-shimmer-text',
-            isGallery ? 'text-amber-800' : 'text-blue-800'
+            isGallery ? 'text-amber-800' : 'text-white'
           )}
         >
-          JOURNEY COMPLETE
+          {isArcade ? 'GAME CLEAR!' : 'JOURNEY COMPLETE'}
         </h1>
 
         {/* Stats */}
         <div
           className={cn(
-            'w-full grid grid-cols-3 gap-4 p-5 border rounded-[2px] victory-stats-entrance',
+            'w-full grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 border-[3px] victory-stats-entrance',
             isGallery
-              ? 'bg-amber-50/60 border-amber-200'
-              : 'bg-blue-50/60 border-blue-200'
+              ? 'bg-amber-50/60 border-amber-200 rounded-[2px]'
+              : ''
           )}
+          style={isArcade ? {
+            background: 'rgba(255,255,255,0.05)',
+            borderColor: 'var(--mario-coin)',
+          } : undefined}
         >
           <StatBlock
-            label="Skills Unlocked"
+            label={isArcade ? 'Power-Ups' : 'Skills Unlocked'}
             value={String(skills.size)}
             isGallery={isGallery}
           />
           <StatBlock
-            label="Demos Completed"
-            value={`${completed.size}/3`}
+            label={isArcade ? 'Stages Cleared' : 'Demos Completed'}
+            value={`${completed.size}/9`}
             isGallery={isGallery}
+          />
+          <StatBlock
+            label="Strategy Score"
+            value={`${totalStars}/${maxStars}`}
+            isGallery={isGallery}
+            icon={isArcade ? '\u2605' : undefined}
           />
           <StatBlock
             label="Est. Time Saved"
@@ -82,14 +203,104 @@ export default function VictoryScreen() {
 
         {/* Earned badges */}
         <div className="w-full victory-badges-entrance">
-          <p className="text-xs font-heading font-semibold uppercase tracking-wider text-[var(--color-faint)] text-center mb-3">
+          <p className={cn(
+            'text-xs font-heading font-semibold uppercase tracking-wider text-center mb-3',
+            isArcade ? 'text-white/40' : 'text-[var(--color-faint)]'
+          )}>
             Achievements
           </p>
           <BadgeGrid isGallery={isGallery} />
         </div>
 
+        {/* Arcade: Time Saved section */}
+        {isArcade && totalTimeSaved > 0 && (
+          <div
+            className="w-full p-6 border-[3px] text-center victory-stats-entrance"
+            style={{
+              background: 'rgba(255,255,255,0.05)',
+              borderColor: 'var(--mario-coin)',
+            }}
+          >
+            <p className="text-xs font-heading font-bold uppercase tracking-wider text-white/40 mb-3">
+              Time Saved
+            </p>
+            <p className="text-2xl sm:text-3xl font-extrabold font-heading" style={{ color: 'var(--mario-coin)' }}>
+              <svg className="inline-block mr-2 -mt-1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--mario-coin)' }}>
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              {totalTimeSaved >= 1
+                ? `${totalTimeSaved % 1 === 0 ? totalTimeSaved : totalTimeSaved.toFixed(1)} hours`
+                : `${Math.round(totalTimeSaved * 60)} minutes`
+              } this session
+            </p>
+            <p className="text-sm text-white/60 mt-2 font-heading">
+              That&apos;s{' '}
+              <span className="font-bold text-white">
+                {weeklyTimeSaved >= 1
+                  ? `${weeklyTimeSaved % 1 === 0 ? weeklyTimeSaved : weeklyTimeSaved.toFixed(1)} hours`
+                  : `${Math.round(weeklyTimeSaved * 60)} minutes`
+                }
+              </span>
+              {' '}per week if you use them daily.
+            </p>
+            <Link
+              href="/how-it-works"
+              className="inline-block mt-4 px-6 py-2.5 text-sm font-heading font-bold text-white transition-all hover:brightness-110"
+              style={{ background: 'var(--mario-pipe)', border: '3px solid #006400' }}
+            >
+              Ready to save this time for real?
+            </Link>
+          </div>
+        )}
+
+        {/* Arcade: AI Readiness Score */}
+        {isArcade && (
+          <div className="w-full flex flex-col items-center victory-stats-entrance">
+            <p className="text-xs font-heading font-bold uppercase tracking-wider text-white/40 mb-4">
+              AI Readiness Score
+            </p>
+            {/* Circular progress */}
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                {/* Background circle */}
+                <circle
+                  cx="60" cy="60" r="52"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="8"
+                />
+                {/* Progress arc */}
+                <circle
+                  cx="60" cy="60" r="52"
+                  fill="none"
+                  stroke="var(--mario-coin)"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray={`${2 * Math.PI * 52}`}
+                  strokeDashoffset={`${2 * Math.PI * 52 * (1 - animatedScore / 100)}`}
+                  style={{ transition: 'stroke-dashoffset 0.1s ease-out', filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.5))' }}
+                />
+              </svg>
+              {/* Score number in center */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-3xl sm:text-4xl font-extrabold font-heading" style={{ color: 'var(--mario-coin)' }}>
+                  {animatedScore}
+                </span>
+                <span className="text-[10px] font-heading text-white/40">/100</span>
+              </div>
+            </div>
+            <p className="text-sm font-heading font-semibold text-white mt-3">
+              {scoreLabel}
+            </p>
+          </div>
+        )}
+
         {/* Tagline */}
-        <p className="text-sm text-[var(--color-muted)] text-center font-heading victory-tagline-entrance">
+        <p className={cn(
+          'text-sm text-center font-heading victory-tagline-entrance',
+          isArcade ? 'text-white/60' : 'text-[var(--color-muted)]'
+        )}>
           AI is way more powerful than you realized.
         </p>
 
@@ -100,28 +311,33 @@ export default function VictoryScreen() {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm rounded-[2px] transition-all duration-200',
+              'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm transition-all duration-200',
               isGallery
-                ? 'bg-amber-700 text-white hover:bg-amber-800'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-amber-700 text-white hover:bg-amber-800 rounded-[2px]'
+                : 'text-white'
             )}
+            style={isArcade ? { background: 'var(--mario-pipe)', border: '3px solid #006400' } : undefined}
           >
             Join the Community
           </a>
           <button
             onClick={handleTryAnotherWorld}
             className={cn(
-              'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm rounded-[2px] border transition-all duration-200',
+              'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm border-[3px] transition-all duration-200',
               isGallery
-                ? 'border-amber-300 text-amber-800 hover:bg-amber-50'
-                : 'border-blue-300 text-blue-800 hover:bg-blue-50'
+                ? 'border-amber-300 text-amber-800 hover:bg-amber-50 rounded-[2px]'
+                : 'text-white/80 hover:text-white'
             )}
+            style={isArcade ? { borderColor: 'var(--mario-coin)', color: 'var(--mario-coin)' } : undefined}
           >
             Try Another World
           </button>
           <button
             onClick={handleStartOver}
-            className="w-full sm:w-auto text-center px-6 py-3 font-heading font-medium text-sm text-[var(--color-faint)] hover:text-[var(--color-muted)] transition-colors"
+            className={cn(
+              'w-full sm:w-auto text-center px-6 py-3 font-heading font-medium text-sm transition-colors',
+              isArcade ? 'text-white/30 hover:text-white/60' : 'text-[var(--color-faint)] hover:text-[var(--color-muted)]'
+            )}
           >
             Start Over
           </button>
@@ -135,22 +351,28 @@ function StatBlock({
   label,
   value,
   isGallery,
+  icon,
 }: {
   label: string
   value: string
   isGallery: boolean
+  icon?: string
 }) {
   return (
     <div className="text-center">
       <p
         className={cn(
           'text-2xl sm:text-3xl font-extrabold font-heading',
-          isGallery ? 'text-amber-700' : 'text-blue-700'
+          isGallery ? 'text-amber-700' : ''
         )}
+        style={!isGallery ? { color: 'var(--mario-coin)' } : undefined}
       >
-        {value}
+        {icon && <span className="mr-1">{icon}</span>}{value}
       </p>
-      <p className="text-[10px] sm:text-xs font-heading text-[var(--color-muted)] mt-1">
+      <p className={cn(
+        'text-[10px] sm:text-xs font-heading mt-1',
+        isGallery ? 'text-[var(--color-muted)]' : 'text-white/50'
+      )}>
         {label}
       </p>
     </div>

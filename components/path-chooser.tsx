@@ -51,7 +51,7 @@ export default function PathChooser() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
+    <div className="page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
       <div className="text-center mb-14">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-orange)] mb-4 font-heading">
           8020skill - The AI Game

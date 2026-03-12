@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LinkedIn Post - Skill Output</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f3f2ef; color: #1a1a2e; padding: 32px; }
+        .wrapper { max-width: 620px; margin: 0 auto; }
+
+        /* LinkedIn card */
+        .linkedin-card { background: white; border: 1px solid #e0dfdc; border-radius: 2px; overflow: hidden; }
+
+        /* Profile header */
+        .profile-header { display: flex; gap: 12px; padding: 16px 20px 12px; align-items: flex-start; }
+        .avatar { width: 48px; height: 48px; background: #0f172a; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+        .profile-info { flex: 1; }
+        .profile-name { font-weight: 700; font-size: 14px; color: #191919; }
+        .profile-title { font-size: 12px; color: #666; margin-top: 1px; line-height: 1.4; }
+        .profile-time { font-size: 12px; color: #999; margin-top: 2px; }
+
+        /* Post content */
+        .post-content { padding: 0 20px 16px; font-size: 14px; line-height: 1.5; color: #191919; }
+        .post-content .line { margin-bottom: 12px; }
+        .post-content .hook { font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+        .post-content .spacer { height: 8px; }
+        .post-content .hashtags { color: #0a66c2; font-size: 13px; margin-top: 4px; }
+
+        /* Engagement bar */
+        .engagement-bar { padding: 8px 20px; border-top: 1px solid #e8e8e8; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; }
+        .reaction-icons { display: flex; gap: -4px; }
+        .reaction-icon { width: 18px; height: 18px; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-right: -2px; }
+        .r-like { background: #0a66c2; color: white; }
+        .r-celebrate { background: #44712e; color: white; }
+        .r-insightful { background: #b24020; color: white; }
+
+        .actions-bar { display: flex; justify-content: space-around; padding: 4px 12px 8px; border-top: 1px solid #e8e8e8; }
+        .action-btn { display: flex; align-items: center; gap: 6px; padding: 10px 8px; font-size: 13px; color: #666; font-weight: 600; cursor: default; }
+
+        /* Skill notes */
+        .skill-notes { background: white; border: 1px solid #e2e8f0; border-radius: 2px; margin-top: 16px; padding: 20px; }
+        .skill-notes h3 { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .note-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 13px; color: #475569; }
+        .note-icon { flex-shrink: 0; width: 20px; height: 20px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-size: 11px; font-weight: 700; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="linkedin-card">
+        <div class="profile-header">
+            <div class="avatar">MR</div>
+            <div class="profile-info">
+                <div class="profile-name">Mike Rhodes</div>
+                <div class="profile-title">Founder @ ads2ai.com | Helping businesses build AI systems that actually work</div>
+                <div class="profile-time">Just now</div>
+            </div>
+        </div>
+
+        <div class="post-content">
+            <div class="hook">Yesterday a client told me "AI doesn't work for our industry."</div>
+
+            <div class="line">45 minutes later, we'd built a system that saved their team 11 hours a week.</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">Here's what actually happened in that meeting:</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">They had 3 people manually checking CRM contacts every Monday morning. Scrolling through spreadsheets. Copy-pasting into email drafts. Deciding who to follow up with based on gut feel.</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">So I asked one question: "Can you show me exactly what they check?"</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">Turns out it was 4 data points: last contact date, deal value, pipeline stage, and whether the contact had opened their last email.</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">We built a skill that:</div>
+            <div class="line">1. Pulls those 4 fields from their CRM every Monday at 7am</div>
+            <div class="line">2. Scores and ranks contacts by urgency</div>
+            <div class="line">3. Drafts personalized follow-up emails for the top 10</div>
+            <div class="line">4. Puts them in a queue ready to review and send</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">The whole thing took 45 minutes to set up.</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">Not 45 minutes because AI is magic. 45 minutes because we started with the actual problem, not the technology.</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">Most people fail with AI because they ask "What can AI do?" instead of "What's eating my team's time?"</div>
+
+            <div class="spacer"></div>
+
+            <div class="line">Start with the spreadsheet someone hates. That's your first AI project.</div>
+
+            <div class="spacer"></div>
+
+            <div class="hashtags">#AI #Automation #Productivity</div>
+        </div>
+
+        <div class="engagement-bar">
+            <div class="reaction-icons">
+                <span class="reaction-icon r-like">&#9650;</span>
+                <span class="reaction-icon r-celebrate">&#9733;</span>
+                <span class="reaction-icon r-insightful">&#9679;</span>
+            </div>
+            <span>247 reactions</span>
+            <span style="margin-left:auto;">38 comments</span>
+        </div>
+
+        <div class="actions-bar">
+            <div class="action-btn">&#9650; Like</div>
+            <div class="action-btn">&#128172; Comment</div>
+            <div class="action-btn">&#8634; Repost</div>
+            <div class="action-btn">&#9993; Send</div>
+        </div>
+    </div>
+
+    <div class="skill-notes">
+        <h3>Content Skill Notes</h3>
+        <div class="note-item">
+            <div class="note-icon">1</div>
+            <div>Hook uses a client objection (pattern interrupt, not a question). Outperforms "I just learned..." openers by 3x on average.</div>
+        </div>
+        <div class="note-item">
+            <div class="note-icon">2</div>
+            <div>Specific numbers (45 minutes, 11 hours, 4 data points) build credibility. Generic claims like "significant time savings" get scrolled past.</div>
+        </div>
+        <div class="note-item">
+            <div class="note-icon">3</div>
+            <div>Ends with actionable takeaway ("start with the spreadsheet someone hates"), not a self-promotional CTA. Drives more engagement on LinkedIn.</div>
+        </div>
+        <div class="note-item">
+            <div class="note-icon">4</div>
+            <div>Post reads at a 7th-grade level (Flesch-Kincaid). Short sentences. No jargon. One thought per line for mobile readability.</div>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by Content Writer Skill | Tone: conversational, story-driven | Platform: LinkedIn
+    </div>
+
+</div>
+</body>
+</html>

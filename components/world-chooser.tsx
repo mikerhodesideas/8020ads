@@ -21,7 +21,7 @@ export default function WorldChooser() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
+    <div className="page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
       <div className="text-center mb-12">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-brand-orange)] mb-4 font-heading">
           Choose Your World
@@ -87,7 +87,7 @@ export default function WorldChooser() {
                   'font-heading',
                   w.id === 'gallery'
                     ? 'bg-amber-600/90 group-hover:bg-amber-500'
-                    : 'bg-blue-600/90 group-hover:bg-blue-500'
+                    : 'bg-[#E8A000]/90 group-hover:bg-[#FFD700]'
                 )}
               >
                 Enter World

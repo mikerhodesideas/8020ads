@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CRM Contact Follow-Up Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1000px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 24px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; margin-top: 2px; font-size: 13px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+        tr:hover { background: #fafbfc; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .good { color: #16a34a; font-weight: 600; }
+        .bad { color: #dc2626; font-weight: 600; }
+        .warn { color: #d97706; font-weight: 600; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+        .contact-card { border-left: 3px solid #dc2626; padding: 16px; background: #fff; margin-bottom: 12px; border-radius: 0 2px 2px 0; border: 1px solid #e2e8f0; border-left: 3px solid #dc2626; }
+        .contact-card.stale { border-left-color: #d97706; }
+        .contact-name { font-weight: 700; font-size: 15px; color: #0f172a; }
+        .contact-company { font-size: 13px; color: #64748b; margin-top: 2px; }
+        .contact-meta { display: flex; gap: 24px; margin-top: 10px; font-size: 12px; color: #64748b; }
+        .contact-meta strong { color: #1a1a2e; }
+        .contact-action { margin-top: 10px; padding: 10px 14px; background: #f8fafc; border-radius: 2px; font-size: 13px; }
+        .contact-action .rec-label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .contact-action .rec-text { color: #0f172a; font-weight: 500; }
+        .email-line { margin-top: 8px; padding: 8px 12px; background: #eff6ff; border-radius: 2px; font-size: 13px; color: #1e40af; font-style: italic; }
+
+        .action { padding: 16px; border-left: 3px solid #f59e0b; background: #fffbeb; margin-bottom: 12px; border-radius: 0 2px 2px 0; }
+        .action-num { font-weight: 700; color: #d97706; font-size: 13px; }
+        .action-title { font-weight: 700; font-size: 14px; margin-top: 2px; }
+        .action-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        .summary-stat { text-align: center; padding: 16px; }
+        .summary-stat .big { font-size: 28px; font-weight: 800; }
+        .summary-stat .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        .urgency-bar { height: 8px; display: flex; border-radius: 2px; overflow: hidden; margin: 8px 0; }
+        .urg-red { background: #ef4444; }
+        .urg-amber { background: #f59e0b; }
+        .urg-green { background: #22c55e; }
+    </style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>CRM Contact Follow-Up Report</h1>
+        <p>50 contacts analyzed | Pipeline health assessment</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">$68,000</div>
+                <div class="lbl">Pipeline at Risk</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">12</div>
+                <div class="lbl">Stale Contacts</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">4</div>
+                <div class="lbl">Urgent (High Value)</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">127 days</div>
+                <div class="lbl">Avg Days Since Contact</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Priority matrix -->
+    <div class="card">
+        <h2>Priority Matrix</h2>
+        <div class="urgency-bar">
+            <div class="urg-red" style="width:8%" title="4 urgent"></div>
+            <div class="urg-amber" style="width:16%" title="8 stale"></div>
+            <div class="urg-green" style="width:76%" title="38 healthy"></div>
+        </div>
+        <div style="display:flex;gap:16px;font-size:12px;color:#64748b;margin-top:4px;">
+            <span>&#9632; 4 Urgent (>90 days + deal >$20k)</span>
+            <span style="color:#d97706;">&#9632; 8 Stale (>90 days)</span>
+            <span style="color:#22c55e;">&#9632; 38 Healthy</span>
+        </div>
+    </div>
+
+    <!-- Urgent contacts -->
+    <div class="card">
+        <h2>Urgent: Reach Out Today <span class="badge badge-red">4 contacts</span></h2>
+
+        <div class="contact-card">
+            <div class="contact-name">Sarah Chen</div>
+            <div class="contact-company">Meridian Digital Group</div>
+            <div class="contact-meta">
+                <span>Last contact: <strong class="bad">142 days ago</strong> (Oct 21)</span>
+                <span>Deal value: <strong>$28,500</strong></span>
+                <span>Stage: <strong>Proposal Sent</strong></span>
+            </div>
+            <div class="contact-action">
+                <div class="rec-label">Recommended Action</div>
+                <div class="rec-text">Re-engage with updated proposal. She requested revisions in October but no follow-up was sent.</div>
+            </div>
+            <div class="email-line">"Hi Sarah, I was reviewing our last conversation about the Q1 campaign restructure and wanted to share an updated approach I think you'll find compelling..."</div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-name">James Whitfield</div>
+            <div class="contact-company">Apex Manufacturing</div>
+            <div class="contact-meta">
+                <span>Last contact: <strong class="bad">118 days ago</strong> (Nov 13)</span>
+                <span>Deal value: <strong>$22,000</strong></span>
+                <span>Stage: <strong>Discovery</strong></span>
+            </div>
+            <div class="contact-action">
+                <div class="rec-label">Recommended Action</div>
+                <div class="rec-text">Share case study from similar manufacturing client. Discovery call notes mention he wanted proof of ROI in his vertical.</div>
+            </div>
+            <div class="email-line">"James, I recently helped another manufacturing company cut their cost per lead by 40%. Thought of your team immediately..."</div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-name">Priya Sharma</div>
+            <div class="contact-company">GreenLeaf Wellness</div>
+            <div class="contact-meta">
+                <span>Last contact: <strong class="bad">104 days ago</strong> (Nov 27)</span>
+                <span>Deal value: <strong>$31,200</strong></span>
+                <span>Stage: <strong>Negotiation</strong></span>
+            </div>
+            <div class="contact-action">
+                <div class="rec-label">Recommended Action</div>
+                <div class="rec-text">Was close to signing in November. Budget freeze delayed decision. Q1 budgets should be unlocked now, so re-open the conversation.</div>
+            </div>
+            <div class="email-line">"Hi Priya, hope the new year is off to a strong start at GreenLeaf. I know timing was tight in November. Now that Q1 is underway, I'd love to pick up where we left off..."</div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-name">Tom Richardson</div>
+            <div class="contact-company">BlueWave SaaS</div>
+            <div class="contact-meta">
+                <span>Last contact: <strong class="bad">96 days ago</strong> (Dec 5)</span>
+                <span>Deal value: <strong>$24,800</strong></span>
+                <span>Stage: <strong>Proposal Sent</strong></span>
+            </div>
+            <div class="contact-action">
+                <div class="rec-label">Recommended Action</div>
+                <div class="rec-text">Proposal was opened 3 times in December but never responded to. Send a brief check-in, not another proposal.</div>
+            </div>
+            <div class="email-line">"Tom, just a quick note. I noticed our proposal might have gotten buried over the holidays. Happy to jump on a 15-min call if any questions came up..."</div>
+        </div>
+    </div>
+
+    <!-- Stale contacts summary -->
+    <div class="card">
+        <h2>Stale Contacts <span class="badge badge-amber">8 contacts, lower priority</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th class="num">Days Silent</th>
+                    <th class="num">Deal Value</th>
+                    <th>Stage</th>
+                    <th>Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Lisa Park</td><td>Coastal Realty</td><td class="num warn">108</td><td class="num">$12,500</td><td>Discovery</td><td><span class="badge badge-amber">Medium</span></td></tr>
+                <tr><td>David Okonkwo</td><td>Summit Legal</td><td class="num warn">101</td><td class="num">$8,400</td><td>Lead</td><td><span class="badge badge-amber">Medium</span></td></tr>
+                <tr><td>Emily Torres</td><td>Bright Horizon Ed</td><td class="num warn">97</td><td class="num">$6,200</td><td>Discovery</td><td><span class="badge badge-amber">Medium</span></td></tr>
+                <tr><td>Mark Jensen</td><td>Nordic Fitness</td><td class="num warn">95</td><td class="num">$9,100</td><td>Proposal Sent</td><td><span class="badge badge-amber">Medium</span></td></tr>
+                <tr><td>Ana Reyes</td><td>Solstice Design</td><td class="num">94</td><td class="num">$4,800</td><td>Lead</td><td><span class="badge badge-amber">Low</span></td></tr>
+                <tr><td>Chen Wei</td><td>Pacific Trade Co</td><td class="num">93</td><td class="num">$7,200</td><td>Lead</td><td><span class="badge badge-amber">Low</span></td></tr>
+                <tr><td>Rachel Adams</td><td>Metro Dental</td><td class="num">92</td><td class="num">$5,600</td><td>Discovery</td><td><span class="badge badge-amber">Low</span></td></tr>
+                <tr><td>Kyle Brennan</td><td>FastTrack Logistics</td><td class="num">91</td><td class="num">$14,200</td><td>Lead</td><td><span class="badge badge-amber">Medium</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary stats -->
+    <div class="card">
+        <h2>Pipeline Risk Summary</h2>
+        <div class="grid-3">
+            <div class="summary-stat">
+                <div class="big bad">$68,000</div>
+                <div class="desc">Total pipeline value at risk from stale contacts</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big warn">127 days</div>
+                <div class="desc">Average silence for stale contacts</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big good">$106,500</div>
+                <div class="desc">Recoverable if urgent contacts re-engage</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action items -->
+    <div class="card">
+        <h2>Do This Today</h2>
+
+        <div class="action">
+            <div class="action-num">Action 1</div>
+            <div class="action-title">Email Sarah Chen and Priya Sharma this morning</div>
+            <div class="action-detail">These two are furthest along in the pipeline (Proposal + Negotiation stage) with the highest combined value ($59,700). Use the suggested opening lines above. Both had clear reasons for going quiet that have likely resolved.</div>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 2</div>
+            <div class="action-title">Send Tom Richardson a brief check-in (not a new proposal)</div>
+            <div class="action-detail">His 3 proposal opens in December signal interest. A short, low-pressure message asking if he has questions will outperform resending the proposal. Keep it under 4 sentences.</div>
+        </div>
+
+        <div class="action">
+            <div class="action-num">Action 3</div>
+            <div class="action-title">Schedule 15 minutes Friday to batch-email the 8 stale contacts</div>
+            <div class="action-detail">These are lower priority but still represent $68k in pipeline. A templated "checking in" email personalized with one line about their business will prevent further decay. Kyle Brennan ($14,200) and Lisa Park ($12,500) should be first.</div>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by CRM Analyst Skill | 50 contacts processed | Pipeline data as of today
+    </div>
+
+</div>
+</body>
+</html>

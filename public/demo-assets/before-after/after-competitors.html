@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Competitive Intelligence Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1060px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 22px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; font-size: 13px; margin-top: 2px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+        .badge-blue { background: #eff6ff; color: #2563eb; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        tr:hover { background: #fafbfc; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+        .gap-item { padding: 14px; border-left: 3px solid #dc2626; background: #fef2f2; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .gap-title { font-weight: 700; font-size: 14px; color: #1a1a2e; }
+        .gap-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        .opp-item { padding: 14px; border-left: 3px solid #16a34a; background: #f0fdf4; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .opp-title { font-weight: 700; font-size: 14px; color: #1a1a2e; }
+        .opp-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .opp-score { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; background: #dcfce7; color: #166534; margin-top: 6px; border-radius: 2px; }
+
+        .headline-card { background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 2px; }
+        .headline-card .num { font-size: 11px; font-weight: 700; color: #2563eb; margin-bottom: 6px; }
+        .headline-card .text { font-size: 15px; font-weight: 700; color: #1e3a5f; margin-bottom: 6px; }
+        .headline-card .rationale { font-size: 12px; color: #64748b; }
+
+        .action { padding: 14px; border-left: 3px solid #f59e0b; background: #fffbeb; margin-bottom: 10px; border-radius: 0 2px 2px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+        .action-content { flex: 1; }
+        .action-title { font-weight: 700; font-size: 14px; }
+        .action-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .impact-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; white-space: nowrap; margin-left: 16px; }
+        .impact-high { background: #dcfce7; color: #166534; }
+        .impact-med { background: #fef3c7; color: #92400e; }
+
+        .check { color: #16a34a; }
+        .cross { color: #dc2626; }
+        .dash { color: #94a3b8; }
+    </style>
+</head>
+<body>
+<div class="report">
+    <div class="report-header">
+        <h1>Competitive Intelligence Report</h1>
+        <p>Melbourne Emergency Plumbing Market - 3 Direct Competitors Analysed</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">3</div>
+                <div class="lbl">Competitors Scraped</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">7</div>
+                <div class="lbl">Gaps Found</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">4</div>
+                <div class="lbl">Unclaimed Angles</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">5</div>
+                <div class="lbl">Quick Wins</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side-by-side comparison -->
+    <div class="card">
+        <h2>Head-to-Head Comparison <span class="badge badge-blue">FULL BREAKDOWN</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data Point</th>
+                    <th>Melbourne Emergency Plumbing</th>
+                    <th>FastFix Plumbers</th>
+                    <th>ProFlow Solutions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary Headline</strong></td>
+                    <td>"24/7 Emergency Plumbers Melbourne"</td>
+                    <td>"Fast, Affordable Plumbing Repairs"</td>
+                    <td>"Licensed Plumbing Professionals"</td>
+                </tr>
+                <tr>
+                    <td><strong>CTA Text</strong></td>
+                    <td>"Call Now"</td>
+                    <td>"Get a Free Quote"</td>
+                    <td>"Book Online"</td>
+                </tr>
+                <tr>
+                    <td><strong>Trust Signals</strong></td>
+                    <td>Google Reviews badge (4.6 stars, 312 reviews)</td>
+                    <td>"Free Quote" guarantee, 2 testimonials</td>
+                    <td>License number, insurance badge, HIA member logo</td>
+                </tr>
+                <tr>
+                    <td><strong>Pricing Visibility</strong></td>
+                    <td><span class="cross">None visible</span></td>
+                    <td>"From $89 callout fee" on homepage</td>
+                    <td><span class="cross">None visible</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Response Time Claim</strong></td>
+                    <td>"Within 60 minutes"</td>
+                    <td>"Same day service"</td>
+                    <td><span class="dash">Not stated</span></td>
+                </tr>
+                <tr>
+                    <td><strong>USP</strong></td>
+                    <td>Speed / 24/7 availability</td>
+                    <td>Price transparency / free quotes</td>
+                    <td>Credentials / professionalism</td>
+                </tr>
+                <tr>
+                    <td><strong>Service Area Listed</strong></td>
+                    <td><span class="check">Yes - 12 suburbs</span></td>
+                    <td><span class="check">Yes - "All Melbourne"</span></td>
+                    <td><span class="check">Yes - 8 suburbs</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Before/After Photos</strong></td>
+                    <td><span class="cross">No</span></td>
+                    <td><span class="cross">No</span></td>
+                    <td><span class="check">Yes - 6 projects</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Video Content</strong></td>
+                    <td><span class="cross">No</span></td>
+                    <td><span class="cross">No</span></td>
+                    <td><span class="cross">No</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Gap Analysis -->
+    <div class="card">
+        <h2>Gap Analysis <span class="badge badge-red">WHAT THEY DO THAT YOU DON'T</span></h2>
+        <div class="gap-item">
+            <div class="gap-title">Transparent Pricing on Homepage</div>
+            <div class="gap-detail">FastFix displays callout fees upfront. You don't show any pricing, which means price-sensitive searchers may bounce before calling. 68% of service searches include price-related terms.</div>
+        </div>
+        <div class="gap-item">
+            <div class="gap-title">Before/After Project Gallery</div>
+            <div class="gap-detail">ProFlow shows 6 completed projects with photos. Visual proof of work quality converts 2.4x better than text-only testimonials according to local services benchmarks.</div>
+        </div>
+        <div class="gap-item">
+            <div class="gap-title">Free Quote as Primary CTA</div>
+            <div class="gap-detail">FastFix leads with "Get a Free Quote" instead of "Call Now". Lower commitment CTA captures leads who aren't ready to call. Your site only offers the phone call path.</div>
+        </div>
+        <div class="gap-item">
+            <div class="gap-title">Industry Credential Badges</div>
+            <div class="gap-detail">ProFlow displays license number, insurance badge, and HIA member logo above the fold. You have Google Reviews but no official trade credentials visible.</div>
+        </div>
+    </div>
+
+    <!-- Opportunity Matrix -->
+    <div class="card">
+        <h2>Opportunity Matrix <span class="badge badge-green">UNCLAIMED ANGLES</span></h2>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Messaging angles none of your 3 competitors are using. First mover advantage available.</p>
+        <div class="opp-item">
+            <div class="opp-title">Guaranteed Fixed Pricing (No Surprise Bills)</div>
+            <div class="opp-detail">No competitor offers fixed-price guarantees. FastFix shows a starting price but still says "quote on arrival". A fixed-price guarantee would be a category-first differentiator in this market.</div>
+            <div class="opp-score">DIFFERENTIATION: HIGH</div>
+        </div>
+        <div class="opp-item">
+            <div class="opp-title">Live Tracking ("Your Plumber is 12 Minutes Away")</div>
+            <div class="opp-detail">Uber-style ETA tracking. No competitor mentions real-time updates. Even a simple SMS with ETA would be novel. Reduces anxiety during emergencies.</div>
+            <div class="opp-score">DIFFERENTIATION: HIGH</div>
+        </div>
+        <div class="opp-item">
+            <div class="opp-title">Video Diagnosis Option</div>
+            <div class="opp-detail">No competitor offers video call diagnosis before dispatch. "Show us the problem on video, get an instant quote" reduces unnecessary callouts and builds trust.</div>
+            <div class="opp-score">DIFFERENTIATION: MEDIUM</div>
+        </div>
+        <div class="opp-item">
+            <div class="opp-title">"We Clean Up After Ourselves" Guarantee</div>
+            <div class="opp-detail">None of the 3 competitors mention post-job cleanup. A "leave it cleaner than we found it" promise addresses a top-3 complaint about tradespeople.</div>
+            <div class="opp-score">DIFFERENTIATION: MEDIUM</div>
+        </div>
+    </div>
+
+    <!-- Ad Headlines -->
+    <div class="card">
+        <h2>Ready-to-Use Ad Headlines <span class="badge badge-amber">BASED ON COMPETITIVE GAPS</span></h2>
+        <div class="grid-3">
+            <div class="headline-card">
+                <div class="num">HEADLINE 1</div>
+                <div class="text">Melbourne Plumber - Fixed Price, No Surprises</div>
+                <div class="rationale">Exploits gap: no competitor guarantees fixed pricing. Addresses #1 customer anxiety (unexpected bills).</div>
+            </div>
+            <div class="headline-card">
+                <div class="num">HEADLINE 2</div>
+                <div class="text">Emergency Plumber in 30 Min - Track Your Plumber Live</div>
+                <div class="rationale">Combines your speed advantage with the unclaimed "live tracking" angle. Concrete time beats vague "fast".</div>
+            </div>
+            <div class="headline-card">
+                <div class="num">HEADLINE 3</div>
+                <div class="text">Free Video Quote in 5 Minutes - No Callout Fee</div>
+                <div class="rationale">Undercuts FastFix's "$89 callout" with a zero-cost alternative. Video diagnosis is novel in this market.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Wins -->
+    <div class="card">
+        <h2>Quick Wins <span class="badge badge-amber">RANKED BY IMPACT</span></h2>
+        <div class="action">
+            <div class="action-content">
+                <div class="action-title">1. Add "From $X" pricing to your homepage and ads</div>
+                <div class="action-detail">FastFix converts price-sensitive traffic you're losing. Add a starting price to your hero section and at least one RSA headline. Takes 30 minutes.</div>
+            </div>
+            <div class="impact-tag impact-high">HIGH IMPACT</div>
+        </div>
+        <div class="action">
+            <div class="action-content">
+                <div class="action-title">2. Add an online booking form alongside "Call Now"</div>
+                <div class="action-detail">ProFlow offers online booking; you're phone-only. 34% of emergency searches happen after 10pm when people prefer forms over calls. Install a simple form today.</div>
+            </div>
+            <div class="impact-tag impact-high">HIGH IMPACT</div>
+        </div>
+        <div class="action">
+            <div class="action-content">
+                <div class="action-title">3. Display license number and insurance in your site header</div>
+                <div class="action-detail">ProFlow does this and it builds instant trust. You have the credentials; you're just not showing them. 5-minute website edit.</div>
+            </div>
+            <div class="impact-tag impact-med">MEDIUM IMPACT</div>
+        </div>
+        <div class="action">
+            <div class="action-content">
+                <div class="action-title">4. Photograph your next 5 jobs for a before/after gallery</div>
+                <div class="action-detail">ProFlow has this, you don't. Takes zero extra time on the job. Just snap a photo before and after. Build the gallery page this week.</div>
+            </div>
+            <div class="impact-tag impact-med">MEDIUM IMPACT</div>
+        </div>
+        <div class="action">
+            <div class="action-content">
+                <div class="action-title">5. Test "Fixed Price Guarantee" in your top RSA headline</div>
+                <div class="action-detail">No competitor claims this. Pin it to Position 1 in your top ad group. If conversion rate lifts even 10%, that's significant at your volume.</div>
+            </div>
+            <div class="impact-tag impact-high">HIGH IMPACT</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

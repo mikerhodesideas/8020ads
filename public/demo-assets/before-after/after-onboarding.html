@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Client Onboarding SOP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1060px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 22px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; font-size: 13px; margin-top: 2px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-blue { background: #eff6ff; color: #2563eb; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+
+        .phase { margin-bottom: 24px; }
+        .phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; }
+        .phase-dot { width: 10px; height: 10px; border-radius: 2px; }
+        .phase-dot-blue { background: #2563eb; }
+        .phase-dot-green { background: #16a34a; }
+        .phase-dot-amber { background: #d97706; }
+        .phase-dot-purple { background: #7c3aed; }
+        .phase-title { font-size: 15px; font-weight: 700; color: #0f172a; }
+        .phase-time { font-size: 12px; color: #94a3b8; margin-left: auto; }
+
+        .task { padding: 12px 16px; border-left: 3px solid #e2e8f0; margin-bottom: 8px; margin-left: 4px; border-radius: 0 2px 2px 0; background: #fafbfc; }
+        .task-row { display: flex; align-items: flex-start; gap: 12px; }
+        .task-checkbox { width: 16px; height: 16px; border: 2px solid #cbd5e1; border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
+        .task-content { flex: 1; }
+        .task-name { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+        .task-meta { display: flex; gap: 16px; margin-top: 4px; font-size: 12px; color: #94a3b8; }
+        .task-sub { margin-top: 6px; padding-left: 28px; }
+        .task-sub li { font-size: 12px; color: #64748b; margin-bottom: 3px; list-style: none; }
+        .task-sub li::before { content: "- "; color: #94a3b8; }
+
+        .template-ref { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; background: #eff6ff; color: #2563eb; border-radius: 2px; border: 1px solid #bfdbfe; margin-top: 4px; }
+
+        .pitfall { padding: 14px; border-left: 3px solid #dc2626; background: #fef2f2; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .pitfall-title { font-weight: 700; font-size: 14px; color: #dc2626; }
+        .pitfall-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        .success { padding: 14px; border-left: 3px solid #16a34a; background: #f0fdf4; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .success-title { font-weight: 700; font-size: 14px; color: #166534; }
+        .success-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    </style>
+</head>
+<body>
+<div class="report">
+    <div class="report-header">
+        <h1>New Client Onboarding SOP</h1>
+        <p>Standard Operating Procedure - Google Ads Management Clients</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">4 Phases</div>
+                <div class="lbl">Day 1 through Week 2</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">16 Tasks</div>
+                <div class="lbl">With Owners &amp; Time Estimates</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">3 Templates</div>
+                <div class="lbl">Ready to Use</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">5 Pitfalls</div>
+                <div class="lbl">Documented &amp; Avoided</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 1: Day 1 -->
+    <div class="card">
+        <h2><span class="badge badge-blue">PHASE 1</span> Day 1: Welcome &amp; Access</h2>
+        <div class="phase">
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Send personalised welcome email</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager</span>
+                            <span>Time: 10 min</span>
+                            <span>Tool: Gmail</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Confirm engagement scope and monthly fee</li>
+                            <li>Attach signed agreement as PDF</li>
+                            <li>Include your direct phone number and response SLA (within 4 hours)</li>
+                            <li>Link to the shared reporting dashboard (set up in Task 4)</li>
+                        </ul>
+                        <div class="template-ref">TEMPLATE: welcome-email-v3.md</div>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Request Google Ads admin access</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager</span>
+                            <span>Time: 5 min</span>
+                            <span>Tool: Google Ads UI</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Send invitation from your MCC account</li>
+                            <li>Request Admin level (not Standard; you'll need billing visibility)</li>
+                            <li>Confirm client has accepted invite before proceeding to audit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Request Google Analytics &amp; GTM access</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager</span>
+                            <span>Time: 5 min</span>
+                            <span>Tool: GA4 / GTM</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>GA4: request Editor role on the property</li>
+                            <li>GTM: request Publish access to the container</li>
+                            <li>If client doesn't have GTM, flag for setup in Phase 2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Set up shared reporting dashboard</div>
+                        <div class="task-meta">
+                            <span>Owner: Analyst</span>
+                            <span>Time: 30 min</span>
+                            <span>Tool: Looker Studio</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Clone the client dashboard template</li>
+                            <li>Connect Google Ads and GA4 data sources</li>
+                            <li>Set date range to last 90 days for baseline</li>
+                            <li>Share with client (viewer access)</li>
+                        </ul>
+                        <div class="template-ref">TEMPLATE: looker-studio-client-v2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 2: Day 2-3 -->
+    <div class="card">
+        <h2><span class="badge badge-green">PHASE 2</span> Day 2-3: Discovery &amp; Audit</h2>
+        <div class="phase">
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Run full account audit</div>
+                        <div class="task-meta">
+                            <span>Owner: Strategist</span>
+                            <span>Time: 2 hrs</span>
+                            <span>Tool: Google Ads + audit script</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Campaign structure assessment (naming, segmentation)</li>
+                            <li>Search term relevance check (last 90 days)</li>
+                            <li>Negative keyword coverage review</li>
+                            <li>Conversion tracking validation (are conversions real?)</li>
+                            <li>Budget vs. impression share analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Kickoff call with client</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager + Strategist</span>
+                            <span>Time: 45 min</span>
+                            <span>Tool: Zoom</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Walk through audit findings (screen share the dashboard)</li>
+                            <li>Confirm business goals, target CPA, and ROAS expectations</li>
+                            <li>Identify their top 3 services/products by margin</li>
+                            <li>Agree on first 30-day action plan</li>
+                            <li>Set recurring meeting cadence (biweekly recommended)</li>
+                        </ul>
+                        <div class="template-ref">TEMPLATE: kickoff-agenda-v2.md</div>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Document client context in your system</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager</span>
+                            <span>Time: 20 min</span>
+                            <span>Tool: CRM / Brain</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Business type, service area, seasonality notes</li>
+                            <li>Key contacts (who approves ad copy, who approves budget?)</li>
+                            <li>Competitor names they care about</li>
+                            <li>Past agency history and what went wrong</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 3: Week 1 -->
+    <div class="card">
+        <h2><span class="badge badge-amber">PHASE 3</span> Week 1: Foundation Setup</h2>
+        <div class="phase">
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Implement conversion tracking fixes</div>
+                        <div class="task-meta">
+                            <span>Owner: Analyst</span>
+                            <span>Time: 1-3 hrs</span>
+                            <span>Tool: GTM / GA4</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Verify all conversion actions fire correctly (test with Tag Assistant)</li>
+                            <li>Remove duplicate conversion actions</li>
+                            <li>Set primary vs. secondary conversion classification</li>
+                            <li>Set up enhanced conversions if applicable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Build negative keyword lists</div>
+                        <div class="task-meta">
+                            <span>Owner: Strategist</span>
+                            <span>Time: 1 hr</span>
+                            <span>Tool: Google Ads + neg keyword script</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Create shared negative keyword lists (brand terms, competitor terms, irrelevant)</li>
+                            <li>Apply across all Search campaigns</li>
+                            <li>Schedule weekly search term review (every Monday)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Restructure campaigns (if needed)</div>
+                        <div class="task-meta">
+                            <span>Owner: Strategist</span>
+                            <span>Time: 2-4 hrs</span>
+                            <span>Tool: Google Ads</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Consolidate thin ad groups (under 10 clicks/week)</li>
+                            <li>Split overloaded campaigns by intent or service</li>
+                            <li>Standardise naming convention</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 4: Week 2 -->
+    <div class="card">
+        <h2><span class="badge badge-green">PHASE 4</span> Week 2: Optimise &amp; Confirm</h2>
+        <div class="phase">
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Write and launch new ad copy</div>
+                        <div class="task-meta">
+                            <span>Owner: Strategist</span>
+                            <span>Time: 2 hrs</span>
+                            <span>Tool: Google Ads</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>2 new RSAs per ad group (minimum)</li>
+                            <li>Include client's unique value props from kickoff call</li>
+                            <li>Pin top-performing headlines to Position 1</li>
+                            <li>Get client approval on ad copy before launch</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Set bid strategy and targets</div>
+                        <div class="task-meta">
+                            <span>Owner: Strategist</span>
+                            <span>Time: 30 min</span>
+                            <span>Tool: Google Ads</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Align bid strategy with agreed goals (tCPA, tROAS, or Max Conversions)</li>
+                            <li>Set targets based on audit baseline, not guesswork</li>
+                            <li>Document targets in the client profile</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="task">
+                <div class="task-row">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-name">Send Week 2 progress report</div>
+                        <div class="task-meta">
+                            <span>Owner: Account Manager</span>
+                            <span>Time: 20 min</span>
+                            <span>Tool: Email + Dashboard</span>
+                        </div>
+                        <ul class="task-sub">
+                            <li>Summary of changes made and why</li>
+                            <li>Early performance indicators vs. baseline</li>
+                            <li>Next 2 weeks' plan</li>
+                            <li>Remind them of next scheduled call</li>
+                        </ul>
+                        <div class="template-ref">TEMPLATE: progress-report-email-v1.md</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Common Pitfalls -->
+        <div class="card">
+            <h2><span class="badge badge-red">PITFALLS</span> Common Mistakes</h2>
+            <div class="pitfall">
+                <div class="pitfall-title">Not verifying conversion tracking before optimising</div>
+                <div class="pitfall-detail">If conversions are double-counting or missing, every optimisation decision is based on bad data. Always validate tracking in Phase 2, before making changes.</div>
+            </div>
+            <div class="pitfall">
+                <div class="pitfall-title">Making big changes without baseline data</div>
+                <div class="pitfall-detail">Export 90-day performance before touching anything. You need a "before" to prove your "after" is better. Clients will ask.</div>
+            </div>
+            <div class="pitfall">
+                <div class="pitfall-title">Skipping the kickoff call context questions</div>
+                <div class="pitfall-detail">If you don't ask about margins, seasonality, and past agency problems, you'll repeat the same mistakes the last agency made.</div>
+            </div>
+            <div class="pitfall">
+                <div class="pitfall-title">Promising specific results in Week 1</div>
+                <div class="pitfall-detail">Set expectations that Week 1-2 is foundation work. Performance gains typically show in Week 3-4. Overpromising early leads to churn.</div>
+            </div>
+            <div class="pitfall">
+                <div class="pitfall-title">Not documenting the agreed plan</div>
+                <div class="pitfall-detail">If the 30-day plan isn't written down and shared, the client will remember a different version. Always send a follow-up email after kickoff.</div>
+            </div>
+        </div>
+
+        <!-- Success Criteria -->
+        <div class="card">
+            <h2><span class="badge badge-green">SUCCESS</span> End of Week 2 Checkpoints</h2>
+            <div class="success">
+                <div class="success-title">Client can access their live dashboard</div>
+                <div class="success-detail">They've opened it at least once and know where to find it. No "where's my report?" emails.</div>
+            </div>
+            <div class="success">
+                <div class="success-title">Conversion tracking is validated and clean</div>
+                <div class="success-detail">No duplicates, no missing events. Primary conversions correctly classified. You trust the data.</div>
+            </div>
+            <div class="success">
+                <div class="success-title">Client knows the 30-day plan and next call date</div>
+                <div class="success-detail">They received the kickoff summary email. They replied or acknowledged. They know what you're doing and why.</div>
+            </div>
+            <div class="success">
+                <div class="success-title">At least one optimisation is live</div>
+                <div class="success-detail">New ad copy, negative keywords, or restructured campaigns. Something tangible is running. Momentum matters.</div>
+            </div>
+            <div class="success">
+                <div class="success-title">Client context is documented in your system</div>
+                <div class="success-detail">If you got hit by a bus, another team member could pick up this account tomorrow and know the goals, contacts, and history.</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
