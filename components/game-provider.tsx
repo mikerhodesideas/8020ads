@@ -12,6 +12,7 @@ import {
 } from 'react'
 import type { PlayerType, WorldId } from '@/lib/game-data'
 import { getLevel1Demos, getLevel2Demos, getLevel3Demos, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS, LEVEL_1_SKILL_IDS, LEVEL_2_SKILL_IDS, LEVEL_3_SKILL_IDS, DEMO_SKILLS } from '@/lib/game-data'
+import { getSkin, type SkinConfig } from '@/lib/skin-config'
 
 interface GameState {
   type: PlayerType | null
@@ -437,4 +438,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
 export function useGame() {
   return useContext(GameContext)
+}
+
+export function useSkin(): SkinConfig {
+  const { world } = useGame()
+  return getSkin(world || 'gallery')
 }

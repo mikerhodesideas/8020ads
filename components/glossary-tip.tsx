@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { useGame } from '@/components/game-provider'
+import { useGame, useSkin } from '@/components/game-provider'
 
 const GLOSSARY: Record<string, string> = {
   skill: 'A specialized instruction set that focuses AI on a specific task',
@@ -12,14 +12,13 @@ const GLOSSARY: Record<string, string> = {
 
 export default function GlossaryTip({
   termId,
-  isArcade,
 }: {
   termId: string
-  isArcade: boolean
 }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const { openGlossaryTerm } = useGame()
+  const skin = useSkin()
 
   const handleClick = useCallback(() => {
     if (!open) openGlossaryTerm(termId)
@@ -38,7 +37,7 @@ export default function GlossaryTip({
     return () => document.removeEventListener('mousedown', handler)
   }, [open])
 
-  if (!isArcade) return null
+  if (!skin.showGlossaryTips) return null
 
   const definition = GLOSSARY[termId]
   if (!definition) return null

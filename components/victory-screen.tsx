@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useGame } from '@/components/game-provider'
+import { useGame, useSkin } from '@/components/game-provider'
 import { BadgeGrid } from '@/components/badge-system'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
@@ -28,30 +28,27 @@ function useAnimatedCounter(target: number, duration: number = 1200): number {
 
 export default function VictoryScreen() {
   const router = useRouter()
-  const { world, completed, skills, totalTimeSaved, totalStars, maxStars, isLevelComplete, resetGame } = useGame()
+  const { completed, skills, totalTimeSaved, totalStars, maxStars, isLevelComplete, resetGame } = useGame()
+  const skin = useSkin()
 
-  const isGallery = world === 'gallery'
-  const isArcade = world === 'arcade'
-  const victoryImage = isGallery
+  const isDark = skin.isDark
+  const victoryImage = !isDark
     ? '/images/victory/gallery-victory.png'
     : '/images/victory/arcade-victory.png'
 
   // AI Readiness Score calculation (arcade only)
   const readinessScore = useMemo(() => {
-    if (!isArcade) return 0
-    // Each demo completed: 8 points (max 72)
+    if (!isDark) return 0
     const demoPoints = completed.size * 8
-    // Each unique skill installed: 2 points (cap at 16)
     const skillPoints = Math.min(skills.size * 2, 16)
-    // Level completion bonus: 4 points per level (max 12)
     let levelBonus = 0
     if (isLevelComplete(1)) levelBonus += 4
     if (isLevelComplete(2)) levelBonus += 4
     if (isLevelComplete(3)) levelBonus += 4
     return Math.min(demoPoints + skillPoints + levelBonus, 100)
-  }, [isArcade, completed.size, skills.size, isLevelComplete])
+  }, [isDark, completed.size, skills.size, isLevelComplete])
 
-  const animatedScore = useAnimatedCounter(isArcade ? readinessScore : 0, 1500)
+  const animatedScore = useAnimatedCounter(isDark ? readinessScore : 0, 1500)
 
   const scoreLabel = useMemo(() => {
     if (readinessScore >= 90) return 'AI-First Ready. You get it.'
@@ -65,14 +62,14 @@ export default function VictoryScreen() {
 
   // Play fanfare on mount for arcade
   useEffect(() => {
-    if (isArcade) {
-      const t = setTimeout(() => playSound('fanfare'), 400)
+    if (skin.sounds.victory) {
+      const t = setTimeout(() => playSound(skin.sounds.victory!), 400)
       return () => clearTimeout(t)
     }
-  }, [isArcade])
+  }, [skin.sounds.victory])
 
-  const handleTryAnotherWorld = () => {
-    router.push('/world')
+  const handlePlayAgain = () => {
+    router.push('/play')
   }
 
   const handleStartOver = () => {
@@ -82,7 +79,7 @@ export default function VictoryScreen() {
 
   // Arcade firework particles
   const fireworks = useMemo(() => {
-    if (!isArcade) return []
+    if (!isDark) return []
     const colors = ['#FFD700', '#FF0000', '#00A800', '#5C94FC', '#FF6B1A']
     return Array.from({ length: 20 }, (_, i) => ({
       id: i,
@@ -91,20 +88,20 @@ export default function VictoryScreen() {
       color: colors[i % colors.length],
       size: 3 + Math.random() * 4,
     }))
-  }, [isArcade])
+  }, [isDark])
 
   return (
     <div
       className={cn(
         'page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden',
-        isGallery
+        !isDark
           ? 'bg-gradient-to-b from-[#f8f0e3] via-[#faf6ef] to-[#f5ece0]'
           : 'skin-arcade arcade-ground arcade-scanlines'
       )}
-      style={isArcade ? { background: 'var(--mario-dark)' } : undefined}
+      style={isDark ? { background: 'var(--mario-dark)' } : undefined}
     >
       {/* Arcade: starfield background + fireworks */}
-      {isArcade && (
+      {isDark && (
         <>
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {Array.from({ length: 40 }, (_, i) => (
@@ -144,12 +141,12 @@ export default function VictoryScreen() {
         </>
       )}
 
-      <div className={cn('max-w-lg w-full flex flex-col items-center gap-8 relative z-10', isArcade && 'pb-12')}>
+      <div className={cn('max-w-lg w-full flex flex-col items-center gap-8 relative z-10', isDark && 'pb-12')}>
         {/* Victory image */}
         <div className="w-40 h-40 sm:w-52 sm:h-52 relative victory-image-entrance">
           <Image
             src={victoryImage}
-            alt={isArcade ? 'Game Clear' : 'Journey Complete'}
+            alt={isDark ? 'Game Clear' : 'Journey Complete'}
             fill
             className="object-contain drop-shadow-2xl"
           />
@@ -159,45 +156,45 @@ export default function VictoryScreen() {
         <h1
           className={cn(
             'text-3xl sm:text-4xl font-extrabold font-heading text-center victory-shimmer-text',
-            isGallery ? 'text-amber-800' : 'text-white'
+            !isDark ? 'text-amber-800' : 'text-white'
           )}
         >
-          {isArcade ? 'GAME CLEAR!' : 'JOURNEY COMPLETE'}
+          {skin.victoryHeading}
         </h1>
 
         {/* Stats */}
         <div
           className={cn(
             'w-full grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 border-[3px] victory-stats-entrance',
-            isGallery
+            !isDark
               ? 'bg-amber-50/60 border-amber-200 rounded-[2px]'
               : ''
           )}
-          style={isArcade ? {
+          style={isDark ? {
             background: 'rgba(255,255,255,0.05)',
             borderColor: 'var(--mario-coin)',
           } : undefined}
         >
           <StatBlock
-            label={isArcade ? 'Power-Ups' : 'Skills Unlocked'}
+            label={skin.victorySkillsLabel}
             value={String(skills.size)}
-            isGallery={isGallery}
+            isDark={isDark}
           />
           <StatBlock
-            label={isArcade ? 'Stages Cleared' : 'Demos Completed'}
+            label={skin.victoryDemosLabel}
             value={`${completed.size}/9`}
-            isGallery={isGallery}
+            isDark={isDark}
           />
           <StatBlock
             label="Strategy Score"
             value={`${totalStars}/${maxStars}`}
-            isGallery={isGallery}
-            icon={isArcade ? '\u2605' : undefined}
+            isDark={isDark}
+            icon={isDark ? '\u2605' : undefined}
           />
           <StatBlock
             label="Est. Time Saved"
             value={totalTimeSaved >= 1 ? `~${Math.round(totalTimeSaved)}h` : `~${Math.round(totalTimeSaved * 60)}m`}
-            isGallery={isGallery}
+            isDark={isDark}
           />
         </div>
 
@@ -205,15 +202,15 @@ export default function VictoryScreen() {
         <div className="w-full victory-badges-entrance">
           <p className={cn(
             'text-xs font-heading font-semibold uppercase tracking-wider text-center mb-3',
-            isArcade ? 'text-white/40' : 'text-[var(--color-faint)]'
+            isDark ? 'text-white/40' : 'text-[var(--color-faint)]'
           )}>
             Achievements
           </p>
-          <BadgeGrid isGallery={isGallery} />
+          <BadgeGrid />
         </div>
 
         {/* Arcade: Time Saved section */}
-        {isArcade && totalTimeSaved > 0 && (
+        {isDark && totalTimeSaved > 0 && (
           <div
             className="w-full p-6 border-[3px] text-center victory-stats-entrance"
             style={{
@@ -255,7 +252,7 @@ export default function VictoryScreen() {
         )}
 
         {/* Arcade: AI Readiness Score */}
-        {isArcade && (
+        {isDark && (
           <div className="w-full flex flex-col items-center victory-stats-entrance">
             <p className="text-xs font-heading font-bold uppercase tracking-wider text-white/40 mb-4">
               AI Readiness Score
@@ -263,14 +260,12 @@ export default function VictoryScreen() {
             {/* Circular progress */}
             <div className="relative w-32 h-32 sm:w-40 sm:h-40">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-                {/* Background circle */}
                 <circle
                   cx="60" cy="60" r="52"
                   fill="none"
                   stroke="rgba(255,255,255,0.1)"
                   strokeWidth="8"
                 />
-                {/* Progress arc */}
                 <circle
                   cx="60" cy="60" r="52"
                   fill="none"
@@ -282,7 +277,6 @@ export default function VictoryScreen() {
                   style={{ transition: 'stroke-dashoffset 0.1s ease-out', filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.5))' }}
                 />
               </svg>
-              {/* Score number in center */}
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-3xl sm:text-4xl font-extrabold font-heading" style={{ color: 'var(--mario-coin)' }}>
                   {animatedScore}
@@ -299,7 +293,7 @@ export default function VictoryScreen() {
         {/* Tagline */}
         <p className={cn(
           'text-sm text-center font-heading victory-tagline-entrance',
-          isArcade ? 'text-white/60' : 'text-[var(--color-muted)]'
+          isDark ? 'text-white/60' : 'text-[var(--color-muted)]'
         )}>
           AI is way more powerful than you realized.
         </p>
@@ -312,31 +306,31 @@ export default function VictoryScreen() {
             rel="noopener noreferrer"
             className={cn(
               'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm transition-all duration-200',
-              isGallery
+              !isDark
                 ? 'bg-amber-700 text-white hover:bg-amber-800 rounded-[2px]'
                 : 'text-white'
             )}
-            style={isArcade ? { background: 'var(--mario-pipe)', border: '3px solid #006400' } : undefined}
+            style={isDark ? { background: 'var(--mario-pipe)', border: '3px solid #006400' } : undefined}
           >
             Join the Community
           </a>
           <button
-            onClick={handleTryAnotherWorld}
+            onClick={handlePlayAgain}
             className={cn(
               'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm border-[3px] transition-all duration-200',
-              isGallery
+              !isDark
                 ? 'border-amber-300 text-amber-800 hover:bg-amber-50 rounded-[2px]'
                 : 'text-white/80 hover:text-white'
             )}
-            style={isArcade ? { borderColor: 'var(--mario-coin)', color: 'var(--mario-coin)' } : undefined}
+            style={isDark ? { borderColor: 'var(--mario-coin)', color: 'var(--mario-coin)' } : undefined}
           >
-            Try Another World
+            Back to Map
           </button>
           <button
             onClick={handleStartOver}
             className={cn(
               'w-full sm:w-auto text-center px-6 py-3 font-heading font-medium text-sm transition-colors',
-              isArcade ? 'text-white/30 hover:text-white/60' : 'text-[var(--color-faint)] hover:text-[var(--color-muted)]'
+              isDark ? 'text-white/30 hover:text-white/60' : 'text-[var(--color-faint)] hover:text-[var(--color-muted)]'
             )}
           >
             Start Over
@@ -350,12 +344,12 @@ export default function VictoryScreen() {
 function StatBlock({
   label,
   value,
-  isGallery,
+  isDark,
   icon,
 }: {
   label: string
   value: string
-  isGallery: boolean
+  isDark: boolean
   icon?: string
 }) {
   return (
@@ -363,15 +357,15 @@ function StatBlock({
       <p
         className={cn(
           'text-2xl sm:text-3xl font-extrabold font-heading',
-          isGallery ? 'text-amber-700' : ''
+          !isDark ? 'text-amber-700' : ''
         )}
-        style={!isGallery ? { color: 'var(--mario-coin)' } : undefined}
+        style={isDark ? { color: 'var(--mario-coin)' } : undefined}
       >
         {icon && <span className="mr-1">{icon}</span>}{value}
       </p>
       <p className={cn(
         'text-[10px] sm:text-xs font-heading mt-1',
-        isGallery ? 'text-[var(--color-muted)]' : 'text-white/50'
+        !isDark ? 'text-[var(--color-muted)]' : 'text-white/50'
       )}>
         {label}
       </p>

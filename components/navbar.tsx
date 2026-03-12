@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useGame } from '@/components/game-provider'
+import { useGame, useSkin } from '@/components/game-provider'
 import { DEMO_SKILLS, DEMO_TIME_SAVED } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { isMuted, toggleMute, playSound } from '@/lib/sounds'
@@ -30,6 +30,7 @@ function formatTimeSaved(hours: number): string {
 export default function Navbar() {
   const pathname = usePathname()
   const { type, world, skills, completed, resetGame } = useGame()
+  const skin = useSkin()
   const [panelOpen, setPanelOpen] = useState(false)
   const [soundMuted, setSoundMuted] = useState(true)
   const [displayTimeSaved, setDisplayTimeSaved] = useState(0)
@@ -86,8 +87,7 @@ export default function Navbar() {
   }, [])
 
   const isPlaying = pathname.startsWith('/play') || pathname === '/world'
-  const isGallery = world === 'gallery'
-  const isArcade = world === 'arcade'
+  const isDark = skin.isDark
   const skillCount = skills.size
 
   // Get installed skill details
@@ -118,7 +118,7 @@ export default function Navbar() {
   return (
     <>
       {/* ARCADE NAVBAR - Mario HUD style */}
-      {isArcade ? (
+      {skin.navLayout === 'dark-hud' ? (
         <nav className="sticky top-0 z-50 border-b border-[#333]" style={{ background: '#1a1a2e' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <Link
@@ -298,39 +298,39 @@ export default function Navbar() {
       {panelOpen && (
         <div
           className="fixed inset-0 z-[55] skill-panel-backdrop"
-          style={{ backgroundColor: isArcade ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)' }}
+          style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)' }}
           onClick={() => setPanelOpen(false)}
         >
           <div
             className={cn(
               'absolute top-0 right-0 h-full w-72 sm:w-80 shadow-xl border-l skill-panel-slide',
-              isArcade
+              isDark
                 ? 'border-[#333]'
                 : 'bg-white border-amber-200'
             )}
-            style={isArcade ? { background: 'var(--mario-dark)' } : undefined}
+            style={isDark ? { background: 'var(--mario-dark)' } : undefined}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Panel header */}
             <div
               className={cn(
                 'flex items-center justify-between px-5 py-4 border-b',
-                isArcade
+                isDark
                   ? 'border-[#333]'
                   : 'border-amber-100 bg-amber-50/50'
               )}
             >
               <h2 className={cn(
                 'text-sm font-heading font-bold',
-                isArcade ? 'text-white' : 'text-[var(--color-ink)]'
+                isDark ? 'text-white' : 'text-[var(--color-ink)]'
               )}>
-                {isArcade ? 'Power-Ups' : 'Installed Skills'}
+                {skin.skillInventoryTitle}
               </h2>
               <button
                 onClick={() => setPanelOpen(false)}
                 className={cn(
                   'transition-colors text-lg leading-none',
-                  isArcade ? 'text-white/50 hover:text-white' : 'text-[var(--color-faint)] hover:text-[var(--color-ink)]'
+                  isDark ? 'text-white/50 hover:text-white' : 'text-[var(--color-faint)] hover:text-[var(--color-ink)]'
                 )}
               >
                 &times;
@@ -340,8 +340,8 @@ export default function Navbar() {
             {/* Skill list */}
             <div className="p-4 space-y-3">
               {uniqueSkills.length === 0 ? (
-                <p className={cn('text-xs font-heading', isArcade ? 'text-white/40' : 'text-[var(--color-faint)]')}>
-                  {isArcade ? 'No power-ups yet.' : 'No skills installed yet.'}
+                <p className={cn('text-xs font-heading', isDark ? 'text-white/40' : 'text-[var(--color-faint)]')}>
+                  {skin.noSkillsText}
                 </p>
               ) : (
                 uniqueSkills.map((skill) => (
@@ -349,18 +349,18 @@ export default function Navbar() {
                     key={skill.id}
                     className={cn(
                       'p-3 border',
-                      isArcade
+                      isDark
                         ? 'border-[#444]'
                         : 'border-amber-200 bg-amber-50/40'
                     )}
-                    style={isArcade ? { background: 'rgba(255,255,255,0.05)', borderColor: 'var(--mario-block)' } : undefined}
+                    style={isDark ? { background: 'rgba(255,255,255,0.05)', borderColor: 'var(--mario-block)' } : undefined}
                   >
                     <p
                       className={cn(
                         'text-sm font-heading font-bold',
-                        isArcade ? '' : 'text-amber-800'
+                        isDark ? '' : 'text-amber-800'
                       )}
-                      style={isArcade ? { color: 'var(--mario-coin)' } : undefined}
+                      style={isDark ? { color: 'var(--mario-coin)' } : undefined}
                     >
                       {skill.name}
                     </p>
@@ -370,12 +370,12 @@ export default function Navbar() {
                           key={cap}
                           className={cn(
                             'text-xs flex items-center gap-1.5',
-                            isArcade ? 'text-white/60' : 'text-[var(--color-muted)]'
+                            isDark ? 'text-white/60' : 'text-[var(--color-muted)]'
                           )}
                         >
                           <span
                             className="w-1 h-1 flex-shrink-0"
-                            style={isArcade ? { background: 'var(--mario-pipe)', borderRadius: 0 } : undefined}
+                            style={isDark ? { background: 'var(--mario-pipe)', borderRadius: 0 } : undefined}
                           />
                           {cap}
                         </li>

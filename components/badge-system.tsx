@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useGame } from '@/components/game-provider'
+import { useGame, useSkin } from '@/components/game-provider'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
 
@@ -30,14 +30,12 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
 
   switch (id) {
     case 'first-skill':
-      // Wrench
       return (
         <svg {...props}>
           <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
         </svg>
       )
     case 'skill-collector':
-      // Three stars
       return (
         <svg {...props}>
           <path d="M12 2l1.5 4.5H18l-3.5 2.5L16 13.5 12 11l-4 2.5 1.5-4.5L6 6.5h4.5z" />
@@ -46,14 +44,12 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
         </svg>
       )
     case 'speed-demon':
-      // Lightning bolt
       return (
         <svg {...props}>
           <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="none" />
         </svg>
       )
     case 'explorer':
-      // Compass
       return (
         <svg {...props}>
           <circle cx="12" cy="12" r="10" />
@@ -61,7 +57,6 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
         </svg>
       )
     case 'level-up':
-      // Shield
       return (
         <svg {...props}>
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -69,7 +64,6 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
         </svg>
       )
     case 'full-clear':
-      // Crown
       return (
         <svg {...props}>
           <path d="M2 17l3-8 4 4 3-6 3 6 4-4 3 8z" fill="currentColor" stroke="none" />
@@ -77,7 +71,6 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
         </svg>
       )
     case 'transformer':
-      // Split screen with arrow
       return (
         <svg {...props}>
           <rect x="2" y="4" width="8" height="16" rx="1" />
@@ -86,7 +79,6 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
         </svg>
       )
     case 'replay-master':
-      // Loop arrow
       return (
         <svg {...props}>
           <path d="M17 2l4 4-4 4" />
@@ -105,8 +97,10 @@ function BadgeIcon({ id, size = 20 }: { id: string; size?: number }) {
 }
 
 // Badge tray for the level map
-export function BadgeTray({ isGallery }: { isGallery: boolean }) {
+export function BadgeTray() {
   const { badges } = useGame()
+  const skin = useSkin()
+  const isDark = skin.isDark
 
   return (
     <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
@@ -120,20 +114,20 @@ export function BadgeTray({ isGallery }: { isGallery: boolean }) {
             <div
               className={cn(
                 'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center border transition-all duration-300',
-                isGallery ? 'rounded-[2px]' : '',
+                !isDark ? 'rounded-[2px]' : '',
                 earned
-                  ? isGallery
+                  ? !isDark
                     ? 'bg-amber-50 border-amber-400 text-amber-700 badge-earned-glow-gallery'
                     : 'border-[2px] badge-earned-glow-mario'
-                  : isGallery
+                  : !isDark
                     ? 'bg-gray-50 border-gray-200 text-gray-300'
                     : 'border-[2px] border-gray-600 text-gray-500'
               )}
-              style={!isGallery && earned ? {
+              style={isDark && earned ? {
                 background: 'rgba(232,160,0,0.15)',
                 borderColor: 'var(--mario-coin)',
                 color: 'var(--mario-coin)',
-              } : !isGallery ? {
+              } : isDark ? {
                 background: 'rgba(255,255,255,0.05)',
               } : undefined}
             >
@@ -152,8 +146,10 @@ export function BadgeTray({ isGallery }: { isGallery: boolean }) {
 }
 
 // Badge grid for victory screen
-export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
+export function BadgeGrid() {
   const { badges } = useGame()
+  const skin = useSkin()
+  const isDark = skin.isDark
 
   return (
     <div className="grid grid-cols-4 gap-3 sm:gap-4">
@@ -164,20 +160,20 @@ export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
             key={def.id}
             className={cn(
               'flex flex-col items-center gap-1.5 p-3 border transition-all',
-              isGallery ? 'rounded-[2px]' : 'border-[2px]',
+              !isDark ? 'rounded-[2px]' : 'border-[2px]',
               earned
-                ? isGallery
+                ? !isDark
                   ? 'bg-amber-50 border-amber-300 text-amber-700'
                   : ''
-                : isGallery
+                : !isDark
                   ? 'bg-gray-50 border-gray-200 text-gray-300'
                   : 'border-gray-600 text-gray-500'
             )}
-            style={!isGallery && earned ? {
+            style={isDark && earned ? {
               background: 'rgba(232,160,0,0.15)',
               borderColor: 'var(--mario-coin)',
               color: 'var(--mario-coin)',
-            } : !isGallery ? {
+            } : isDark ? {
               background: 'rgba(255,255,255,0.05)',
             } : undefined}
           >
@@ -197,17 +193,18 @@ export function BadgeGrid({ isGallery }: { isGallery: boolean }) {
 
 // Toast notification for newly earned badges
 export function BadgeToast() {
-  const { badgeToastQueue, dismissBadgeToast, world } = useGame()
+  const { badgeToastQueue, dismissBadgeToast } = useGame()
+  const skin = useSkin()
 
   const currentBadgeId = badgeToastQueue[0]
   const def = currentBadgeId ? BADGE_DEFS.find((b) => b.id === currentBadgeId) : null
 
   useEffect(() => {
     if (!currentBadgeId) return
-    if (world === 'arcade') playSound('oneUp')
+    if (skin.sounds.badgeEarned) playSound(skin.sounds.badgeEarned)
     const timer = setTimeout(dismissBadgeToast, 3000)
     return () => clearTimeout(timer)
-  }, [currentBadgeId, dismissBadgeToast, world])
+  }, [currentBadgeId, dismissBadgeToast, skin.sounds.badgeEarned])
 
   if (!def) return null
 
@@ -215,7 +212,7 @@ export function BadgeToast() {
     <div className="fixed top-16 right-4 z-[60] badge-toast-enter">
       <div
         className="flex items-center gap-3 px-4 py-3 shadow-lg min-w-[220px]"
-        style={world === 'arcade' ? {
+        style={skin.isDark ? {
           background: 'var(--mario-dark)',
           border: '3px solid var(--mario-coin)',
         } : {
@@ -224,19 +221,19 @@ export function BadgeToast() {
           borderRadius: '2px',
         }}
       >
-        <div style={world === 'arcade' ? { color: 'var(--mario-coin)' } : { color: '#B8860B' }}>
+        <div style={skin.isDark ? { color: 'var(--mario-coin)' } : { color: '#B8860B' }}>
           <BadgeIcon id={def.id} size={24} />
         </div>
         <div>
           <p className={cn(
             'text-[10px] font-heading font-semibold uppercase tracking-wider',
-            world === 'arcade' ? 'text-white/50' : 'text-[var(--color-faint)]'
+            skin.isDark ? 'text-white/50' : 'text-[var(--color-faint)]'
           )}>
-            {world === 'arcade' ? 'POWER-UP!' : 'Achievement Unlocked'}
+            {skin.badgeEarnedLabel}
           </p>
           <p className={cn(
             'text-sm font-heading font-bold',
-            world === 'arcade' ? 'text-white' : 'text-[var(--color-ink)]'
+            skin.isDark ? 'text-white' : 'text-[var(--color-ink)]'
           )}>
             {def.name}
           </p>

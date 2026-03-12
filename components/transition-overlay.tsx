@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { useRouter } from 'next/navigation'
 import { useGame } from './game-provider'
+import { getSkin } from '@/lib/skin-config'
 import { playSound } from '@/lib/sounds'
 
 type TransitionPhase = 'idle' | 'closing' | 'closed' | 'opening'
@@ -35,13 +36,15 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const fallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const busyRef = useRef(false)
 
-  const isArcade = world === 'arcade'
+  const skin = world ? getSkin(world) : getSkin('gallery')
+  const useTransitions = skin.useTransitions
+  const isDark = skin.isDark
   const isTransitioning = phase !== 'idle'
 
   const navigateWithTransition = useCallback(
     (path: string) => {
-      // Gallery: no transition, just navigate
-      if (!isArcade) {
+      // No transition style: just navigate
+      if (!useTransitions) {
         router.push(path)
         return
       }
@@ -53,8 +56,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       }
       busyRef.current = true
 
-      // Play pipe sound at the START
-      playSound('pipe')
+      // Play transition sound at the START
+      if (skin.sounds.transition) {
+        playSound(skin.sounds.transition)
+      }
 
       // Start closing animation
       setPhase('closing')
@@ -87,16 +92,16 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         }, 50)
       }, 400)
     },
-    [isArcade, router]
+    [useTransitions, router, skin.sounds.transition]
   )
 
   // Determine CSS class for the content wrapper
   const contentClass =
-    isArcade && phase === 'closing'
+    useTransitions && phase === 'closing'
       ? 'iris-closing'
-      : isArcade && phase === 'closed'
+      : useTransitions && phase === 'closed'
         ? 'iris-closed'
-        : isArcade && phase === 'opening'
+        : useTransitions && phase === 'opening'
           ? 'iris-opening'
           : ''
 
@@ -104,7 +109,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     <TransitionContext.Provider value={{ navigateWithTransition, isTransitioning }}>
       <div
         style={{
-          background: isTransitioning && isArcade ? '#1a1a2e' : 'transparent',
+          background: isTransitioning && isDark ? '#1a1a2e' : 'transparent',
           minHeight: '100vh',
         }}
       >
