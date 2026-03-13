@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
@@ -15,97 +16,105 @@ export default function WorldChooser() {
     router.push('/play')
   }
 
-  if (!type) {
-    router.replace('/')
-    return null
-  }
+  useEffect(() => {
+    if (!type) router.replace('/')
+  }, [type, router])
+
+  if (!type) return null
+
+  const gameWorlds = worlds.filter((w) => w.id !== 'gallery')
+  const classicWorld = worlds.find((w) => w.id === 'gallery')
 
   return (
-    <div className="page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 sm:px-6 py-12">
-      <div className="text-center mb-12">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-brand-orange)] mb-4 font-heading">
-          Choose Your World
-        </p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.1] mb-4 font-heading text-[var(--color-ink)]">
-          Same challenges.
-          <br />
-          <span className="text-[var(--color-brand-orange)]">
-            Different vibe.
-          </span>
+    <div className="fixed inset-0 top-[3.5rem] flex flex-col bg-[#1e1e24]">
+      {/* Compact header */}
+      <div className="text-center py-4 sm:py-5 flex-shrink-0">
+        <h1 className="text-lg sm:text-xl font-bold font-heading text-white/90 tracking-wide">
+          Choose your world
         </h1>
-        <p className="text-sm sm:text-base text-[var(--color-muted)] max-w-md mx-auto leading-relaxed">
-          Pick an aesthetic. The demos are the same, the experience is yours.
+        <p className="text-xs text-white/40 mt-0.5">
+          Same quests. Different vibe.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl w-full">
-        {worlds.map((w) => (
-          <button
-            key={w.id}
-            onClick={() => handlePick(w.id)}
-            className={cn(
-              'group relative text-left overflow-hidden',
-              'border border-[var(--color-border)]',
-              'rounded-[2px] transition-all duration-500 ease-out',
-              'hover:shadow-2xl hover:-translate-y-1',
-              'cursor-pointer block',
-              'aspect-[16/11] sm:aspect-[16/12]',
-              'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
-            )}
-          >
-            {/* Background image */}
-            <Image
-              src={w.image}
-              alt={w.name}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-              sizes="(max-width: 640px) 100vw, 50vw"
-              priority
-            />
+      {/* World grid - fills available space */}
+      <div className="flex-1 min-h-0 px-3 sm:px-4 pb-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 h-full max-w-6xl mx-auto"
+          style={{ gridTemplateRows: '1fr 1fr' }}
+        >
+          {gameWorlds.map((w) => (
+            <button
+              key={w.id}
+              onClick={() => handlePick(w.id)}
+              className={cn(
+                'group relative overflow-hidden',
+                'border border-white/10',
+                'rounded-[2px] transition-all duration-500 ease-out',
+                'hover:border-white/30 hover:z-10 hover:shadow-2xl hover:shadow-white/5',
+                'cursor-pointer block',
+                'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
+              )}
+            >
+              <Image
+                src={w.image}
+                alt={w.name}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+                sizes="(max-width: 640px) 50vw, 33vw"
+                priority
+              />
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-500" />
+              {/* Darken overlay - lightens on hover */}
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500" />
 
-            {/* Shimmer on hover */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-[-100%] group-hover:translate-x-[100%]"
-              style={{ transition: 'opacity 0.7s, transform 1.2s' }} />
+              {/* Bottom gradient for text */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-            {/* Content */}
-            <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
-              <h2 className="text-2xl sm:text-3xl font-extrabold mb-2 font-heading text-white leading-tight drop-shadow-lg">
-                {w.name}
-              </h2>
-              <p className="text-sm text-white/80 leading-relaxed mb-4 drop-shadow">
-                {w.tagline}
-              </p>
-              <div
-                className={cn(
-                  'inline-flex items-center gap-2 px-5 py-2.5',
-                  'text-white text-sm font-semibold',
-                  'rounded-[2px] transition-all duration-300',
-                  'group-hover:gap-3',
-                  'font-heading',
-                  w.id === 'gallery'
-                    ? 'bg-amber-600/90 group-hover:bg-amber-500'
-                    : 'bg-[#E8A000]/90 group-hover:bg-[#FFD700]'
-                )}
-              >
-                Enter World
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  &#8594;
-                </span>
+              {/* Shimmer on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-[-100%] group-hover:translate-x-[100%]"
+                style={{ transition: 'opacity 0.7s, transform 1.2s' }} />
+
+              {/* Content pinned to bottom */}
+              <div className="absolute inset-x-0 bottom-0 px-4 pb-4 sm:px-5 sm:pb-5">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold font-heading text-white leading-tight drop-shadow-lg">
+                  {w.name}
+                </h2>
+                <p className="text-[10px] sm:text-xs text-white/70 leading-relaxed mt-1 drop-shadow hidden sm:block">
+                  {w.tagline}
+                </p>
               </div>
-            </div>
-          </button>
-        ))}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <button
-        onClick={() => router.push('/')}
-        className="mt-8 text-xs text-[var(--color-faint)] hover:text-[var(--color-muted)] transition-colors font-heading"
-      >
-        &#8592; Change type
-      </button>
+      {/* Classic - minimal footer bar */}
+      <div className="flex-shrink-0 px-3 sm:px-4 pb-3 max-w-6xl mx-auto w-full">
+        <div className="flex items-center justify-between">
+          {classicWorld && (
+            <button
+              onClick={() => handlePick(classicWorld.id)}
+              className="group flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors"
+            >
+              <span className="text-xs font-heading">
+                {classicWorld.name}
+              </span>
+              <span className="text-[10px] text-white/20 group-hover:text-white/40 transition-colors hidden sm:inline">
+                {classicWorld.tagline}
+              </span>
+              <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                &#8594;
+              </span>
+            </button>
+          )}
+          <button
+            onClick={() => router.push('/')}
+            className="text-[10px] text-white/20 hover:text-white/50 transition-colors font-heading ml-auto"
+          >
+            &#8592; Change avatar
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

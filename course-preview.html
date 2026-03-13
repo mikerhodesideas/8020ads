@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Preview - Learn Cowork</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+
+  .header { background: #fff; border-bottom: 1px solid #e5e5e0; padding: 32px 0; text-align: center; position: sticky; top: 0; z-index: 100; }
+  .header small { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #D64C00; }
+  .header h1 { font-size: 28px; font-weight: 800; margin-top: 4px; }
+  .header p { font-size: 14px; color: #777; margin-top: 4px; }
+
+  .toc { max-width: 720px; margin: 32px auto; padding: 0 24px; }
+  .toc h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #D64C00; margin-bottom: 16px; }
+  .toc-module { margin-bottom: 20px; }
+  .toc-module-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .toc-module-outcome { font-size: 13px; color: #777; margin-bottom: 6px; }
+  .toc-lessons { list-style: none; padding-left: 0; }
+  .toc-lessons li { font-size: 14px; padding: 3px 0; }
+  .toc-lessons a { color: #D64C00; text-decoration: none; }
+  .toc-lessons a:hover { text-decoration: underline; }
+
+  .divider { max-width: 720px; margin: 40px auto; border: none; border-top: 2px solid #D64C00; }
+
+  .module-header { max-width: 720px; margin: 48px auto 8px; padding: 0 24px; }
+  .module-header small { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #D64C00; }
+  .module-header h2 { font-size: 22px; font-weight: 800; margin-top: 2px; }
+  .module-header .outcome { font-size: 14px; color: #777; margin-top: 4px; font-style: italic; }
+
+  .lesson { max-width: 720px; margin: 32px auto; padding: 24px; background: #fff; border: 1px solid #e5e5e0; border-left: 3px solid #D64C00; border-radius: 2px; }
+  .lesson-id { font-size: 11px; font-weight: 700; color: #D64C00; text-transform: uppercase; letter-spacing: 0.1em; }
+  .lesson h3 { font-size: 20px; font-weight: 700; margin: 4px 0 16px; }
+
+  .lesson-content h2 { font-size: 17px; font-weight: 700; margin: 24px 0 8px; color: #1a1a1a; }
+  .lesson-content p { margin: 10px 0; font-size: 15px; }
+  .lesson-content ul, .lesson-content ol { margin: 10px 0 10px 24px; font-size: 15px; }
+  .lesson-content li { margin: 4px 0; }
+  .lesson-content strong { font-weight: 700; }
+  .lesson-content code { background: #f3f3ef; padding: 2px 6px; border-radius: 2px; font-size: 13px; }
+  .lesson-content pre { background: #f3f3ef; padding: 16px; border-radius: 2px; overflow-x: auto; margin: 12px 0; font-size: 13px; line-height: 1.5; }
+  .lesson-content pre code { background: none; padding: 0; }
+  .lesson-content blockquote { background: #fff8f0; border-left: 3px solid #D64C00; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #8B4000; border-radius: 2px; }
+  .lesson-content table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .lesson-content th, .lesson-content td { border: 1px solid #e5e5e0; padding: 8px 12px; text-align: left; }
+  .lesson-content th { background: #f3f3ef; font-weight: 700; font-size: 13px; }
+  .lesson-content a { color: #D64C00; }
+
+  .stats { display: flex; gap: 32px; justify-content: center; margin-top: 12px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 800; color: #D64C00; }
+  .stat-label { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .footer { text-align: center; padding: 48px 24px; color: #999; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <small>The Cowork Course</small>
+  <h1>Learn Cowork</h1>
+  <p>From first launch to running your business with AI</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Modules</div></div>
+    <div class="stat"><div class="stat-num">20</div><div class="stat-label">Lessons</div></div>
+    <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Screenshots needed</div></div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 1: What is Cowork?</div>
+    <div class="toc-module-outcome">You understand what Cowork is, how it differs from ChatGPT, and you have it installed and running.</div>
+    <ul class="toc-lessons">
+      <li><a href="#1-1">1-1: What Cowork Is</a></li>
+      <li><a href="#1-2">1-2: How It's Different from ChatGPT</a></li>
+      <li><a href="#1-3">1-3: Installing Cowork</a></li>
+      <li><a href="#1-4">1-4: The Interface Tour</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 2: Your First Conversation</div>
+    <div class="toc-module-outcome">You've had your first conversation, given it a file, and seen it create something real.</div>
+    <ul class="toc-lessons">
+      <li><a href="#2-1">2-1: Starting a Chat</a></li>
+      <li><a href="#2-2">2-2: Giving Cowork a File</a></li>
+      <li><a href="#2-3">2-3: Where Your Results Go</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 3: Working With Your Files</div>
+    <div class="toc-module-outcome">You can point Cowork at any folder, organise files, and understand access boundaries.</div>
+    <ul class="toc-lessons">
+      <li><a href="#3-1">3-1: Pointing Cowork at a Folder</a></li>
+      <li><a href="#3-2">3-2: Reading, Summarising, and Organising</a></li>
+      <li><a href="#3-3">3-3: What Cowork Can and Can't See</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 4: Adding Skills</div>
+    <div class="toc-module-outcome">You understand what skills are, you've installed one, and you've seen generic vs skilled AI.</div>
+    <ul class="toc-lessons">
+      <li><a href="#4-1">4-1: What Is a Skill?</a></li>
+      <li><a href="#4-2">4-2: Installing Your First Skill</a></li>
+      <li><a href="#4-3">4-3: Generic AI vs Skilled AI</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 5: Real Examples</div>
+    <div class="toc-module-outcome">You've seen skills handle email, content, data, and meetings. You know how to run each one.</div>
+    <ul class="toc-lessons">
+      <li><a href="#5-1">5-1: Email Triage</a></li>
+      <li><a href="#5-2">5-2: Content Repurposing</a></li>
+      <li><a href="#5-3">5-3: Data Analysis</a></li>
+      <li><a href="#5-4">5-4: Meeting Notes to Action Items</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-module">
+    <div class="toc-module-title">Module 6: Making It Yours</div>
+    <div class="toc-module-outcome">You know how to customise skills, connect your real tools, and have a clear path forward.</div>
+    <ul class="toc-lessons">
+      <li><a href="#6-1">6-1: Customising Skills</a></li>
+      <li><a href="#6-2">6-2: Connectors and Plugins</a></li>
+      <li><a href="#6-3">6-3: Where to Go Next</a></li>
+    </ul>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 1 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 1</small>
+  <h2>What is Cowork?</h2>
+  <p class="outcome">You understand what Cowork is, how it differs from ChatGPT, and you have it installed and running on your computer.</p>
+</div>
+
+<div class="lesson" id="1-1">
+  <div class="lesson-id">Lesson 1-1</div>
+  <h3>What Cowork Is</h3>
+  <div class="lesson-content">
+    <p>You've probably used ChatGPT. You type a question, you get an answer. It's useful. But everything happens inside a browser tab. You copy text in. You copy results out. The AI lives in one world, and your actual work lives in another.</p>
+    <p>Cowork is different. It's a desktop app from Anthropic (the company behind Claude) that works directly with the files on your computer. Not through copy-paste. Not through uploads. It sits right alongside your documents, spreadsheets, and folders, and it can read them, create new ones, and edit existing ones.</p>
+    <p>Think of it this way:</p>
+    <p><strong>ChatGPT</strong> is like texting a smart friend. You describe your problem, they text back advice. Helpful, but you still do all the work.</p>
+    <p><strong>Cowork</strong> is like having that smart friend sitting at your desk, looking at your screen, and actually doing the work with you. You say "organise these files" and the files get organised. You say "turn this data into a report" and a report appears in your folder.</p>
+    <p>That's the core difference. Cowork doesn't just talk about your work. It does your work.</p>
+    <h2>What it looks like in practice</h2>
+    <p>Here's a simple example. Say you have a messy folder of client notes. In ChatGPT, you'd need to copy each note, paste it in, ask for help, copy the result back out. For ten files, that's painful.</p>
+    <p>In Cowork, you point it at the folder and say: "Read all these notes and create a summary document organised by client." Thirty seconds later, there's a new file in your folder with exactly that.</p>
+    <blockquote>[SCREENSHOT: Cowork creating a summary document from a folder of files]</blockquote>
+    <p>That's not magic. It's not complicated. You just need to know how to talk to it, which is what this course is for.</p>
+    <h2>What you need</h2>
+    <ul>
+      <li>A computer (Mac or Windows)</li>
+      <li>A Claude account (free or paid)</li>
+      <li>That's it</li>
+    </ul>
+    <p>No coding. No terminal. No technical setup beyond installing the app. If you can install Spotify or Slack, you can install Cowork.</p>
+    <h2>Try it</h2>
+    <p>If you haven't already, go to <a href="https://claude.ai">claude.ai</a> and make sure you have an account. You'll need it in a couple of lessons when we install the app. If you already have one, you're ahead of the game.</p>
+  </div>
+</div>
+
+<div class="lesson" id="1-2">
+  <div class="lesson-id">Lesson 1-2</div>
+  <h3>How It's Different from ChatGPT</h3>
+  <div class="lesson-content">
+    <p>If you've used ChatGPT (or Claude in the browser, or Gemini, or any other chat AI), you already know the basics: type a question, get an answer. That mental model is the right starting point. Cowork builds on it.</p>
+    <p>But there are some key differences that change everything about how you work. Let's walk through them.</p>
+    <h2>The copy-paste problem</h2>
+    <p>With ChatGPT, your workflow looks like this:</p>
+    <ol>
+      <li>Open ChatGPT in a browser tab</li>
+      <li>Copy some text from a document</li>
+      <li>Paste it into ChatGPT</li>
+      <li>Read the response</li>
+      <li>Copy the response</li>
+      <li>Paste it back into your document</li>
+    </ol>
+    <p>For a quick question, that's fine. For real work, the copying and pasting, back and forth, trying to give the AI enough context... it gets exhausting fast.</p>
+    <p>Cowork eliminates that entirely. It can already see your files. You don't copy anything in. Results appear as actual files on your computer. You don't copy anything out.</p>
+    <h2>ChatGPT answers questions. Cowork does tasks.</h2>
+    <p>This is the biggest mental shift. When you use ChatGPT, you're having a conversation. You ask, it answers. You're the one who acts on the information.</p>
+    <p>With Cowork, you give it a task. "Summarise these meeting notes." "Turn this CSV into a chart." "Draft a follow-up email based on this conversation." And it does the task. The output isn't a chat bubble you need to copy from. It's a file on your computer, ready to use.</p>
+    <table>
+      <tr><th></th><th>ChatGPT</th><th>Cowork</th></tr>
+      <tr><td>Where it runs</td><td>Browser tab</td><td>Desktop app</td></tr>
+      <tr><td>How you share files</td><td>Copy-paste or upload</td><td>Drag in, or point at a folder</td></tr>
+      <tr><td>Where results go</td><td>Chat bubble</td><td>Real files on your computer</td></tr>
+      <tr><td>Best for</td><td>Questions and brainstorming</td><td>Tasks and production work</td></tr>
+      <tr><td>Knows about your files</td><td>Only what you paste in</td><td>Everything you point it at</td></tr>
+    </table>
+    <h2>They're not competing</h2>
+    <p>This isn't about Cowork being "better" than ChatGPT. They're different tools for different jobs.</p>
+    <p>Need a quick answer to a question? ChatGPT (or Claude in the browser) is great. Need to brainstorm ideas? Chat is perfect for that.</p>
+    <p>But when the work involves your actual files, when you need something created or transformed or organised, that's where Cowork takes over. It's the difference between asking for directions and having someone drive you there.</p>
+    <h2>Try it</h2>
+    <p>Think of the last time you used ChatGPT for something that involved a lot of copy-pasting. Maybe you were reformatting a document, or extracting information from a spreadsheet, or trying to get a consistent output across multiple inputs.</p>
+    <p>Write that task down. We're going to do it in Cowork later, and you'll feel the difference immediately.</p>
+  </div>
+</div>
+
+<div class="lesson" id="1-3">
+  <div class="lesson-id">Lesson 1-3</div>
+  <h3>Installing Cowork</h3>
+  <div class="lesson-content">
+    <p>Time to get Cowork on your computer. This takes about two minutes.</p>
+    <h2>Step 1: Download the app</h2>
+    <p>Go to <a href="https://claude.ai/download">claude.ai/download</a> and download Cowork for your operating system (Mac or Windows).</p>
+    <blockquote>[SCREENSHOT: The Cowork download page showing Mac and Windows options]</blockquote>
+    <h2>Step 2: Install it</h2>
+    <p><strong>On Mac:</strong> Open the downloaded .dmg file and drag Cowork to your Applications folder. Just like installing any other app.</p>
+    <p><strong>On Windows:</strong> Run the installer and follow the prompts. Default settings are fine.</p>
+    <blockquote>[SCREENSHOT: Dragging Cowork to Applications on Mac]</blockquote>
+    <h2>Step 3: Open it</h2>
+    <p>Find Cowork in your Applications (Mac) or Start menu (Windows) and open it.</p>
+    <p>The first time you launch it, you'll need to sign in with your Claude account. If you already use Claude in the browser, use the same login. If you don't have one yet, you can create one right here.</p>
+    <blockquote>[SCREENSHOT: Cowork sign-in screen]</blockquote>
+    <h2>Step 4: You're in</h2>
+    <p>Once you're signed in, you'll see the main Cowork interface. Don't worry about understanding everything yet. We'll do a proper tour in the next lesson.</p>
+    <p>For now, just notice a few things:</p>
+    <ul>
+      <li>There's a text area where you type (just like any chat)</li>
+      <li>There's a sidebar or panel that shows files</li>
+      <li>It feels familiar, like a chat app, but with some extra pieces</li>
+    </ul>
+    <blockquote>[SCREENSHOT: Cowork main interface after first sign-in]</blockquote>
+    <h2>If something goes wrong</h2>
+    <ul>
+      <li><strong>"I can't find the download"</strong>: Check your Downloads folder. The file is called something like "Cowork-Setup" or "Cowork.dmg".</li>
+      <li><strong>"It won't open on Mac"</strong>: Right-click the app, choose "Open", then click "Open" again on the security dialog. macOS sometimes blocks new apps the first time.</li>
+      <li><strong>"I can't sign in"</strong>: Make sure you're using the same email as your Claude account. If you don't have one, create a free account at claude.ai first.</li>
+    </ul>
+    <h2>Try it</h2>
+    <p>Install Cowork and open it. That's the whole task for this lesson. Get to the point where you can see the main interface. If you can see a place to type, you're done.</p>
+  </div>
+</div>
+
+<div class="lesson" id="1-4">
+  <div class="lesson-id">Lesson 1-4</div>
+  <h3>The Interface Tour</h3>
+  <div class="lesson-content">
+    <p>You've got Cowork open. Let's look at what you're working with.</p>
+    <p>The interface has a few key areas. None of them are complicated, but knowing what each one does will save you a lot of confusion later.</p>
+    <h2>The chat area</h2>
+    <p>This is the big area in the middle. It works like any chat interface you've used. You type at the bottom, messages appear above. Cowork responds in the same space.</p>
+    <blockquote>[SCREENSHOT: The chat area with a simple conversation]</blockquote>
+    <p>The difference from a browser chat: when Cowork creates or edits files, you'll see that happen right here in the conversation. It'll show you what it's reading, what it's creating, and what it changed. Transparency is built in.</p>
+    <h2>The project folder</h2>
+    <p>On the right side (or in the sidebar, depending on your setup), you'll see a file browser. This shows the files in your current project folder.</p>
+    <blockquote>[SCREENSHOT: The file browser panel showing a folder with files]</blockquote>
+    <p>This is important: <strong>Cowork works within a folder.</strong> When you open Cowork, you choose which folder it should focus on. It can see all the files in that folder, and any new files it creates will go there too.</p>
+    <p>Think of it like opening a project in any app. You tell it where to look, and that becomes its workspace.</p>
+    <h2>The Customize menu</h2>
+    <p>Click the Customize button (or look for the settings/gear area). This is where you'll eventually add skills, connectors, and plugins. We won't use it yet, but know it's there.</p>
+    <blockquote>[SCREENSHOT: The Customize menu or button location]</blockquote>
+    <h2>What you can ignore for now</h2>
+    <ul>
+      <li>Advanced settings</li>
+      <li>Developer tools</li>
+      <li>Any configuration panels</li>
+    </ul>
+    <p>You don't need any of that to start. The basics are: type in the chat area, point it at a folder, and let it work. Everything else is optional and we'll cover it when it becomes useful.</p>
+    <h2>The mental model</h2>
+    <ol>
+      <li><strong>Left/sidebar</strong>: Navigation and settings</li>
+      <li><strong>Centre</strong>: Your conversation with Cowork</li>
+      <li><strong>Right</strong>: The files Cowork can see and create</li>
+    </ol>
+    <p>You talk to it in the centre. It works with files on the right. And as you get more advanced, you'll configure it on the left.</p>
+    <h2>Try it</h2>
+    <p>Open Cowork and explore the interface. Click on things. Type "Hello, what can you help me with?" and see what happens. Open the file browser and see what folder it's pointed at.</p>
+    <p>You can't break anything. Cowork will always ask before making changes to existing files. So click around freely. Get comfortable with where things are.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 2 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 2</small>
+  <h2>Your First Conversation</h2>
+  <p class="outcome">You've had your first real conversation with Cowork, given it a file to work with, and seen it create something useful on your computer.</p>
+</div>
+
+<div class="lesson" id="2-1">
+  <div class="lesson-id">Lesson 2-1</div>
+  <h3>Starting a Chat</h3>
+  <div class="lesson-content">
+    <p>You've got Cowork open. The chat area is staring at you. Now what?</p>
+    <p>Just type. Seriously. Type anything. Ask it a question. Give it a task. Say hello. There's no wrong way to start.</p>
+    <h2>Your first message</h2>
+    <p>Here are some good first messages to try:</p>
+    <ul>
+      <li>"What can you help me with?"</li>
+      <li>"I'm new to Cowork. What should I know?"</li>
+      <li>"Can you see any files right now?"</li>
+    </ul>
+    <p>That last one is useful because it tells you whether Cowork is pointed at a folder with files in it, or if it's starting with an empty workspace.</p>
+    <blockquote>[SCREENSHOT: A simple first conversation in Cowork]</blockquote>
+    <h2>How it responds</h2>
+    <p>Cowork responds in the chat, just like ChatGPT or any other AI chat. You'll see text, sometimes formatted with bold, bullet points, or headings.</p>
+    <p>But here's what's different: if you ask it to do something that involves files, it won't just tell you how. It'll do it. Ask it to create a to-do list and it'll create an actual file. Ask it to read a document and it'll actually read the file, not ask you to paste it in.</p>
+    <h2>Having a conversation</h2>
+    <p>You can go back and forth, just like any chat. Ask a follow-up question. Change your mind. Give more detail. Cowork remembers everything you've said in the current conversation.</p>
+    <p>A few tips for good conversations:</p>
+    <ul>
+      <li><strong>Be specific about what you want.</strong> "Summarise this document" works. "Help me with this" is too vague.</li>
+      <li><strong>Tell it the format you want.</strong> "Give me bullet points" or "Create a table" or "Write it as a short paragraph."</li>
+      <li><strong>Don't worry about being too polite or too casual.</strong> Cowork doesn't care about tone. It cares about clarity.</li>
+    </ul>
+    <h2>Starting a new conversation</h2>
+    <p>Each conversation is a fresh start. If you want to work on something new, start a new conversation. The old one is still there in your history if you need it.</p>
+    <h2>Try it</h2>
+    <p>Start a conversation with Cowork. Ask it: "I have a folder of documents I need help organising. What information would you need from me to help?"</p>
+    <p>Read what it says. This gives you a feel for how it thinks and what kind of instructions work best.</p>
+  </div>
+</div>
+
+<div class="lesson" id="2-2">
+  <div class="lesson-id">Lesson 2-2</div>
+  <h3>Giving Cowork a File</h3>
+  <div class="lesson-content">
+    <p>Chatting is nice. But the real power of Cowork shows up when you give it something to work with.</p>
+    <h2>How to give it a file</h2>
+    <p>There are two ways:</p>
+    <p><strong>1. Drag and drop.</strong> Grab a file from your desktop or file explorer and drag it right into the chat area. Cowork will read it and wait for your instructions.</p>
+    <blockquote>[SCREENSHOT: Dragging a file into the Cowork chat area]</blockquote>
+    <p><strong>2. Just mention it.</strong> If the file is already in your project folder, you can just reference it: "Read the file called meeting-notes.txt" or "Look at the spreadsheet in this folder." Cowork will find it.</p>
+    <h2>Give it a task</h2>
+    <p>Once Cowork has the file, tell it what to do. Here are some things that work well:</p>
+    <ul>
+      <li>"Summarise this document in 5 bullet points"</li>
+      <li>"Turn this into a formatted report"</li>
+      <li>"Find all the action items in these notes"</li>
+      <li>"Create a table from this data"</li>
+      <li>"Rewrite this email to be more professional"</li>
+    </ul>
+    <p>Be direct. You're giving instructions, not having a philosophical conversation.</p>
+    <h2>Watch it work</h2>
+    <p>This is the moment that surprises most people the first time. Cowork reads your file, processes it, and creates something new. You'll see it working in the chat: reading the file, thinking through the task, then producing the output.</p>
+    <blockquote>[SCREENSHOT: Cowork reading a file and producing a summary]</blockquote>
+    <p>The output might appear in the chat, or it might create a new file. For simple requests like "summarise this," you'll usually see the summary right in the conversation. For bigger tasks like "create a report," it'll create an actual file.</p>
+    <h2>A simple exercise</h2>
+    <p>Let's do this for real. Create a text file on your computer with this content (or anything similar):</p>
+    <p><strong>meeting-notes.txt</strong></p>
+    <pre><code>Team meeting March 10
+Attendees: Sarah, James, Priya, Tom
+
+Discussion:
+- Website redesign is behind schedule. Sarah will follow up with the developer.
+- New pricing page needs to be live by April 1.
+- James pitched the idea of a customer survey. Team agreed. Priya will draft questions.
+- Tom flagged that the email automation is broken. Needs fixing this week.
+- Next meeting: March 17.</code></pre>
+    <p>Now drag that file into Cowork and type: "Read these meeting notes and give me a list of action items with who is responsible for each."</p>
+    <h2>Try it</h2>
+    <p>Do the exercise above. Create the file, drag it in, ask for action items. See what comes back. If you already have real meeting notes, even better. Use those.</p>
+  </div>
+</div>
+
+<div class="lesson" id="2-3">
+  <div class="lesson-id">Lesson 2-3</div>
+  <h3>Where Your Results Go</h3>
+  <div class="lesson-content">
+    <p>You gave Cowork a file. It did something with it. But where did the result actually go?</p>
+    <p>This is one of the most important things to understand about Cowork, and it's different from every browser-based AI you've used.</p>
+    <h2>Results are real files</h2>
+    <p>When Cowork creates something, it creates an actual file on your computer. Not a chat response you need to copy. Not a temporary preview. A real file, in a real folder, that you can open with any app.</p>
+    <p>Ask Cowork to "create a summary document from these notes" and you'll find a new file in your project folder. Something like <code>meeting-summary.md</code> or <code>summary.txt</code>. You can open it in Word, Notion, Google Docs, whatever you normally use.</p>
+    <blockquote>[SCREENSHOT: A project folder showing a newly created file from Cowork]</blockquote>
+    <h2>Where they appear</h2>
+    <p>New files appear in your <strong>project folder</strong>. That's the folder Cowork is currently pointed at. If you're not sure which folder that is, ask: "What folder are we working in?"</p>
+    <p>You can also see new files appear in the file browser panel on the right side of the Cowork interface. They show up in real time as Cowork creates them.</p>
+    <h2>Chat responses vs file creation</h2>
+    <p>Not everything creates a file. There's a simple pattern:</p>
+    <ul>
+      <li><strong>Questions</strong> get answered in the chat. ("What's the main theme of this document?" produces a chat response.)</li>
+      <li><strong>Tasks</strong> produce files. ("Create a summary document from this" produces an actual file.)</li>
+    </ul>
+    <p>If you want a file when Cowork gives you a chat response, just say: "Save that as a file called summary.md." It will.</p>
+    <h2>The "wait, it actually did it" moment</h2>
+    <p>This is the point where most people realise Cowork is something different. You didn't copy anything. You didn't paste anything. You pointed at a file, said what you wanted, and the result appeared in your folder, ready to use.</p>
+    <p>No exporting. No reformatting. No "let me just clean this up." It's done.</p>
+    <blockquote>[SCREENSHOT: Opening a Cowork-created file in another application]</blockquote>
+    <h2>Editing existing files</h2>
+    <p>Cowork doesn't just create new files. It can also edit existing ones. Say "Fix the typos in meeting-notes.txt" and it'll update the file directly.</p>
+    <p>Important: Cowork always asks permission before changing an existing file. You'll see what it wants to change and you approve or reject the edit. It never silently overwrites your work.</p>
+    <h2>Try it</h2>
+    <p>Go back to the exercise from the previous lesson (or start a new one). This time, ask Cowork to create a file: "Create a new file called action-items.md with the action items from these notes, formatted as a checklist."</p>
+    <p>Then go to your project folder and open the file. It's really there. That's Cowork.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 3 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 3</small>
+  <h2>Working With Your Files</h2>
+  <p class="outcome">You can point Cowork at any folder, ask it to read and organise your files, and you understand what it can and can't access on your computer.</p>
+</div>
+
+<div class="lesson" id="3-1">
+  <div class="lesson-id">Lesson 3-1</div>
+  <h3>Pointing Cowork at a Folder</h3>
+  <div class="lesson-content">
+    <p>So far you've worked with individual files. That's useful, but the real power comes when you point Cowork at an entire folder. It can see everything inside, understand how files relate to each other, and work across multiple documents at once.</p>
+    <h2>Setting your project folder</h2>
+    <p>When you open Cowork, you'll see an option to choose your project folder. This is the folder Cowork will work within for this session.</p>
+    <blockquote>[SCREENSHOT: Choosing a project folder in Cowork]</blockquote>
+    <p>You can pick any folder on your computer:</p>
+    <ul>
+      <li>A project folder with client files</li>
+      <li>Your desktop (if that's where your files live)</li>
+      <li>A specific folder you've set up for experimenting</li>
+    </ul>
+    <p>Once selected, Cowork can see every file and subfolder inside it.</p>
+    <h2>Why folders matter</h2>
+    <p>Working with a folder is different from working with a single file. Here's why:</p>
+    <p><strong>Context.</strong> When Cowork can see all the files in a folder, it understands the bigger picture. Instead of "summarise this one document," you can say "look at all the client notes in this folder and tell me which projects are behind schedule."</p>
+    <p><strong>Connections.</strong> Cowork can find relationships between files. "Compare the budgets in these three spreadsheets" or "find all the files that mention the Henderson project."</p>
+    <p><strong>Batch operations.</strong> Need to rename 20 files? Reformat 10 documents? Cowork can work through the whole folder, not just one file at a time.</p>
+    <h2>Creating a practice folder</h2>
+    <p>If you want to follow along without touching any important files, create a practice folder:</p>
+    <ol>
+      <li>Create a new folder on your desktop called "cowork-practice"</li>
+      <li>Put a few files in it: text files, a spreadsheet, some notes, anything you have lying around</li>
+      <li>Point Cowork at this folder</li>
+    </ol>
+    <p>This gives you a safe space to experiment. Cowork can't see anything outside this folder, and you can delete the whole thing when you're done.</p>
+    <h2>Try it</h2>
+    <p>Create a practice folder with at least 3-4 different files in it. They can be anything: old notes, a spreadsheet, some text files, maybe a document you've been meaning to organise. Point Cowork at the folder and ask: "What files are in this folder? Give me a quick summary of each one."</p>
+    <p>See how Cowork reads through everything and gives you an overview. That's the starting point for everything we'll do next.</p>
+  </div>
+</div>
+
+<div class="lesson" id="3-2">
+  <div class="lesson-id">Lesson 3-2</div>
+  <h3>Reading, Summarising, and Organising</h3>
+  <div class="lesson-content">
+    <p>Now that Cowork can see your folder, let's put it to work. These are the bread-and-butter tasks that save the most time, and they're all simple to ask for.</p>
+    <h2>Reading files</h2>
+    <p>The simplest thing you can do: ask Cowork to read something and tell you what's in it.</p>
+    <ul>
+      <li>"Read the file quarterly-report.pdf and give me the key numbers"</li>
+      <li>"What's in the spreadsheet? Give me a summary of the columns and what they contain"</li>
+      <li>"Read all the files in the /notes subfolder"</li>
+    </ul>
+    <p>Cowork handles text files, CSVs, PDFs, and most common document formats. If it can't read something, it'll tell you.</p>
+    <h2>Summarising</h2>
+    <p>This is where Cowork starts saving you real time. Instead of reading through ten documents yourself, ask Cowork to do it:</p>
+    <ul>
+      <li>"Summarise all the files in this folder. One paragraph per file."</li>
+      <li>"Give me the top 3 takeaways from each document in the /reports folder"</li>
+      <li>"Read these meeting notes and tell me what decisions were made"</li>
+    </ul>
+    <p>The summaries appear in the chat, but you can always say "save that as a file" if you want to keep them.</p>
+    <h2>Organising</h2>
+    <p>This is the one that feels like magic the first time. Cowork can reorganise files, rename them, create folder structures, and move things around:</p>
+    <ul>
+      <li>"Organise these files into subfolders by topic"</li>
+      <li>"Rename all these files to follow the pattern YYYY-MM-DD-topic.md"</li>
+      <li>"Create an index file that lists every document in this folder with a one-line description"</li>
+    </ul>
+    <blockquote>[SCREENSHOT: Before and after of a messy folder that Cowork has organised]</blockquote>
+    <p><strong>Important:</strong> Cowork will always show you what it plans to do before making changes. You'll see a list of proposed renames or moves, and you approve them. It doesn't just start shuffling files around without asking.</p>
+    <h2>Combining tasks</h2>
+    <p>The real efficiency comes from chaining these together:</p>
+    <p>"Read all the files in this folder. Create a summary document with one section per file. Then suggest a better folder structure and rename the files to be more consistent."</p>
+    <p>That's one instruction. Three tasks. Cowork handles the whole sequence.</p>
+    <h2>Try it</h2>
+    <p>Point Cowork at your practice folder (or any folder with a few files) and try this:</p>
+    <p>"Read every file in this folder. Create a new file called INDEX.md that lists each file with a one-sentence description of what it contains. Sort the list by topic."</p>
+    <p>Check the result. It should be a clean, organised index of everything in your folder. If something's off, tell Cowork what to fix. It'll update the file.</p>
+  </div>
+</div>
+
+<div class="lesson" id="3-3">
+  <div class="lesson-id">Lesson 3-3</div>
+  <h3>What Cowork Can and Can't See</h3>
+  <div class="lesson-content">
+    <p>Before you go further, it's worth understanding the boundaries. Knowing what Cowork can access (and what it can't) will save you from confusion later, and help you feel confident about privacy and safety.</p>
+    <h2>What it CAN see</h2>
+    <p><strong>Your project folder.</strong> Everything inside the folder you've pointed Cowork at. All files, all subfolders, everything.</p>
+    <p><strong>Files you drag in.</strong> Even if a file isn't in your project folder, you can drag it into the chat and Cowork will read it for that conversation.</p>
+    <p><strong>Your conversation history.</strong> Cowork remembers everything you've said in the current conversation. It uses that context to give better answers and avoid repeating itself.</p>
+    <h2>What it CAN'T see</h2>
+    <p><strong>Other folders on your computer.</strong> Cowork only sees the folder you've pointed it at. Your emails, your browser tabs, your other applications: invisible to it.</p>
+    <p><strong>The internet.</strong> By default, Cowork can't browse websites or search Google. It works with local files. (Later, in Module 6, we'll cover connectors that let it access specific online services like email.)</p>
+    <p><strong>Other people's Cowork sessions.</strong> Your conversations are private. Nobody else can see what you're doing.</p>
+    <p><strong>Your screen or webcam.</strong> Cowork doesn't "watch" you work. It only knows what you type and the files you've given it access to.</p>
+    <h2>What it CAN do with your files</h2>
+    <ul>
+      <li><strong>Read</strong> any file in your project folder</li>
+      <li><strong>Create</strong> new files in your project folder</li>
+      <li><strong>Edit</strong> existing files (with your permission)</li>
+      <li><strong>Rename</strong> or move files (with your permission)</li>
+      <li><strong>Delete</strong> files (with your permission, and it always confirms first)</li>
+    </ul>
+    <h2>The permission model</h2>
+    <p>This is important: <strong>Cowork always asks before changing your files.</strong></p>
+    <p>If you say "rewrite this document," Cowork will show you the proposed changes and wait for your approval. You can accept, reject, or ask for modifications. It never silently overwrites your work.</p>
+    <blockquote>[SCREENSHOT: Cowork asking for permission before editing a file]</blockquote>
+    <p>This is one of the things that makes Cowork safe to use with real work files. You're always in control.</p>
+    <h2>The mental model</h2>
+    <p>Think of Cowork as a very capable assistant sitting in one room of your house. They can see everything in that room (your project folder) and do impressive work with it. But they can't wander into other rooms, they can't leave the house to check the post, and they always knock before rearranging the furniture.</p>
+    <p>That's the right level of trust for now. Enough access to be genuinely useful. Enough limits to feel safe.</p>
+    <h2>Try it</h2>
+    <p>Ask Cowork these questions about its own access:</p>
+    <ol>
+      <li>"What folder are we working in right now?"</li>
+      <li>"How many files can you see?"</li>
+      <li>"Can you access the internet?"</li>
+    </ol>
+    <p>The answers will confirm everything above. And if anything surprises you, this is a good time to ask follow-up questions. Cowork is great at explaining its own capabilities.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 4 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 4</small>
+  <h2>Adding Skills</h2>
+  <p class="outcome">You understand what skills are, you've installed your first one, and you've seen the dramatic difference between generic AI and a skill-powered specialist.</p>
+</div>
+
+<div class="lesson" id="4-1">
+  <div class="lesson-id">Lesson 4-1</div>
+  <h3>What Is a Skill?</h3>
+  <div class="lesson-content">
+    <p>So far, everything you've done with Cowork has been using its general intelligence. You ask, it does its best. And that's pretty good.</p>
+    <p>But here's the thing: Cowork is like a smart person who just arrived at your company on their first day. They're capable and willing, but they don't know your processes, your preferences, or what "good" looks like in your specific context.</p>
+    <p>A skill changes that.</p>
+    <h2>Skills in plain English</h2>
+    <p>A skill is a set of instructions that turns Cowork from a generalist into a specialist. It tells Cowork:</p>
+    <ul>
+      <li>What task to focus on</li>
+      <li>What format the output should follow</li>
+      <li>What rules to apply</li>
+      <li>What scripts to run for calculations or formatting</li>
+    </ul>
+    <p>When you install a skill, you're giving Cowork expertise in one specific area. Instead of "do your best with this data," the skill says "extract action items, categorise them by urgency, assign owners based on the attendee list, and format the output as a checklist with due dates."</p>
+    <h2>Without a skill vs with a skill</h2>
+    <p>Here's a concrete example. Say you give Cowork a blog post and ask it to repurpose the content for social media.</p>
+    <p><strong>Without a skill</strong>, you get a generic response. Maybe a tweet thread, maybe a LinkedIn post. The format is inconsistent, it might miss your brand voice, and you'll need to edit heavily.</p>
+    <p><strong>With the Content Repurposer skill</strong>, you get:</p>
+    <ul>
+      <li>A LinkedIn post in your tone</li>
+      <li>A Twitter/X thread with hooks</li>
+      <li>An email newsletter version</li>
+      <li>A short-form video script</li>
+      <li>All in an interactive HTML page with tabs and copy buttons</li>
+    </ul>
+    <p>Same input. Dramatically different output. The difference isn't that Cowork got smarter. It's that the skill told it exactly what "good" looks like.</p>
+    <h2>What's inside a skill?</h2>
+    <p>A skill is just a folder containing a few files:</p>
+    <ul>
+      <li><strong>SKILL.md</strong>: The instructions. This is the "brain" of the skill. It tells Cowork what to do, step by step, and what the output should look like.</li>
+      <li><strong>Scripts</strong> (optional): Code files that handle calculations, formatting, or data processing. These ensure consistent, precise output that doesn't rely on the AI to do maths.</li>
+      <li><strong>Templates</strong> (optional): Starting points for the output format.</li>
+    </ul>
+    <p>You don't need to write these yourself (though you can). For now, you'll install pre-built skills that are ready to go.</p>
+    <h2>Why this matters</h2>
+    <p>Skills are what make Cowork a practical business tool instead of just a clever chatbot. A chatbot gives you suggestions. A skill-powered Cowork gives you finished, ready-to-use output.</p>
+    <p>Every demo you try in <a href="/play">the interactive game</a> uses a skill. That's why the results look polished and professional. It's not a different AI. It's the same AI with better instructions.</p>
+    <h2>Try it</h2>
+    <p>Think about a task you do regularly where the output always follows the same format. Maybe it's:</p>
+    <ul>
+      <li>A weekly report that always has the same sections</li>
+      <li>A client email that follows a certain structure</li>
+      <li>A data analysis that needs specific metrics calculated</li>
+    </ul>
+    <p>That repetitive structure is exactly what a skill captures. Write down one task like this. In the next lesson, you'll install a skill and see the difference for yourself.</p>
+  </div>
+</div>
+
+<div class="lesson" id="4-2">
+  <div class="lesson-id">Lesson 4-2</div>
+  <h3>Installing Your First Skill</h3>
+  <div class="lesson-content">
+    <p>Time to install a skill. This takes about 30 seconds, and it's the single biggest upgrade to how Cowork works for you.</p>
+    <h2>What you'll install</h2>
+    <p>We're going to install the <strong>Content Repurposer</strong> skill. It takes a blog post, article, or any piece of long-form content, and turns it into multiple formats: LinkedIn post, tweet thread, email newsletter, and more. All in one go.</p>
+    <p>You can download the skill from the <a href="/play">interactive game</a> (it's one of the Level 2 demos), or Mike will provide a direct download link.</p>
+    <h2>Step by step</h2>
+    <h3>1. Download the skill</h3>
+    <p>Download the <code>content-repurposer.zip</code> file and save it somewhere easy to find (your desktop is fine).</p>
+    <h3>2. Open Cowork's Customize menu</h3>
+    <p>In Cowork, look for the <strong>Customize</strong> button. It's usually in the sidebar or settings area.</p>
+    <blockquote>[SCREENSHOT: Finding the Customize button in Cowork]</blockquote>
+    <h3>3. Go to Skills</h3>
+    <p>In the Customize panel, click on <strong>Skills</strong>. You'll see any skills you've already installed (probably none yet).</p>
+    <blockquote>[SCREENSHOT: The Skills section in Customize, empty state]</blockquote>
+    <h3>4. Click the + button</h3>
+    <p>Click the <strong>+</strong> (add) button to install a new skill.</p>
+    <blockquote>[SCREENSHOT: The add skill button]</blockquote>
+    <h3>5. Upload the zip file</h3>
+    <p>Select the <code>content-repurposer.zip</code> file you downloaded. Cowork will unpack it and install the skill.</p>
+    <blockquote>[SCREENSHOT: Uploading a skill zip file]</blockquote>
+    <h3>6. Done</h3>
+    <p>That's it. The skill is installed. You'll see it listed in your Skills panel.</p>
+    <blockquote>[SCREENSHOT: The Content Repurposer skill installed and visible in the Skills list]</blockquote>
+    <h2>Running the skill</h2>
+    <p>Now let's use it. You need a piece of content to repurpose. You can:</p>
+    <ul>
+      <li>Use a blog post you've written</li>
+      <li>Copy an article you like into a text file</li>
+      <li>Use the sample file from the game demos</li>
+    </ul>
+    <p>Drag the content file into Cowork and type:</p>
+    <p>"Use the Content Repurposer skill on this article."</p>
+    <p>Or simply:</p>
+    <p>"Repurpose this content for social media."</p>
+    <p>Cowork will recognise that you have the skill installed and use it automatically. Watch what happens.</p>
+    <blockquote>[SCREENSHOT: Cowork running the Content Repurposer skill, showing the output]</blockquote>
+    <h2>What you should see</h2>
+    <p>The skill produces an interactive HTML file with:</p>
+    <ul>
+      <li>Multiple tabs (LinkedIn, Twitter, Email, etc.)</li>
+      <li>Copy buttons for each version</li>
+      <li>Consistent formatting across all outputs</li>
+      <li>Content adapted to each platform's style</li>
+    </ul>
+    <p>Open the HTML file in your browser. Click through the tabs. This is what a skill does: turns a vague task into a precise, polished, ready-to-use result.</p>
+    <h2>If something goes wrong</h2>
+    <ul>
+      <li><strong>"Cowork didn't use the skill"</strong>: Try being more explicit: "Run the Content Repurposer skill on this file."</li>
+      <li><strong>"The zip won't upload"</strong>: Make sure you're uploading the .zip file directly, not an unzipped folder.</li>
+      <li><strong>"I can't find Customize"</strong>: It might be behind a menu icon or in the sidebar. Look for a gear icon or three dots.</li>
+    </ul>
+    <h2>Try it</h2>
+    <p>Install the Content Repurposer skill and run it on any piece of content you have. A blog post, an article, even a long email. See what comes back. That's the baseline for what a skill can do.</p>
+  </div>
+</div>
+
+<div class="lesson" id="4-3">
+  <div class="lesson-id">Lesson 4-3</div>
+  <h3>Generic AI vs Skilled AI</h3>
+  <div class="lesson-content">
+    <p>You've installed a skill. You've seen what it produces. Now let's make sure the lesson really sinks in, because this distinction is the core idea of everything that follows.</p>
+    <h2>The test</h2>
+    <p>Here's a simple comparison. Take the same piece of content and give it to Cowork twice.</p>
+    <p><strong>First, without the skill.</strong> Start a new conversation (so Cowork doesn't use the skill automatically) and type:</p>
+    <p>"Here's a blog post. Repurpose it for LinkedIn, Twitter, and email newsletter."</p>
+    <p>Read what you get back.</p>
+    <p><strong>Then, with the skill.</strong> In a new conversation (or the same one), type:</p>
+    <p>"Use the Content Repurposer skill on this blog post."</p>
+    <p>Compare the two outputs.</p>
+    <h2>What you'll notice</h2>
+    <p>The generic response is... fine. It's helpful. The AI does its best. But you'll likely see:</p>
+    <ul>
+      <li>Inconsistent formatting between platforms</li>
+      <li>Missing elements you'd want (like hashtags, hooks, or character counts)</li>
+      <li>A wall of text instead of something you can immediately use</li>
+      <li>No export options, no copy buttons, no interactivity</li>
+    </ul>
+    <p>The skilled response is different. It's structured, consistent, and practical. Every platform has the right format. There are copy buttons. The output is an HTML page you can open and use immediately.</p>
+    <h2>Why the difference?</h2>
+    <p>It's not that the AI is smarter with a skill. It's that the skill removes the guesswork.</p>
+    <p>Without a skill, Cowork has to figure out:</p>
+    <ul>
+      <li>What format should LinkedIn use?</li>
+      <li>How long should a tweet be?</li>
+      <li>What does "email newsletter" mean to you?</li>
+      <li>Should it create files or just respond in the chat?</li>
+    </ul>
+    <p>With a skill, all of those decisions are already made. The skill says: "LinkedIn posts should be 150-200 words with a hook in the first line. Tweets should be threaded with a max of 280 characters each. The output goes in an HTML file with tabs and copy buttons."</p>
+    <p><strong>The skill is the difference between "use your best judgment" and "here's exactly what I need."</strong></p>
+    <h2>This applies to everything</h2>
+    <p>The Content Repurposer is just one example. Every task that has a repeatable structure benefits from a skill:</p>
+    <ul>
+      <li><strong>Meeting notes</strong> become structured action items with assigned owners</li>
+      <li><strong>Raw data</strong> becomes an interactive dashboard with charts and filtering</li>
+      <li><strong>Email triage</strong> becomes a prioritised list with suggested responses</li>
+      <li><strong>Client feedback</strong> becomes categorised, scored, and summarised</li>
+    </ul>
+    <p>In the next module, you'll see several of these in action. Each one follows the same pattern: install the skill, give it a file, get a dramatically better result.</p>
+    <h2>The bigger picture</h2>
+    <p>Here's why this matters beyond just "better output." Skills make AI <strong>reliable</strong>. Without them, you get different results every time, and you spend time fixing the output to match what you actually wanted.</p>
+    <p>With skills, the output is consistent. You can trust it. You can hand it to a colleague and say "run this, it works." That's the difference between a toy and a tool.</p>
+    <h2>Try it</h2>
+    <p>Do the comparison yourself. Same content, with and without the skill. Notice the differences. Then ask yourself: what other tasks in your work would benefit from this level of structure?</p>
+    <p>Write down two or three. We'll get to real examples in the next module.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 5 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 5</small>
+  <h2>Real Examples</h2>
+  <p class="outcome">You've seen skills handle real business tasks: email triage, content repurposing, data analysis, and meeting notes. You know how to run each one and what to expect.</p>
+</div>
+
+<div class="lesson" id="5-1">
+  <div class="lesson-id">Lesson 5-1</div>
+  <h3>Email Triage</h3>
+  <div class="lesson-content">
+    <p>Let's start with something everyone deals with: a messy inbox. This example shows how a skill turns a pile of emails into a clear, prioritised action list.</p>
+    <h2>The scenario</h2>
+    <p>You have 20 emails. Some are urgent. Some are FYI. Some need a reply. Some can wait. Sorting through them manually takes time and mental energy. With a skill, it takes about 30 seconds.</p>
+    <h2>How it works</h2>
+    <ol>
+      <li><strong>Export your emails</strong> as a file (JSON, text, or even just paste them into a document)</li>
+      <li><strong>Give the file to Cowork</strong> with an email triage skill installed</li>
+      <li><strong>Get back a priority dashboard</strong>: urgent items at the top, FYI items at the bottom, with suggested next actions for each</li>
+    </ol>
+    <blockquote>[SCREENSHOT: Email triage skill output showing a priority dashboard]</blockquote>
+    <h2>What the skill produces</h2>
+    <p>A good email triage skill creates an interactive HTML dashboard with:</p>
+    <ul>
+      <li><strong>Priority levels</strong>: Urgent, Needs Reply, FYI, Can Wait</li>
+      <li><strong>One-line summaries</strong> for each email so you can scan quickly</li>
+      <li><strong>Suggested actions</strong>: "Reply with X," "Forward to Y," "No action needed"</li>
+      <li><strong>Filtering</strong>: Click a priority level to see only those emails</li>
+    </ul>
+    <p>Compare that to reading through 20 emails one by one. The skill doesn't just sort them. It thinks about what matters and surfaces the things you actually need to act on.</p>
+    <h2>Try it in the game</h2>
+    <p>The <a href="/play">interactive game</a> has an email triage demo in Level 1. You can see exactly what the output looks like and try it with sample data.</p>
+    <h2>Try it yourself</h2>
+    <p>If you want to test this with real emails:</p>
+    <ol>
+      <li>Pick 5-10 recent emails from your inbox</li>
+      <li>Copy them into a text file (subject line and first paragraph is enough)</li>
+      <li>Point Cowork at the file</li>
+      <li>Ask: "Triage these emails by priority. Flag anything that needs a reply today."</li>
+    </ol>
+    <p>Even without a dedicated email skill, Cowork will do a decent job. With one, the output is structured, consistent, and immediately useful.</p>
+  </div>
+</div>
+
+<div class="lesson" id="5-2">
+  <div class="lesson-id">Lesson 5-2</div>
+  <h3>Content Repurposing</h3>
+  <div class="lesson-content">
+    <p>You've already seen this skill in action when you installed it in Module 4. Now let's look at how to get the most out of it, and why it's one of the most popular skills people use.</p>
+    <h2>The problem it solves</h2>
+    <p>You write something once: a blog post, an article, a case study, a newsletter. Then you need versions for LinkedIn, Twitter/X, email, maybe a short video script. Doing that manually means rewriting the same content 4-5 times, each in a different format and tone.</p>
+    <p>The Content Repurposer skill does all of that from a single input.</p>
+    <h2>Getting better results</h2>
+    <p>The skill works well out of the box, but a few things make the output even better:</p>
+    <p><strong>Give it longer content.</strong> A 200-word blurb doesn't give the skill much to work with. A 1000-word blog post gives it enough material to create genuinely different versions for each platform.</p>
+    <p><strong>Be specific about your audience.</strong> Add a line like: "My audience is small business owners who are not technical" or "This is for a B2B SaaS audience." The skill adapts the tone for each platform while keeping your audience in mind.</p>
+    <p><strong>Tell it what to emphasise.</strong> "Focus on the practical tips, not the theory" or "The key message is that automation saves time" gives the skill a clear angle for each version.</p>
+    <h2>What the output looks like</h2>
+    <p>The skill creates an HTML file with tabs:</p>
+    <ul>
+      <li><strong>LinkedIn</strong>: Professional tone, hook in the first line, 150-200 words</li>
+      <li><strong>Twitter/X</strong>: Thread format, short punchy sentences, hashtags</li>
+      <li><strong>Email Newsletter</strong>: Personal tone, clear CTA, easy to scan</li>
+      <li><strong>Short Video Script</strong>: Spoken-word version, 60-90 seconds</li>
+      <li><strong>Summary</strong>: One-paragraph version for repurposing anywhere</li>
+    </ul>
+    <p>Each tab has a copy button. Click, paste, done.</p>
+    <h2>Try it in the game</h2>
+    <p>The <a href="/play">Content Repurposer demo</a> in Level 2 walks you through the full process with sample content.</p>
+    <h2>Try it yourself</h2>
+    <p>Take something you've written recently (or something you wish you had time to repurpose) and run the Content Repurposer skill on it. Compare the output to what you'd normally produce manually. Pay attention to the time difference.</p>
+    <p>Most people find the skill produces a solid first draft for every platform in under a minute. Even if you tweak the results, that's a huge time saving.</p>
+  </div>
+</div>
+
+<div class="lesson" id="5-3">
+  <div class="lesson-id">Lesson 5-3</div>
+  <h3>Data Analysis</h3>
+  <div class="lesson-content">
+    <p>This is the example that gets the biggest reaction. You give Cowork a spreadsheet, and it creates an interactive dashboard with charts, filtering, and insights. No formulas, no pivot tables, no spreadsheet skills required.</p>
+    <h2>The scenario</h2>
+    <p>You have a CSV or spreadsheet with data. Sales numbers, campaign metrics, survey responses, expense tracking, anything with rows and columns. You need to understand what's in it.</p>
+    <p>Normally you'd open it in Excel or Google Sheets, squint at the numbers, maybe try to build a chart. With a data analysis skill, you skip straight to the insights.</p>
+    <h2>How it works</h2>
+    <ol>
+      <li><strong>Drag your CSV/spreadsheet into Cowork</strong> (or point it at the file in your project folder)</li>
+      <li><strong>Ask for analysis</strong>: "Analyse this data and create a dashboard"</li>
+      <li><strong>Get back an interactive HTML report</strong> with charts, summaries, and key findings</li>
+    </ol>
+    <blockquote>[SCREENSHOT: A data analysis dashboard created by Cowork from a CSV file]</blockquote>
+    <h2>What makes the skilled version better</h2>
+    <p>Without a skill, Cowork will look at your data and give you a text summary. Decent, but hard to share and not very visual.</p>
+    <p>With a data analysis skill, you get:</p>
+    <ul>
+      <li><strong>Charts</strong> that automatically pick the right visualisation (bar, line, pie) based on your data</li>
+      <li><strong>Key metrics</strong> pulled out and highlighted at the top</li>
+      <li><strong>Filtering and sorting</strong> so you can explore the data yourself</li>
+      <li><strong>Anomaly detection</strong>: "This number looks unusual compared to the trend"</li>
+      <li><strong>Export options</strong>: Download filtered views, save charts</li>
+    </ul>
+    <p>The skill's scripts handle the calculations. That means the numbers are reliable. The AI doesn't "estimate" your totals. The code adds them up properly.</p>
+    <h2>What kind of data works?</h2>
+    <p>Almost anything in rows and columns:</p>
+    <ul>
+      <li>Sales data (revenue, units, by product/region)</li>
+      <li>Marketing data (clicks, conversions, cost per lead)</li>
+      <li>Survey responses</li>
+      <li>Financial data (expenses, income, budgets)</li>
+      <li>Any CSV export from any tool</li>
+    </ul>
+    <h2>Try it in the game</h2>
+    <p>The <a href="/play">Campaign Dashboard demo</a> in Level 1 shows a data analysis in action. The Level 2 demos include more advanced analysis with the CSV Analyzer skill.</p>
+    <h2>Try it yourself</h2>
+    <p>Find any spreadsheet or CSV you have. Export data from whatever tool you use: Google Ads, Shopify, your accounting software, a CRM. Drag it into Cowork and say:</p>
+    <p>"Analyse this data. Create an interactive dashboard showing the key metrics, trends, and anything that looks unusual."</p>
+    <p>Open the HTML file it creates. Click around. Filter. Sort. That took 30 seconds.</p>
+  </div>
+</div>
+
+<div class="lesson" id="5-4">
+  <div class="lesson-id">Lesson 5-4</div>
+  <h3>Meeting Notes to Action Items</h3>
+  <div class="lesson-content">
+    <p>Meetings produce notes. Notes produce... nothing, usually. They sit in a document until the next meeting when someone asks "wait, who was supposed to do that?"</p>
+    <p>A meeting intelligence skill fixes this. It takes messy notes and turns them into structured, actionable output.</p>
+    <h2>The scenario</h2>
+    <p>You've just finished a meeting. You have notes: maybe typed, maybe from a recording transcript, maybe a mix of both. The notes are useful but messy. Decisions are buried in discussion. Action items aren't clearly separated from general conversation. Nobody knows who agreed to do what by when.</p>
+    <h2>How the skill works</h2>
+    <ol>
+      <li><strong>Give Cowork your meeting notes</strong> (paste, drag a file, or point at it)</li>
+      <li><strong>Run the Meeting Intelligence skill</strong></li>
+      <li><strong>Get back a structured dashboard</strong> with everything extracted and organised</li>
+    </ol>
+    <h2>What you get</h2>
+    <p>The Meeting Intelligence skill produces:</p>
+    <ul>
+      <li><strong>Decisions made</strong>: Clear list of what was decided, not what was discussed</li>
+      <li><strong>Action items</strong>: Who does what, by when, with checkboxes</li>
+      <li><strong>Key discussion points</strong>: Summarised, not verbatim</li>
+      <li><strong>Follow-up email draft</strong>: Ready to send to attendees</li>
+      <li><strong>Open questions</strong>: Things that were raised but not resolved</li>
+      <li><strong>CSV export</strong>: For tracking action items in a project tool</li>
+    </ul>
+    <blockquote>[SCREENSHOT: Meeting Intelligence dashboard showing categorised outputs]</blockquote>
+    <h2>Why this matters</h2>
+    <p>The difference between "here are your notes" and "here's what you need to do" is the difference between information and action. The skill doesn't just reorganise your notes. It interprets them and produces the thing you actually need: a clear list of next steps.</p>
+    <p>And the follow-up email is a real time saver. Instead of drafting "Hi team, here's a summary of what we discussed..." for 20 minutes, the skill writes it for you. You review, tweak if needed, and send.</p>
+    <h2>Try it in the game</h2>
+    <p>The <a href="/play">Meeting Intelligence demo</a> in Level 2 shows the full workflow with sample meeting notes.</p>
+    <h2>Try it yourself</h2>
+    <p>After your next meeting, try this:</p>
+    <ol>
+      <li>Get your notes into a file (even rough notes work fine)</li>
+      <li>Give the file to Cowork</li>
+      <li>Say: "Extract the action items, decisions, and open questions from these meeting notes. Draft a follow-up email for the attendees."</li>
+    </ol>
+    <p>If you have the Meeting Intelligence skill installed, the output will be a full dashboard. Without the skill, you'll still get useful extraction, but the structured dashboard and export features come from the skill.</p>
+    <p>Either way, compare the time to what it would normally take you to write that follow-up email manually. That's the value you're getting from this one skill alone.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- MODULE 6 -->
+<!-- ============================================================ -->
+<div class="module-header">
+  <small>Module 6</small>
+  <h2>Making It Yours</h2>
+  <p class="outcome">You know how to customise skills for your business, connect Cowork to your real tools, and you have a clear path forward to keep building.</p>
+</div>
+
+<div class="lesson" id="6-1">
+  <div class="lesson-id">Lesson 6-1</div>
+  <h3>Customising Skills</h3>
+  <div class="lesson-content">
+    <p>The skills you've installed work out of the box. But the real value comes when you make them work for YOUR business. Customising a skill is simpler than you'd think.</p>
+    <h2>What you can customise</h2>
+    <p>Every skill has a main instruction file called <strong>SKILL.md</strong>. This is just a text file that tells Cowork what to do. You can open it and read it. You can edit it.</p>
+    <p>Common things to customise:</p>
+    <ul>
+      <li><strong>Output format</strong>: Change the sections, headings, or structure</li>
+      <li><strong>Tone and voice</strong>: Add your brand voice guidelines</li>
+      <li><strong>Priorities</strong>: Tell the skill what matters most to you</li>
+      <li><strong>Terminology</strong>: Use your industry terms instead of generic ones</li>
+      <li><strong>Output type</strong>: HTML dashboard, markdown document, CSV export, whatever you prefer</li>
+    </ul>
+    <h2>How to customise</h2>
+    <p>1. <strong>Find the skill's folder.</strong> In Cowork's Customize > Skills panel, you can locate where each skill is stored.</p>
+    <blockquote>[SCREENSHOT: Locating a skill's folder in the Customize panel]</blockquote>
+    <p>2. <strong>Open SKILL.md.</strong> This is the instruction file. Read through it. You'll see it's written in plain English.</p>
+    <p>3. <strong>Make a change.</strong> For example, if you want the Content Repurposer to always write in an Australian, casual tone, add a line: "Always use Australian English. Keep the tone casual and direct. Avoid corporate jargon."</p>
+    <p>4. <strong>Save and test.</strong> Run the skill again. See if the change shows up in the output. If not, adjust your wording.</p>
+    <h2>Example: customising the email triage skill</h2>
+    <p>Say you want the email triage skill to always flag emails from your top 3 clients as high priority, regardless of content. Open the SKILL.md and add:</p>
+    <pre><code>Always classify emails from these senders as High Priority:
+- sarah@bigclient.com
+- james@importantco.com
+- priya@keyaccount.com</code></pre>
+    <p>Now every time you run the triage, those clients get flagged. You've encoded your business knowledge into the skill.</p>
+    <h2>Adding context about your business</h2>
+    <p>One of the most powerful customisations is giving Cowork context about your business. You can add a section to any skill's instructions:</p>
+    <pre><code>About my business:
+- I run a digital marketing agency with 5 staff
+- Our main clients are in real estate and hospitality
+- We use Monday.com for project management
+- Reports should always include ROI calculations</code></pre>
+    <p>This context shapes every output. Meeting notes will flag marketing-specific follow-ups. Data analysis will highlight the metrics you care about. Content repurposing will match your industry's tone.</p>
+    <h2>Don't be afraid to experiment</h2>
+    <p>You can't break a skill by editing SKILL.md. If something goes wrong, you can always reinstall the original version. The worst that happens is the output changes in a way you don't like, and you edit again.</p>
+    <p>Think of it like adjusting settings in any app. You're not rewriting the code. You're telling the skill what you prefer.</p>
+    <h2>Try it</h2>
+    <p>Open the SKILL.md file for any skill you've installed. Read through it. Then make one small change:</p>
+    <ul>
+      <li>Add a line about your preferred tone</li>
+      <li>Add context about your business</li>
+      <li>Change the output format for one section</li>
+    </ul>
+    <p>Run the skill again and see the difference. That's customisation.</p>
+  </div>
+</div>
+
+<div class="lesson" id="6-2">
+  <div class="lesson-id">Lesson 6-2</div>
+  <h3>Connectors and Plugins</h3>
+  <div class="lesson-content">
+    <p>Until now, everything you've done with Cowork has been with files on your computer. You drag files in, Cowork creates files out. That's powerful, but it's not the whole picture.</p>
+    <p>Connectors and plugins let Cowork interact with your real tools: email, calendar, project management, and more. This is where "AI assistant" starts becoming "AI infrastructure."</p>
+    <h2>What's a connector?</h2>
+    <p>A connector links Cowork to an external service. Once connected, Cowork can read from (and sometimes write to) that service.</p>
+    <p>Examples:</p>
+    <ul>
+      <li><strong>Gmail connector</strong>: Cowork can read your emails, search your inbox, draft responses</li>
+      <li><strong>Google Calendar connector</strong>: Cowork can see your schedule, find free time, summarise your week</li>
+      <li><strong>Slack connector</strong>: Cowork can read channels, summarise threads</li>
+    </ul>
+    <h2>How to install a connector</h2>
+    <ol>
+      <li>Go to <strong>Customize > Connectors</strong> in Cowork</li>
+      <li>Browse the available connectors</li>
+      <li>Click the one you want</li>
+      <li>Follow the authentication steps (usually sign in to the service and grant access)</li>
+    </ol>
+    <blockquote>[SCREENSHOT: The Connectors panel showing available connectors]</blockquote>
+    <blockquote>[SCREENSHOT: Authenticating a Gmail connector]</blockquote>
+    <h2>What's a plugin?</h2>
+    <p>Plugins are similar to connectors but they add capabilities rather than connecting to services. A plugin gives Cowork new abilities it didn't have before.</p>
+    <p>Example: The <strong>Design plugin</strong> from Anthropic adds visual analysis and design critique capabilities. With it installed, Cowork can look at a website screenshot and give you detailed design feedback with scores and specific improvement suggestions.</p>
+    <p>You install plugins from <strong>Customize > Browse Plugins</strong>.</p>
+    <blockquote>[SCREENSHOT: The plugin marketplace in Cowork]</blockquote>
+    <h2>Start with reading, not writing</h2>
+    <p>Here's a sensible approach when you're getting started: <strong>connect your tools for reading first, not writing.</strong></p>
+    <p>Let Cowork read your emails and calendar. Let it summarise what's there. Get comfortable with how it interprets your data.</p>
+    <p>Only after you trust the output should you let it draft emails, create calendar events, or post messages. Start passive, then go active.</p>
+    <h2>What you can do with connectors</h2>
+    <p>Once Gmail and Calendar are connected, try:</p>
+    <ul>
+      <li>"Summarise the 20 most recent emails in my inbox. Flag anything urgent."</li>
+      <li>"Look at my calendar for this week. Where do I have back-to-back meetings? Where are the gaps?"</li>
+      <li>"Create a combined summary: what's in my inbox that relates to meetings happening this week?"</li>
+    </ul>
+    <p>That last one is the kind of cross-service insight that you can't easily get from any single tool. Cowork connects the dots because it can see across your tools.</p>
+    <h2>Try it</h2>
+    <p>Install one connector. Gmail is the most useful starting point. Follow the setup steps, then ask Cowork:</p>
+    <p>"Summarise my inbox. What needs attention today?"</p>
+    <p>See how it handles real, live data. That's the bridge from "files on my computer" to "AI working with my real business."</p>
+  </div>
+</div>
+
+<div class="lesson" id="6-3">
+  <div class="lesson-id">Lesson 6-3</div>
+  <h3>Where to Go Next</h3>
+  <div class="lesson-content">
+    <p>You started this course having only used AI in a browser. Let's look at where you are now.</p>
+    <h2>What you've learned</h2>
+    <ul>
+      <li><strong>Module 1</strong>: What Cowork is and how it differs from ChatGPT</li>
+      <li><strong>Module 2</strong>: How to have a conversation and give it files</li>
+      <li><strong>Module 3</strong>: Working with folders, organising, and understanding access boundaries</li>
+      <li><strong>Module 4</strong>: What skills are, how to install them, and why they matter</li>
+      <li><strong>Module 5</strong>: Real examples of skills in action (email, content, data, meetings)</li>
+      <li><strong>Module 6</strong>: Customising skills and connecting Cowork to your real tools</li>
+    </ul>
+    <p>That's a complete foundation. You can install Cowork, point it at your files, add skills, and connect it to your tools. Most people who use AI haven't gotten this far.</p>
+    <h2>What's possible from here</h2>
+    <p>There are a few directions you can take this:</p>
+    <h3>Build your own skills</h3>
+    <p>You've been using pre-built skills. But you can also create your own. If you have a task you do repeatedly and the output always follows a similar structure, that's a skill waiting to be written.</p>
+    <p>You don't need to write code. A SKILL.md file written in plain English is enough to start. Describe the task, describe the output, add examples of what "good" looks like. Cowork does the rest.</p>
+    <h3>Go deeper with connectors</h3>
+    <p>Gmail and Calendar are just the start. There are connectors for Slack, project management tools, CRMs, and more. Each one gives Cowork access to another piece of your work, making it more useful across your entire day.</p>
+    <h3>Combine skills and connectors</h3>
+    <p>The real power comes from combining things. A morning routine that:</p>
+    <ol>
+      <li>Reads your inbox (Gmail connector)</li>
+      <li>Checks your calendar (Calendar connector)</li>
+      <li>Triages emails by priority (email triage skill)</li>
+      <li>Summarises your day ahead</li>
+    </ol>
+    <p>That's not science fiction. That's what people are building right now.</p>
+    <h2>The Ads to AI community</h2>
+    <p>Everything in this course is a starting point. The <a href="https://ads2ai.com">Ads to AI community</a> is where you go deeper:</p>
+    <ul>
+      <li><strong>Ready-made skills</strong>: Dozens of pre-built skills for different industries and tasks</li>
+      <li><strong>The brain system</strong>: A complete AI infrastructure that manages email, content, projects, contacts, and more</li>
+      <li><strong>Courses</strong>: From beginner to advanced, including building your own skills</li>
+      <li><strong>Monthly Q&amp;A calls</strong>: Get your questions answered live</li>
+      <li><strong>A community of people doing this work</strong>: Share what you're building, learn from others</li>
+    </ul>
+    <p>You don't have to figure this out alone. The community exists specifically for people at your stage: you understand the basics, you can see the potential, and you want to go further.</p>
+    <h2>One last thing</h2>
+    <p>You know more than most people now. Seriously. Most people are still copy-pasting into ChatGPT. You've got Cowork installed, skills running, connectors live. That puts you ahead.</p>
+    <p>The question isn't whether AI will change how you work. It already has, in the time it took you to go through this course.</p>
+    <p>The question is how far you want to take it.</p>
+    <p><a href="https://ads2ai.com">Join the Ads to AI community</a> and find out.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Course Preview - 6 modules, 20 lessons - Screenshot placeholders marked with [SCREENSHOT: ...]</p>
+</div>
+
+</body>
+</html>

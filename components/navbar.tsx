@@ -16,8 +16,13 @@ const typeLabels: Record<string, string> = {
 }
 
 const worldLabels: Record<string, string> = {
-  gallery: 'The Gallery',
-  arcade: 'The Arcade',
+  gallery: 'Classic',
+  arcade: 'Super Mario',
+  'red-alert': 'Red Alert',
+  'clair-obscur': 'Clair Obscur',
+  tetris: 'Tetris',
+  zelda: 'Zelda',
+  'elder-scrolls': 'Elder Scrolls',
 }
 
 function formatTimeSaved(hours: number): string {
@@ -103,9 +108,10 @@ export default function Navbar() {
   const getCurrentWorldLabel = () => {
     if (!pathname.startsWith('/play/')) return null
     const demoId = parseInt(pathname.split('/').pop() || '0', 10)
-    if (demoId >= 1 && demoId <= 4) return 'WORLD 1'
-    if (demoId >= 5 && demoId <= 8) return 'WORLD 2'
-    if (demoId >= 9 && demoId <= 11) return 'WORLD 3'
+    const label = skin.levelLabel.toUpperCase()
+    if (demoId >= 1 && demoId <= 4) return `${label} 1`
+    if (demoId >= 5 && demoId <= 8) return `${label} 2`
+    if (demoId >= 9 && demoId <= 11) return `${label} 3`
     return null
   }
 
@@ -119,14 +125,14 @@ export default function Navbar() {
     <>
       {/* ARCADE NAVBAR - Mario HUD style */}
       {skin.navLayout === 'dark-hud' ? (
-        <nav className="sticky top-0 z-50 border-b border-[#333]" style={{ background: '#1a1a2e' }}>
+        <nav className={cn("sticky top-0 z-50 border-b border-[#333]", skin.skinClass)} style={{ background: 'var(--world-dark)' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <Link
               href="/"
               className="font-heading font-bold text-lg tracking-tight text-white"
               onClick={() => { if (isPlaying) resetGame() }}
             >
-              <span style={{ color: 'var(--mario-coin)' }}>8020skill</span>
+              <span style={{ color: 'var(--world-accent)' }}>8020skill</span>
               <span className="text-white/80"> The AI Game</span>
             </Link>
 
@@ -140,11 +146,11 @@ export default function Navbar() {
 
               {/* Coin counter */}
               {completed.size > 0 && (
-                <div className={cn('relative flex items-center gap-1.5 text-xs font-heading font-bold', showCoinPlus && 'coin-counter-flash')} style={{ color: 'var(--mario-coin)' }}>
+                <div className={cn('relative flex items-center gap-1.5 text-xs font-heading font-bold', showCoinPlus && 'coin-counter-flash')} style={{ color: 'var(--world-accent)' }}>
                   <span className="coin-spin text-sm">&#9679;</span>
                   <span>x{completed.size}</span>
                   {showCoinPlus && (
-                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 text-[10px] font-bold coin-plus-one" style={{ color: 'var(--mario-coin)' }}>
+                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 text-xs font-bold coin-plus-one" style={{ color: 'var(--world-accent)' }}>
                       +1
                     </span>
                   )}
@@ -156,7 +162,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setPanelOpen(true)}
                   className="flex items-center gap-1.5 text-xs font-heading font-bold transition-all"
-                  style={{ color: 'var(--mario-coin)' }}
+                  style={{ color: 'var(--world-accent)' }}
                 >
                   <span className="text-sm">{'\u2605'}</span>
                   <span>x{skillCount}</span>
@@ -165,7 +171,7 @@ export default function Navbar() {
 
               {/* Time saved counter (arcade only) */}
               {actualTimeSaved > 0 && (
-                <div className="flex items-center gap-1.5 text-xs font-heading font-bold" style={{ color: 'var(--mario-coin)' }}>
+                <div className="flex items-center gap-1.5 text-xs font-heading font-bold" style={{ color: 'var(--world-accent)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
@@ -204,6 +210,19 @@ export default function Navbar() {
                   Map
                 </Link>
               )}
+
+              {/* Course */}
+              <Link
+                href="/course"
+                className={cn(
+                  'text-xs sm:text-sm font-heading font-medium transition-colors',
+                  pathname.startsWith('/course')
+                    ? 'text-white'
+                    : 'text-white/60 hover:text-white'
+                )}
+              >
+                Course
+              </Link>
 
               {/* How it works */}
               <Link
@@ -277,6 +296,19 @@ export default function Navbar() {
                 </Link>
               )}
 
+              {/* Course */}
+              <Link
+                href="/course"
+                className={cn(
+                  'text-xs sm:text-sm font-heading font-medium transition-colors',
+                  pathname.startsWith('/course')
+                    ? 'text-[var(--color-brand-orange)]'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
+                )}
+              >
+                Course
+              </Link>
+
               {/* How it works */}
               <Link
                 href="/how-it-works"
@@ -304,11 +336,12 @@ export default function Navbar() {
           <div
             className={cn(
               'absolute top-0 right-0 h-full w-72 sm:w-80 shadow-xl border-l skill-panel-slide',
+              skin.skinClass,
               isDark
                 ? 'border-[#333]'
                 : 'bg-white border-amber-200'
             )}
-            style={isDark ? { background: 'var(--mario-dark)' } : undefined}
+            style={isDark ? { background: 'var(--world-dark)' } : undefined}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Panel header */}
@@ -320,17 +353,14 @@ export default function Navbar() {
                   : 'border-amber-100 bg-amber-50/50'
               )}
             >
-              <h2 className={cn(
-                'text-sm font-heading font-bold',
-                isDark ? 'text-white' : 'text-[var(--color-ink)]'
-              )}>
+              <h2 className="text-sm font-heading font-bold text-[var(--world-text)]">
                 {skin.skillInventoryTitle}
               </h2>
               <button
                 onClick={() => setPanelOpen(false)}
                 className={cn(
                   'transition-colors text-lg leading-none',
-                  isDark ? 'text-white/50 hover:text-white' : 'text-[var(--color-faint)] hover:text-[var(--color-ink)]'
+                  'text-[var(--world-text-muted)] hover:text-[var(--world-text)]'
                 )}
               >
                 &times;
@@ -340,7 +370,7 @@ export default function Navbar() {
             {/* Skill list */}
             <div className="p-4 space-y-3">
               {uniqueSkills.length === 0 ? (
-                <p className={cn('text-xs font-heading', isDark ? 'text-white/40' : 'text-[var(--color-faint)]')}>
+                <p className="text-xs font-heading text-[var(--world-text-muted)]">
                   {skin.noSkillsText}
                 </p>
               ) : (
@@ -353,14 +383,11 @@ export default function Navbar() {
                         ? 'border-[#444]'
                         : 'border-amber-200 bg-amber-50/40'
                     )}
-                    style={isDark ? { background: 'rgba(255,255,255,0.05)', borderColor: 'var(--mario-block)' } : undefined}
+                    style={{ background: 'var(--world-card-bg)', borderColor: 'var(--world-accent3)' }}
                   >
                     <p
-                      className={cn(
-                        'text-sm font-heading font-bold',
-                        isDark ? '' : 'text-amber-800'
-                      )}
-                      style={isDark ? { color: 'var(--mario-coin)' } : undefined}
+                      className="text-sm font-heading font-bold"
+                      style={{ color: 'var(--world-accent)' }}
                     >
                       {skill.name}
                     </p>
@@ -369,13 +396,12 @@ export default function Navbar() {
                         <li
                           key={cap}
                           className={cn(
-                            'text-xs flex items-center gap-1.5',
-                            isDark ? 'text-white/60' : 'text-[var(--color-muted)]'
+                            'text-xs flex items-center gap-1.5 text-[var(--world-text-secondary)]'
                           )}
                         >
                           <span
                             className="w-1 h-1 flex-shrink-0"
-                            style={isDark ? { background: 'var(--mario-pipe)', borderRadius: 0 } : undefined}
+                            style={{ background: 'var(--world-accent2)', borderRadius: 0 }}
                           />
                           {cap}
                         </li>

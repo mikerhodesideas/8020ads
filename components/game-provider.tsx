@@ -375,7 +375,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const allAvailableComplete = useMemo(() => {
     if (!state.type) return false
     const l1Demos = getLevel1Demos(state.type)
-    const l2Demos = getLevel2Demos()
+    const l2Demos = getLevel2Demos(state.type)
     const l3Demos = getLevel3Demos()
     const allDemos = [...l1Demos, ...l2Demos, ...l3Demos]
     return allDemos.every((d) => state.completed.has(d.id))
@@ -399,7 +399,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const maxStars = useMemo(() => {
     if (!state.type) return 0
     const l1Demos = getLevel1Demos(state.type)
-    const l2Demos = getLevel2Demos()
+    const l2Demos = getLevel2Demos(state.type)
     const l3Demos = getLevel3Demos()
     return (l1Demos.length + l2Demos.length + l3Demos.length) * 3
   }, [state.type])

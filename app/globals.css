@@ -401,6 +401,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ============ QUEST FLOW ANIMATIONS ============ */
 
+/* CTA button pulse */
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--world-accent); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+.cta-pulse {
+  animation: cta-pulse 2s ease-in-out 1s 3;
+}
+
 /* Phase entrance */
 @keyframes quest-phase-in {
   0% {
@@ -552,6 +562,61 @@ h1, h2, h3, h4, h5, h6 {
   --skin-accent: #B8860B;
   --skin-accent-light: #F5E6C8;
   --skin-bg: #FAF6EF;
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #faf6ef, #f5ece0);
+  --world-accent: #B8860B;
+  --world-accent2: #1B8C3A;
+  --world-accent3: #D97706;
+  --world-accent-border: transparent;
+  --world-dark: #faf6ef;
+  --world-problem-border: #C4342D;
+  --world-problem-bg: #FEF0EF;
+  --world-fix-border: #1B8C3A;
+  --world-fix-bg: #EEFBF0;
+  --world-data-border: rgba(217, 181, 103, 0.6);
+  --world-data-bg: rgba(255, 255, 255, 0.8);
+  --world-brief-bg: rgba(250, 246, 239, 0.9);
+  --world-brief-border: #B8860B;
+  --world-selection-bg: #FFF8E7;
+  --world-card-bg: white;
+  --world-text: #1a1a2e;
+  --world-text-secondary: #555;
+  --world-text-muted: #888;
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.40);
+  --world-hover-copy: brightness(0.97);
+  --world-btn-shadow: 0 4px 12px rgba(180, 130, 10, 0.2);
+  --world-download-border: var(--color-brand-orange);
+  --world-download-bg: var(--color-brand-orange-faint);
+  --world-download-hover-bg: #fff8f3;
+  --world-download-badge-bg: var(--color-brand-orange);
+  --world-download-text: var(--color-ink);
+  --world-download-subtext: var(--color-faint);
+  --world-prompt-bg: rgba(255, 255, 255, 0.8);
+
+  /* Skill card vars */
+  --world-skill-card-bg: #faf6ef;
+  --world-skill-card-border: #f59e0b;
+  --world-skill-download-border: #f59e0b;
+  --world-skill-download-hover-bg: rgba(245, 158, 11, 0.05);
+  --world-skill-download-bg: transparent;
+  --world-skill-subtext: var(--color-faint);
+
+  /* Confetti */
+  --world-confetti-1: #B8860B;
+  --world-confetti-2: #D4A843;
+  --world-confetti-3: #22c55e;
+  --world-confetti-4: #f59e0b;
+  --world-confetti-5: #e8b04b;
+  --world-confetti-radius: 0px;
+
+  /* Processing bar */
+  --world-progress-label: var(--color-muted);
+  --world-progress-pct: var(--color-faint);
+  --world-progress-track: var(--color-border);
+  --world-progress-fill: #f59e0b;
 }
 
 /* ============ SKIN: ARCADE ============ */
@@ -570,6 +635,61 @@ h1, h2, h3, h4, h5, h6 {
   --mario-coin: #FFD700;
   --mario-text: #FFFFFF;
   --mario-dark: #1a1a2e;
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #1a1a2e, #16213e);
+  --world-accent: var(--mario-coin);
+  --world-accent2: var(--mario-pipe);
+  --world-accent3: var(--mario-block);
+  --world-accent-border: #C07800;
+  --world-dark: var(--mario-dark);
+  --world-problem-border: #FF6B6B;
+  --world-problem-bg: rgba(255, 107, 107, 0.1);
+  --world-fix-border: var(--mario-pipe);
+  --world-fix-bg: rgba(0, 168, 0, 0.1);
+  --world-data-border: var(--mario-block);
+  --world-data-bg: rgba(255, 255, 255, 0.95);
+  --world-brief-bg: rgba(26, 26, 46, 0.9);
+  --world-brief-border: var(--mario-coin);
+  --world-selection-bg: rgba(255, 215, 0, 0.1);
+  --world-card-bg: rgba(255, 255, 255, 0.05);
+  --world-text: #FFFFFF;
+  --world-text-secondary: rgba(255, 255, 255, 0.6);
+  --world-text-muted: rgba(255, 255, 255, 0.4);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.60);
+  --world-hover-copy: brightness(1);
+  --world-btn-shadow: 0 0 20px 6px rgba(255, 215, 0, 0.3);
+  --world-download-border: var(--mario-coin);
+  --world-download-bg: rgba(255, 215, 0, 0.08);
+  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-download-badge-bg: var(--mario-pipe);
+  --world-download-text: white;
+  --world-download-subtext: rgba(255, 255, 255, 0.4);
+  --world-prompt-bg: rgba(0, 0, 0, 0.3);
+
+  /* Skill card vars */
+  --world-skill-card-bg: var(--mario-dark);
+  --world-skill-card-border: var(--mario-pipe);
+  --world-skill-download-border: var(--mario-coin);
+  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-skill-download-bg: rgba(255, 215, 0, 0.06);
+  --world-skill-subtext: rgba(255, 255, 255, 0.4);
+
+  /* Confetti */
+  --world-confetti-1: #FFD700;
+  --world-confetti-2: #E8A000;
+  --world-confetti-3: #FFE44D;
+  --world-confetti-4: #FFC800;
+  --world-confetti-5: #FFAA00;
+  --world-confetti-radius: 50%;
+
+  /* Processing bar */
+  --world-progress-label: rgba(255, 255, 255, 0.6);
+  --world-progress-pct: rgba(255, 255, 255, 0.3);
+  --world-progress-track: rgba(255, 255, 255, 0.1);
+  --world-progress-fill: var(--mario-block);
 }
 
 /* Mario-world: pixel-sharp corners on cards and buttons (not circles) */
@@ -915,6 +1035,618 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 45;
 }
 
+/* ============ SKIN: RED ALERT ============ */
+
+.skin-red-alert {
+  --ra-dark: #0A1208;
+  --ra-panel: #1A2A14;
+  --ra-green: #33FF33;
+  --ra-amber: #FFB800;
+  --ra-red: #FF2020;
+  --ra-grid: #1A3A1A;
+  --ra-text: #CCFFCC;
+  --ra-steel: #2A2A2A;
+
+  --skin-accent: var(--ra-green);
+  --skin-bg: var(--ra-dark);
+  background-color: var(--ra-dark);
+  color: var(--ra-text);
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #0d1a0d, #0a1208);
+  --world-accent: #33FF33;
+  --world-accent2: #33FF33;
+  --world-accent3: #1B5E20;
+  --world-accent-border: #33FF33;
+  --world-dark: #0A1208;
+  --world-problem-border: #FF4444;
+  --world-problem-bg: rgba(255, 68, 68, 0.1);
+  --world-fix-border: #33FF33;
+  --world-fix-bg: rgba(51, 255, 51, 0.08);
+  --world-data-border: rgba(51, 255, 51, 0.4);
+  --world-data-bg: rgba(255, 255, 255, 0.95);
+  --world-brief-bg: rgba(10, 18, 8, 0.9);
+  --world-brief-border: #33FF33;
+  --world-selection-bg: rgba(51, 255, 51, 0.1);
+  --world-card-bg: rgba(51, 255, 51, 0.03);
+  --world-text: #CCFFCC;
+  --world-text-secondary: rgba(204, 255, 204, 0.7);
+  --world-text-muted: rgba(51, 255, 51, 0.5);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.60);
+  --world-hover-copy: brightness(1);
+  --world-btn-shadow: 0 0 16px 4px rgba(51, 255, 51, 0.3);
+  --world-download-border: #33FF33;
+  --world-download-bg: rgba(51, 255, 51, 0.06);
+  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-download-badge-bg: #1B5E20;
+  --world-download-text: #CCFFCC;
+  --world-download-subtext: rgba(51, 255, 51, 0.5);
+  --world-prompt-bg: rgba(0, 0, 0, 0.3);
+
+  /* Skill card vars */
+  --world-skill-card-bg: #0A1208;
+  --world-skill-card-border: #33FF33;
+  --world-skill-download-border: #33FF33;
+  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-skill-download-bg: rgba(51, 255, 51, 0.06);
+  --world-skill-subtext: rgba(51, 255, 51, 0.5);
+
+  /* Confetti */
+  --world-confetti-1: #33FF33;
+  --world-confetti-2: #FFB800;
+  --world-confetti-3: #22DD22;
+  --world-confetti-4: #33FF33;
+  --world-confetti-5: #FF2020;
+  --world-confetti-radius: 50%;
+
+  /* Processing bar */
+  --world-progress-label: rgba(204, 255, 204, 0.7);
+  --world-progress-pct: rgba(51, 255, 51, 0.4);
+  --world-progress-track: rgba(255, 255, 255, 0.1);
+  --world-progress-fill: #1B5E20;
+}
+
+/* Radar ping expanding ring */
+@keyframes ra-radar-ping {
+  0% { box-shadow: 0 0 0 0 rgba(51, 255, 51, 0.4); }
+  100% { box-shadow: 0 0 0 20px rgba(51, 255, 51, 0); }
+}
+
+/* CRT panel boot flicker */
+@keyframes ra-panel-boot {
+  0% { opacity: 0; filter: brightness(0); }
+  10% { opacity: 0.3; filter: brightness(0.5); }
+  15% { opacity: 0.1; filter: brightness(0.2); }
+  25% { opacity: 0.6; filter: brightness(0.8); }
+  50% { opacity: 0.9; filter: brightness(0.95); }
+  100% { opacity: 1; filter: brightness(1); }
+}
+
+/* Green phosphor processing bar */
+.processing-bar-red-alert {
+  background: linear-gradient(90deg, #33FF33 0%, #22DD22 40%, #33FF33 70%, #22DD22 100%);
+  background-size: 200% 100%;
+  animation: processing-bar-shimmer 1.5s linear infinite;
+}
+
+/* Red Alert badge glow */
+@keyframes badge-glow-red-alert {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(51, 255, 51, 0.15); }
+  50% { box-shadow: 0 0 10px 3px rgba(51, 255, 51, 0.35); }
+}
+
+.badge-earned-glow-red-alert {
+  animation: badge-glow-red-alert 3s ease-in-out infinite;
+}
+
+/* ============ SKIN: CLAIR OBSCUR ============ */
+
+.skin-clair-obscur {
+  --co-cream: #F5EFE0;
+  --co-black: #1A1A1A;
+  --co-gold: #C5A55A;
+  --co-rose: #8B4557;
+  --co-slate: #4A5568;
+  --co-ink: #2D2D2D;
+  --co-glow: #D4AF37;
+  --co-card: #FDFBF7;
+  --co-border: #E8DCC8;
+
+  --skin-accent: var(--co-gold);
+  --skin-bg: var(--co-cream);
+  background-color: var(--co-cream);
+  color: var(--co-black);
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #F5EDE0, #EDE3D4);
+  --world-accent: #C5A55A;
+  --world-accent2: #C5A55A;
+  --world-accent3: #C5A55A;
+  --world-accent-border: #A88B3E;
+  --world-dark: #2C1810;
+  --world-problem-border: #C5727A;
+  --world-problem-bg: rgba(197, 114, 122, 0.08);
+  --world-fix-border: #C5A55A;
+  --world-fix-bg: rgba(197, 165, 90, 0.08);
+  --world-data-border: rgba(197, 165, 90, 0.4);
+  --world-data-bg: rgba(253, 251, 247, 0.9);
+  --world-brief-bg: rgba(245, 237, 224, 0.9);
+  --world-brief-border: #C5A55A;
+  --world-selection-bg: rgba(197, 165, 90, 0.1);
+  --world-card-bg: #FDFBF7;
+  --world-text: #2C1810;
+  --world-text-secondary: #4A5568;
+  --world-text-muted: rgba(74, 85, 104, 0.6);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.40);
+  --world-hover-copy: brightness(0.97);
+  --world-btn-shadow: 0 4px 12px rgba(197, 165, 90, 0.25);
+  --world-download-border: #C5A55A;
+  --world-download-bg: rgba(197, 165, 90, 0.06);
+  --world-download-hover-bg: rgba(197, 165, 90, 0.1);
+  --world-download-badge-bg: #C5A55A;
+  --world-download-text: #2C1810;
+  --world-download-subtext: rgba(74, 85, 104, 0.6);
+  --world-prompt-bg: rgba(253, 251, 247, 0.8);
+
+  /* Skill card vars */
+  --world-skill-card-bg: #FDFBF7;
+  --world-skill-card-border: #C5A55A;
+  --world-skill-download-border: #C5A55A;
+  --world-skill-download-hover-bg: rgba(197, 165, 90, 0.08);
+  --world-skill-download-bg: transparent;
+  --world-skill-subtext: rgba(74, 85, 104, 0.6);
+
+  /* Confetti */
+  --world-confetti-1: #C5A55A;
+  --world-confetti-2: #D4AF37;
+  --world-confetti-3: #8B4557;
+  --world-confetti-4: #C5A55A;
+  --world-confetti-5: #E8DCC8;
+  --world-confetti-radius: 0px;
+
+  /* Processing bar */
+  --world-progress-label: #4A5568;
+  --world-progress-pct: rgba(74, 85, 104, 0.6);
+  --world-progress-track: #E8DCC8;
+  --world-progress-fill: #C5A55A;
+}
+
+/* Art deco shimmer */
+@keyframes co-deco-shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Painterly fade in */
+@keyframes co-brush-fade-in {
+  0% { opacity: 0; filter: blur(4px); }
+  100% { opacity: 1; filter: blur(0px); }
+}
+
+/* Gold leaf processing bar */
+.processing-bar-clair-obscur {
+  background: linear-gradient(90deg, #C5A55A 0%, #D4AF37 40%, #C5A55A 70%, #D4AF37 100%);
+  background-size: 200% 100%;
+  animation: processing-bar-shimmer 2s linear infinite;
+}
+
+/* Clair Obscur badge glow */
+@keyframes badge-glow-clair-obscur {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(197, 165, 90, 0.1); }
+  50% { box-shadow: 0 0 8px 2px rgba(197, 165, 90, 0.25); }
+}
+
+.badge-earned-glow-clair-obscur {
+  animation: badge-glow-clair-obscur 3s ease-in-out infinite;
+}
+
+/* ============ SKIN: TETRIS ============ */
+
+.skin-tetris {
+  --tetris-void: #0A0A0A;
+  --tetris-grid: #1A1A2E;
+  --tetris-i: #00F0F0;
+  --tetris-o: #F0F000;
+  --tetris-t: #A000F0;
+  --tetris-s: #00F000;
+  --tetris-z: #F00000;
+  --tetris-j: #0000F0;
+  --tetris-l: #F0A000;
+  --tetris-text: #FFFFFF;
+  --tetris-ghost: rgba(255, 255, 255, 0.2);
+
+  --skin-accent: var(--tetris-i);
+  --skin-bg: var(--tetris-void);
+  background-color: var(--tetris-void);
+  color: var(--tetris-text);
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #0A0A0A, #111111);
+  --world-accent: #00F0F0;
+  --world-accent2: #00F000;
+  --world-accent3: #00B8B8;
+  --world-accent-border: #00F0F0;
+  --world-dark: #060610;
+  --world-problem-border: #F00000;
+  --world-problem-bg: rgba(240, 0, 0, 0.1);
+  --world-fix-border: #00F000;
+  --world-fix-bg: rgba(0, 240, 0, 0.08);
+  --world-data-border: rgba(0, 240, 240, 0.4);
+  --world-data-bg: rgba(255, 255, 255, 0.95);
+  --world-brief-bg: rgba(10, 10, 10, 0.9);
+  --world-brief-border: #00F0F0;
+  --world-selection-bg: rgba(0, 240, 240, 0.1);
+  --world-card-bg: rgba(0, 240, 240, 0.03);
+  --world-text: #FFFFFF;
+  --world-text-secondary: rgba(255, 255, 255, 0.7);
+  --world-text-muted: rgba(0, 240, 240, 0.5);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.60);
+  --world-hover-copy: brightness(1);
+  --world-btn-shadow: 0 0 16px 4px rgba(0, 240, 240, 0.3);
+  --world-download-border: #00F0F0;
+  --world-download-bg: rgba(0, 240, 240, 0.06);
+  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-download-badge-bg: #00B8B8;
+  --world-download-text: white;
+  --world-download-subtext: rgba(0, 240, 240, 0.5);
+  --world-prompt-bg: rgba(0, 0, 0, 0.3);
+
+  /* Skill card vars */
+  --world-skill-card-bg: #060610;
+  --world-skill-card-border: #00F0F0;
+  --world-skill-download-border: #00F0F0;
+  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-skill-download-bg: rgba(0, 240, 240, 0.06);
+  --world-skill-subtext: rgba(0, 240, 240, 0.5);
+
+  /* Confetti */
+  --world-confetti-1: #00F0F0;
+  --world-confetti-2: #F0F000;
+  --world-confetti-3: #A000F0;
+  --world-confetti-4: #00F000;
+  --world-confetti-5: #F00000;
+  --world-confetti-radius: 0px;
+
+  /* Processing bar */
+  --world-progress-label: rgba(255, 255, 255, 0.6);
+  --world-progress-pct: rgba(0, 240, 240, 0.4);
+  --world-progress-track: rgba(255, 255, 255, 0.1);
+  --world-progress-fill: #00B8B8;
+}
+
+/* Tetris line clear flash */
+@keyframes tetris-line-clear-flash {
+  0% { opacity: 1; transform: scaleY(1); background: white; }
+  30% { opacity: 1; transform: scaleY(1); background: white; }
+  100% { opacity: 0; transform: scaleY(0); }
+}
+
+/* Block rain for celebrations */
+@keyframes tetris-block-rain {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Tetris processing bar - colorful blocks */
+.processing-bar-tetris {
+  background: repeating-linear-gradient(
+    90deg,
+    #00F0F0 0px, #00F0F0 18px, transparent 18px, transparent 20px,
+    #F0F000 20px, #F0F000 38px, transparent 38px, transparent 40px,
+    #A000F0 40px, #A000F0 58px, transparent 58px, transparent 60px,
+    #00F000 60px, #00F000 78px, transparent 78px, transparent 80px,
+    #F00000 80px, #F00000 98px, transparent 98px, transparent 100px,
+    #0000F0 100px, #0000F0 118px, transparent 118px, transparent 120px,
+    #F0A000 120px, #F0A000 138px, transparent 138px, transparent 140px
+  );
+}
+
+/* Tetris badge glow - cycles through piece colors */
+@keyframes badge-glow-tetris {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(0, 240, 240, 0.2); }
+  33% { box-shadow: 0 0 10px 3px rgba(240, 240, 0, 0.3); }
+  66% { box-shadow: 0 0 10px 3px rgba(160, 0, 240, 0.3); }
+}
+
+.badge-earned-glow-tetris {
+  animation: badge-glow-tetris 3s ease-in-out infinite;
+}
+
+/* ============ SKIN: ZELDA ============ */
+
+.skin-zelda {
+  --zelda-grass: #228B22;
+  --zelda-dark: #1A3A1A;
+  --zelda-gold: #DAA520;
+  --zelda-stone: #8B8B83;
+  --zelda-sky: #87CEEB;
+  --zelda-heart: #FF1744;
+  --zelda-fairy: #FFD4E8;
+  --zelda-text: #FFFFFF;
+  --zelda-wood: #8B6914;
+  --zelda-parchment: #D4B896;
+
+  --skin-accent: var(--zelda-gold);
+  --skin-bg: var(--zelda-dark);
+  background-color: var(--zelda-dark);
+  color: var(--zelda-text);
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #F0E8D0, #E5DCBF);
+  --world-accent: #DAA520;
+  --world-accent2: #2D6B22;
+  --world-accent3: #2D6B22;
+  --world-accent-border: #DAA520;
+  --world-dark: #1A3A1A;
+  --world-problem-border: #8B0000;
+  --world-problem-bg: rgba(139, 0, 0, 0.08);
+  --world-fix-border: #2D6B22;
+  --world-fix-bg: rgba(45, 107, 34, 0.08);
+  --world-data-border: rgba(218, 165, 32, 0.4);
+  --world-data-bg: rgba(255, 255, 255, 0.9);
+  --world-brief-bg: rgba(26, 58, 26, 0.9);
+  --world-brief-border: #DAA520;
+  --world-selection-bg: rgba(218, 165, 32, 0.1);
+  --world-card-bg: rgba(255, 248, 230, 0.6);
+  --world-text: #2D3B1A;
+  --world-text-secondary: #5A6B4A;
+  --world-text-muted: rgba(139, 107, 20, 0.6);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.50);
+  --world-hover-copy: brightness(1);
+  --world-btn-shadow: 0 0 16px 4px rgba(218, 165, 32, 0.3);
+  --world-download-border: #DAA520;
+  --world-download-bg: rgba(218, 165, 32, 0.06);
+  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-download-badge-bg: #2D6B22;
+  --world-download-text: #2D3B1A;
+  --world-download-subtext: rgba(139, 107, 20, 0.6);
+  --world-prompt-bg: rgba(26, 58, 26, 0.15);
+
+  /* Skill card vars */
+  --world-skill-card-bg: rgba(240, 232, 208, 0.95);
+  --world-skill-card-border: #DAA520;
+  --world-skill-download-border: #DAA520;
+  --world-skill-download-hover-bg: rgba(218, 165, 32, 0.08);
+  --world-skill-download-bg: transparent;
+  --world-skill-subtext: rgba(139, 107, 20, 0.6);
+
+  /* Confetti */
+  --world-confetti-1: #DAA520;
+  --world-confetti-2: #228B22;
+  --world-confetti-3: #FFD700;
+  --world-confetti-4: #2D6B22;
+  --world-confetti-5: #87CEEB;
+  --world-confetti-radius: 0px;
+
+  /* Processing bar */
+  --world-progress-label: #5A6B4A;
+  --world-progress-pct: rgba(139, 107, 20, 0.6);
+  --world-progress-track: rgba(218, 165, 32, 0.2);
+  --world-progress-fill: #2D6B22;
+}
+
+/* Heart pulse animation */
+@keyframes zelda-heart-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Chest open - lid lifting */
+@keyframes zelda-chest-open {
+  0% { transform: translateY(0) rotate(0deg); transform-origin: bottom center; }
+  60% { transform: translateY(-20px) rotate(-45deg); transform-origin: bottom center; }
+  100% { transform: translateY(-18px) rotate(-40deg); transform-origin: bottom center; }
+}
+
+/* Item rise from chest */
+@keyframes zelda-item-rise {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; filter: brightness(2); }
+  30% { opacity: 1; filter: brightness(1.5); }
+  70% { transform: translateY(-60px) scale(1.1); filter: brightness(1.2); }
+  100% { transform: translateY(-50px) scale(1); opacity: 1; filter: brightness(1); }
+}
+
+/* Rupee spin */
+@keyframes zelda-rupee-spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+/* Zelda processing bar (gold shimmer) */
+.processing-bar-zelda {
+  background: linear-gradient(90deg, #DAA520 0%, #FFD700 40%, #DAA520 70%, #FFD700 100%);
+  background-size: 200% 100%;
+  animation: processing-bar-shimmer 1.5s linear infinite;
+}
+
+/* Zelda badge glow */
+@keyframes badge-glow-zelda {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(218, 165, 32, 0.15); }
+  50% { box-shadow: 0 0 10px 3px rgba(218, 165, 32, 0.4); }
+}
+
+.badge-earned-glow-zelda {
+  animation: badge-glow-zelda 3s ease-in-out infinite;
+}
+
+/* ============ SKIN: ELDER SCROLLS ============ */
+
+.skin-elder-scrolls {
+  --es-parchment: #D4C5A9;
+  --es-dark-leather: #2C1810;
+  --es-gold: #C9A84C;
+  --es-steel: #5A5A5A;
+  --es-blood: #8B0000;
+  --es-forest: #2D4A1C;
+  --es-night-sky: #0F0F1A;
+  --es-stone: #3A3A4A;
+  --es-rune-blue: #4A6B8A;
+  --es-star-white: #E8E4D8;
+  --es-constellation: #7B9EC7;
+  --es-ember: #B85C1E;
+
+  --skin-accent: var(--es-gold);
+  --skin-bg: var(--es-night-sky);
+  background-color: var(--es-night-sky);
+  color: var(--es-star-white);
+
+  /* World immersion vars */
+  --page-bg: linear-gradient(to bottom, #141428, #0F0F1A);
+  --world-accent: #C9A84C;
+  --world-accent2: #C9A84C;
+  --world-accent3: #C9A84C;
+  --world-accent-border: rgba(201, 168, 76, 0.6);
+  --world-dark: #0A0A14;
+  --world-problem-border: #8B0000;
+  --world-problem-bg: rgba(139, 0, 0, 0.1);
+  --world-fix-border: #C9A84C;
+  --world-fix-bg: rgba(201, 168, 76, 0.08);
+  --world-data-border: rgba(201, 168, 76, 0.3);
+  --world-data-bg: rgba(255, 255, 255, 0.95);
+  --world-brief-bg: rgba(15, 15, 26, 0.9);
+  --world-brief-border: #C9A84C;
+  --world-selection-bg: rgba(201, 168, 76, 0.1);
+  --world-card-bg: rgba(201, 168, 76, 0.03);
+  --world-text: #E8E4D8;
+  --world-text-secondary: rgba(232, 228, 216, 0.7);
+  --world-text-muted: rgba(201, 168, 76, 0.5);
+
+  /* Button & overlay vars */
+  --world-overlay-bg: rgba(0, 0, 0, 0.60);
+  --world-hover-copy: brightness(1);
+  --world-btn-shadow: 0 0 16px 4px rgba(201, 168, 76, 0.3);
+  --world-download-border: #C9A84C;
+  --world-download-bg: rgba(201, 168, 76, 0.06);
+  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-download-badge-bg: #C9A84C;
+  --world-download-text: #E8E4D8;
+  --world-download-subtext: rgba(201, 168, 76, 0.5);
+  --world-prompt-bg: rgba(0, 0, 0, 0.3);
+
+  /* Skill card vars */
+  --world-skill-card-bg: #0A0A14;
+  --world-skill-card-border: rgba(201, 168, 76, 0.6);
+  --world-skill-download-border: rgba(201, 168, 76, 0.4);
+  --world-skill-download-hover-bg: rgba(201, 168, 76, 0.06);
+  --world-skill-download-bg: rgba(201, 168, 76, 0.03);
+  --world-skill-subtext: rgba(201, 168, 76, 0.5);
+
+  /* Confetti */
+  --world-confetti-1: #C9A84C;
+  --world-confetti-2: #7B9EC7;
+  --world-confetti-3: #DFC06A;
+  --world-confetti-4: #C9A84C;
+  --world-confetti-5: #E8E4D8;
+  --world-confetti-radius: 50%;
+
+  /* Processing bar */
+  --world-progress-label: rgba(232, 228, 216, 0.7);
+  --world-progress-pct: rgba(201, 168, 76, 0.4);
+  --world-progress-track: rgba(255, 255, 255, 0.1);
+  --world-progress-fill: #C9A84C;
+}
+
+/* Constellation glow - gentle star pulsing */
+@keyframes es-constellation-glow {
+  0%, 100% { box-shadow: 0 0 4px rgba(201, 168, 76, 0.2); opacity: 0.8; }
+  50% { box-shadow: 0 0 12px rgba(201, 168, 76, 0.5), 0 0 24px rgba(123, 158, 199, 0.2); opacity: 1; }
+}
+
+/* Rune pulse for current node */
+@keyframes es-rune-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(201, 168, 76, 0.3); transform: scale(1); }
+  50% { box-shadow: 0 0 16px rgba(201, 168, 76, 0.6), 0 0 32px rgba(201, 168, 76, 0.15); transform: scale(1.05); }
+}
+
+/* Star ignite - node lights up */
+@keyframes es-star-ignite {
+  0% { opacity: 0.2; transform: scale(0.5); filter: brightness(0.3); }
+  60% { opacity: 1; transform: scale(1.3); filter: brightness(1.5) drop-shadow(0 0 8px rgba(123, 158, 199, 0.6)); }
+  100% { opacity: 1; transform: scale(1); filter: brightness(1) drop-shadow(0 0 4px rgba(123, 158, 199, 0.3)); }
+}
+
+/* Ember drift - floating particles */
+@keyframes es-ember-drift {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.4; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+/* Dragonborn title reveal */
+@keyframes es-dragonborn-reveal {
+  0% { opacity: 0; letter-spacing: 0.3em; filter: brightness(3); }
+  40% { opacity: 1; filter: brightness(2); }
+  70% { letter-spacing: 0.14em; filter: brightness(1.3); }
+  100% { opacity: 1; letter-spacing: 0.12em; filter: brightness(1); }
+}
+
+/* Elder Scrolls processing bar (gold segments) */
+.processing-bar-elder-scrolls {
+  background: linear-gradient(90deg, #C9A84C 0%, #DFC06A 40%, #C9A84C 70%, #DFC06A 100%);
+  background-size: 200% 100%;
+  animation: processing-bar-shimmer 2s linear infinite;
+}
+
+/* Elder Scrolls badge glow */
+@keyframes badge-glow-elder-scrolls {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(201, 168, 76, 0.15); }
+  50% { box-shadow: 0 0 12px 3px rgba(201, 168, 76, 0.35); }
+}
+
+.badge-earned-glow-elder-scrolls {
+  animation: badge-glow-elder-scrolls 3s ease-in-out infinite;
+}
+
+/* ============ BACKGROUND EFFECTS ============ */
+
+/* Red Alert: radar grid overlay */
+.bg-effect-radar-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(51, 255, 51, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 255, 51, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tetris: faint grid lines */
+.bg-effect-grid-lines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Elder Scrolls: nebula glow */
+.bg-effect-nebula::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(123, 158, 199, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* ============ PROSE STYLING (legacy) ============ */
 
 .prose-lesson h2 {
@@ -976,4 +1708,24 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   border-top: 1px solid var(--color-border);
   margin: 2rem 0;
+}
+
+/* Step label animations */
+@keyframes bounce-right {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.animate-bounce-right {
+  animation: bounce-right 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes step-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.step-label-glow {
+  animation: step-glow 2s ease-in-out infinite;
 }

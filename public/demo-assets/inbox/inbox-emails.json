@@ -1,0 +1,62 @@
+[
+  {
+    "from": "Sarah Mitchell <sarah@thunderboltelectricals.com.au>",
+    "subject": "URGENT - Google Ads account suspended this morning",
+    "date": "2026-02-09T08:14:00+11:00",
+    "body": "Hi team, I just got an alert that our Google Ads account has been suspended. We can't see any of our campaigns and the whole account is flagged. This is costing us leads every hour it's down, can someone look into this immediately?"
+  },
+  {
+    "from": "Xero Notifications <notifications@xero.com>",
+    "subject": "Invoice #INV-2847 from DigitalEdge Media - $4,200.00 due Feb 16",
+    "date": "2026-02-09T07:45:00+11:00",
+    "body": "You have a new invoice from DigitalEdge Media for Q1 display creative production. Amount: $4,200.00 AUD. Due date: 16 February 2026. View and pay this invoice in Xero."
+  },
+  {
+    "from": "James Walker <james@agency.com.au>",
+    "subject": "Need your eyes on the Coastal Plumbing restructure",
+    "date": "2026-02-09T09:02:00+11:00",
+    "body": "Hey, I've been working through the Coastal Plumbing campaign restructure we discussed last week. I've split the services into separate campaigns but I'm not sure about the budget allocation between emergency and scheduled jobs. Could you take a look at the draft structure before I push it live? Shared the sheet in our drive folder."
+  },
+  {
+    "from": "Search Engine Land <newsletter@searchengineland.com>",
+    "subject": "Weekly digest: Google's new AI overview changes, PMax updates, and more",
+    "date": "2026-02-08T22:30:00+11:00",
+    "body": "This week in search marketing: Google rolls out expanded AI Overviews to 12 new countries. Performance Max gets new asset-level reporting. Microsoft Ads announces audience network expansion. Plus, our deep dive into why broad match is outperforming exact match for 67% of advertisers in our survey."
+  },
+  {
+    "from": "Lisa Chen <lisa@greenvalleyroofing.com.au>",
+    "subject": "Re: Monthly performance review - agenda for Thursday",
+    "date": "2026-02-09T08:55:00+11:00",
+    "body": "Hi, here's what I'd like to cover in our Thursday catch-up: 1) January performance vs targets (we're tracking 12% above on leads), 2) The new landing page test results, 3) Budget increase discussion for March. I'll also have our sales team's close rate numbers to share. See you at 2pm."
+  },
+  {
+    "from": "David Park <david@thunderboltelectricals.com.au>",
+    "subject": "January report ready for sign-off",
+    "date": "2026-02-08T16:20:00+11:00",
+    "body": "Hi, the January performance report for Thunderbolt is finalised and ready for your review before we send it to Sarah. Key highlights: 847 leads at $14.20 CPL (down from $16.80 in Dec), conversion rate up 8%. One flag though, the branded campaign CPA jumped 22% which looks odd. Report is in the shared folder, appreciate a sign-off by Wednesday so we can send it Thursday."
+  },
+  {
+    "from": "Tom Richards <tom@adplatformpartners.com>",
+    "subject": "Partnership opportunity - Ad Platform Partners x your agency",
+    "date": "2026-02-08T14:10:00+11:00",
+    "body": "Hi there, I'm Tom from Ad Platform Partners. We work with mid-size agencies to provide white-label landing page and CRO services. I noticed your agency has some great case studies and I think there could be a good fit for a referral partnership. Would you be open to a quick 15-minute call this week to explore?"
+  },
+  {
+    "from": "Google Ads <ads-noreply@google.com>",
+    "subject": "Your February Google Ads recommendations are ready",
+    "date": "2026-02-09T06:00:00+11:00",
+    "body": "New recommendations are available for 4 of your managed accounts. Estimated impact: +12% conversions. Recommendations include: apply broad match keywords (3 accounts), increase budgets on limited campaigns (2 accounts), add responsive search ads (1 account). Review recommendations in your Google Ads dashboard."
+  },
+  {
+    "from": "Rachel Morgan <rachel@agency.com.au>",
+    "subject": "FYI - Updated the shared client tracker spreadsheet",
+    "date": "2026-02-08T17:45:00+11:00",
+    "body": "Just a heads up, I've updated the master client tracker with February billing amounts and contract renewal dates. Also added a column for NPS scores from last month's survey. Nothing urgent, just so you know it's current."
+  },
+  {
+    "from": "Slack <notification@slack.com>",
+    "subject": "3 new messages in #pmax-testing",
+    "date": "2026-02-09T07:30:00+11:00",
+    "body": "You have unread messages in #pmax-testing. James Walker: 'The new asset group structure is pulling 40% more impressions but CTR dropped. Not sure if that's expected during learning phase.' 2 replies from team members."
+  }
+]

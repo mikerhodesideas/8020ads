@@ -1,5 +1,5 @@
 export type PlayerType = 'agency' | 'employee' | 'freelancer' | 'business'
-export type WorldId = 'gallery' | 'arcade'
+export type WorldId = 'gallery' | 'arcade' | 'red-alert' | 'clair-obscur' | 'tetris' | 'zelda' | 'elder-scrolls'
 
 export interface World {
   id: WorldId
@@ -8,9 +8,12 @@ export interface World {
   image: string
 }
 
+export type DemoType = 'website' | 'email' | 'data' | 'content' | 'meeting' | 'search' | 'design' | 'security'
+
 export interface Demo {
   id: number
   icon: string
+  demoType: DemoType
   title: string
   subtitle: string
   pain: string
@@ -26,6 +29,7 @@ export interface Demo {
   dataFiles?: string[]
   dataText?: string[]
   dragFile?: { name: string; path: string; mime: string }
+  skillZip?: { name: string; path: string }
   beforeFile?: string
   afterFile?: string
   skillId?: string
@@ -72,31 +76,67 @@ export interface Level {
 
 export const worlds: World[] = [
   {
-    id: 'gallery',
-    name: 'The Gallery',
-    tagline: 'Painterly landscapes, golden paths, elegant discovery',
-    image: '/images/worlds/gallery.png',
+    id: 'arcade',
+    name: 'Super Mario',
+    tagline: 'Bright worlds, power-ups, and pixel-perfect platforming',
+    image: '/images/worlds/arcade.png',
   },
   {
-    id: 'arcade',
-    name: 'The Arcade',
-    tagline: 'Bright worlds, power-ups, and that classic game feel',
-    image: '/images/worlds/arcade.png',
+    id: 'red-alert',
+    name: 'Red Alert',
+    tagline: 'Military command, radar sweeps, and green phosphor on black',
+    image: '/images/worlds/red-alert.png',
+  },
+  {
+    id: 'clair-obscur',
+    name: 'Clair Obscur',
+    tagline: 'Art deco elegance, gold leaf, and painterly discovery',
+    image: '/images/worlds/clair-obscur.png',
+  },
+  {
+    id: 'tetris',
+    name: 'Tetris',
+    tagline: 'Bold blocks, clean lines, and that satisfying click into place',
+    image: '/images/worlds/tetris.png',
+  },
+  {
+    id: 'zelda',
+    name: 'Legend of Zelda',
+    tagline: 'Treasure chests, dungeons, and a hero\'s quest for knowledge',
+    image: '/images/worlds/zelda.png',
+  },
+  {
+    id: 'elder-scrolls',
+    name: 'Elder Scrolls',
+    tagline: 'Constellation skill trees, Nordic runes, and ancient wisdom',
+    image: '/images/worlds/elder-scrolls.png',
+  },
+  {
+    id: 'gallery',
+    name: 'Classic',
+    tagline: 'Clean and quiet. Just the demos, no game skin.',
+    image: '/images/worlds/gallery.png',
   },
 ]
 
-// Demo content - separated from presentation
-const demoWebsite: Demo = {
+// ============================================================
+// LEVEL 1 DEMOS - "This Is Cowork"
+// No skills. Just Cowork + local files + prompts.
+// Same 3 demos for ALL avatars.
+// ============================================================
+
+const demoWebsiteRedesign: Demo = {
   id: 1,
   icon: '\u{1F480}',
+  demoType: 'website',
   title: 'My website is embarrassing',
   subtitle: "Every day it stays live, you're losing deals you'll never know about",
-  missionBrief: "ALERT: Thunderbolt Electricals' website looks like it escaped from 1999. The business is bleeding leads every hour it stays live. Your mission: use AI to redesign it in under a minute.",
+  missionBrief: "ALERT: Thunderbolt Electricals' website looks like it escaped from 1999. The business is bleeding leads every hour it stays live. Your mission: drag the file into Cowork and redesign it in under a minute.",
   beforeReaction: "Three columns, comic sans, and a visitor counter from 2003. This is going to need more than a fresh coat of paint.",
-  afterReaction: "From 1999 to 2026 in 47 seconds. That's what a power-up does.",
-  pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Old stock photos. No new blog posts for three years. Last award 2018. Every day it stays live, you\'re losing deals you\'ll never know about.',
-  fix: 'Drop the current URL into Cowork and get three new (modern) versions in minutes, not months.',
-  tryThis: 'Please create 3 new versions of this website, using the frontend-design skill each with a very different style: (1) Clean and conservative, minimal colour, lots of whitespace, understated typography. (2) Big and bold, strong colour, oversized headings, high contrast. (3) Warm and friendly, approachable feel, soft colours, rounded elements. Use the frontend-design skill. Keep the same content but make each version look like a completely different designer built it.',
+  afterReaction: "From 1999 to 2026 in 47 seconds. One file, one prompt, one minute.",
+  pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Old stock photos. Comic Sans. A visitor counter from 2003. Every day it stays live, you\'re losing deals you\'ll never know about.',
+  fix: 'Drag the HTML file into Cowork, paste a prompt, and get a professional redesign in under a minute. No coding. No designer. No three-week timeline.',
+  tryThis: 'I\'ve dragged in a website HTML file for a local electrician called Thunderbolt Electricals. It\'s terrible - looks like it\'s from 1999.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons ("Get a Free Quote", "Call Now")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop so I can open it in a browser.',
   dataType: 'html-preview',
   dataLabel: 'Current Website',
   dataText: [
@@ -115,97 +155,245 @@ const demoWebsite: Demo = {
   },
   beforeFile: '/demo-assets/before-after/before-website.html',
   afterFile: '/demo-assets/before-after/after-website.html',
-  skillId: 'website-designer',
   wowStat: 'Complete redesign in 47 seconds',
   wowTime: '47 seconds',
   beforeStages: [
-    'Scanning current layout... 3 columns detected',
-    'Evaluating visual hierarchy...',
-    'Generating responsive design...',
+    'Opening file in browser...',
+    'Copying text into ChatGPT...',
+    'Waiting for a wall of text...',
   ],
   afterStages: [
-    'Loading Website Designer skill...',
-    'Applying conversion optimization patterns...',
-    'Generating 3 design variants...',
+    'Cowork reading HTML file directly...',
+    'Analyzing layout and content...',
+    'Generating responsive design...',
+    'Saving redesigned file to Desktop...',
   ],
-  choices: {
-    label: 'Choose target audience',
-    options: [
-      {
-        id: 'b2b',
-        name: 'B2B',
-        description: 'Corporate / Enterprise',
-        beforeStages: [
-          'Scanning current layout... 3 columns detected',
-          'Evaluating for B2B decision-makers...',
-          'Optimizing for lead generation...',
-        ],
-        afterStages: [
-          'Loading Website Designer skill...',
-          'Applying enterprise conversion patterns...',
-          'Building trust signals for buyers...',
-          'Generating professional design...',
-        ],
-        reactionLine1: 'Corporate enough for the boardroom...',
-        reactionLine2: 'But it needs real B2B conversion power.',
-        reactionAfterLine: 'Enterprise-grade. Your prospects will take you seriously now.',
-        wowStatText: 'B2B redesign in 47 seconds',
-      },
-      {
-        id: 'b2c',
-        name: 'B2C',
-        description: 'Consumer / E-commerce',
-        beforeStages: [
-          'Scanning current layout... 3 columns detected',
-          'Evaluating for consumer shopping behavior...',
-          'Optimizing for mobile conversions...',
-        ],
-        afterStages: [
-          'Loading Website Designer skill...',
-          'Applying e-commerce best practices...',
-          'Building product showcase layout...',
-          'Generating consumer-friendly design...',
-        ],
-        reactionLine1: 'Looks more like a real store now...',
-        reactionLine2: 'But consumers expect more polish.',
-        reactionAfterLine: 'Now THAT makes people want to buy.',
-        wowStatText: 'E-commerce redesign in 47 seconds',
-      },
-      {
-        id: 'local',
-        name: 'Local Service',
-        description: 'Small business / Trades',
-        beforeStages: [
-          'Scanning current layout... 3 columns detected',
-          'Evaluating for local search visibility...',
-          'Optimizing for phone calls and bookings...',
-        ],
-        afterStages: [
-          'Loading Website Designer skill...',
-          'Applying local service patterns...',
-          'Building trust signals for local buyers...',
-          'Generating service-area design...',
-        ],
-        reactionLine1: 'People can actually find you now...',
-        reactionLine2: "But it needs that 'call now' punch.",
-        reactionAfterLine: 'Local customers will be calling within minutes.',
-        wowStatText: 'Local service redesign in 47 seconds',
-      },
-    ],
-  },
 }
 
-const demoSearchTerms: Demo = {
+const demoEmailTriage: Demo = {
   id: 2,
+  icon: '\u{1F4E8}',
+  demoType: 'email',
+  title: '50 emails by 9am Monday',
+  subtitle: "There's a client escalation buried in there. Somewhere.",
+  missionBrief: "INCOMING: Monday morning, inbox overflowing. Somewhere in that pile, a client escalation is going nuclear. Your mission: triage everything before the 10am call.",
+  beforeReaction: "Emails sorted by... time received. That's not a triage, that's a to-do list with anxiety.",
+  afterReaction: "Urgent items surfaced, responses drafted, priority dashboard built. Monday morning, sorted.",
+  pain: "It's 8:47am Monday. Your inbox has exploded overnight. Somewhere in there is a client escalation that needed a response Friday, a board meeting agenda you haven't read, and a sales report with numbers you need for a 10am call. You're scrolling, scanning, guessing.",
+  fix: "Drag your inbox export into Cowork and get a priority-sorted triage dashboard with draft replies, all before your first coffee gets cold.",
+  tryThis: "I've dragged in my inbox as a JSON file. It's Monday morning and I have emails to deal with before my 10am call.\n\nPlease triage these emails and create an HTML file called email-triage.html on my Desktop that shows:\n- A priority-sorted view with clear visual indicators (urgent/action needed/FYI/ignore)\n- For each email: who it's from, what it's about, why it's that priority level, and a suggested next action\n- Draft reply suggestions for the ones that need replies\n- A summary at the top showing how many need immediate action vs can wait\n\nMake it look like a real dashboard. Clean, scannable, professional. Use color coding for priority levels.",
+  dataType: 'text',
+  dataLabel: 'Monday Inbox',
+  dataText: [
+    'From: sarah@thunderbolt.com.au',
+    'Subject: URGENT - Google Ads account suspended!!',
+    '',
+    'From: mike.chen@globalagency.com',
+    'Subject: Q1 report attached - need your sign-off by noon',
+    '',
+    'From: newsletter@marketingweekly.com',
+    'Subject: This week in PPC: 5 things you missed',
+    '',
+    'From: accounts@xero.com',
+    'Subject: Invoice #4521 is overdue',
+    '',
+    '... 6 more emails ...',
+  ],
+  dragFile: {
+    name: 'inbox-emails.json',
+    path: '/demo-assets/inbox/inbox-emails.json',
+    mime: 'application/json',
+  },
+  wowStat: '10 emails triaged in 8 seconds',
+  wowTime: '8 seconds',
+  beforeStages: [
+    'Opening email client...',
+    'Reading subject lines one by one...',
+    'Trying to figure out what matters...',
+  ],
+  afterStages: [
+    'Cowork reading inbox JSON...',
+    'Scoring priority by sender and content...',
+    'Drafting response summaries...',
+    'Building triage dashboard...',
+  ],
+}
+
+const demoCampaignDashboard: Demo = {
+  id: 3,
+  icon: '\u{1F4CA}',
+  demoType: 'data',
+  title: '12 weeks of campaign data, zero insights',
+  subtitle: "Your client wants a presentation by Friday. You've got a CSV and a headache.",
+  missionBrief: "WARNING: 12 weeks of campaign data across Google, Facebook, and Instagram. Your client wants charts, insights, and recommendations by Friday. Your mission: turn this CSV into a dashboard that makes you look like a data scientist.",
+  beforeReaction: "A spreadsheet with 200 rows. Your client expects charts and insights. Good luck with that pivot table.",
+  afterReaction: "Interactive dashboard with Chart.js charts, sortable tables, and AI-generated insights. Friday's meeting just went from stressful to strategic.",
+  pain: "You've got 12 weeks of campaign data in a CSV. Google, Facebook, Instagram. Your client wants a presentation with charts and insights by Friday. You've been staring at the spreadsheet for 20 minutes and all you've got is a headache and a half-finished pivot table.",
+  fix: "Drag the CSV into Cowork and get an interactive dashboard with charts, sortable tables, filtering, and written insights. One file, ready to present.",
+  tryThis: "I've dragged in 12 weeks of cross-channel advertising data (Google, Facebook, Instagram). I need to present this to a client on Friday.\n\nCreate an interactive HTML dashboard saved to my Desktop called campaign-dashboard.html that includes:\n\n1. An OVERVIEW tab with total spend, revenue, and ROAS for the full period, a line chart showing weekly revenue trend, and top 3 and bottom 3 campaigns by ROAS\n\n2. A CHANNEL BREAKDOWN tab with performance comparison table across channels, bar chart comparing ROAS by channel, and spend allocation pie chart\n\n3. A CAMPAIGN DETAIL tab with sortable table of all campaigns with all metrics, highlighted anomalies, and filter dropdown to view by channel\n\n4. An INSIGHTS section with 3-5 key findings written as if briefing a client, specific recommendations with data backing them up, and any concerning trends flagged\n\nUse Chart.js for charts (load from CDN). Make it look like a professional analytics dashboard. Single self-contained HTML file.",
+  dataType: 'table',
+  dataLabel: 'Cross-Channel Campaign Data (12 weeks)',
+  dataHeaders: ['Channel', 'Week', 'Cost', 'Revenue', 'ROAS'],
+  dataRows: [
+    { cells: ['Google Ads - Brand', 'Week 1', '$285', '$2,250', '7.9x'] },
+    { cells: ['Google Ads - Generic', 'Week 1', '$420', '$525', '1.3x'] },
+    { cells: ['Facebook', 'Week 1', '$213', '$475', '2.2x'] },
+    { cells: ['Instagram', 'Week 1', '$175', '$210', '1.2x'], highlight: true },
+    { cells: ['...', '...', '...', '...', '...'], muted: true },
+    { cells: ['12 weeks \u00D7 4 channels', '', '$15,400', '$55,200', '3.6x'], muted: true },
+  ],
+  dragFile: {
+    name: 'campaign-data.csv',
+    path: '/data/campaign-data.csv',
+    mime: 'text/csv',
+  },
+  wowStat: '12-week dashboard built in 15 seconds',
+  wowTime: '15 seconds',
+  beforeStages: [
+    'Opening CSV in Google Sheets...',
+    'Trying to build a pivot table...',
+    'Giving up on the chart wizard...',
+  ],
+  afterStages: [
+    'Cowork reading CSV data...',
+    'Calculating channel performance metrics...',
+    'Generating Chart.js visualizations...',
+    'Writing client-ready insights...',
+    'Saving interactive dashboard...',
+  ],
+}
+
+// Level 1: same demos for all avatars
+export function getLevel1Demos(_type: PlayerType): Demo[] {
+  return [demoWebsiteRedesign, demoEmailTriage, demoCampaignDashboard]
+}
+
+// ============================================================
+// LEVEL 2 DEMOS - "Skills Change Everything"
+// Each demo gives a downloadable skill zip.
+// Demo 3 is avatar-specific.
+// ============================================================
+
+const demoContentRepurposer: Demo = {
+  id: 4,
+  icon: '\u2702\uFE0F',
+  demoType: 'content',
+  title: 'One blog post, zero social content',
+  subtitle: "You wrote something great last week. Nobody saw it.",
+  missionBrief: "You published a blog post last week. It's good. But it's sitting on your website with 47 views. Your mission: install the Content Repurposer skill and turn one post into content for every platform.",
+  beforeReaction: "A 1,500 word blog post sitting on a website nobody visits. This content deserves better.",
+  afterReaction: "One blog post became a LinkedIn post, an X thread, an email newsletter, and a summary card. All with copy buttons. All in 12 seconds.",
+  pain: "You spent hours writing a blog post. It's genuinely useful. But turning it into a LinkedIn post, an X thread, and an email newsletter? That's another 3 hours you don't have. So it sits on your website with 47 views and gathering dust.",
+  fix: "The Content Repurposer skill reads your post, extracts the key insights, and creates platform-specific versions. You get an interactive hub where you can preview and copy each version with one click.",
+  tryThis: "I've installed the content-repurposer skill. Please use it to repurpose the blog post I've dragged in.\n\nFollow the skill instructions to run the extraction and generate all platform versions plus the interactive HTML hub.",
+  dataType: 'text',
+  dataLabel: 'Blog Post',
+  dataText: [
+    'How We Cut Our Google Ads Waste by 34%',
+    '(Without Touching Our Bids)',
+    '',
+    'Last quarter, I noticed something that most account',
+    'managers miss. Our search terms report had 2,100 terms.',
+    'Only 340 were actually relevant.',
+    '',
+    'The rest? Bleeding budget at $0.80 per click.',
+    '',
+    'Here\'s exactly what we did, step by step...',
+    '',
+    '... 1,200 more words ...',
+  ],
+  dragFile: {
+    name: 'sample-blog-post.md',
+    path: '/demo-assets/content/sample-blog-post.md',
+    mime: 'text/markdown',
+  },
+  skillZip: {
+    name: 'content-repurposer.zip',
+    path: '/demo-assets/skills/content-repurposer.zip',
+  },
+  skillId: 'content-repurposer',
+  wowStat: 'Blog post to 5 platforms in 12 seconds',
+  wowTime: '12 seconds',
+  beforeStages: [
+    'Reading blog post content...',
+    'Counting words and sections...',
+    'Extracting key quotes...',
+  ],
+  afterStages: [
+    'Loading Content Repurposer skill...',
+    'Running content extraction script...',
+    'Generating LinkedIn version...',
+    'Generating X thread...',
+    'Building interactive content hub...',
+  ],
+}
+
+const demoMeetingIntelligence: Demo = {
+  id: 5,
+  icon: '\u{1F9E0}',
+  demoType: 'meeting',
+  title: 'Meeting notes nobody acts on',
+  subtitle: "Great call. Twelve action items. Zero follow-through.",
+  missionBrief: "You had a client call with 12 action items, 4 decisions, and a follow-up due by Friday. It's all in your notes somewhere. Your mission: install the Meeting Intelligence skill and turn those notes into a system.",
+  beforeReaction: "Rough notes with action items buried between pleasantries and tangents. Classic.",
+  afterReaction: "Actions extracted with owners. Decisions logged. Follow-up email drafted. Dashboard with checkboxes so nothing slips.",
+  pain: "Your last client call produced a great discussion, 12 action items, and 4 important decisions. You wrote rough notes during the call. It's been 3 days and you haven't turned them into anything actionable. Some items are urgent. You're not sure which ones.",
+  fix: "The Meeting Intelligence skill extracts action items with owners, decisions, questions, and commitments. You get an interactive dashboard with filters, status toggles, and a ready-to-send follow-up email.",
+  tryThis: "I've installed the meeting-intelligence skill. Please use it to process the meeting notes I've dragged in.\n\nFollow the skill instructions to extract actions, decisions, and questions, then build the interactive dashboard.",
+  dataType: 'text',
+  dataLabel: 'Meeting Notes (rough)',
+  dataText: [
+    'Client Review - Thunderbolt Electricals',
+    'Date: Feb 14, 2026',
+    '',
+    'Attendees: Sarah (client), James (account mgr)',
+    '',
+    'PMax results are in - leads up 340%',
+    'Sarah: "I had to hire someone to answer the phone"',
+    '',
+    'Action items scattered throughout...',
+    'Decisions made but not documented...',
+    '',
+    '... full transcript continues ...',
+  ],
+  dragFile: {
+    name: 'sample-meeting-notes.md',
+    path: '/demo-assets/content/sample-meeting-notes.md',
+    mime: 'text/markdown',
+  },
+  skillZip: {
+    name: 'meeting-intelligence.zip',
+    path: '/demo-assets/skills/meeting-intelligence.zip',
+  },
+  skillId: 'meeting-intelligence',
+  wowStat: 'Meeting notes to action plan in 10 seconds',
+  wowTime: '10 seconds',
+  beforeStages: [
+    'Reading meeting notes...',
+    'Identifying speakers...',
+    'Scanning for action items...',
+  ],
+  afterStages: [
+    'Loading Meeting Intelligence skill...',
+    'Running action extraction script...',
+    'Categorizing decisions and questions...',
+    'Drafting follow-up email...',
+    'Building interactive dashboard...',
+  ],
+}
+
+const demoSearchTermAnalyzer: Demo = {
+  id: 6,
   icon: '\u{1F525}',
+  demoType: 'search',
   title: '2,000 search terms sitting untouched',
   subtitle: "The wasted spend is in there somewhere. You just can't find it.",
-  missionBrief: "WARNING: 2,000 search terms sitting in a spreadsheet, untouched for a week. Wasted spend is hiding in there. Your mission: find the money pit and plug it.",
-  beforeReaction: "247 search terms, 12 obvious negatives, and $2,340 in wasted spend. At least now we can see the mess.",
-  afterReaction: "210 terms classified, waste flagged, winners highlighted. Your Tuesday spreadsheet just became a Friday action plan.",
+  missionBrief: "WARNING: 2,000 search terms in a spreadsheet, untouched for a week. Wasted spend is hiding in there. Your mission: install the Search Term Analyzer skill and find the money pit.",
+  beforeReaction: "247 search terms, no classification, and $2,340 in wasted spend hiding in plain sight.",
+  afterReaction: "Every term classified, waste flagged, winners highlighted. Interactive tabs, dropdown filters, and CSV exports ready to paste into Google Ads.",
   pain: 'You exported 2,000 search terms last Tuesday. They\'re still sitting in the spreadsheet, untouched. Somewhere in there, "emergency plumber near me" is converting at $12 a lead while "how to fix a leaky tap DIY" burns $40 a click. You just don\'t know which is which.',
-  fix: 'Cowork reads every row, flags the waste, finds the winners, and gives you the exact negatives to add and keywords to scale. In about 60 seconds.',
-  tryThis: 'Use the search-term-analyzer skill to build me an interactive HTML report from these search terms. I want: (1) A visual breakdown showing exactly where my budget is going, with charts by intent category showing waste vs winners. (2) A filterable, sortable table of every search term color-coded by recommendation: add as keyword (green), add as negative (red), monitor (amber). (3) A ready-to-paste negative keyword list grouped by theme. (4) My top 10 money-makers with specific scaling recommendations and projected impact. Make this something I can send to a client and they immediately understand where their money went.',
+  fix: 'The Search Term Analyzer skill runs ngram analysis, classifies every term by intent, and gives you an interactive report with tabs, filters, and ready-to-paste negative keyword lists.',
+  tryThis: "I've installed the search-term-analyzer skill. Please use it to analyze the search terms CSV I've dragged in.\n\nFollow the skill instructions to run the analysis and generate the interactive HTML report with classification tabs and CSV exports.",
   dataType: 'table',
   dataLabel: 'Search Terms Export',
   dataHeaders: ['Search term', 'Clicks', 'Cost', 'Conv.'],
@@ -216,7 +404,6 @@ const demoSearchTerms: Demo = {
     { cells: ['plumber salary australia', '89', '$445', '0'], highlight: true },
     { cells: ['plumbing memes funny', '67', '$335', '0'], highlight: true },
     { cells: ['blocked drain specialist', '234', '$1,404', '19'] },
-    { cells: ['is plumbing hard to learn', '45', '$225', '0'], highlight: true },
     { cells: ['+ 239 more rows...', '', '', ''], muted: true },
   ],
   dragFile: {
@@ -224,506 +411,186 @@ const demoSearchTerms: Demo = {
     path: '/demo-assets/sample-csvs/search-terms.csv',
     mime: 'text/csv',
   },
-  beforeFile: '/demo-assets/before-after/before-analysis.html',
-  afterFile: '/demo-assets/before-after/after-analysis.html',
-  skillId: 'data-analyst',
-  wowStat: '210 search terms classified in 12 seconds',
+  skillZip: {
+    name: 'search-term-analyzer.zip',
+    path: '/demo-assets/skills/search-term-analyzer.zip',
+  },
+  skillId: 'search-term-analyzer',
+  wowStat: '210 terms classified in 12 seconds',
   wowTime: '12 seconds',
   beforeStages: [
-    'Reading 247 search terms...',
-    'Flagging 12 negative candidates...',
-    'Calculating wasted spend: $2,340...',
+    'Reading search terms CSV...',
+    'Counting 247 unique terms...',
+    'Sorting by cost...',
   ],
   afterStages: [
-    'Loading Data Analyst skill...',
-    'Applying pattern recognition...',
+    'Loading Search Term Analyzer skill...',
+    'Running ngram analysis...',
     'Classifying terms by intent...',
-    'Generating actionable report...',
+    'Generating negative keyword lists...',
+    'Building interactive report...',
   ],
 }
 
-const demoDataAnalysis: Demo = {
-  id: 7,
-  icon: '\u{1F4C9}',
-  title: 'P&L arrives. You nod wisely and close it.',
-  subtitle: "Revenue's up but profit's down. Not sure why.",
-  missionBrief: "INCOMING: Monthly P&L from your accountant. Revenue up, profit down. Nobody knows why. Your mission: decode the numbers before the board meeting.",
-  beforeReaction: "Twelve months of data and the only trend line going up is expenses. That June dip needs explaining.",
-  afterReaction: "CFO-level analysis in 8 seconds. The board meeting just went from scary to strategic.",
-  pain: "Your accountant sends the P&L every month. You open it, see rows of numbers, nod wisely, and close it. Revenue's up but profit's down and you're not sure why. The spreadsheet has the answers but you'd need an MBA to decode it.",
-  fix: "Cowork reads your P&L like a CFO, explains what's actually happening in plain English, spots the trends you'd miss, and tells you the three things you should do about it.",
-  tryThis: "Use the csv-analyzer skill to analyse this P&L like a fractional CFO would. Build me an interactive financial dashboard with: (1) Revenue and profit trend lines with growth rates annotated on the chart. (2) Expense breakdown showing which categories are growing fastest relative to revenue. (3) Margin analysis: gross, operating, and net margin trends over 12 months. (4) A cash flow health indicator showing whether we are trending toward trouble or building runway. (5) Three specific, prioritised actions with projected financial impact for each. Do not just show me the numbers. Tell me the story they are telling and what I should do about it.",
+const demoCsvAnalyzer: Demo = {
+  id: 10,
+  icon: '\u{1F4C8}',
+  demoType: 'data',
+  title: 'Same data, but now with real math',
+  subtitle: "Remember the dashboard from Level 1? Watch what a skill does with the same CSV.",
+  missionBrief: "You built a dashboard from this CSV in Level 1. It looked great. But the 'insights' were AI-generated guesses. Your mission: install the CSV Analyzer skill and see what real statistical analysis looks like.",
+  beforeReaction: "Same CSV as Level 1. But this time Python scripts are doing the math, not the AI winging it.",
+  afterReaction: "Standard deviations instead of guesses. Correlation matrices instead of hunches. That's the difference a skill makes.",
+  pain: "You built a nice dashboard in Level 1 from this same data. But the insights were AI-generated text. Were the calculations actually right? Were the 'anomalies' real or just the AI guessing? When you need to trust the numbers, you need real math.",
+  fix: "The CSV Analyzer skill runs Python scripts that calculate real statistics: standard deviations, correlation coefficients, trend analysis. Same data, but now the numbers are computed, not estimated.",
+  tryThis: "I've installed the csv-analyzer skill. Please use it to analyze the campaign data CSV I've dragged in.\n\nFollow the skill instructions to run the full analysis. I want to see charts, statistical analysis, and actionable insights backed by real calculations.",
   dataType: 'table',
-  dataLabel: 'Monthly P&L',
-  dataHeaders: ['Month', 'Revenue', 'Expenses', 'Profit', 'Margin'],
+  dataLabel: 'Campaign Data (same as Level 1)',
+  dataHeaders: ['Channel', 'Week', 'Cost', 'Revenue', 'ROAS'],
   dataRows: [
-    { cells: ['Apr 2025', '$82,000', '$71,000', '$11,000', '13.4%'] },
-    { cells: ['May 2025', '$85,000', '$74,000', '$11,000', '12.9%'] },
-    { cells: ['Jun 2025', '$79,000', '$76,000', '$3,000', '3.8%'], highlight: true },
-    { cells: ['Jul 2025', '$91,000', '$78,000', '$13,000', '14.3%'] },
+    { cells: ['Google Ads - Brand', 'Week 1', '$285', '$2,250', '7.9x'] },
+    { cells: ['Facebook', 'Week 1', '$213', '$475', '2.2x'] },
+    { cells: ['Instagram', 'Week 1', '$175', '$210', '1.2x'], highlight: true },
     { cells: ['...', '...', '...', '...', '...'], muted: true },
-    { cells: ['Mar 2026', '$103,000', '$89,000', '$14,000', '13.6%'] },
-  ],
-  dragFile: {
-    name: 'monthly-pnl.csv',
-    path: '/data/monthly-pnl.csv',
-    mime: 'text/csv',
-  },
-  beforeFile: '/demo-assets/before-after/before-pnl.html',
-  afterFile: '/demo-assets/before-after/after-pnl.html',
-  skillId: 'data-analyst',
-  wowStat: '12-month P&L decoded in 8 seconds',
-  wowTime: '8 seconds',
-  beforeStages: [
-    'Parsing 12-month financial data...',
-    'Calculating margin trends...',
-    'Identifying anomalies...',
-  ],
-  afterStages: [
-    'Loading Data Analyst skill...',
-    'Applying CFO-level analysis...',
-    'Modeling cash flow projections...',
-    'Generating financial dashboard...',
-  ],
-}
-
-const demoEmail: Demo = {
-  id: 4,
-  icon: '\u{1F4E8}',
-  title: '50 emails by 9am Monday',
-  subtitle: "There's a client escalation buried in there. Somewhere.",
-  missionBrief: "INCOMING: 50 unread emails. Monday morning. Somewhere in that pile, a client escalation is going nuclear. Your mission: triage everything before the 10am call.",
-  beforeReaction: "50 emails sorted by... time received. That's not a triage, that's a to-do list with anxiety.",
-  afterReaction: "Urgent items surfaced, responses drafted, meeting prep done. Monday just got a lot shorter.",
-  pain: "It's 8:47am Monday. You've got 50 unread emails. Somewhere in there is a client escalation that needed a response Friday, a board meeting agenda you haven't read, and a sales report with numbers you need for a 10am call. You're scrolling, scanning, guessing.",
-  fix: "Cowork triages everything: what's urgent, what's informational, what can wait. You get a priority list with summaries so you can act on the right things first.",
-  tryThis: "Use the inboxy skill to process these messages and build me a Monday Morning Dashboard as an interactive HTML page. I want: (1) A priority matrix with every message plotted by urgency and impact. (2) Draft replies for anything marked urgent, ready to send, not templates. (3) A 30-second executive summary I can scan before my first meeting. (4) Time estimates for each action item so I can plan my morning. (5) Anything that can be delegated, flagged with a suggested owner and forwarding message.",
-  dataType: 'file-list',
-  dataLabel: 'Monday Inbox (5 items)',
-  dataFiles: [
-    'urgent-escalation.txt',
-    'sales-report-weekly.txt',
-    'team-update-ellie.txt',
-    'board-meeting-reminder.txt',
-    'feature-request-feedback.txt',
-  ],
-  dragFile: {
-    name: 'monday-inbox',
-    path: '/data/monday-inbox',
-    mime: 'application/octet-stream',
-  },
-  beforeFile: '/demo-assets/before-after/before-triage.html',
-  afterFile: '/demo-assets/before-after/after-triage.html',
-  skillId: 'inbox-commander',
-  wowStat: '12 emails triaged in 8 seconds',
-  wowTime: '8 seconds',
-  beforeStages: [
-    'Scanning 50 unread messages...',
-    'Scoring priority by sender and subject...',
-    'Drafting response summaries...',
-  ],
-  afterStages: [
-    'Loading Inbox Commander skill...',
-    'Applying priority scoring matrix...',
-    'Extracting action items...',
-    'Generating Monday dashboard...',
-  ],
-}
-
-// Get Level 1 demos based on player type
-// Search terms for agency/employee/freelancer, P&L for business
-export function getLevel1Demos(type: PlayerType): Demo[] {
-  const dataDemo = type === 'business' ? demoDataAnalysis : demoSearchTerms
-  return [demoWebsite, dataDemo, demoEmail]
-}
-
-// === LEVEL 2 DEMOS ===
-
-const demoContacts: Demo = {
-  id: 5,
-  icon: '\u{1F4C7}',
-  title: 'CRM contacts going cold',
-  subtitle: 'Deals are dying quietly. Your follow-up list is a graveyard.',
-  missionBrief: "ALERT: A $22K deal hasn't heard from you in 90 days. Your CRM is a graveyard of good intentions. Your mission: find the deals worth saving.",
-  beforeReaction: "50 contacts and no priority order. The $22K deal is buried on row 37 next to a dead lead from last year.",
-  afterReaction: "50 contacts ranked, top 5 flagged, opening lines written. Your graveyard just got a resurrection.",
-  pain: "You exported your CRM contacts last month and never looked back. Somewhere in that list, a $22K deal hasn't heard from you in 90 days. A referral from your best client is going cold. The spreadsheet has 50 contacts but you don't know which 5 need attention TODAY.",
-  fix: "AI reads every contact, calculates urgency based on deal value and days since last touch, and gives you a prioritized 'call these people today' list with suggested opening lines.",
-  tryThis: 'Use the followups skill to analyse these CRM contacts. Find the deals at risk and give me a priority list with suggested actions for each.',
-  dataType: 'table',
-  dataLabel: 'CRM Contacts Export',
-  dataHeaders: ['Contact', 'Company', 'Last Contact', 'Deal Value', 'Stage'],
-  dataRows: [
-    { cells: ['Rachel Thompson', 'Peppercorn Early Learning', 'Jan 10', '$18,500', 'Negotiation'] },
-    { cells: ['James O\'Brien', 'Bright Horizons', 'Mar 15', '$12,000', 'Qualified'] },
-    { cells: ['Sarah Mitchell', 'Little Stars Hawthorn', 'Dec 18', '$22,000', 'Proposal'], highlight: true },
-    { cells: ['David Chen', 'Sunshine Early Learning', 'Jan 5', '$8,500', 'Lead'], highlight: true },
-    { cells: ['+ 46 more contacts...', '', '', '', ''], muted: true },
-  ],
-  dragFile: {
-    name: 'hubspot-contacts.csv',
-    path: '/data/hubspot-contacts.csv',
-    mime: 'text/csv',
-  },
-  beforeFile: '/demo-assets/before-after/before-contacts.html',
-  afterFile: '/demo-assets/before-after/after-contacts.html',
-  skillId: 'crm-strategist',
-  wowStat: '50 contacts prioritized in 9 seconds',
-  wowTime: '9 seconds',
-  beforeStages: [
-    'Reading 50 CRM contacts...',
-    'Calculating days since last touch...',
-    'Flagging at-risk deals...',
-  ],
-  afterStages: [
-    'Loading CRM Strategist skill...',
-    'Applying deal risk scoring...',
-    'Generating personalized outreach...',
-    'Prioritizing follow-up list...',
-  ],
-  promptStrategies: [
-    {
-      id: 'direct',
-      name: 'DIRECT',
-      promptText: 'Analyze this data and give me recommendations',
-      afterStages: [
-        'Loading CRM Strategist skill...',
-        'Scanning contact list...',
-        'Generating basic recommendations...',
-      ],
-      reactionAfterLine: "Basic contact list... but you're missing the high-value signals.",
-      quality: 'direct',
-    },
-    {
-      id: 'structured',
-      name: 'STRUCTURED',
-      promptText: 'Analyze this data. Group by category. Show percentages. Highlight top 3.',
-      afterStages: [
-        'Loading CRM Strategist skill...',
-        'Grouping contacts by risk tier...',
-        'Calculating urgency percentages...',
-        'Highlighting top 3 at-risk deals...',
-      ],
-      reactionAfterLine: 'Structured and clear. The priority groupings make this actionable.',
-      quality: 'structured',
-    },
-    {
-      id: 'expert',
-      name: 'EXPERT',
-      promptText: 'Act as a senior analyst. Start with the executive summary. Flag anomalies. Recommend next steps with confidence scores.',
-      afterStages: [
-        'Loading CRM Strategist skill...',
-        'Building deal velocity model...',
-        'Cross-referencing engagement signals...',
-        'Scoring confidence per recommendation...',
-        'Generating executive action plan...',
-      ],
-      reactionAfterLine: 'Executive-grade analysis. Confidence scores on every recommendation.',
-      quality: 'expert',
-    },
-  ],
-  resultTiers: {
-    direct: { wowMultiplier: 0.4, reaction: 'Hmm. Better than before... but something\'s missing.' },
-    structured: { wowMultiplier: 0.7, reaction: 'Solid work. Structured output makes a real difference.' },
-    expert: { wowMultiplier: 1.0, reaction: 'Executive-grade analysis. Confidence scores on every recommendation.' },
-  },
-}
-
-const demoCampaign: Demo = {
-  id: 6,
-  icon: '\u{1F4CA}',
-  title: 'Marketing spend across 4 channels',
-  subtitle: "You're spending $8K/month but can't tell which channel actually works.",
-  missionBrief: "WARNING: $8K/month across 4 channels. Your boss wants answers by Friday. Your mission: find the money pit and the goldmine.",
-  beforeReaction: "Four dashboards, four different metrics, and LinkedIn is burning cash like it's going out of style.",
-  afterReaction: "All channels normalized, winner identified, budget reallocation ready. Friday's meeting just got easy.",
-  pain: "Google Ads, Facebook, LinkedIn, Email. Four dashboards, four different metrics, four sets of numbers that don't talk to each other. You're spending $8K/month and your boss wants to know which channel to double down on. You've been 'getting to it' for three weeks.",
-  fix: 'AI normalizes all channels into one view, calculates true cost per acquisition, spots the winner and the money pit, and tells you exactly where to shift budget.',
-  tryThis: 'Use the csv-analyzer skill to analyse this cross-channel campaign data. Compare channels by CPA, find the biggest budget waste, and recommend a reallocation strategy.',
-  dataType: 'table',
-  dataLabel: 'Cross-Channel Campaign Data (3 months)',
-  dataHeaders: ['Channel', 'Cost', 'Clicks', 'Conv.', 'Revenue'],
-  dataRows: [
-    { cells: ['Google Ads - Brand', '$3,420', '2,850', '180', '$27,000'] },
-    { cells: ['Google Ads - Generic', '$5,040', '1,680', '42', '$6,300'] },
-    { cells: ['Facebook', '$2,550', '1,700', '38', '$5,700'] },
-    { cells: ['LinkedIn', '$4,200', '840', '12', '$1,800'], highlight: true },
-    { cells: ['Email', '$180', '2,400', '96', '$14,400'] },
-    { cells: ['3 months aggregated', '', '', '', ''], muted: true },
+    { cells: ['Same data, skill-powered analysis', '', '', '', ''], muted: true },
   ],
   dragFile: {
     name: 'campaign-data.csv',
     path: '/data/campaign-data.csv',
     mime: 'text/csv',
   },
-  beforeFile: '/demo-assets/before-after/before-campaign.html',
-  afterFile: '/demo-assets/before-after/after-campaign.html',
-  skillId: 'channel-optimizer',
-  wowStat: '4 channels compared in 6 seconds',
-  wowTime: '6 seconds',
-  beforeStages: [
-    'Importing 4-channel campaign data...',
-    'Normalizing cross-channel metrics...',
-    'Calculating true CPA by channel...',
-  ],
-  afterStages: [
-    'Loading Channel Optimizer skill...',
-    'Applying CPA normalization...',
-    'Modeling budget reallocation...',
-    'Generating channel comparison...',
-  ],
-  promptStrategies: [
-    {
-      id: 'direct',
-      name: 'DIRECT',
-      promptText: 'Analyze this data and give me recommendations',
-      afterStages: [
-        'Loading Channel Optimizer skill...',
-        'Comparing channel metrics...',
-        'Generating basic recommendations...',
-      ],
-      reactionAfterLine: 'Channel comparison done... but the real insights need more structure.',
-      quality: 'direct',
-    },
-    {
-      id: 'structured',
-      name: 'STRUCTURED',
-      promptText: 'Analyze this data. Group by category. Show percentages. Highlight top 3.',
-      afterStages: [
-        'Loading Channel Optimizer skill...',
-        'Grouping metrics by channel...',
-        'Calculating CPA percentages...',
-        'Highlighting top 3 opportunities...',
-      ],
-      reactionAfterLine: 'Clean breakdown. The percentage view makes the winner obvious.',
-      quality: 'structured',
-    },
-    {
-      id: 'expert',
-      name: 'EXPERT',
-      promptText: 'Act as a senior analyst. Start with the executive summary. Flag anomalies. Recommend next steps with confidence scores.',
-      afterStages: [
-        'Loading Channel Optimizer skill...',
-        'Building multi-touch attribution model...',
-        'Modeling budget reallocation scenarios...',
-        'Flagging spend anomalies...',
-        'Generating ROI-optimized plan...',
-      ],
-      reactionAfterLine: 'Budget reallocation with projected ROI. This is CFO-ready.',
-      quality: 'expert',
-    },
-  ],
-  resultTiers: {
-    direct: { wowMultiplier: 0.4, reaction: 'Hmm. Better than before... but something\'s missing.' },
-    structured: { wowMultiplier: 0.7, reaction: 'Good structure. The channel groupings help, but there\'s deeper insight available.' },
-    expert: { wowMultiplier: 1.0, reaction: 'Budget reallocation with projected ROI. This is CFO-ready.' },
+  skillZip: {
+    name: 'csv-analyzer.zip',
+    path: '/demo-assets/skills/csv-analyzer.zip',
   },
-}
-
-const demoPost: Demo = {
-  id: 8,
-  icon: '\u{270D}\u{FE0F}',
-  title: 'Meeting notes collecting dust',
-  subtitle: 'Great insights from the call. Zero chance you\'ll write that post.',
-  missionBrief: "ALERT: Tuesday's client call had 3 killer insights. It's now Friday. The notes are cold. Your mission: turn them into content before the moment dies.",
-  beforeReaction: "Raw notes, no structure, and the best quote is buried between a lunch order and an action item.",
-  afterReaction: "Meeting notes to LinkedIn post in 11 seconds. Tuesday's insights just became Friday's content.",
-  pain: "You had an amazing client call on Tuesday. Three killer insights came up that your audience would love. You scribbled notes, told yourself you'd write a LinkedIn post about it later. It's now Friday. The notes are cold. The moment is gone. Another week with no content.",
-  fix: 'AI reads your rough meeting notes, extracts the shareable insights, and drafts a LinkedIn post with a hook, a story, and a call to action. Your voice, your style, ready to post.',
-  tryThis: 'Use the draft-post skill to turn these meeting notes into a LinkedIn post. Make it specific, use a strong hook, and keep my voice conversational.',
-  dataType: 'text',
-  dataLabel: 'Meeting Notes (rough)',
-  dataText: [
-    'Call with Sarah - Thunderbolt Electricals - Feb review',
-    '',
-    'Big win: PMax campaign from Nov finally kicking in',
-    'Leads up 340% month on month (!!)',
-    'She said "I actually had to hire someone to answer the phone"',
-    'Still skeptical about AI for ad copy but open to testing',
-    'Key insight: her best leads come from 6pm-10pm (after hours emergencies)',
-    'Action: shift budget to evening hours, test AI-written ad variations',
-  ],
-  dragFile: {
-    name: 'thunderbolt-feb-review.md',
-    path: '/demo-assets/meeting-transcripts/thunderbolt-feb-review.md',
-    mime: 'text/markdown',
-  },
-  beforeFile: '/demo-assets/before-after/before-post.html',
-  afterFile: '/demo-assets/before-after/after-post.html',
-  skillId: 'content-writer',
-  wowStat: 'Meeting notes to post in 11 seconds',
-  wowTime: '11 seconds',
-  beforeStages: [
-    'Reading meeting notes...',
-    'Extracting key insights...',
-    'Identifying shareable moments...',
-  ],
-  afterStages: [
-    'Loading Content Writer skill...',
-    'Applying hook creation patterns...',
-    'Matching voice and tone...',
-    'Drafting LinkedIn post...',
-  ],
-  promptStrategies: [
-    {
-      id: 'direct',
-      name: 'DIRECT',
-      promptText: 'Analyze this data and give me recommendations',
-      afterStages: [
-        'Loading Content Writer skill...',
-        'Reading meeting notes...',
-        'Generating basic draft...',
-      ],
-      reactionAfterLine: 'Draft written... but it reads like a summary, not a story.',
-      quality: 'direct',
-    },
-    {
-      id: 'structured',
-      name: 'STRUCTURED',
-      promptText: 'Analyze this data. Group by category. Show percentages. Highlight top 3.',
-      afterStages: [
-        'Loading Content Writer skill...',
-        'Extracting insights by category...',
-        'Structuring hook, body, CTA...',
-        'Highlighting top 3 takeaways...',
-      ],
-      reactionAfterLine: 'Good structure. Hook, body, CTA, all in the right places.',
-      quality: 'structured',
-    },
-    {
-      id: 'expert',
-      name: 'EXPERT',
-      promptText: 'Act as a senior analyst. Start with the executive summary. Flag anomalies. Recommend next steps with confidence scores.',
-      afterStages: [
-        'Loading Content Writer skill...',
-        'Identifying emotional resonance points...',
-        'Applying storytelling framework...',
-        'Matching voice cadence and tone...',
-        'Crafting engagement-optimized post...',
-      ],
-      reactionAfterLine: 'This reads like YOU wrote it. Voice, cadence, everything.',
-      quality: 'expert',
-    },
-  ],
-  resultTiers: {
-    direct: { wowMultiplier: 0.4, reaction: 'Hmm. Better than before... but something\'s missing.' },
-    structured: { wowMultiplier: 0.7, reaction: 'Decent structure. Hook, body, CTA are all there, but the voice is generic.' },
-    expert: { wowMultiplier: 1.0, reaction: 'This reads like YOU wrote it. Voice, cadence, everything.' },
-  },
-}
-
-// Get Level 2 demos (same for all player types)
-export function getLevel2Demos(): Demo[] {
-  return [demoContacts, demoCampaign, demoPost]
-}
-
-// === LEVEL 3 DEMOS ===
-
-const demoCompetitors: Demo = {
-  id: 9,
-  icon: '\u{1F50D}',
-  title: 'Competitors are eating your lunch',
-  subtitle: "They're saying things you should be saying. You haven't checked in months.",
-  missionBrief: "WARNING: Your top 3 competitors updated their sites last month. One of them is eating your leads. Your mission: find out what they're saying that you're not.",
-  beforeReaction: "Three competitors, three different angles, and one of them just added a free trial you didn't know about.",
-  afterReaction: "Gaps mapped, angles identified, ad copy ready. Now you know exactly where to hit them.",
-  pain: "Your top 3 competitors updated their websites last month. One added a free trial CTA that's probably killing your conversion rate. Another is running ads you've never seen. You keep meaning to do a competitive analysis but it never makes it past the to-do list.",
-  fix: 'AI scrapes competitor websites, extracts their messaging, CTAs, and trust signals, then identifies the gaps you can exploit. You get ready-to-use ad angles in seconds.',
-  tryThis: 'Use the competitor-scraper skill to analyse these 3 competitor websites. Compare their messaging, find the gaps, and give me 3 ad headline ideas that exploit what they\'re missing.',
-  dataType: 'text',
-  dataLabel: 'Competitor Brief',
-  dataText: [
-    'Competitors to analyze:',
-    '1. childcarefinder.com.au (main competitor, 5 years)',
-    '2. littlestepsmarketing.com.au (newer, aggressive)',
-    '3. centregrow.com.au (enterprise focused)',
-    '',
-    'We need: messaging comparison, CTA analysis,',
-    'trust signals, pricing visibility, gaps to exploit',
-  ],
-  dragFile: {
-    name: 'competitor-urls.txt',
-    path: '/data/competitor-urls.txt',
-    mime: 'text/plain',
-  },
-  beforeFile: '/demo-assets/before-after/before-competitors.html',
-  afterFile: '/demo-assets/before-after/after-competitors.html',
-  skillId: 'competitive-intel',
-  wowStat: '3 competitors analysed in 15 seconds',
-  wowTime: '15 seconds',
-  beforeStages: [
-    'Scanning 3 competitor websites...',
-    'Extracting messaging and CTAs...',
-    'Mapping competitive landscape...',
-  ],
-  afterStages: [
-    'Loading Competitive Intel skill...',
-    'Applying gap analysis...',
-    'Scoring opportunity areas...',
-    'Generating attack angles...',
-  ],
-}
-
-const demoOnboarding: Demo = {
-  id: 10,
-  icon: '\u{1F4CB}',
-  title: 'Onboarding is a 3-week mess',
-  subtitle: "Every new client is a different chaos. Nothing is written down properly.",
-  missionBrief: "ALERT: Onboarding takes 3 weeks. It should take 10 days. The process lives in Ellie's head. Your mission: build the SOP before she goes on holiday.",
-  beforeReaction: "A brain dump with no dates, no owners, and a step that just says 'do the thing'. Classic.",
-  afterReaction: "Brain dump to operations manual in 14 seconds. Ellie can go on holiday now.",
-  pain: "Your onboarding process lives in Ellie's head and a messy Google Doc from January. New team members don't know the steps. Clients wait 3 weeks when it should take 10 days. The process notes are a brain dump with no structure, no timelines, no owners.",
-  fix: 'AI reads the messy notes and produces a structured SOP with phases, owners, timelines, checklists, and common pitfalls. A real operations manual from a rough brain dump.',
-  tryThis: 'Use the csv-analyzer skill to turn these messy onboarding notes into a structured SOP. Include phases, timelines, owners, checklists, and flag the bottlenecks.',
-  dataType: 'text',
-  dataLabel: 'Onboarding Notes (messy brain dump)',
-  dataText: [
-    'Centre Onboarding Process - rough notes',
-    '(from Ellie\'s brain dump, January 2026)',
-    '',
-    'when new centre signs up:',
-    '- get signed agreement back',
-    '- add them to hubspot, update deal stage',
-    '- send welcome email with login credentials',
-    '- set up account in admin panel',
-    '- pull ACECQA data manually (takes ages)',
-    '... whole process currently takes about 3 weeks',
-    '... ash wants it under 10 days',
-  ],
-  dragFile: {
-    name: 'onboarding-process-notes.txt',
-    path: '/data/onboarding-process-notes.txt',
-    mime: 'text/plain',
-  },
-  beforeFile: '/demo-assets/before-after/before-onboarding.html',
-  afterFile: '/demo-assets/before-after/after-onboarding.html',
-  skillId: 'sop-builder',
-  wowStat: 'Brain dump to SOP in 14 seconds',
+  skillId: 'csv-analyzer',
+  wowStat: 'Full statistical analysis in 14 seconds',
   wowTime: '14 seconds',
   beforeStages: [
-    'Reading onboarding brain dump...',
-    'Identifying process steps...',
-    'Flagging missing owners...',
+    'Reading campaign CSV...',
+    'Parsing 48 data rows...',
+    'Identifying column types...',
   ],
   afterStages: [
-    'Loading SOP Builder skill...',
-    'Structuring phases and timelines...',
-    'Detecting bottlenecks...',
-    'Generating operations manual...',
+    'Loading CSV Analyzer skill...',
+    'Running Python statistical analysis...',
+    'Detecting anomalies via standard deviation...',
+    'Calculating correlation coefficients...',
+    'Generating charts and recommendations...',
   ],
 }
 
-const demoSecurity: Demo = {
-  id: 11,
+// Level 2: avatar-specific third demo
+// Freelancer/Employee get Search Term Analyzer (ads-focused)
+// Agency Owner/Business Owner get CSV Analyzer (general data)
+export function getLevel2Demos(type: PlayerType): Demo[] {
+  const thirdDemo = (type === 'freelancer' || type === 'employee')
+    ? demoSearchTermAnalyzer
+    : demoCsvAnalyzer
+  return [demoContentRepurposer, demoMeetingIntelligence, thirdDemo]
+}
+
+// ============================================================
+// LEVEL 3 DEMOS - "The Real World"
+// Connectors, plugins, and safety.
+// Same 3 demos for ALL avatars.
+// ============================================================
+
+const demoEmailCalendar: Demo = {
+  id: 7,
+  icon: '\u{1F4EC}',
+  demoType: 'email',
+  title: 'Your inbox and calendar don\'t talk to each other',
+  subtitle: "Meetings in one app, emails in another, your brain trying to bridge the gap.",
+  missionBrief: "Level 3 connects Cowork to your REAL tools. Gmail. Google Calendar. No files to drag this time. Cowork reads your actual inbox and your actual calendar. Your mission: get your entire week in one view.",
+  beforeReaction: "Your inbox is in one tab, your calendar in another, and your to-do list is a sticky note. Welcome to Monday.",
+  afterReaction: "Inbox triaged, calendar analyzed, everything combined into one 'Your Week' dashboard. Three apps became one file.",
+  pain: "Your email is in Gmail. Your meetings are in Google Calendar. Your to-do list is on a sticky note. Every Monday you spend 30 minutes bouncing between tabs trying to figure out what your week looks like. Nothing talks to each other.",
+  fix: "Connect Gmail and Google Calendar to Cowork. One prompt gives you a combined dashboard: email priorities and calendar time allocation in a single view. Your entire week, one file.",
+  tryThis: "Please check my Gmail inbox (20 most recent emails) and my Google Calendar for the next 7 days.\n\nCreate an HTML file called my-week.html on my Desktop that combines:\n- Emails sorted by priority with color coding and suggested next actions\n- Each day's meetings with times, titles, and attendees\n- A time allocation breakdown showing meetings vs free time\n- Any scheduling conflicts or back-to-back meetings flagged\n\nMake it a combined 'Your Week' dashboard I can use every Monday morning.",
+  dataType: 'text',
+  dataLabel: 'Live Connectors (no file needed)',
+  dataText: [
+    'Gmail Connector',
+    'Reads your actual inbox (20 most recent)',
+    'Install: Customize > Connectors > Gmail',
+    '',
+    'Google Calendar Connector',
+    'Reads your actual calendar (next 7 days)',
+    'Install: Customize > Connectors > Google Calendar',
+    '',
+    'No files to drag. Cowork reads your real data.',
+  ],
+  wowStat: 'Inbox + calendar combined in 20 seconds',
+  wowTime: '20 seconds',
+  beforeStages: [
+    'Opening Gmail in one tab...',
+    'Opening Calendar in another...',
+    'Trying to cross-reference manually...',
+  ],
+  afterStages: [
+    'Cowork connecting to Gmail...',
+    'Reading 20 most recent emails...',
+    'Connecting to Google Calendar...',
+    'Analyzing next 7 days...',
+    'Building combined weekly dashboard...',
+  ],
+}
+
+const demoDesignPlugin: Demo = {
+  id: 8,
+  icon: '\u{1F3A8}',
+  demoType: 'design',
+  title: 'Remember that terrible website?',
+  subtitle: "Time to critique it properly. With a plugin that knows design.",
+  missionBrief: "Remember Thunderbolt's website from Level 1? You redesigned it with a prompt. Now critique the ORIGINAL using Anthropic's Design plugin. It has 12 specialized design skills. Your mission: get a professional, scored evaluation.",
+  beforeReaction: "You rebuilt this site in Level 1 with a prompt. But did you actually know WHAT was wrong with it? Or did you just ask for 'modern'?",
+  afterReaction: "Scored evaluation across layout, typography, color, accessibility, and mobile. Now you know exactly what was wrong, not just that it looked bad.",
+  pain: "In Level 1, you told Cowork to 'make it look professional.' It did. But you couldn't explain WHY the original was bad beyond 'it looks old.' If a client asked you to evaluate their site's design, could you give them a structured, scored critique?",
+  fix: "The Design plugin from Anthropic gives Cowork 12 specialized design skills. The design-critique skill evaluates websites across specific dimensions with scores. Not 'this looks bad' but 'your visual hierarchy scores 2/10 because...'",
+  tryThis: "I've dragged in an HTML file for a local electrician's website (the same one from Level 1). Please use the design-critique skill from the Design plugin to evaluate this website's design.\n\nGive me a scored evaluation covering layout, typography, color, accessibility, and mobile responsiveness. Present the results as a clear scorecard with specific issues and recommendations for each category.",
+  dataType: 'html-preview',
+  dataLabel: 'The Thunderbolt Site (again)',
+  dataText: [
+    '\u{1F6A7} WELCOME TO THUNDERBOLT ELECTRICALS!!! \u{1F6A7}',
+    'Your #1 Source for ALL Electrical Needs!!!!',
+    '>>> CLICK HERE FOR SPECIALS <<<',
+    "You redesigned this in Level 1...",
+    "Now let's EVALUATE it properly.",
+  ],
+  dragFile: {
+    name: 'crappy-website.html',
+    path: '/demo-assets/crappy-website/index.html',
+    mime: 'text/html',
+  },
+  wowStat: 'Professional design critique in 8 seconds',
+  wowTime: '8 seconds',
+  beforeStages: [
+    'Looking at the website...',
+    '"It looks old, I guess?"...',
+    'Not sure what specifically is wrong...',
+  ],
+  afterStages: [
+    'Loading Design plugin...',
+    'Running design-critique skill...',
+    'Scoring layout and hierarchy...',
+    'Evaluating typography and color...',
+    'Generating design scorecard...',
+  ],
+}
+
+const demoPoisonedNewsletter: Demo = {
+  id: 9,
   icon: '\u{1F6E1}\u{FE0F}',
+  demoType: 'security',
   title: 'That newsletter has a hidden payload',
   subtitle: 'Looks normal. Reads normal. But there\'s something hiding in there.',
-  missionBrief: "INCOMING: That newsletter looks normal. Reads normal. But something is hiding in there. Your mission: find the hidden threat before your AI reads it.",
+  missionBrief: "INCOMING: That newsletter looks normal. Reads normal. But something is hiding in there. Your mission: find the hidden threat before your AI reads it blindly.",
   beforeReaction: "Seven sections, all looking perfectly normal. That's exactly what makes this one dangerous.",
-  afterReaction: "Hidden payload found and neutralized in 3 seconds. Your AI just dodged a bullet.",
-  pain: "You subscribe to a dozen newsletters. They go straight into your AI workflow for summarization. But what if one of them contains hidden instructions designed to trick your AI into leaking credentials or running commands? You'd never know. The text looks completely normal.",
-  fix: "AI with security skills scans the content for prompt injection attempts, finds the hidden malicious text (even white-on-white tricks), and flags exactly what the attacker was trying to do.",
-  tryThis: 'Analyse this newsletter for prompt injection attacks. Find any hidden instructions, explain what they try to do, and show me the safe content with threats removed.',
+  afterReaction: "Hidden payload found and exposed. Now you know what prompt injection looks like, and why it matters.",
+  pain: "You subscribe to a dozen newsletters. They go straight into your AI workflow for summarization. But what if one contains hidden instructions designed to trick your AI into leaking credentials or running commands? You'd never know. The text looks completely normal.",
+  fix: "Understanding prompt injection is critical for anyone using AI with real data. This demo shows you what a hidden attack looks like, how to spot it, and why Cowork's safety features matter.",
+  tryThis: "I've dragged in a newsletter. Before you summarize it, I want you to analyze it for prompt injection attacks.\n\nFind any hidden instructions, explain what they try to do, and show me the safe content with threats removed. Explain what would have happened if I'd just asked you to 'summarize this newsletter' without checking first.",
   dataType: 'text',
   dataLabel: 'Newsletter (looks normal...)',
   dataText: [
@@ -746,30 +613,33 @@ const demoSecurity: Demo = {
     path: '/demo-assets/research/poisoned-newsletter.md',
     mime: 'text/markdown',
   },
-  beforeFile: '/demo-assets/before-after/before-security.html',
-  afterFile: '/demo-assets/before-after/after-security.html',
-  skillId: 'security-scanner',
   wowStat: 'Hidden threat detected in 3 seconds',
   wowTime: '3 seconds',
   beforeStages: [
     'Scanning newsletter content...',
-    'Parsing HTML structure...',
-    'Checking for hidden elements...',
+    'Everything looks normal...',
+    'Ready to summarize...',
   ],
   afterStages: [
-    'Loading Security Scanner skill...',
-    'Applying injection detection patterns...',
-    'Analyzing hidden text layers...',
+    'Analyzing content structure...',
+    'Checking for hidden text layers...',
+    'Detecting prompt injection patterns...',
+    'Isolating malicious instructions...',
     'Generating threat report...',
   ],
 }
 
-// Get Level 3 demos (same for all player types)
+// Level 3: same demos for all avatars
 export function getLevel3Demos(): Demo[] {
-  return [demoCompetitors, demoOnboarding, demoSecurity]
+  return [demoEmailCalendar, demoDesignPlugin, demoPoisonedNewsletter]
 }
 
-// Skill definitions per demo
+// ============================================================
+// SKILL DEFINITIONS
+// Only Level 2 has traditional skills (downloadable zips).
+// Level 1 has no skills. Level 3 uses connectors/plugins.
+// ============================================================
+
 export interface DemoSkill {
   id: string
   name: string
@@ -777,68 +647,57 @@ export interface DemoSkill {
 }
 
 export const DEMO_SKILLS: Record<number, DemoSkill> = {
-  1: { id: 'website-designer', name: 'Website Designer', capabilities: ['Layout understanding', 'Visual hierarchy', 'Conversion optimization', 'Brand consistency'] },
-  2: { id: 'data-analyst', name: 'Data Analyst', capabilities: ['Pattern recognition', 'Waste detection', 'Actionable recommendations', 'Trend analysis'] },
-  7: { id: 'data-analyst', name: 'Data Analyst', capabilities: ['Pattern recognition', 'Waste detection', 'Actionable recommendations', 'Trend analysis'] },
-  4: { id: 'inbox-commander', name: 'Inbox Commander', capabilities: ['Priority scoring', 'Context awareness', 'Action extraction', 'Response drafting'] },
-  5: { id: 'crm-strategist', name: 'CRM Strategist', capabilities: ['Contact prioritization', 'Deal risk scoring', 'Follow-up timing', 'Personalized outreach'] },
-  6: { id: 'channel-optimizer', name: 'Channel Optimizer', capabilities: ['Cross-channel analysis', 'CPA normalization', 'Budget reallocation', 'ROI forecasting'] },
-  8: { id: 'content-writer', name: 'Content Writer', capabilities: ['Hook creation', 'Story extraction', 'Voice matching', 'Platform formatting'] },
-  9: { id: 'competitive-intel', name: 'Competitive Intel', capabilities: ['Messaging extraction', 'Gap analysis', 'Opportunity scoring', 'Ad angle generation'] },
-  10: { id: 'sop-builder', name: 'SOP Builder', capabilities: ['Process structuring', 'Timeline creation', 'Bottleneck detection', 'Checklist generation'] },
-  11: { id: 'security-scanner', name: 'Security Scanner', capabilities: ['Prompt injection detection', 'Hidden text analysis', 'Threat assessment', 'Safe content extraction'] },
+  // Level 1: no skills
+  // Level 2: real downloadable skills
+  4: { id: 'content-repurposer', name: 'Content Repurposer', capabilities: ['Content extraction', 'Platform-specific formatting', 'Multi-file output', 'Copy-button hub'] },
+  5: { id: 'meeting-intelligence', name: 'Meeting Intelligence', capabilities: ['Action item extraction', 'Decision tracking', 'Follow-up drafting', 'Interactive dashboard'] },
+  6: { id: 'search-term-analyzer', name: 'Search Term Analyzer', capabilities: ['Ngram analysis', 'Intent classification', 'Negative keyword lists', 'CSV exports'] },
+  10: { id: 'csv-analyzer', name: 'CSV Analyzer', capabilities: ['Statistical analysis', 'Anomaly detection', 'Chart generation', 'Budget recommendations'] },
+  // Level 3: connectors/plugins, not traditional skills
 }
 
 // Hours saved per demo (for stats display)
 export const DEMO_TIME_SAVED: Record<number, number> = {
-  1: 80,
-  2: 4,
-  7: 4,
-  4: 0.7,
-  5: 3,
-  6: 2,
-  8: 1.5,
-  9: 5,
-  10: 8,
-  11: 0.5,
+  1: 80,    // Website redesign
+  2: 0.7,   // Email triage
+  3: 4,     // Campaign dashboard
+  4: 3,     // Content repurposer
+  5: 1.5,   // Meeting intelligence
+  6: 4,     // Search term analyzer
+  10: 4,    // CSV analyzer
+  7: 1,     // Email + calendar
+  8: 2,     // Design plugin
+  9: 0.5,   // Security/safety
 }
 
-// All possible Level 1 demo IDs (varies by player type)
-export const ALL_LEVEL_1_IDS = new Set([1, 2, 4, 7])
+// All possible demo IDs per level (includes avatar-specific variants)
+export const ALL_LEVEL_1_IDS = new Set([1, 2, 3])
+export const ALL_LEVEL_2_IDS = new Set([4, 5, 6, 10])
+export const ALL_LEVEL_3_IDS = new Set([7, 8, 9])
 
-// All Level 2 demo IDs
-export const ALL_LEVEL_2_IDS = new Set([5, 6, 8])
-
-// All Level 3 demo IDs
-export const ALL_LEVEL_3_IDS = new Set([9, 10, 11])
-
-// Unique skill IDs in Level 1
-export const LEVEL_1_SKILL_IDS = new Set(['website-designer', 'data-analyst', 'inbox-commander'])
-
-// Unique skill IDs in Level 2
-export const LEVEL_2_SKILL_IDS = new Set(['crm-strategist', 'channel-optimizer', 'content-writer'])
-
-// Unique skill IDs in Level 3
-export const LEVEL_3_SKILL_IDS = new Set(['competitive-intel', 'sop-builder', 'security-scanner'])
+// Skill IDs per level (for badge tracking)
+export const LEVEL_1_SKILL_IDS = new Set<string>() // No skills in Level 1
+export const LEVEL_2_SKILL_IDS = new Set(['content-repurposer', 'meeting-intelligence', 'search-term-analyzer', 'csv-analyzer'])
+export const LEVEL_3_SKILL_IDS = new Set<string>() // Connectors/plugins, not skills
 
 export function getLevels(type: PlayerType): Level[] {
   return [
     {
       id: 1,
-      name: 'First Light',
-      subtitle: 'Zero setup. Instant results. See what AI can really do.',
+      name: 'This Is Cowork',
+      subtitle: 'No skills. No setup. Just drag a file and see what happens.',
       demos: getLevel1Demos(type),
     },
     {
       id: 2,
-      name: 'Going Deeper',
-      subtitle: 'More complex problems. Bigger payoffs.',
-      demos: getLevel2Demos(),
+      name: 'Skills Change Everything',
+      subtitle: 'Install a skill. Watch the output transform.',
+      demos: getLevel2Demos(type),
     },
     {
       id: 3,
       name: 'The Real World',
-      subtitle: 'Real data. Real stakes. Real impact.',
+      subtitle: 'Connectors, plugins, and staying safe.',
       demos: getLevel3Demos(),
     },
   ]

@@ -5,39 +5,16 @@ import { useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import { modules } from '@/lib/course-data'
+import { useGame } from '@/components/game-provider'
 
-const lessonImages: Record<string, string> = {
-  '1-1': '/images/lessons/cowork26-1-1.png',
-  '1-2': '/images/lessons/cowork26-1-2.png',
-  '1-3': '/images/lessons/cowork26-1-3.png',
-  '1-4': '/images/lessons/cowork26-1-4.png',
-  '2-1': '/images/lessons/cowork26-2-1.png',
-  '2-2': '/images/lessons/cowork26-2-2.png',
-  '3-1': '/images/lessons/cowork26-3-1.png',
-  '3-2': '/images/lessons/cowork26-3-2.png',
-  '3-3': '/images/lessons/cowork26-3-3.png',
-  '4-1': '/images/lessons/cowork26-4-1.png',
-  '4-2': '/images/lessons/cowork26-4-2.png',
-  '4-3': '/images/lessons/cowork26-4-3.png',
-  '5-1': '/images/lessons/cowork26-5-1.png',
-  '5-2': '/images/lessons/cowork26-5-2.png',
-  '5-3': '/images/lessons/cowork26-5-3.png',
-  '6-1': '/images/lessons/cowork26-6-1.png',
-  '6-2': '/images/lessons/cowork26-6-2.png',
-  '6-3': '/images/lessons/cowork26-6-3.png',
-  '7-1': '/images/lessons/cowork26-7-1.png',
-  '7-2': '/images/lessons/cowork26-7-2.png',
-  '7-3': '/images/lessons/cowork26-7-3.png',
-  '7-4': '/images/lessons/cowork26-7-4.png',
-  '8-1': '/images/lessons/cowork26-8-1.png',
-  '8-2': '/images/lessons/cowork26-8-2.png',
-  '8-3': '/images/lessons/cowork26-8-3.png',
-  '8-4': '/images/lessons/cowork26-8-4.png',
-}
+// Lesson images - add entries as Mike provides screenshots
+// Format: 'lesson-id': '/images/lessons/cowork-lesson-id.png'
+const lessonImages: Record<string, string> = {}
 
 export default function LessonPage() {
   const params = useParams()
   const router = useRouter()
+  const { isLevelComplete } = useGame()
   const lessonId = params.lesson as string
 
   // Build flat list of all lessons for prev/next navigation
@@ -57,8 +34,12 @@ export default function LessonPage() {
     m.lessons.some((l) => l.id === lessonId)
   )
 
+  // Block access to locked modules (4-6 require Level 1 complete)
+  const isLocked = currentModule && currentModule.id >= 4 && !isLevelComplete(1)
+
   // Keyboard navigation
   useEffect(() => {
+    if (isLocked) return
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' && prev) {
         router.push(`/course/${prev.id}`)
@@ -72,12 +53,49 @@ export default function LessonPage() {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [prev, next, router])
+  }, [prev, next, router, isLocked])
 
   if (!lesson) {
     router.replace('/course')
     return null
   }
+
+  if (isLocked) {
+    return (
+      <div className="min-h-[calc(100vh-3.5rem)] px-4 sm:px-6 py-16 max-w-3xl mx-auto text-center">
+        <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-faint)] mb-3 font-heading">
+          Module {currentModule.id}: {currentModule.title}
+        </p>
+        <h1 className="text-2xl sm:text-3xl font-bold font-heading leading-tight text-[var(--color-ink)] mb-6">
+          This module is locked
+        </h1>
+        <p className="text-sm text-[var(--color-muted)] mb-8 max-w-md mx-auto leading-relaxed">
+          Complete Level 1 of the game to unlock Modules 4, 5, and 6. The first three modules are available now.
+        </p>
+        <div className="flex items-center justify-center gap-4">
+          <Link
+            href="/course"
+            className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
+          >
+            &#8592; Back to course
+          </Link>
+          <Link
+            href="/play"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+          >
+            Play the game
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // Don't nav into locked lessons
+  const level1Done = isLevelComplete(1)
+  const isNextLocked = next && modules.find((m) => m.lessons.some((l) => l.id === next.id))!.id >= 4 && !level1Done
+  const isPrevLocked = prev && modules.find((m) => m.lessons.some((l) => l.id === prev.id))!.id >= 4 && !level1Done
+  const safePrev = isPrevLocked ? null : prev
+  const safeNext = isNextLocked ? null : next
 
   // Strip the # heading from content since we render it separately
   const contentWithoutTitle = lesson.content
@@ -116,12 +134,12 @@ export default function LessonPage() {
 
       {/* Bottom navigation */}
       <div className="flex items-center justify-between mt-12 pt-6 border-t border-[var(--color-border)]">
-        {prev ? (
+        {safePrev ? (
           <Link
-            href={`/course/${prev.id}`}
+            href={`/course/${safePrev.id}`}
             className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
           >
-            &#8592; {prev.title}
+            &#8592; {safePrev.title}
           </Link>
         ) : (
           <Link
@@ -131,9 +149,9 @@ export default function LessonPage() {
             &#8592; All lessons
           </Link>
         )}
-        {next ? (
+        {safeNext ? (
           <Link
-            href={`/course/${next.id}`}
+            href={`/course/${safeNext.id}`}
             className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
           >
             Next lesson

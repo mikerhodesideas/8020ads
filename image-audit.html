@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8020skill - Image Asset Audit</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f8; color: #222; padding: 24px; }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+  .top-bar { position: sticky; top: 0; z-index: 100; background: #fff; border: 1px solid #ddd; padding: 12px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; border-radius: 2px; }
+  .top-bar button { background: #222; color: #fff; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 2px; }
+  .top-bar button:hover { background: #444; }
+  .top-bar .status { font-size: 13px; color: #666; }
+  .top-bar .count { font-size: 13px; color: #999; margin-left: auto; }
+
+  .world-section { margin-bottom: 32px; }
+  .world-header { font-size: 16px; font-weight: 700; padding: 8px 12px; background: #222; color: #fff; margin-bottom: 2px; display: flex; align-items: center; gap: 10px; }
+  .world-header .badge { font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 2px; }
+  .subsection { margin-bottom: 2px; }
+  .subsection-header { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 6px 12px; background: #eee; color: #555; border-left: 3px solid #ccc; }
+  .subsection-header.used { border-left-color: #2a9d2a; }
+  .subsection-header.unused { border-left-color: #d44; }
+  .subsection-header.assets { border-left-color: #d4a520; }
+
+  .image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .image-card { background: #fff; padding: 10px; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; gap: 6px; }
+  .image-card:hover { background: #fafafa; }
+  .thumb-wrap { width: 100%; height: 140px; background: #f0f0f0; border: 1px solid #ddd; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+  .thumb-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .thumb-wrap.svg-thumb { background: #e8e8e8; }
+
+  .meta { min-width: 0; }
+  .filename { font-size: 12px; font-weight: 600; font-family: 'SF Mono', Monaco, monospace; color: #333; word-break: break-all; }
+  .filepath { font-size: 10px; color: #999; margin-top: 1px; word-break: break-all; }
+  .usage-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; margin-top: 3px; border-radius: 2px; }
+  .usage-tag.used { background: #e6f5e6; color: #1a7a1a; }
+  .usage-tag.unused { background: #fde8e8; color: #b33; }
+  .usage-tag.design { background: #fff3d6; color: #8a6d00; }
+  .used-in { font-size: 11px; color: #666; margin-top: 2px; }
+  .used-in code { background: #f0f0f0; padding: 1px 4px; font-size: 10px; border-radius: 2px; }
+
+  .note-field textarea { width: 100%; height: 50px; border: 1px solid #ddd; padding: 6px; font-size: 11px; font-family: inherit; resize: vertical; border-radius: 2px; }
+  .note-field textarea:focus { outline: none; border-color: #888; }
+  .note-field textarea::placeholder { color: #bbb; }
+
+  .legend { display: flex; gap: 16px; font-size: 12px; color: #666; margin-bottom: 16px; }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 2px; }
+  .legend .dot.green { background: #2a9d2a; }
+  .legend .dot.red { background: #d44; }
+  .legend .dot.amber { background: #d4a520; }
+</style>
+</head>
+<body>
+
+<h1>8020skill Image Asset Audit</h1>
+<p class="subtitle">All images across public/ and assets/ directories, organized by world. Add notes and copy when done.</p>
+
+<div class="top-bar">
+  <button onclick="copyNotes()">Copy All Notes to Clipboard</button>
+  <span class="status" id="copyStatus"></span>
+  <span class="count" id="noteCount">0 notes</span>
+</div>
+
+<div class="legend">
+  <span><span class="dot green"></span> Used in code</span>
+  <span><span class="dot red"></span> Not referenced</span>
+  <span><span class="dot amber"></span> Design asset (not deployed)</span>
+</div>
+
+<div id="content"></div>
+
+<script>
+// Absolute path base for file:// protocol
+const BASE = '/Users/mikerhodes/Projects/8020ads';
+
+const DATA = [
+  {
+    world: "Clair Obscur",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "clair-obscur.png", path: "public/images/worlds/clair-obscur.png", usedIn: "game-data.ts (world thumbnail), clair-obscur-map.tsx (SVG map background)", size: "4096x2304" },
+          { file: "clair-obscur.png", path: "public/images/sprites/clair-obscur.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+        ]
+      },
+      {
+        label: "Design Assets (not deployed)",
+        type: "assets",
+        images: [
+          { file: "map-bg.png", path: "assets/clair-obscur/map-bg.png", note: "Original map background" },
+          { file: "map-bg-v1.png", path: "assets/clair-obscur/map-bg-v1.png", note: "Map background variant 1" },
+          { file: "map-bg-v2.png", path: "assets/clair-obscur/map-bg-v2.png", note: "Map background variant 2" },
+          { file: "map-bg-v3.png", path: "assets/clair-obscur/map-bg-v3.png", note: "Map background variant 3" },
+          { file: "node-active-v1.png", path: "assets/clair-obscur/node-active-v1.png", note: "Active node state v1" },
+          { file: "node-active-v2.png", path: "assets/clair-obscur/node-active-v2.png", note: "Active node state v2" },
+          { file: "node-complete-v1.png", path: "assets/clair-obscur/node-complete-v1.png", note: "Complete node state v1" },
+          { file: "node-complete-v2.png", path: "assets/clair-obscur/node-complete-v2.png", note: "Complete node state v2" },
+          { file: "victory-bg.png", path: "assets/clair-obscur/victory-bg.png", note: "Victory screen background" },
+          { file: "victory-bg-v1.png", path: "assets/clair-obscur/victory-bg-v1.png", note: "Victory background v1" },
+          { file: "victory-bg-v2.png", path: "assets/clair-obscur/victory-bg-v2.png", note: "Victory background v2" },
+          { file: "victory-bg-v3.png", path: "assets/clair-obscur/victory-bg-v3.png", note: "Victory background v3" },
+          { file: "world-preview.png", path: "assets/clair-obscur/world-preview.png", note: "World preview thumbnail" },
+          { file: "world-preview-v1.png", path: "assets/clair-obscur/world-preview-v1.png", note: "World preview v1" },
+          { file: "world-preview-v2.png", path: "assets/clair-obscur/world-preview-v2.png", note: "World preview v2" },
+          { file: "world-preview-v3.png", path: "assets/clair-obscur/world-preview-v3.png", note: "World preview v3" },
+          { file: "art-deco-border.svg", path: "assets/clair-obscur/art-deco-border.svg", note: "SVG border decoration", isSvg: true },
+          { file: "art-deco-corner.svg", path: "assets/clair-obscur/art-deco-corner.svg", note: "SVG corner decoration", isSvg: true },
+          { file: "art-deco-divider.svg", path: "assets/clair-obscur/art-deco-divider.svg", note: "SVG divider", isSvg: true },
+          { file: "expedition-marker.svg", path: "assets/clair-obscur/expedition-marker.svg", note: "SVG map marker", isSvg: true },
+          { file: "technique-card-frame.svg", path: "assets/clair-obscur/technique-card-frame.svg", note: "SVG card frame", isSvg: true },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Zelda",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "zelda.png", path: "public/images/worlds/zelda.png", usedIn: "game-data.ts (world thumbnail), zelda-map.tsx (SVG map background)", size: "4096x2304" },
+          { file: "zelda.png", path: "public/images/sprites/zelda.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+        ]
+      },
+      {
+        label: "Design Assets (not deployed)",
+        type: "assets",
+        images: [
+          { file: "map-bg-v1.png", path: "assets/zelda/map-bg-v1.png", note: "Map background variant 1" },
+          { file: "map-bg-v2.png", path: "assets/zelda/map-bg-v2.png", note: "Map background variant 2" },
+          { file: "victory-bg-v1.png", path: "assets/zelda/victory-bg-v1.png", note: "Victory background v1" },
+          { file: "victory-bg-v2.png", path: "assets/zelda/victory-bg-v2.png", note: "Victory background v2" },
+          { file: "world-preview-v1.png", path: "assets/zelda/world-preview-v1.png", note: "World preview v1" },
+          { file: "world-preview-v2.png", path: "assets/zelda/world-preview-v2.png", note: "World preview v2" },
+          { file: "dungeon-entrance.svg", path: "assets/zelda/dungeon-entrance.svg", note: "SVG dungeon entrance", isSvg: true },
+          { file: "heart-container.svg", path: "assets/zelda/heart-container.svg", note: "SVG full heart", isSvg: true },
+          { file: "heart-empty.svg", path: "assets/zelda/heart-empty.svg", note: "SVG empty heart", isSvg: true },
+          { file: "rupee.svg", path: "assets/zelda/rupee.svg", note: "SVG rupee icon", isSvg: true },
+          { file: "scroll-frame.svg", path: "assets/zelda/scroll-frame.svg", note: "SVG scroll frame", isSvg: true },
+          { file: "shield-icon.svg", path: "assets/zelda/shield-icon.svg", note: "SVG shield icon", isSvg: true },
+          { file: "treasure-chest-closed.svg", path: "assets/zelda/treasure-chest-closed.svg", note: "SVG closed chest", isSvg: true },
+          { file: "treasure-chest-open.svg", path: "assets/zelda/treasure-chest-open.svg", note: "SVG open chest", isSvg: true },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Elder Scrolls",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "elder-scrolls.png", path: "public/images/worlds/elder-scrolls.png", usedIn: "game-data.ts (world thumbnail), elder-scrolls-map.tsx (SVG map background)", size: "4096x2304" },
+          { file: "elder-scrolls.png", path: "public/images/sprites/elder-scrolls.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+        ]
+      },
+      {
+        label: "Design Assets (not deployed)",
+        type: "assets",
+        images: [
+          { file: "map-bg-v1.png", path: "assets/elder-scrolls/map-bg-v1.png", note: "Map background variant 1" },
+          { file: "map-bg-v2.png", path: "assets/elder-scrolls/map-bg-v2.png", note: "Map background variant 2" },
+          { file: "victory-bg-v1.png", path: "assets/elder-scrolls/victory-bg-v1.png", note: "Victory background v1" },
+          { file: "victory-bg-v2.png", path: "assets/elder-scrolls/victory-bg-v2.png", note: "Victory background v2" },
+          { file: "world-preview-v1.png", path: "assets/elder-scrolls/world-preview-v1.png", note: "World preview v1" },
+          { file: "world-preview-v2.png", path: "assets/elder-scrolls/world-preview-v2.png", note: "World preview v2" },
+          { file: "compass-rose.svg", path: "assets/elder-scrolls/compass-rose.svg", note: "SVG compass rose", isSvg: true },
+          { file: "constellation-star.svg", path: "assets/elder-scrolls/constellation-star.svg", note: "SVG bright star", isSvg: true },
+          { file: "constellation-star-dim.svg", path: "assets/elder-scrolls/constellation-star-dim.svg", note: "SVG dim star", isSvg: true },
+          { file: "dragon-emblem.svg", path: "assets/elder-scrolls/dragon-emblem.svg", note: "SVG dragon emblem", isSvg: true },
+          { file: "rune-border.svg", path: "assets/elder-scrolls/rune-border.svg", note: "SVG runic border", isSvg: true },
+          { file: "scroll-panel.svg", path: "assets/elder-scrolls/scroll-panel.svg", note: "SVG scroll panel", isSvg: true },
+          { file: "skill-orb.svg", path: "assets/elder-scrolls/skill-orb.svg", note: "SVG skill orb", isSvg: true },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Arcade (Mario)",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "arcade.png", path: "public/images/worlds/arcade.png", usedIn: "game-data.ts (world thumbnail)", size: "4096x2304" },
+          { file: "mario.png", path: "public/images/sprites/mario.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+          { file: "arcade-victory.png", path: "public/images/victory/arcade-victory.png", usedIn: "victory-screen.tsx, maps/shared.tsx (victory background)" },
+        ]
+      },
+      {
+        label: "Unused in public/",
+        type: "unused",
+        images: [
+          { file: "arcade-level-1.png", path: "public/images/levels/arcade-level-1.png" },
+          { file: "arcade-level-2.png", path: "public/images/levels/arcade-level-2.png" },
+          { file: "arcade-level-3.png", path: "public/images/levels/arcade-level-3.png" },
+          { file: "arcade-icon-website.png", path: "public/images/icons/arcade-icon-website.png" },
+          { file: "arcade-icon-email.png", path: "public/images/icons/arcade-icon-email.png" },
+          { file: "arcade-icon-data.png", path: "public/images/icons/arcade-icon-data.png" },
+          { file: "arcade-icon-search.png", path: "public/images/icons/arcade-icon-search.png" },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Red Alert",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "red-alert.png", path: "public/images/worlds/red-alert.png", usedIn: "game-data.ts (world thumbnail)", size: "4096x2304" },
+          { file: "red-alert.png", path: "public/images/sprites/red-alert.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+        ]
+      },
+      {
+        label: "Design Assets (not deployed)",
+        type: "assets",
+        images: [
+          { file: "map-bg-v1.png", path: "assets/red-alert/map-bg-v1.png", note: "Map background v1" },
+          { file: "map-bg-v2.png", path: "assets/red-alert/map-bg-v2.png", note: "Map background v2" },
+          { file: "victory-bg-v1.png", path: "assets/red-alert/victory-bg-v1.png", note: "Victory background v1" },
+          { file: "victory-bg-v2.png", path: "assets/red-alert/victory-bg-v2.png", note: "Victory background v2" },
+          { file: "world-preview-v1.png", path: "assets/red-alert/world-preview-v1.png", note: "World preview v1" },
+          { file: "world-preview-v2.png", path: "assets/red-alert/world-preview-v2.png", note: "World preview v2" },
+          { file: "base-icon.svg", path: "assets/red-alert/base-icon.svg", note: "SVG base icon", isSvg: true },
+          { file: "hazard-border.svg", path: "assets/red-alert/hazard-border.svg", note: "SVG hazard border", isSvg: true },
+          { file: "military-panel.svg", path: "assets/red-alert/military-panel.svg", note: "SVG military panel", isSvg: true },
+          { file: "radar-sweep.svg", path: "assets/red-alert/radar-sweep.svg", note: "SVG radar animation", isSvg: true },
+          { file: "unit-ready-indicator.svg", path: "assets/red-alert/unit-ready-indicator.svg", note: "SVG unit indicator", isSvg: true },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Tetris",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "tetris.png", path: "public/images/worlds/tetris.png", usedIn: "game-data.ts (world thumbnail)", size: "4096x2304" },
+          { file: "tetris.png", path: "public/images/sprites/tetris.png", usedIn: "path-chooser.tsx (world selector sprite)", size: "2048x2048" },
+        ]
+      },
+      {
+        label: "Design Assets (not deployed)",
+        type: "assets",
+        images: [
+          { file: "map-bg-v1.png", path: "assets/tetris/map-bg-v1.png", note: "Map background v1" },
+          { file: "map-bg-v2.png", path: "assets/tetris/map-bg-v2.png", note: "Map background v2" },
+          { file: "victory-bg-v1.png", path: "assets/tetris/victory-bg-v1.png", note: "Victory background v1" },
+          { file: "victory-bg-v2.png", path: "assets/tetris/victory-bg-v2.png", note: "Victory background v2" },
+          { file: "world-preview-v1.png", path: "assets/tetris/world-preview-v1.png", note: "World preview v1" },
+          { file: "world-preview-v2.png", path: "assets/tetris/world-preview-v2.png", note: "World preview v2" },
+          { file: "block-single.svg", path: "assets/tetris/block-single.svg", note: "SVG single block", isSvg: true },
+          { file: "ghost-piece.svg", path: "assets/tetris/ghost-piece.svg", note: "SVG ghost piece", isSvg: true },
+          { file: "i-piece.svg", path: "assets/tetris/i-piece.svg", note: "SVG I-piece", isSvg: true },
+          { file: "l-piece.svg", path: "assets/tetris/l-piece.svg", note: "SVG L-piece", isSvg: true },
+          { file: "line-clear.svg", path: "assets/tetris/line-clear.svg", note: "SVG line clear", isSvg: true },
+          { file: "next-piece-frame.svg", path: "assets/tetris/next-piece-frame.svg", note: "SVG next piece frame", isSvg: true },
+          { file: "t-piece.svg", path: "assets/tetris/t-piece.svg", note: "SVG T-piece", isSvg: true },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Gallery (Classic)",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "gallery.png", path: "public/images/worlds/gallery.png", usedIn: "game-data.ts (world thumbnail)", size: "4096x2304" },
+          { file: "gallery-victory.png", path: "public/images/victory/gallery-victory.png", usedIn: "victory-screen.tsx, maps/shared.tsx (victory background)" },
+        ]
+      },
+      {
+        label: "Unused",
+        type: "unused",
+        images: [
+          { file: "gallery-level-1.png", path: "public/images/levels/gallery-level-1.png" },
+          { file: "gallery-level-2.png", path: "public/images/levels/gallery-level-2.png" },
+          { file: "gallery-level-3.png", path: "public/images/levels/gallery-level-3.png" },
+          { file: "gallery-icon-website.png", path: "public/images/icons/gallery-icon-website.png" },
+          { file: "gallery-icon-email.png", path: "public/images/icons/gallery-icon-email.png" },
+          { file: "gallery-icon-data.png", path: "public/images/icons/gallery-icon-data.png" },
+          { file: "gallery-icon-search.png", path: "public/images/icons/gallery-icon-search.png" },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Personas",
+    sections: [
+      {
+        label: "Used in Code",
+        type: "used",
+        images: [
+          { file: "business-persona.png", path: "public/images/business-persona.png", usedIn: "path-chooser.tsx (Step 1 avatar)" },
+          { file: "employee-persona.png", path: "public/images/employee-persona.png", usedIn: "path-chooser.tsx (Step 1 avatar)" },
+          { file: "freelancer-persona.png", path: "public/images/freelancer-persona.png", usedIn: "path-chooser.tsx (Step 1 avatar)" },
+          { file: "business-owner-persona.png", path: "public/images/business-owner-persona.png", usedIn: "path-chooser.tsx (Step 1 avatar)" },
+        ]
+      },
+      {
+        label: "Unused",
+        type: "unused",
+        images: [
+          { file: "agency-persona.png", path: "public/images/agency-persona.png" },
+        ]
+      }
+    ]
+  },
+  {
+    world: "Lesson Screenshots",
+    sections: [
+      {
+        label: "Used in Code (course pages)",
+        type: "used",
+        images: [
+          { file: "cowork26-1-1.png", path: "public/images/lessons/cowork26-1-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-1-2.png", path: "public/images/lessons/cowork26-1-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-1-3.png", path: "public/images/lessons/cowork26-1-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-1-4.png", path: "public/images/lessons/cowork26-1-4.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-2-1.png", path: "public/images/lessons/cowork26-2-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-2-2.png", path: "public/images/lessons/cowork26-2-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-3-1.png", path: "public/images/lessons/cowork26-3-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-3-2.png", path: "public/images/lessons/cowork26-3-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-3-3.png", path: "public/images/lessons/cowork26-3-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-4-1.png", path: "public/images/lessons/cowork26-4-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-4-2.png", path: "public/images/lessons/cowork26-4-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-4-3.png", path: "public/images/lessons/cowork26-4-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-5-1.png", path: "public/images/lessons/cowork26-5-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-5-2.png", path: "public/images/lessons/cowork26-5-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-5-3.png", path: "public/images/lessons/cowork26-5-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-6-1.png", path: "public/images/lessons/cowork26-6-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-6-2.png", path: "public/images/lessons/cowork26-6-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-6-3.png", path: "public/images/lessons/cowork26-6-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-7-1.png", path: "public/images/lessons/cowork26-7-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-7-2.png", path: "public/images/lessons/cowork26-7-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-7-3.png", path: "public/images/lessons/cowork26-7-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-7-4.png", path: "public/images/lessons/cowork26-7-4.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-8-1.png", path: "public/images/lessons/cowork26-8-1.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-8-2.png", path: "public/images/lessons/cowork26-8-2.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-8-3.png", path: "public/images/lessons/cowork26-8-3.png", usedIn: "app/course/[lesson]/page.tsx" },
+          { file: "cowork26-8-4.png", path: "public/images/lessons/cowork26-8-4.png", usedIn: "app/course/[lesson]/page.tsx" },
+        ]
+      }
+    ]
+  }
+];
+
+function render() {
+  const container = document.getElementById('content');
+  let html = '';
+  let imgIdx = 0;
+
+  for (const world of DATA) {
+    const totalImages = world.sections.reduce((sum, s) => sum + s.images.length, 0);
+    html += `<div class="world-section">`;
+    html += `<div class="world-header">${world.world} <span class="badge">${totalImages} images</span></div>`;
+
+    for (const section of world.sections) {
+      html += `<div class="subsection">`;
+      html += `<div class="subsection-header ${section.type}">${section.label} (${section.images.length})</div>`;
+      html += `<div class="image-grid">`;
+
+      for (const img of section.images) {
+        const isAsset = img.path.startsWith('assets/');
+        const imgSrc = `${BASE}/${img.path}`;
+        const tagClass = img.usedIn ? 'used' : isAsset ? 'design' : 'unused';
+        const tagText = img.usedIn ? 'USED' : isAsset ? 'DESIGN ASSET' : 'UNUSED';
+        const thumbClass = img.isSvg ? 'thumb-wrap svg-thumb' : 'thumb-wrap';
+
+        html += `<div class="image-card">`;
+        html += `<div class="${thumbClass}"><img src="${imgSrc}" alt="${img.file}" loading="lazy" onerror="this.parentElement.innerHTML='<span style=\\'color:#999;font-size:11px\\'>Failed to load</span>'"></div>`;
+        html += `<div class="meta">`;
+        html += `<div class="filename">${img.file}</div>`;
+        html += `<div class="filepath">${img.path}${img.size ? ' (' + img.size + ')' : ''}</div>`;
+        html += `<span class="usage-tag ${tagClass}">${tagText}</span>`;
+        if (img.usedIn) html += `<div class="used-in">Used in: <code>${img.usedIn}</code></div>`;
+        if (img.note && !img.usedIn) html += `<div class="used-in">${img.note}</div>`;
+        html += `</div>`;
+        html += `<div class="note-field"><textarea data-idx="${imgIdx}" data-file="${img.file}" data-path="${img.path}" data-world="${world.world}" placeholder="Notes..." oninput="updateCount()"></textarea></div>`;
+        html += `</div>`;
+        imgIdx++;
+      }
+
+      html += `</div></div>`;
+    }
+
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function updateCount() {
+  const textareas = document.querySelectorAll('textarea');
+  let count = 0;
+  textareas.forEach(t => { if (t.value.trim()) count++; });
+  document.getElementById('noteCount').textContent = count + ' note' + (count !== 1 ? 's' : '');
+}
+
+function copyNotes() {
+  const textareas = document.querySelectorAll('textarea');
+  let lines = [];
+  let currentWorld = '';
+
+  textareas.forEach(t => {
+    if (!t.value.trim()) return;
+    const world = t.dataset.world;
+    if (world !== currentWorld) {
+      if (lines.length > 0) lines.push('');
+      lines.push('## ' + world);
+      currentWorld = world;
+    }
+    lines.push(`- **${t.dataset.file}** (${t.dataset.path}): ${t.value.trim()}`);
+  });
+
+  if (lines.length === 0) {
+    document.getElementById('copyStatus').textContent = 'No notes to copy';
+    setTimeout(() => document.getElementById('copyStatus').textContent = '', 2000);
+    return;
+  }
+
+  const text = '# Image Audit Notes\n\n' + lines.join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyStatus').textContent = 'Copied!';
+    setTimeout(() => document.getElementById('copyStatus').textContent = '', 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

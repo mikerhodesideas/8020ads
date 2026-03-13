@@ -1,9 +1,10 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { useGame } from '@/components/game-provider'
 import { BadgeTray, BadgeToast } from '@/components/badge-system'
-import { getLevels, type PlayerType } from '@/lib/game-data'
+import { getLevels, type PlayerType, type DemoType } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import type { SkinConfig } from '@/lib/skin-config'
 import { LevelCelebration } from './shared'
@@ -16,13 +17,15 @@ function DemoNode({
   isGallery,
   stars,
   onClick,
+  iconImage,
 }: {
-  demo: { id: number; icon: string; title: string; subtitle: string }
+  demo: { id: number; icon: string; demoType: DemoType; title: string; subtitle: string }
   index: number
   done: boolean
   isGallery: boolean
   stars: number
   onClick: () => void
+  iconImage?: string
 }) {
   return (
     <button
@@ -43,7 +46,11 @@ function DemoNode({
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2.5">
-          <span className="text-2xl leading-none">{demo.icon}</span>
+          {iconImage ? (
+            <Image src={iconImage} alt="" width={28} height={28} className="object-contain" />
+          ) : (
+            <span className="text-2xl leading-none">{demo.icon}</span>
+          )}
           <span
             className={cn(
               'inline-flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold font-heading',
@@ -371,6 +378,7 @@ export default function GalleryMap({
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {level.demos.map((demo, demoIndex) => {
                             const done = completed.has(demo.id)
+                            const iconImage = skin.demoIcons?.[demo.demoType]
                             return (
                               <DemoNode
                                 key={demo.id}
@@ -382,6 +390,7 @@ export default function GalleryMap({
                                 onClick={() =>
                                   router.push(`/play/${demo.id}`)
                                 }
+                                iconImage={iconImage}
                               />
                             )
                           })}

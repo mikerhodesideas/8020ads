@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useSkin } from '@/components/game-provider'
 import { cn } from '@/lib/utils'
 
@@ -10,15 +10,18 @@ interface DragFileProps {
 
 export default function DragFile({ file }: DragFileProps) {
   const skin = useSkin()
+  const linkRef = useRef<HTMLAnchorElement>(null)
 
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
       const fullUrl = `${window.location.origin}${file.path}`
+      // Chrome DownloadURL format: mime:filename:url
       e.dataTransfer.setData(
         'DownloadURL',
         `${file.mime}:${file.name}:${fullUrl}`
       )
-      e.dataTransfer.setData('text/plain', file.path)
+      e.dataTransfer.setData('text/uri-list', fullUrl)
+      e.dataTransfer.setData('text/plain', fullUrl)
       e.dataTransfer.effectAllowed = 'copy'
     },
     [file]
@@ -28,11 +31,14 @@ export default function DragFile({ file }: DragFileProps) {
     const link = document.createElement('a')
     link.href = file.path
     link.download = file.name
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
   }, [file])
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
+      <a ref={linkRef} href={file.path} download={file.name} className="hidden" />
       <div
         draggable
         onDragStart={handleDragStart}
@@ -67,7 +73,7 @@ export default function DragFile({ file }: DragFileProps) {
         'text-xs leading-relaxed',
         skin.isDark ? 'text-white/40' : 'text-[var(--color-faint)]'
       )}>
-        Click to save this file. Then drag it from your desktop into CoWork to get started.
+        Drag to your desktop or click to save. Then open Cowork and drag the file in.
       </p>
     </div>
   )

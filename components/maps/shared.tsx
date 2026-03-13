@@ -24,9 +24,7 @@ export function LevelCelebration({
     return () => clearTimeout(timer)
   }, [onDismiss, skin.sounds.levelComplete])
 
-  const victoryImage = !isDark
-    ? '/images/victory/gallery-victory.png'
-    : '/images/victory/arcade-victory.png'
+  const victoryImage = skin.victoryImage
 
   return (
     <div

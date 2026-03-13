@@ -1,3 +1,8 @@
 export { default as GalleryMap } from './gallery-map'
 export { default as MarioMap } from './mario-map'
+export { default as RedAlertMap } from './red-alert-map'
+export { default as ClairObscurMap } from './clair-obscur-map'
+export { default as TetrisMap } from './tetris-map'
+export { default as ZeldaMap } from './zelda-map'
+export { default as ElderScrollsMap } from './elder-scrolls-map'
 export { LevelCelebration } from './shared'
