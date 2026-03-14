@@ -311,27 +311,21 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const isLevelComplete = useCallback(
     (levelId: number) => {
-      if (levelId === 1) {
-        const l1Done = Array.from(state.completed).filter((id) =>
-          ALL_LEVEL_1_IDS.has(id)
-        )
-        return l1Done.length >= 3
-      }
-      if (levelId === 2) {
-        const l2Done = Array.from(state.completed).filter((id) =>
-          ALL_LEVEL_2_IDS.has(id)
-        )
-        return l2Done.length >= 3
-      }
-      if (levelId === 3) {
-        const l3Done = Array.from(state.completed).filter((id) =>
-          ALL_LEVEL_3_IDS.has(id)
-        )
-        return l3Done.length >= 3
-      }
-      return false
+      if (!state.type) return false
+      // Check against the player's actual demos for this level, not the global ID sets.
+      // This ensures we only count the 3 demos assigned to this player type.
+      const t = state.type as PlayerType
+      const levelDemos = levelId === 1
+        ? getLevel1Demos(t)
+        : levelId === 2
+          ? getLevel2Demos(t)
+          : levelId === 3
+            ? getLevel3Demos(t)
+            : []
+      if (levelDemos.length === 0) return false
+      return levelDemos.every((d) => state.completed.has(d.id))
     },
-    [state.completed]
+    [state.completed, state.type]
   )
 
   const installSkill = useCallback((skillId: string) => {

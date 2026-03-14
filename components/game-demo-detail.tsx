@@ -100,6 +100,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   const [showTryThis, setShowTryThis] = useState(false)
   const [copied, setCopied] = useState(false)
   const [justCompleted, setJustCompleted] = useState(false)
+  const [downloadedItems, setDownloadedItems] = useState<Set<string>>(new Set())
 
 
   const animFrameRef = useRef<number>(0)
@@ -750,8 +751,34 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
               </div>
             )}
 
+            {/* Post-celebration guidance: nudge user to the "Now Do It" section */}
             {(showTryThis || done) && (
-              <div className="mt-10 max-w-5xl mx-auto quest-phase-in">
+              <div className="mt-6 mb-2 text-center quest-phase-in">
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('try-it-yourself')
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }}
+                  className="inline-flex flex-col items-center gap-1 group transition-opacity hover:opacity-80"
+                >
+                  <span
+                    className="text-sm font-heading font-semibold"
+                    style={{ color: 'var(--world-accent)' }}
+                  >
+                    Now try it with your own data
+                  </span>
+                  <span
+                    className="text-lg animate-bounce"
+                    style={{ color: 'var(--world-accent)' }}
+                  >
+                    &#8595;
+                  </span>
+                </button>
+              </div>
+            )}
+
+            {(showTryThis || done) && (
+              <div id="try-it-yourself" className="mt-4 max-w-5xl mx-auto quest-phase-in scroll-mt-4">
                 {/* Post-demo connector guide (Demo 7) */}
                 {POST_DEMO_GUIDES[demo.id] && (
                   <div
@@ -835,27 +862,53 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                       <a
                         href={demo.skillZip.path}
                         download={demo.skillZip.name}
-                        className="flex items-center gap-4 px-6 py-4 border-2 border-dashed rounded-[2px] transition-colors text-left"
+                        className="flex items-center gap-4 px-6 py-4 border-2 rounded-[2px] transition-all text-left"
                         style={{
-                          borderColor: 'var(--world-download-border)',
-                          background: 'var(--world-download-bg)',
+                          borderColor: downloadedItems.has(demo.skillZip.path)
+                            ? (isDark ? 'rgba(16,185,129,0.6)' : '#10b981')
+                            : 'var(--world-download-border)',
+                          borderStyle: downloadedItems.has(demo.skillZip.path) ? 'solid' : 'dashed',
+                          background: downloadedItems.has(demo.skillZip.path)
+                            ? (isDark ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.05)')
+                            : 'var(--world-download-bg)',
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--world-download-hover-bg)'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = 'var(--world-download-bg)'}
-                        onClick={() => { if (skin.sounds.skillDownload) playSound(skin.sounds.skillDownload) }}
+                        onMouseEnter={(e) => {
+                          if (!downloadedItems.has(demo.skillZip!.path)) {
+                            e.currentTarget.style.background = 'var(--world-download-hover-bg)'
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!downloadedItems.has(demo.skillZip!.path)) {
+                            e.currentTarget.style.background = 'var(--world-download-bg)'
+                          }
+                        }}
+                        onClick={() => {
+                          if (skin.sounds.skillDownload) playSound(skin.sounds.skillDownload)
+                          setDownloadedItems(prev => new Set(prev).add(demo.skillZip!.path))
+                        }}
                       >
-                        <span className="text-2xl shrink-0">&#128230;</span>
+                        <span className="text-2xl shrink-0">
+                          {downloadedItems.has(demo.skillZip.path) ? '\u2713' : '\uD83D\uDCE6'}
+                        </span>
                         <span
                           className="text-base font-medium truncate font-heading"
-                          style={{ color: 'var(--world-download-text)' }}
+                          style={{
+                            color: downloadedItems.has(demo.skillZip.path)
+                              ? (isDark ? '#6ee7b7' : '#059669')
+                              : 'var(--world-download-text)',
+                          }}
                         >
-                          {demo.skillZip.name}
+                          {downloadedItems.has(demo.skillZip.path) ? `${demo.skillZip.name} - Downloaded` : demo.skillZip.name}
                         </span>
                         <span
                           className="ml-auto text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px] text-white"
-                          style={{ background: 'var(--world-download-badge-bg)' }}
+                          style={{
+                            background: downloadedItems.has(demo.skillZip.path)
+                              ? (isDark ? '#059669' : '#10b981')
+                              : 'var(--world-download-badge-bg)',
+                          }}
                         >
-                          &#8595; Download
+                          {downloadedItems.has(demo.skillZip.path) ? '\u2713 Done' : '\u2193 Download'}
                         </span>
                       </a>
                       <p
@@ -1058,13 +1111,13 @@ function SkillUnlockCard({
         <div
           className="border-[3px] p-8 rounded-[2px] shadow-2xl"
           style={{
-            background: 'var(--world-skill-card-bg)',
+            background: isDark ? '#0c0c1a' : '#faf6ef',
             borderColor: 'var(--world-skill-card-border)',
           }}
         >
           {!installed ? (
             <>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">
                   {skin.skillUnlockIcon}
                 </span>
@@ -1076,9 +1129,34 @@ function SkillUnlockCard({
                 </span>
                 {skin.showGlossaryTips && <GlossaryTip termId="power-up" />}
               </div>
-              <h3 className="text-lg font-heading font-bold mb-3 text-[var(--world-text)]">
+              <h3
+                className="text-lg font-heading font-bold mb-4"
+                style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}
+              >
                 {skill.name}
               </h3>
+
+              {/* Install button - prominent, near the top */}
+              <button
+                onClick={() => {
+                  if (skillZip) {
+                    const a = document.createElement('a')
+                    a.href = skillZip.path
+                    a.download = skillZip.name
+                    document.body.appendChild(a)
+                    a.click()
+                    document.body.removeChild(a)
+                  }
+                  onInstall()
+                }}
+                className={cn(
+                  'w-full font-heading font-bold rounded-[2px] text-white transition-all mb-5',
+                  isDark ? 'py-3.5 text-base power-pulse' : 'py-2.5 text-sm'
+                )}
+                style={{ background: 'var(--world-accent2)' }}
+              >
+                {skin.installLabel}
+              </button>
 
               {/* Skill zip download */}
               {skillZip && (
@@ -1096,11 +1174,14 @@ function SkillUnlockCard({
                   <span className="text-lg shrink-0">&#128230;</span>
                   <span
                     className="text-sm font-heading truncate"
-                    style={{ color: 'var(--world-download-text)' }}
+                    style={{ color: isDark ? 'rgba(255,255,255,0.85)' : '#333' }}
                   >
                     {skillZip.name}
                   </span>
-                  <span className="ml-auto text-xs font-heading font-bold text-[var(--world-text-muted)]">
+                  <span
+                    className="ml-auto text-xs font-heading font-bold"
+                    style={{ color: isDark ? 'rgba(255,255,255,0.5)' : '#888' }}
+                  >
                     &#8595;
                   </span>
                 </a>
@@ -1110,7 +1191,8 @@ function SkillUnlockCard({
                 {skill.capabilities.map((cap, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-2 text-sm text-[var(--world-text-secondary)]"
+                    className="flex items-center gap-2 text-sm"
+                    style={{ color: isDark ? 'rgba(255,255,255,0.75)' : '#555' }}
                   >
                     <span className="text-xs" style={{ color: 'var(--world-accent)' }}>+</span>
                     {cap}
@@ -1120,37 +1202,16 @@ function SkillUnlockCard({
 
               {/* Install instructions */}
               <p
-                className="text-xs text-center mb-4"
-                style={{ color: 'var(--world-skill-subtext)' }}
+                className="text-xs text-center"
+                style={{ color: isDark ? 'rgba(255,255,255,0.4)' : '#999' }}
               >
                 In Cowork: Customize &gt; Skills &gt; + &gt; Upload
               </p>
-
-              <button
-                onClick={() => {
-                  if (skillZip) {
-                    const a = document.createElement('a')
-                    a.href = skillZip.path
-                    a.download = skillZip.name
-                    document.body.appendChild(a)
-                    a.click()
-                    document.body.removeChild(a)
-                  }
-                  onInstall()
-                }}
-                className={cn(
-                  'w-full font-heading font-bold rounded-[2px] text-white transition-all',
-                  isDark ? 'py-3.5 text-base power-pulse' : 'py-2.5 text-sm'
-                )}
-                style={{ background: 'var(--world-accent2)' }}
-              >
-                {skin.installLabel}
-              </button>
             </>
           ) : (
             <div className="flex flex-col items-center justify-center py-4">
-              <span className="text-4xl mb-3 text-[var(--world-text)]">&#10003;</span>
-              <p className="text-lg font-heading font-bold text-[var(--world-text)]">
+              <span className="text-4xl mb-3" style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}>&#10003;</span>
+              <p className="text-lg font-heading font-bold" style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}>
                 {skin.installedLabel}
               </p>
             </div>
