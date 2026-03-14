@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Music Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #fafafa; color: #1a1a1a; padding: 32px; }
+  h1 { font-size: 24px; margin-bottom: 8px; }
+  p.subtitle { color: #666; margin-bottom: 32px; font-size: 14px; }
+  .worlds { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+  .world-card { background: #fff; border: 1px solid #e0e0e0; border-left: 3px solid var(--accent); padding: 20px; }
+  .world-card h2 { font-size: 18px; margin-bottom: 4px; color: var(--accent); }
+  .world-card .vibe { font-size: 13px; color: #888; margin-bottom: 16px; }
+  .track { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+  .track:last-child { border-bottom: none; }
+  .track-name { font-size: 13px; font-weight: 500; min-width: 120px; }
+  .track audio { height: 32px; flex: 1; }
+  .stop-all { position: fixed; bottom: 24px; right: 24px; background: #D64C00; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .stop-all:hover { background: #b84000; }
+</style>
+</head>
+<body>
+
+<h1>Background Music Preview</h1>
+<p class="subtitle">All 30 tracks across 5 worlds. Click play to listen, decide what to keep/replace.</p>
+
+<div class="worlds">
+
+  <div class="world-card" style="--accent: #e63946;">
+    <h2>Super Mario</h2>
+    <div class="vibe">Bouncy chiptune, 14% volume</div>
+    <div class="track"><span class="track-name">Overworld</span><audio controls preload="none" src="/sounds/mario/bg-overworld.mp3"></audio></div>
+    <div class="track"><span class="track-name">Underground</span><audio controls preload="none" src="/sounds/mario/bg-underground.mp3"></audio></div>
+    <div class="track"><span class="track-name">Starman</span><audio controls preload="none" src="/sounds/mario/bg-starman.mp3"></audio></div>
+    <div class="track"><span class="track-name">Athletic</span><audio controls preload="none" src="/sounds/mario/bg-athletic.mp3"></audio></div>
+    <div class="track"><span class="track-name">Castle</span><audio controls preload="none" src="/sounds/mario/bg-castle.mp3"></audio></div>
+    <div class="track"><span class="track-name">Bonus</span><audio controls preload="none" src="/sounds/mario/bg-bonus.mp3"></audio></div>
+  </div>
+
+  <div class="world-card" style="--accent: #2d6a4f;">
+    <h2>Red Alert</h2>
+    <div class="vibe">Industrial/militaristic, 12% volume</div>
+    <div class="track"><span class="track-name">Command</span><audio controls preload="none" src="/sounds/red-alert/bg-command.mp3"></audio></div>
+    <div class="track"><span class="track-name">March</span><audio controls preload="none" src="/sounds/red-alert/bg-march.mp3"></audio></div>
+    <div class="track"><span class="track-name">Radar</span><audio controls preload="none" src="/sounds/red-alert/bg-radar.mp3"></audio></div>
+    <div class="track"><span class="track-name">Assault</span><audio controls preload="none" src="/sounds/red-alert/bg-assault.mp3"></audio></div>
+    <div class="track"><span class="track-name">Briefing</span><audio controls preload="none" src="/sounds/red-alert/bg-briefing.mp3"></audio></div>
+    <div class="track"><span class="track-name">Deploy</span><audio controls preload="none" src="/sounds/red-alert/bg-deploy.mp3"></audio></div>
+  </div>
+
+  <div class="world-card" style="--accent: #7209b7;">
+    <h2>Tetris</h2>
+    <div class="vibe">Game Boy chiptune, 16% volume</div>
+    <div class="track"><span class="track-name">Type A</span><audio controls preload="none" src="/sounds/tetris/bg-type-a.mp3"></audio></div>
+    <div class="track"><span class="track-name">Type B</span><audio controls preload="none" src="/sounds/tetris/bg-type-b.mp3"></audio></div>
+    <div class="track"><span class="track-name">Type C</span><audio controls preload="none" src="/sounds/tetris/bg-type-c.mp3"></audio></div>
+    <div class="track"><span class="track-name">Marathon</span><audio controls preload="none" src="/sounds/tetris/bg-marathon.mp3"></audio></div>
+    <div class="track"><span class="track-name">Sprint</span><audio controls preload="none" src="/sounds/tetris/bg-sprint.mp3"></audio></div>
+    <div class="track"><span class="track-name">Classic</span><audio controls preload="none" src="/sounds/tetris/bg-classic.mp3"></audio></div>
+  </div>
+
+  <div class="world-card" style="--accent: #386641;">
+    <h2>Legend of Zelda</h2>
+    <div class="vibe">Adventurous/pastoral, 16% volume</div>
+    <div class="track"><span class="track-name">Field</span><audio controls preload="none" src="/sounds/zelda/bg-field.mp3"></audio></div>
+    <div class="track"><span class="track-name">Forest</span><audio controls preload="none" src="/sounds/zelda/bg-forest.mp3"></audio></div>
+    <div class="track"><span class="track-name">Village</span><audio controls preload="none" src="/sounds/zelda/bg-village.mp3"></audio></div>
+    <div class="track"><span class="track-name">Temple</span><audio controls preload="none" src="/sounds/zelda/bg-temple.mp3"></audio></div>
+    <div class="track"><span class="track-name">Quest</span><audio controls preload="none" src="/sounds/zelda/bg-quest.mp3"></audio></div>
+    <div class="track"><span class="track-name">Twilight</span><audio controls preload="none" src="/sounds/zelda/bg-twilight.mp3"></audio></div>
+  </div>
+
+  <div class="world-card" style="--accent: #457b9d;">
+    <h2>Elder Scrolls</h2>
+    <div class="vibe">Epic Nordic orchestral, 16% volume</div>
+    <div class="track"><span class="track-name">Dragonborn</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-dragonborn.mp3"></audio></div>
+    <div class="track"><span class="track-name">Skyrim Wind</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-skyrim-wind.mp3"></audio></div>
+    <div class="track"><span class="track-name">Sovngarde</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-sovngarde.mp3"></audio></div>
+    <div class="track"><span class="track-name">Ancient Stones</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-ancient-stones.mp3"></audio></div>
+    <div class="track"><span class="track-name">Dawn Guard</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-dawn-guard.mp3"></audio></div>
+    <div class="track"><span class="track-name">Throat of World</span><audio controls preload="none" src="/sounds/elder-scrolls/bg-throat-of-world.mp3"></audio></div>
+  </div>
+
+</div>
+
+<button class="stop-all" onclick="document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; })">Stop All</button>
+
+<script>
+  // Only play one track at a time
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.addEventListener('play', () => {
+      document.querySelectorAll('audio').forEach(other => {
+        if (other !== audio) { other.pause(); other.currentTime = 0; }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -27,7 +27,7 @@ export default function CoursePage() {
 
       <div className="space-y-6">
         {modules.map((mod) => {
-          const isLocked = mod.id >= 4 && !level1Done
+          const isLocked = mod.id >= 3 && !level1Done
 
           return (
             <div

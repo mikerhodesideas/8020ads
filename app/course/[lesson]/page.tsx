@@ -9,15 +9,28 @@ import { modules } from '@/lib/course-data'
 import { useGame } from '@/components/game-provider'
 
 // Maps screenshot descriptions from [SCREENSHOT: ...] placeholders to image files
-// Key = text inside the brackets (lowercased, trimmed). Add entries as Mike provides screenshots.
-const screenshotMap: Record<string, string> = {
-  'cowork working in a folder on your computer': '/images/lessons/cowork-home-screen.png',
-  'the cowork download page showing mac and windows options': '/images/lessons/cowork-download-page.png',
+// size: 'full' (default), 'medium' (60% centered), 'small' (40% centered)
+const screenshotMap: Record<string, { src: string; size?: 'full' | 'medium' | 'small' }> = {
+  'cowork working in a folder on your computer': { src: '/images/lessons/cowork-home-screen.png' },
+  'the cowork download page showing mac and windows options': { src: '/images/lessons/cowork-download-page.png' },
+  'cowork sign-in screen': { src: '/images/lessons/cowork-sign-in.png', size: 'small' },
+  'cowork main interface': { src: '/images/lessons/cowork-main-interface.png' },
+  'cowork settings menu': { src: '/images/lessons/cowork-settings-menu.png', size: 'small' },
+  'cowork active conversation': { src: '/images/lessons/cowork-active-conversation.png' },
+  'cowork folder picker': { src: '/images/lessons/cowork-folder-picker.png', size: 'medium' },
 }
 
-function findScreenshot(text: string): string | null {
+const sizeClasses = {
+  full: 'w-full',
+  medium: 'max-w-[60%] mx-auto',
+  small: 'max-w-[40%] mx-auto',
+}
+
+function findScreenshot(text: string): { src: string; size: 'full' | 'medium' | 'small' } | null {
   const key = text.toLowerCase().trim()
-  return screenshotMap[key] ?? null
+  const entry = screenshotMap[key]
+  if (!entry) return null
+  return { src: entry.src, size: entry.size ?? 'full' }
 }
 
 function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithoutRef<'blockquote'>) {
@@ -26,11 +39,13 @@ function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithou
   const match = text.match(/\[SCREENSHOT:\s*(.+?)\]/)
   if (match) {
     const desc = match[1]
-    const src = findScreenshot(desc)
-    if (src) {
+    const result = findScreenshot(desc)
+    if (result) {
       return (
-        <div className="my-8 border border-[var(--color-border)] rounded-[2px] overflow-hidden">
-          <img src={src} alt={desc} className="w-full h-auto" />
+        <div className={`my-8 ${sizeClasses[result.size]}`}>
+          <div className="border border-[var(--color-border)] rounded-[2px] overflow-hidden">
+            <img src={result.src} alt={desc} className="w-full h-auto" />
+          </div>
         </div>
       )
     }
@@ -107,7 +122,7 @@ export default function LessonPage() {
   )
 
   // Block access to locked modules (4-6 require Level 1 complete)
-  const isLocked = currentModule && currentModule.id >= 4 && !isLevelComplete(1)
+  const isLocked = currentModule && currentModule.id >= 3 && !isLevelComplete(1)
 
   // Keyboard navigation
   useEffect(() => {
@@ -142,7 +157,7 @@ export default function LessonPage() {
           This module is locked
         </h1>
         <p className="text-sm text-[var(--color-muted)] mb-8 max-w-md mx-auto leading-relaxed">
-          Complete Level 1 of the game to unlock Modules 4, 5, and 6. The first three modules are available now.
+          Complete Level 1 of the game to unlock Modules 3 and 4. The first two modules are available now.
         </p>
         <div className="flex items-center justify-center gap-4">
           <Link
@@ -164,8 +179,8 @@ export default function LessonPage() {
 
   // Don't nav into locked lessons
   const level1Done = isLevelComplete(1)
-  const isNextLocked = next && modules.find((m) => m.lessons.some((l) => l.id === next.id))!.id >= 4 && !level1Done
-  const isPrevLocked = prev && modules.find((m) => m.lessons.some((l) => l.id === prev.id))!.id >= 4 && !level1Done
+  const isNextLocked = next && modules.find((m) => m.lessons.some((l) => l.id === next.id))!.id >= 3 && !level1Done
+  const isPrevLocked = prev && modules.find((m) => m.lessons.some((l) => l.id === prev.id))!.id >= 3 && !level1Done
   const safePrev = isPrevLocked ? null : prev
   const safeNext = isNextLocked ? null : next
 

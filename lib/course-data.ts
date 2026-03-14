@@ -137,19 +137,23 @@ The first time you launch it, you'll need to sign in with your Claude account. I
 
 ## Step 4: You're in
 
-Once you're signed in, you'll see the main Cowork interface. Don't worry about understanding everything yet. We'll do a proper tour in the next lesson.
+Once you're signed in, you'll see the main Cowork interface.
 
-For now, just notice a few things:
+> [SCREENSHOT: Cowork main interface]
 
-- There's a text area where you type (just like any chat)
-- There's a sidebar or panel that shows files
-- It feels familiar, like a chat app, but with some extra pieces
+Down the left sidebar you'll see:
 
-> [SCREENSHOT: Cowork main interface after first sign-in]
+- **New task** to start a fresh conversation
+- **Search** and **Scheduled** for finding past work or scheduling tasks
+- **Ideas** for inspiration on what to try
+- **Customize** where skills, connectors, and plugins live (we'll get to that later)
+- **Recents** showing your recent sessions (empty for now)
+
+In the centre is the chat area where you type your requests. That's it. No complicated setup.
 
 ## If something goes wrong
 
-- **"I can't find the download"**: Check your Downloads folder. The file is called something like "Cowork-Setup" or "Cowork.dmg".
+- **"I can't find the download"**: Check your Downloads folder. The file is called **claude.dmg** on Mac or **claude.exe** on Windows.
 - **"It won't open on Mac"**: Right-click the app, choose "Open", then click "Open" again on the security dialog. macOS sometimes blocks new apps the first time.
 - **"I can't sign in"**: Make sure you're using the same email as your Claude account. You need a paid plan (Pro or higher) to use Cowork.
 
@@ -165,132 +169,80 @@ Install Cowork and open it. That's the whole task for this lesson. Get to the po
 
 You've got Cowork open. Let's look at what you're working with.
 
-The interface has a few key areas. None of them are complicated, but knowing what each one does will save you a lot of confusion later.
+## Before you start a conversation
 
-## The chat area
+When you first open Cowork, you see the left sidebar and a big empty centre area with a text box at the bottom. We covered the sidebar in the last lesson: New task, Search, Scheduled, Ideas, Customize, and your Recent sessions.
 
-This is the big area in the middle. It works like any chat interface you've used. You type at the bottom, messages appear above. Cowork responds in the same space.
+The centre is where everything happens. You type at the bottom, and Cowork responds above. It works like any chat interface, but there's a key difference: when Cowork reads, creates, or edits files, you'll see exactly what it's doing right here in the conversation. Full transparency.
 
-> [SCREENSHOT: The chat area with a simple conversation]
+## Once you start a conversation
 
-The difference from a browser chat: when Cowork creates or edits files, you'll see that happen right here in the conversation. It'll show you what it's reading, what it's creating, and what it changed. Transparency is built in.
+The right-hand side of the screen stays hidden until you start chatting. Once you do, three panels appear:
 
-## The project folder
+> [SCREENSHOT: Cowork active conversation]
 
-On the right side (or in the sidebar, depending on your setup), you'll see a file browser. This shows the files in your current project folder.
+- **Progress** shows checkmarks as Cowork works through a task. For longer tasks, you can see how far along it is.
+- **Your folder** (shown by name) displays the project folder you're working in and key files like instructions. This is how Cowork knows which files it can see.
+- **Context** tracks the tools and referenced files used in this task. It's a quick way to see what Cowork has been reading and working with.
 
-> [SCREENSHOT: The file browser panel showing a folder with files]
+You don't need to interact with any of these panels. They're there so you can see what's happening behind the scenes.
 
-This is important: **Cowork works within a folder.** When you open Cowork, you choose which folder it should focus on. It can see all the files in that folder, and any new files it creates will go there too.
+## Settings
 
-Think of it like opening a project in any app. You tell it where to look, and that becomes its workspace.
+Click your name in the bottom left corner to open the settings menu.
 
-## The Customize menu
+> [SCREENSHOT: Cowork settings menu]
 
-Click the Customize button (or look for the settings/gear area). This is where you'll eventually add skills, connectors, and plugins. We won't use it yet, but know it's there.
-
-> [SCREENSHOT: The Customize menu or button location]
-
-## What you can ignore for now
-
-- Advanced settings
-- Developer tools
-- Any configuration panels
-
-You don't need any of that to start. The basics are: type in the chat area, point it at a folder, and let it work. Everything else is optional and we'll cover it when it becomes useful.
+You can ignore this for now. It's where you'll find account settings, language options, and links to help. Nothing here that you need for getting started.
 
 ## The mental model
 
 Here's the simplest way to think about the interface:
 
-1. **Left/sidebar**: Navigation and settings
+1. **Left sidebar**: Navigation, starting new tasks, and Customize (for later)
 2. **Centre**: Your conversation with Cowork
-3. **Right**: The files Cowork can see and create
+3. **Right panels**: Progress, your folder, and context (only visible during a conversation)
 
-You talk to it in the centre. It works with files on the right. And as you get more advanced, you'll configure it on the left.
+You talk to it in the centre. It works with your files. The sidebar and right panels are there to keep you informed, not to add complexity.
 
 ## Try it
 
-Open Cowork and explore the interface. Click on things. Type "Hello, what can you help me with?" and see what happens. Open the file browser and see what folder it's pointed at.
+Open Cowork, point it at a folder on your computer, and type something simple like "What files are in this folder?" Watch how the right-hand panels appear and update as Cowork works.
 
-You can't break anything. Cowork will always ask before making changes to existing files. So click around freely. Get comfortable with where things are.
+You can't break anything. Cowork will always ask before making changes to existing files. So click around freely.
 `,
       },
     ],
   },
   {
     id: 2,
-    title: "Your First Conversation",
-    outcome: "You've had your first real conversation with Cowork, given it a file to work with, and seen it create something useful on your computer.",
+    title: "Working With Files",
+    outcome: "You can give Cowork files to work with, understand where results go, and know exactly what it can and can't access on your computer.",
     lessons: [
       {
         id: "2-1",
-        title: "Starting a Chat",
-        content: `# Starting a Chat
-
-You've got Cowork open. The chat area is staring at you. Now what?
-
-Just type. Seriously. Type anything. Ask it a question. Give it a task. Say hello. There's no wrong way to start.
-
-## Your first message
-
-Here are some good first messages to try:
-
-- "What can you help me with?"
-- "I'm new to Cowork. What should I know?"
-- "Can you see any files right now?"
-
-That last one is useful because it tells you whether Cowork is pointed at a folder with files in it, or if it's starting with an empty workspace.
-
-> [SCREENSHOT: A simple first conversation in Cowork]
-
-## How it responds
-
-Cowork responds in the chat, just like ChatGPT or any other AI chat. You'll see text, sometimes formatted with bold, bullet points, or headings.
-
-But here's what's different: if you ask it to do something that involves files, it won't just tell you how. It'll do it. Ask it to create a to-do list and it'll create an actual file. Ask it to read a document and it'll actually read the file, not ask you to paste it in.
-
-## Having a conversation
-
-You can go back and forth, just like any chat. Ask a follow-up question. Change your mind. Give more detail. Cowork remembers everything you've said in the current conversation.
-
-A few tips for good conversations:
-
-- **Be specific about what you want.** "Summarise this document" works. "Help me with this" is too vague.
-- **Tell it the format you want.** "Give me bullet points" or "Create a table" or "Write it as a short paragraph."
-- **Don't worry about being too polite or too casual.** Cowork doesn't care about tone. It cares about clarity.
-
-## Starting a new conversation
-
-Each conversation is a fresh start. If you want to work on something new, start a new conversation. The old one is still there in your history if you need it.
-
-## Try it
-
-Start a conversation with Cowork. Ask it: "I have a folder of documents I need help organising. What information would you need from me to help?"
-
-Read what it says. This gives you a feel for how it thinks and what kind of instructions work best.
-`,
-      },
-      {
-        id: "2-2",
         title: "Giving Cowork a File",
         content: `# Giving Cowork a File
 
 Chatting is nice. But the real power of Cowork shows up when you give it something to work with.
 
-## How to give it a file
+## Working in a folder
 
-There are two ways:
+The first way to give Cowork files is to point it at a folder. Just below the chat window, you'll see a folder button. Click it to choose which folder Cowork should work in.
 
-**1. Drag and drop.** Grab a file from your desktop or file explorer and drag it right into the chat area. Cowork will read it and wait for your instructions.
+> [SCREENSHOT: Cowork folder picker]
 
-> [SCREENSHOT: Dragging a file into the Cowork chat area]
+Once you've selected a folder, Cowork can see every file inside it. You can ask it to read files, create new ones, or work across multiple documents at once. You don't need to upload anything. Just point it at the folder and start asking.
 
-**2. Just mention it.** If the file is already in your project folder, you can just reference it: "Read the file called meeting-notes.txt" or "Look at the spreadsheet in this folder." Cowork will find it.
+## Drag and drop
+
+The second way is to drag a file straight into the chat area. Grab a file from Finder (Mac) or File Explorer (Windows) and drop it into the conversation. Cowork will read it and wait for your instructions.
+
+You'll use drag and drop a lot as you go through the demos in this course. It's quick and it works with any file, even if it's not in your current project folder.
 
 ## Give it a task
 
-Once Cowork has the file, tell it what to do. Here are some things that work well:
+Once Cowork has the file, tell it what to do. Be direct. Here are some things that work well:
 
 - "Summarise this document in 5 bullet points"
 - "Turn this into a formatted report"
@@ -298,42 +250,15 @@ Once Cowork has the file, tell it what to do. Here are some things that work wel
 - "Create a table from this data"
 - "Rewrite this email to be more professional"
 
-Be direct. You're giving instructions, not having a philosophical conversation.
+The output might appear in the chat, or it might create a new file. For simple requests like "summarise this," you'll usually see the summary right in the conversation. For bigger tasks like "create a report," it'll create an actual file on your computer.
 
-## Watch it work
+## Try it in the game
 
-This is the moment that surprises most people the first time. Cowork reads your file, processes it, and creates something new. You'll see it working in the chat: reading the file, thinking through the task, then producing the output.
-
-> [SCREENSHOT: Cowork reading a file and producing a summary]
-
-The output might appear in the chat, or it might create a new file. For simple requests like "summarise this," you'll usually see the summary right in the conversation. For bigger tasks like "create a report," it'll create an actual file.
-
-## A simple exercise
-
-Let's do this for real. Create a text file on your computer with this content (or anything similar):
-
-**meeting-notes.txt**
-\`\`\`
-Team meeting March 10
-Attendees: Sarah, James, Priya, Tom
-
-Discussion:
-- Website redesign is behind schedule. Sarah will follow up with the developer.
-- New pricing page needs to be live by April 1.
-- James pitched the idea of a customer survey. Team agreed. Priya will draft questions.
-- Tom flagged that the email automation is broken. Needs fixing this week.
-- Next meeting: March 17.
-\`\`\`
-
-Now drag that file into Cowork and type: "Read these meeting notes and give me a list of action items with who is responsible for each."
-
-## Try it
-
-Do the exercise above. Create the file, drag it in, ask for action items. See what comes back. If you already have real meeting notes, even better. Use those.
+The best way to see all of this in action is to play through the demos. If you haven't started Level 1 yet, head over to the game and try the first demo. You'll drag in a real file, give Cowork a task, and see the result.
 `,
       },
       {
-        id: "2-3",
+        id: "2-2",
         title: "Where Your Results Go",
         content: `# Where Your Results Go
 
@@ -353,7 +278,7 @@ Ask Cowork to "create a summary document from these notes" and you'll find a new
 
 New files appear in your **project folder**. That's the folder Cowork is currently pointed at. If you're not sure which folder that is, ask: "What folder are we working in?"
 
-You can also see new files appear in the file browser panel on the right side of the Cowork interface. They show up in real time as Cowork creates them.
+You can track what Cowork is working with in the Context panel on the right side of the interface.
 
 ## Chat responses vs file creation
 
@@ -364,169 +289,41 @@ Not everything creates a file. There's a simple pattern:
 
 If you want a file when Cowork gives you a chat response, just say: "Save that as a file called summary.md." It will.
 
-## The "wait, it actually did it" moment
-
-This is the point where most people realise Cowork is something different. You didn't copy anything. You didn't paste anything. You pointed at a file, said what you wanted, and the result appeared in your folder, ready to use.
-
-No exporting. No reformatting. No "let me just clean this up." It's done.
-
-> [SCREENSHOT: Opening a Cowork-created file in another application]
-
 ## Editing existing files
 
 Cowork doesn't just create new files. It can also edit existing ones. Say "Fix the typos in meeting-notes.txt" and it'll update the file directly.
 
 Important: Cowork always asks permission before changing an existing file. You'll see what it wants to change and you approve or reject the edit. It never silently overwrites your work.
 
-## Try it
+## Try it in the game
 
-Go back to the exercise from the previous lesson (or start a new one). This time, ask Cowork to create a file: "Create a new file called action-items.md with the action items from these notes, formatted as a checklist."
-
-Then go to your project folder and open the file. It's really there. That's Cowork.
-`,
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "Working With Your Files",
-    outcome: "You can point Cowork at any folder, ask it to read and organise your files, and you understand what it can and can't access on your computer.",
-    lessons: [
-      {
-        id: "3-1",
-        title: "Pointing Cowork at a Folder",
-        content: `# Pointing Cowork at a Folder
-
-So far you've worked with individual files. That's useful, but the real power comes when you point Cowork at an entire folder. It can see everything inside, understand how files relate to each other, and work across multiple documents at once.
-
-## Setting your project folder
-
-When you open Cowork, you'll see an option to choose your project folder. This is the folder Cowork will work within for this session.
-
-> [SCREENSHOT: Choosing a project folder in Cowork]
-
-You can pick any folder on your computer:
-- A project folder with client files
-- Your desktop (if that's where your files live)
-- A specific folder you've set up for experimenting
-
-Once selected, Cowork can see every file and subfolder inside it.
-
-## Why folders matter
-
-Working with a folder is different from working with a single file. Here's why:
-
-**Context.** When Cowork can see all the files in a folder, it understands the bigger picture. Instead of "summarise this one document," you can say "look at all the client notes in this folder and tell me which projects are behind schedule."
-
-**Connections.** Cowork can find relationships between files. "Compare the budgets in these three spreadsheets" or "find all the files that mention the Henderson project."
-
-**Batch operations.** Need to rename 20 files? Reformat 10 documents? Cowork can work through the whole folder, not just one file at a time.
-
-## Creating a practice folder
-
-If you want to follow along without touching any important files, create a practice folder:
-
-1. Create a new folder on your desktop called "cowork-practice"
-2. Put a few files in it: text files, a spreadsheet, some notes, anything you have lying around
-3. Point Cowork at this folder
-
-This gives you a safe space to experiment. Cowork can't see anything outside this folder, and you can delete the whole thing when you're done.
-
-## Try it
-
-Create a practice folder with at least 3-4 different files in it. They can be anything: old notes, a spreadsheet, some text files, maybe a document you've been meaning to organise. Point Cowork at the folder and ask: "What files are in this folder? Give me a quick summary of each one."
-
-See how Cowork reads through everything and gives you an overview. That's the starting point for everything we'll do next.
+Head to the game and play through the Level 1 demos. You'll see Cowork read files, create new ones, and produce results that land right in your project folder.
 `,
       },
       {
-        id: "3-2",
-        title: "Reading, Summarising, and Organising",
-        content: `# Reading, Summarising, and Organising
-
-Now that Cowork can see your folder, let's put it to work. These are the bread-and-butter tasks that save the most time, and they're all simple to ask for.
-
-## Reading files
-
-The simplest thing you can do: ask Cowork to read something and tell you what's in it.
-
-- "Read the file quarterly-report.pdf and give me the key numbers"
-- "What's in the spreadsheet? Give me a summary of the columns and what they contain"
-- "Read all the files in the /notes subfolder"
-
-Cowork handles text files, CSVs, PDFs, and most common document formats. If it can't read something, it'll tell you.
-
-## Summarising
-
-This is where Cowork starts saving you real time. Instead of reading through ten documents yourself, ask Cowork to do it:
-
-- "Summarise all the files in this folder. One paragraph per file."
-- "Give me the top 3 takeaways from each document in the /reports folder"
-- "Read these meeting notes and tell me what decisions were made"
-
-The summaries appear in the chat, but you can always say "save that as a file" if you want to keep them.
-
-## Organising
-
-This is the one that feels like magic the first time. Cowork can reorganise files, rename them, create folder structures, and move things around:
-
-- "Organise these files into subfolders by topic"
-- "Rename all these files to follow the pattern YYYY-MM-DD-topic.md"
-- "Create an index file that lists every document in this folder with a one-line description"
-
-> [SCREENSHOT: Before and after of a messy folder that Cowork has organised]
-
-**Important:** Cowork will always show you what it plans to do before making changes. You'll see a list of proposed renames or moves, and you approve them. It doesn't just start shuffling files around without asking.
-
-## Combining tasks
-
-The real efficiency comes from chaining these together:
-
-"Read all the files in this folder. Create a summary document with one section per file. Then suggest a better folder structure and rename the files to be more consistent."
-
-That's one instruction. Three tasks. Cowork handles the whole sequence.
-
-## Try it
-
-Point Cowork at your practice folder (or any folder with a few files) and try this:
-
-"Read every file in this folder. Create a new file called INDEX.md that lists each file with a one-sentence description of what it contains. Sort the list by topic."
-
-Check the result. It should be a clean, organised index of everything in your folder. If something's off, tell Cowork what to fix. It'll update the file.
-`,
-      },
-      {
-        id: "3-3",
+        id: "2-3",
         title: "What Cowork Can and Can't See",
         content: `# What Cowork Can and Can't See
 
-Before you go further, it's worth understanding the boundaries. Knowing what Cowork can access (and what it can't) will save you from confusion later, and help you feel confident about privacy and safety.
+Before you go further, it's worth understanding the boundaries. Knowing what Cowork can access (and what it can't) will save you confusion and help you feel confident using it with real work.
 
 ## What it CAN see
 
-**Your project folder.** Everything inside the folder you've pointed Cowork at. All files, all subfolders, everything.
+**Your project folder.** Everything inside the folder you've pointed Cowork at. All files, all subfolders, everything. Point it at a different folder and it sees that one instead.
 
 **Files you drag in.** Even if a file isn't in your project folder, you can drag it into the chat and Cowork will read it for that conversation.
 
-**Your conversation history.** Cowork remembers everything you've said in the current conversation. It uses that context to give better answers and avoid repeating itself.
+**Your conversation history.** Cowork remembers everything you've said in the current conversation. It uses that context to give better answers as you go.
 
 ## What it CAN'T see
 
-**Other folders on your computer.** Cowork only sees the folder you've pointed it at. Your emails, your browser tabs, your other applications: invisible to it.
+**Other folders on your computer.** Cowork only sees the folder you've pointed it at. Your desktop, your downloads, your other projects... invisible.
 
-**The internet.** By default, Cowork can't browse websites or search Google. It works with local files. (Later, in Module 6, we'll cover connectors that let it access specific online services like email.)
+**Your email, browser, or other apps.** By default, Cowork can't read your inbox, check your calendar, or browse websites. It works with local files only. (Later, you can add connectors that give it access to specific services. But that's your choice, and it happens one service at a time.)
 
-**Other people's Cowork sessions.** Your conversations are private. Nobody else can see what you're doing.
+**Other people's sessions.** Your conversations are private. Nobody else can see what you're working on.
 
-**Your screen or webcam.** Cowork doesn't "watch" you work. It only knows what you type and the files you've given it access to.
-
-## What it CAN do with your files
-
-- **Read** any file in your project folder
-- **Create** new files in your project folder
-- **Edit** existing files (with your permission)
-- **Rename** or move files (with your permission)
-- **Delete** files (with your permission, and it always confirms first)
+**Your screen or webcam.** Cowork doesn't watch you work. It only knows what you type and the files you've shared.
 
 ## The permission model
 
@@ -536,681 +333,316 @@ If you say "rewrite this document," Cowork will show you the proposed changes an
 
 > [SCREENSHOT: Cowork asking for permission before editing a file]
 
-This is one of the things that makes Cowork safe to use with real work files. You're always in control.
+You can change which folder Cowork is working in at any time. And you can drag files in from anywhere. So you're always in control of what it has access to.
 
-## The mental model
+## Practical takeaway
 
-Think of Cowork as a very capable assistant sitting in one room of your house. They can see everything in that room (your project folder) and do impressive work with it. But they can't wander into other rooms, they can't leave the house to check the post, and they always knock before rearranging the furniture.
+Cowork is scoped to one folder at a time, plus whatever you drag in. It can't wander into other folders, it can't reach the internet, and it always asks before making changes. That's enough access to be very useful, with enough limits to feel safe.
 
-That's the right level of trust for now. Enough access to be genuinely useful. Enough limits to feel safe.
+## Try it in the game
 
-## Try it
+Head to the game and play through the Level 1 demos. You'll see how Cowork works with different file types: a website file, an inbox export, and a CSV spreadsheet. Each one shows a different way of giving Cowork something to work with and getting a useful result back.
+`,
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Skills",
+    outcome: "You understand what skills are, you've installed one, and you've seen the difference between generic Cowork and a skill-powered specialist.",
+    lessons: [
+      {
+        id: "3-1",
+        title: "What Is a Skill?",
+        content: `# What Is a Skill?
 
-Ask Cowork these questions about its own access:
+You've seen what Cowork can do with files. It reads them, creates new ones, follows your instructions. That's useful on its own.
 
-1. "What folder are we working in right now?"
-2. "How many files can you see?"
-3. "Can you access the internet?"
+But there's a gap between "useful" and "exactly what I needed." When you ask Cowork to summarise meeting notes, you get a summary. It's fine. But it's not the structured action items with owners, due dates, and a follow-up email that you actually wanted.
 
-The answers will confirm everything above. And if anything surprises you, this is a good time to ask follow-up questions. Cowork is great at explaining its own capabilities.
+A skill closes that gap.
+
+## What a skill actually is
+
+A skill is a set of instructions that turns Cowork from a generalist into a specialist. It's a zip file you download and install. Inside, there's a text file (called SKILL.md) that tells Cowork exactly what to do, what format to use, and what "good output" looks like for a specific task.
+
+Think of it like giving a smart assistant a detailed playbook. Without the playbook, they'll do their best and probably get you 70% of the way there. With the playbook, they nail it every time.
+
+## Without a skill vs with a skill
+
+Here's a concrete example. You give Cowork a blog post and ask it to create social media content.
+
+**Without a skill:** You get a generic response. Maybe a LinkedIn post, maybe a tweet. The format varies each time, the tone might not match your voice, and you'll spend time editing.
+
+**With the Content Repurposer skill:** You get a LinkedIn post, a Twitter thread, an email newsletter version, and a short video script. All formatted correctly for each platform, all in a single interactive HTML page with copy buttons. Consistent every time.
+
+Same AI. Same input. Dramatically different output. The skill didn't make Cowork smarter. It told Cowork exactly what you needed.
+
+## Skills are simple
+
+A skill is just a folder with a few files:
+
+- **SKILL.md**: The instructions, written in plain English. This is the core of every skill.
+- **Scripts** (optional): Code that handles calculations or formatting, so the AI doesn't have to guess at maths.
+- **Templates** (optional): Starting points for output structure.
+
+You don't need to write these. You install pre-built skills as zip files. That's it.
+
+## Why this matters
+
+If you've played through the Level 1 demos in the game, you saw Cowork handle a website, emails, and data. Those results were decent. Now imagine those same tasks, but with a specialist skill telling Cowork exactly how to handle each one. That's Level 2 in the game, and the difference is obvious.
+
+Skills are what turn Cowork from a clever chatbot into a practical business tool.
+
+## Try it in the game
+
+If you haven't played the Level 1 demos yet, do that first. Then move to Level 2, where you'll see the same types of tasks handled by skill-powered Cowork. The before-and-after speaks for itself.
+`,
+      },
+      {
+        id: "3-2",
+        title: "Installing a Skill",
+        content: `# Installing a Skill
+
+Installing a skill takes about 30 seconds. Here's how.
+
+## Step 1: Get the skill file
+
+Skills come as zip files. You can download them from the [game demos](/play) (Level 2 has several), or from the Ads to AI community if you're a member. Save the zip file somewhere easy to find. Your desktop works.
+
+The game includes these skills you can download and try:
+
+- **Content Repurposer** (from Demo 4)
+- **Meeting Intelligence** (from Demo 5)
+- **Search Term Analyzer** (from Demo 6)
+- **CSV Analyzer** (from Demo 10)
+
+## Step 2: Open Customize
+
+In Cowork, find the **Customize** button in the left sidebar.
+
+> [SCREENSHOT: Finding the Customize button in Cowork]
+
+## Step 3: Go to Skills
+
+In the Customize panel, click **Skills**. You'll see any skills already installed (probably empty if this is your first one).
+
+> [SCREENSHOT: The Skills section in Customize]
+
+## Step 4: Click the + button
+
+Click the **+** button to add a new skill.
+
+> [SCREENSHOT: The add skill button]
+
+## Step 5: Upload the zip
+
+Select your downloaded zip file. Cowork unpacks it and installs the skill automatically.
+
+> [SCREENSHOT: Skill installed and visible in the list]
+
+That's it. The skill is ready to use.
+
+## Using the skill
+
+Now drag in a file that matches the skill's purpose and tell Cowork what to do. For example, with the Content Repurposer installed:
+
+1. Drag in a blog post or article
+2. Type: "Repurpose this content for social media"
+
+Cowork recognises the installed skill and uses it. The output will be structured, formatted, and ready to use.
+
+You can also be explicit: "Use the Content Repurposer skill on this file." Both approaches work.
+
+## If something goes wrong
+
+- **Cowork didn't use the skill**: Be more explicit in your request. Name the skill directly.
+- **The zip won't upload**: Make sure you're uploading the .zip file itself, not an unzipped folder.
+- **Can't find Customize**: It's in the left sidebar, labelled "Customize" with a briefcase icon.
+
+## Try it in the game
+
+Play through the Level 2 demos. Each one lets you download a real skill zip file and see what it produces. You can install these same skills in your own Cowork afterwards.
+`,
+      },
+      {
+        id: "3-3",
+        title: "Skills in Action",
+        content: `# Skills in Action
+
+You know what skills are and how to install them. Now let's look at what they actually produce. These map directly to the Level 2 demos in the game, so you can try each one yourself.
+
+## Content Repurposer
+
+**The task:** You have one blog post. You need content for LinkedIn, Twitter, email, and maybe a video script.
+
+**Without a skill:** You get a generic rewrite for each platform. Inconsistent formatting, no structure, no export options.
+
+**With the skill:** You get an interactive HTML page with tabs for each platform. LinkedIn gets a professional hook. Twitter gets a thread with hashtags. Email gets a personal intro and clear CTA. Each tab has a copy button. One input, multiple polished outputs.
+
+This is Demo 4 in the game. Try it with the sample blog post, then try it with something you've written.
+
+## Meeting Intelligence
+
+**The task:** You have messy meeting notes. You need to know what was decided, who's doing what, and you need to send a follow-up email.
+
+**Without a skill:** You get a summary. It's okay, but decisions and action items are mixed together, and you still need to write the follow-up email yourself.
+
+**With the skill:** You get structured sections: decisions made, action items with owners and due dates, key discussion points, open questions, and a ready-to-send follow-up email. Everything separated and organised.
+
+This is Demo 5 in the game. The difference between generic notes and skill-powered extraction is stark.
+
+## Search Term Analyzer / CSV Analyzer
+
+**The task:** You have raw data in a CSV. Could be search terms, campaign metrics, sales figures, anything with rows and columns. You need insights.
+
+**Without a skill:** You get a text summary. Some numbers, some observations. Hard to share, hard to dig into.
+
+**With the skill:** You get an interactive dashboard. Charts pick the right visualisation automatically. Key metrics are highlighted at the top. You can filter and sort. The skill's scripts handle the maths, so the numbers are reliable.
+
+These are Demos 6 and 10 in the game. Same data, but the skill turns a wall of numbers into something you can actually use.
+
+## The pattern
+
+Every skill follows the same pattern:
+
+1. Give Cowork a file
+2. The skill tells Cowork exactly what to do with it
+3. You get structured, consistent, ready-to-use output
+
+Three or four skills covering your most common tasks will save you hours every week. And these are just the starting point. Imagine having dozens, each one a specialist for a different part of your work.
+
+## Try it in the game
+
+Play through the Level 2 demos. Download the skills. See the results. Then think about which of your regular tasks would benefit from this kind of structure.
 `,
       },
     ],
   },
   {
     id: 4,
-    title: "Adding Skills",
-    outcome: "You understand what skills are, you've installed your first one, and you've seen the dramatic difference between generic AI and a skill-powered specialist.",
+    title: "What's Next",
+    outcome: "You understand how Cowork connects to your real tools, how to stay safe, and where to go to keep building.",
     lessons: [
       {
         id: "4-1",
-        title: "What Is a Skill?",
-        content: `# What Is a Skill?
+        title: "Connectors and the Real World",
+        content: `# Connectors and the Real World
 
-So far, everything you've done with Cowork has been using its general intelligence. You ask, it does its best. And that's pretty good.
+So far, everything you've done with Cowork has been with files on your computer. Drag a file in, get a result back. That's powerful on its own.
 
-But here's the thing: Cowork is like a smart person who just arrived at your company on their first day. They're capable and willing, but they don't know your processes, your preferences, or what "good" looks like in your specific context.
+But your work doesn't live entirely in files. It's in your email, your calendar, your project management tool, your CRM. Connectors are how Cowork reaches those places.
 
-A skill changes that.
+## What's a connector?
 
-## Skills in plain English
+A connector links Cowork to an external service. Once connected, Cowork can read from (and sometimes write to) that service, just like it reads files in your folder.
 
-A skill is a set of instructions that turns Cowork from a generalist into a specialist. It tells Cowork:
+For example:
 
-- What task to focus on
-- What format the output should follow
-- What rules to apply
-- What scripts to run for calculations or formatting
+- **Gmail connector**: Cowork reads your emails, searches your inbox, drafts responses
+- **Google Calendar connector**: Cowork sees your schedule, finds free time, summarises your week
+- **Slack connector**: Cowork reads channels, summarises threads, catches you up
 
-When you install a skill, you're giving Cowork expertise in one specific area. Instead of "do your best with this data," the skill says "extract action items, categorise them by urgency, assign owners based on the attendee list, and format the output as a checklist with due dates."
+## Why this changes things
 
-## Without a skill vs with a skill
+With files only, Cowork is a great assistant for document work. With connectors, it starts working across your whole day.
 
-Here's a concrete example. Say you give Cowork a blog post and ask it to repurpose the content for social media.
+Imagine asking: "What's in my inbox that relates to meetings happening this week?" That question requires access to both email and calendar. No single tool gives you that answer easily. Cowork with both connectors does.
 
-**Without a skill**, you get a generic response. Maybe a tweet thread, maybe a LinkedIn post. The format is inconsistent, it might miss your brand voice, and you'll need to edit heavily.
+Or: "Triage my inbox, check my calendar for gaps tomorrow, and draft replies to the urgent ones." That's files, email, and calendar working together in one request.
 
-**With the Content Repurposer skill**, you get:
-- A LinkedIn post in your tone
-- A Twitter/X thread with hooks
-- An email newsletter version
-- A short-form video script
-- All in an interactive HTML page with tabs and copy buttons
+## You don't need to set these up now
 
-Same input. Dramatically different output. The difference isn't that Cowork got smarter. It's that the skill told it exactly what "good" looks like.
+Connectors are an "unlock when you're ready" feature. You install them from **Customize > Connectors** in Cowork, and each one requires you to sign in to the relevant service and grant access.
 
-## What's inside a skill?
+The game's Level 3 demos show what this looks like in practice. The first Level 3 demo combines inbox and calendar data to show cross-service intelligence.
 
-A skill is just a folder containing a few files:
+## The right approach
 
-- **SKILL.md**: The instructions. This is the "brain" of the skill. It tells Cowork what to do, step by step, and what the output should look like.
-- **Scripts** (optional): Code files that handle calculations, formatting, or data processing. These ensure consistent, precise output that doesn't rely on the AI to do maths.
-- **Templates** (optional): Starting points for the output format.
+Start with reading. Let Cowork summarise your inbox and calendar. Get comfortable with how it interprets your data. Only then move to letting it draft emails or create events. Start passive, then go active.
 
-You don't need to write these yourself (though you can). For now, you'll install pre-built skills that are ready to go.
+## Try it in the game
 
-## Why this matters
-
-Skills are what make Cowork a practical business tool instead of just a clever chatbot. A chatbot gives you suggestions. A skill-powered Cowork gives you finished, ready-to-use output.
-
-Every demo you try in [the interactive game](/play) uses a skill. That's why the results look polished and professional. It's not a different AI. It's the same AI with better instructions.
-
-## Try it
-
-Think about a task you do regularly where the output always follows the same format. Maybe it's:
-
-- A weekly report that always has the same sections
-- A client email that follows a certain structure
-- A data analysis that needs specific metrics calculated
-
-That repetitive structure is exactly what a skill captures. Write down one task like this. In the next lesson, you'll install a skill and see the difference for yourself.
+Head to the Level 3 demos in the game. You'll see how connectors let Cowork work across services, not just files. It's where "helpful with documents" becomes "runs parts of your business."
 `,
       },
       {
         id: "4-2",
-        title: "Installing Your First Skill",
-        content: `# Installing Your First Skill
+        title: "Safety and Trust",
+        content: `# Safety and Trust
 
-Time to install a skill. This takes about 30 seconds, and it's the single biggest upgrade to how Cowork works for you.
+AI is powerful. It's also imperfect. Here's what you need to know about using Cowork safely, without the scare tactics.
 
-## What you'll install
+## What Cowork does well
 
-We're going to install the **Content Repurposer** skill. It takes a blog post, article, or any piece of long-form content, and turns it into multiple formats: LinkedIn post, tweet thread, email newsletter, and more. All in one go.
+Cowork is transparent about its work. Every action it takes shows up in your conversation. You can see exactly which files it read, what it created, and what changes it's proposing. There's no hidden activity.
 
-You can download the skill from the [interactive game](/play) (it's one of the Level 2 demos), or Mike will provide a direct download link.
+When it wants to edit an existing file, it asks first. You see the proposed changes and approve or reject them. It doesn't silently overwrite your work.
 
-## Step by step
+## Where to be careful
 
-### 1. Download the skill
+**Always review important output.** Cowork is very capable, but it can make mistakes. If you're sending a client email, check it. If it's calculating numbers, verify the key figures. The same way you'd review work from a new team member before it goes out the door.
 
-Download the \`content-repurposer.zip\` file and save it somewhere easy to find (your desktop is fine).
+**Be aware of what you share.** When you point Cowork at a folder, it can see everything in that folder. If there are sensitive files you don't want the AI to process, put them in a separate folder. Cowork only sees what you point it at.
 
-### 2. Open Cowork's Customize menu
+**AI output is a draft, not a final product.** For internal notes, summaries, and first drafts, Cowork's output is usually good enough to use directly. For anything external-facing or high-stakes, treat it as a strong starting point that you refine.
 
-In Cowork, look for the **Customize** button. It's usually in the sidebar or settings area.
+## The hidden payload demo
 
-> [SCREENSHOT: Finding the Customize button in Cowork]
+The game has a Level 3 demo about a newsletter with a hidden payload. It's a practical lesson about how AI can catch things humans miss, and also about why healthy scepticism matters. Worth playing through.
 
-### 3. Go to Skills
+## The practical stance
 
-In the Customize panel, click on **Skills**. You'll see any skills you've already installed (probably none yet).
+Cowork is a tool. Like any tool, it works best when you understand what it's good at and where it needs supervision. You wouldn't send a first draft from a new hire to a client without reading it. Same idea here.
 
-> [SCREENSHOT: The Skills section in Customize, empty state]
+The good news: Cowork shows you everything it's doing. You're never in the dark about what's happening. That transparency is built in, not bolted on.
 
-### 4. Click the + button
+## Try it in the game
 
-Click the **+** (add) button to install a new skill.
-
-> [SCREENSHOT: The add skill button]
-
-### 5. Upload the zip file
-
-Select the \`content-repurposer.zip\` file you downloaded. Cowork will unpack it and install the skill.
-
-> [SCREENSHOT: Uploading a skill zip file]
-
-### 6. Done
-
-That's it. The skill is installed. You'll see it listed in your Skills panel.
-
-> [SCREENSHOT: The Content Repurposer skill installed and visible in the Skills list]
-
-## Running the skill
-
-Now let's use it. You need a piece of content to repurpose. You can:
-
-- Use a blog post you've written
-- Copy an article you like into a text file
-- Use the sample file from the game demos
-
-Drag the content file into Cowork and type:
-
-"Use the Content Repurposer skill on this article."
-
-Or simply:
-
-"Repurpose this content for social media."
-
-Cowork will recognise that you have the skill installed and use it automatically. Watch what happens.
-
-> [SCREENSHOT: Cowork running the Content Repurposer skill, showing the output]
-
-## What you should see
-
-The skill produces an interactive HTML file with:
-- Multiple tabs (LinkedIn, Twitter, Email, etc.)
-- Copy buttons for each version
-- Consistent formatting across all outputs
-- Content adapted to each platform's style
-
-Open the HTML file in your browser. Click through the tabs. This is what a skill does: turns a vague task into a precise, polished, ready-to-use result.
-
-## If something goes wrong
-
-- **"Cowork didn't use the skill"**: Try being more explicit: "Run the Content Repurposer skill on this file."
-- **"The zip won't upload"**: Make sure you're uploading the .zip file directly, not an unzipped folder.
-- **"I can't find Customize"**: It might be behind a menu icon or in the sidebar. Look for a gear icon or three dots.
-
-## Try it
-
-Install the Content Repurposer skill and run it on any piece of content you have. A blog post, an article, even a long email. See what comes back. That's the baseline for what a skill can do.
+Play the Level 3 security demo (Demo 9). It's a quick, practical lesson about staying sharp when working with AI.
 `,
       },
       {
         id: "4-3",
-        title: "Generic AI vs Skilled AI",
-        content: `# Generic AI vs Skilled AI
+        title: "Going Further",
+        content: `# Going Further
 
-You've installed a skill. You've seen what it produces. Now let's make sure the lesson really sinks in, because this distinction is the core idea of everything that follows.
+You've learned the basics. You've seen what Cowork can do with files, and what it can do when you add skills. Let's talk about where this goes.
 
-## The test
+## What you've covered
 
-Here's a simple comparison. Take the same piece of content and give it to Cowork twice.
+- **Module 1**: What Cowork is, how it differs from ChatGPT, installing it
+- **Module 2**: Giving it files, understanding where results go, knowing what it can access
+- **Module 3**: What skills are, how to install them, and what they produce
+- **Module 4**: Connectors, safety, and where to go next
 
-**First, without the skill.** Start a new conversation (so Cowork doesn't use the skill automatically) and type:
+That's a solid foundation. You can install Cowork, point it at your files, add skills that turn it into a specialist, and you understand how connectors extend it to your real tools.
 
-"Here's a blog post. Repurpose it for LinkedIn, Twitter, and email newsletter."
+## The brain system
 
-Read what you get back.
+Imagine Cowork with dozens of skills installed, connected to your email, calendar, and files, running your daily workflow. A morning briefing that triages your inbox, checks your calendar, and tells you what needs attention. Content skills that handle your social media. Data skills that monitor your business metrics. Meeting skills that handle follow-ups automatically.
 
-**Then, with the skill.** In a new conversation (or the same one), type:
-
-"Use the Content Repurposer skill on this blog post."
-
-Compare the two outputs.
-
-## What you'll notice
-
-The generic response is... fine. It's helpful. The AI does its best. But you'll likely see:
-
-- Inconsistent formatting between platforms
-- Missing elements you'd want (like hashtags, hooks, or character counts)
-- A wall of text instead of something you can immediately use
-- No export options, no copy buttons, no interactivity
-
-The skilled response is different. It's structured, consistent, and practical. Every platform has the right format. There are copy buttons. The output is an HTML page you can open and use immediately.
-
-## Why the difference?
-
-It's not that the AI is smarter with a skill. It's that the skill removes the guesswork.
-
-Without a skill, Cowork has to figure out:
-- What format should LinkedIn use?
-- How long should a tweet be?
-- What does "email newsletter" mean to you?
-- Should it create files or just respond in the chat?
-
-With a skill, all of those decisions are already made. The skill says: "LinkedIn posts should be 150-200 words with a hook in the first line. Tweets should be threaded with a max of 280 characters each. The output goes in an HTML file with tabs and copy buttons."
-
-**The skill is the difference between "use your best judgment" and "here's exactly what I need."**
-
-## This applies to everything
-
-The Content Repurposer is just one example. Every task that has a repeatable structure benefits from a skill:
-
-- **Meeting notes** become structured action items with assigned owners
-- **Raw data** becomes an interactive dashboard with charts and filtering
-- **Email triage** becomes a prioritised list with suggested responses
-- **Client feedback** becomes categorised, scored, and summarised
-
-In the next module, you'll see several of these in action. Each one follows the same pattern: install the skill, give it a file, get a dramatically better result.
-
-## The bigger picture
-
-Here's why this matters beyond just "better output." Skills make AI **reliable**. Without them, you get different results every time, and you spend time fixing the output to match what you actually wanted.
-
-With skills, the output is consistent. You can trust it. You can hand it to a colleague and say "run this, it works." That's the difference between a toy and a tool.
-
-## Try it
-
-Do the comparison yourself. Same content, with and without the skill. Notice the differences. Then ask yourself: what other tasks in your work would benefit from this level of structure?
-
-Write down two or three. We'll get to real examples in the next module.
-`,
-      },
-    ],
-  },
-  {
-    id: 5,
-    title: "Real Examples",
-    outcome: "You've seen skills handle real business tasks: email triage, content repurposing, data analysis, and meeting notes. You know how to run each one and what to expect.",
-    lessons: [
-      {
-        id: "5-1",
-        title: "Email Triage",
-        content: `# Email Triage
-
-Let's start with something everyone deals with: a messy inbox. This example shows how a skill turns a pile of emails into a clear, prioritised action list.
-
-## The scenario
-
-You have 20 emails. Some are urgent. Some are FYI. Some need a reply. Some can wait. Sorting through them manually takes time and mental energy. With a skill, it takes about 30 seconds.
-
-## How it works
-
-1. **Export your emails** as a file (JSON, text, or even just paste them into a document)
-2. **Give the file to Cowork** with an email triage skill installed
-3. **Get back a priority dashboard**: urgent items at the top, FYI items at the bottom, with suggested next actions for each
-
-> [SCREENSHOT: Email triage skill output showing a priority dashboard]
-
-## What the skill produces
-
-A good email triage skill creates an interactive HTML dashboard with:
-
-- **Priority levels**: Urgent, Needs Reply, FYI, Can Wait
-- **One-line summaries** for each email so you can scan quickly
-- **Suggested actions**: "Reply with X," "Forward to Y," "No action needed"
-- **Filtering**: Click a priority level to see only those emails
-
-Compare that to reading through 20 emails one by one. The skill doesn't just sort them. It thinks about what matters and surfaces the things you actually need to act on.
-
-## Try it in the game
-
-The [interactive game](/play) has an email triage demo in Level 1. You can see exactly what the output looks like and try it with sample data.
-
-## Try it yourself
-
-If you want to test this with real emails:
-
-1. Pick 5-10 recent emails from your inbox
-2. Copy them into a text file (subject line and first paragraph is enough)
-3. Point Cowork at the file
-4. Ask: "Triage these emails by priority. Flag anything that needs a reply today."
-
-Even without a dedicated email skill, Cowork will do a decent job. With one, the output is structured, consistent, and immediately useful.
-`,
-      },
-      {
-        id: "5-2",
-        title: "Content Repurposing",
-        content: `# Content Repurposing
-
-You've already seen this skill in action when you installed it in Module 4. Now let's look at how to get the most out of it, and why it's one of the most popular skills people use.
-
-## The problem it solves
-
-You write something once: a blog post, an article, a case study, a newsletter. Then you need versions for LinkedIn, Twitter/X, email, maybe a short video script. Doing that manually means rewriting the same content 4-5 times, each in a different format and tone.
-
-The Content Repurposer skill does all of that from a single input.
-
-## Getting better results
-
-The skill works well out of the box, but a few things make the output even better:
-
-**Give it longer content.** A 200-word blurb doesn't give the skill much to work with. A 1000-word blog post gives it enough material to create genuinely different versions for each platform.
-
-**Be specific about your audience.** Add a line like: "My audience is small business owners who are not technical" or "This is for a B2B SaaS audience." The skill adapts the tone for each platform while keeping your audience in mind.
-
-**Tell it what to emphasise.** "Focus on the practical tips, not the theory" or "The key message is that automation saves time" gives the skill a clear angle for each version.
-
-## What the output looks like
-
-The skill creates an HTML file with tabs:
-
-- **LinkedIn**: Professional tone, hook in the first line, 150-200 words
-- **Twitter/X**: Thread format, short punchy sentences, hashtags
-- **Email Newsletter**: Personal tone, clear CTA, easy to scan
-- **Short Video Script**: Spoken-word version, 60-90 seconds
-- **Summary**: One-paragraph version for repurposing anywhere
-
-Each tab has a copy button. Click, paste, done.
-
-## Try it in the game
-
-The [Content Repurposer demo](/play) in Level 2 walks you through the full process with sample content.
-
-## Try it yourself
-
-Take something you've written recently (or something you wish you had time to repurpose) and run the Content Repurposer skill on it. Compare the output to what you'd normally produce manually. Pay attention to the time difference.
-
-Most people find the skill produces a solid first draft for every platform in under a minute. Even if you tweak the results, that's a huge time saving.
-`,
-      },
-      {
-        id: "5-3",
-        title: "Data Analysis",
-        content: `# Data Analysis
-
-This is the example that gets the biggest reaction. You give Cowork a spreadsheet, and it creates an interactive dashboard with charts, filtering, and insights. No formulas, no pivot tables, no spreadsheet skills required.
-
-## The scenario
-
-You have a CSV or spreadsheet with data. Sales numbers, campaign metrics, survey responses, expense tracking, anything with rows and columns. You need to understand what's in it.
-
-Normally you'd open it in Excel or Google Sheets, squint at the numbers, maybe try to build a chart. With a data analysis skill, you skip straight to the insights.
-
-## How it works
-
-1. **Drag your CSV/spreadsheet into Cowork** (or point it at the file in your project folder)
-2. **Ask for analysis**: "Analyse this data and create a dashboard"
-3. **Get back an interactive HTML report** with charts, summaries, and key findings
-
-> [SCREENSHOT: A data analysis dashboard created by Cowork from a CSV file]
-
-## What makes the skilled version better
-
-Without a skill, Cowork will look at your data and give you a text summary. Decent, but hard to share and not very visual.
-
-With a data analysis skill, you get:
-
-- **Charts** that automatically pick the right visualisation (bar, line, pie) based on your data
-- **Key metrics** pulled out and highlighted at the top
-- **Filtering and sorting** so you can explore the data yourself
-- **Anomaly detection**: "This number looks unusual compared to the trend"
-- **Export options**: Download filtered views, save charts
-
-The skill's scripts handle the calculations. That means the numbers are reliable. The AI doesn't "estimate" your totals. The code adds them up properly.
-
-## What kind of data works?
-
-Almost anything in rows and columns:
-
-- Sales data (revenue, units, by product/region)
-- Marketing data (clicks, conversions, cost per lead)
-- Survey responses
-- Financial data (expenses, income, budgets)
-- Any CSV export from any tool
-
-## Try it in the game
-
-The [Campaign Dashboard demo](/play) in Level 1 shows a data analysis in action. The Level 2 demos include more advanced analysis with the CSV Analyzer skill.
-
-## Try it yourself
-
-Find any spreadsheet or CSV you have. Export data from whatever tool you use: Google Ads, Shopify, your accounting software, a CRM. Drag it into Cowork and say:
-
-"Analyse this data. Create an interactive dashboard showing the key metrics, trends, and anything that looks unusual."
-
-Open the HTML file it creates. Click around. Filter. Sort. That took 30 seconds.
-`,
-      },
-      {
-        id: "5-4",
-        title: "Meeting Notes to Action Items",
-        content: `# Meeting Notes to Action Items
-
-Meetings produce notes. Notes produce... nothing, usually. They sit in a document until the next meeting when someone asks "wait, who was supposed to do that?"
-
-A meeting intelligence skill fixes this. It takes messy notes and turns them into structured, actionable output.
-
-## The scenario
-
-You've just finished a meeting. You have notes: maybe typed, maybe from a recording transcript, maybe a mix of both. The notes are useful but messy. Decisions are buried in discussion. Action items aren't clearly separated from general conversation. Nobody knows who agreed to do what by when.
-
-## How the skill works
-
-1. **Give Cowork your meeting notes** (paste, drag a file, or point at it)
-2. **Run the Meeting Intelligence skill**
-3. **Get back a structured dashboard** with everything extracted and organised
-
-## What you get
-
-The Meeting Intelligence skill produces:
-
-- **Decisions made**: Clear list of what was decided, not what was discussed
-- **Action items**: Who does what, by when, with checkboxes
-- **Key discussion points**: Summarised, not verbatim
-- **Follow-up email draft**: Ready to send to attendees
-- **Open questions**: Things that were raised but not resolved
-- **CSV export**: For tracking action items in a project tool
-
-> [SCREENSHOT: Meeting Intelligence dashboard showing categorised outputs]
-
-## Why this matters
-
-The difference between "here are your notes" and "here's what you need to do" is the difference between information and action. The skill doesn't just reorganise your notes. It interprets them and produces the thing you actually need: a clear list of next steps.
-
-And the follow-up email is a real time saver. Instead of drafting "Hi team, here's a summary of what we discussed..." for 20 minutes, the skill writes it for you. You review, tweak if needed, and send.
-
-## Try it in the game
-
-The [Meeting Intelligence demo](/play) in Level 2 shows the full workflow with sample meeting notes.
-
-## Try it yourself
-
-After your next meeting, try this:
-
-1. Get your notes into a file (even rough notes work fine)
-2. Give the file to Cowork
-3. Say: "Extract the action items, decisions, and open questions from these meeting notes. Draft a follow-up email for the attendees."
-
-If you have the Meeting Intelligence skill installed, the output will be a full dashboard. Without the skill, you'll still get useful extraction, but the structured dashboard and export features come from the skill.
-
-Either way, compare the time to what it would normally take you to write that follow-up email manually. That's the value you're getting from this one skill alone.
-`,
-      },
-    ],
-  },
-  {
-    id: 6,
-    title: "Making It Yours",
-    outcome: "You know how to customise skills for your business, connect Cowork to your real tools, and you have a clear path forward to keep building.",
-    lessons: [
-      {
-        id: "6-1",
-        title: "Customising Skills",
-        content: `# Customising Skills
-
-The skills you've installed work out of the box. But the real value comes when you make them work for YOUR business. Customising a skill is simpler than you'd think.
-
-## What you can customise
-
-Every skill has a main instruction file called **SKILL.md**. This is just a text file that tells Cowork what to do. You can open it and read it. You can edit it.
-
-Common things to customise:
-
-- **Output format**: Change the sections, headings, or structure
-- **Tone and voice**: Add your brand voice guidelines
-- **Priorities**: Tell the skill what matters most to you
-- **Terminology**: Use your industry terms instead of generic ones
-- **Output type**: HTML dashboard, markdown document, CSV export, whatever you prefer
-
-## How to customise
-
-1. **Find the skill's folder.** In Cowork's Customize > Skills panel, you can locate where each skill is stored.
-
-> [SCREENSHOT: Locating a skill's folder in the Customize panel]
-
-2. **Open SKILL.md.** This is the instruction file. Read through it. You'll see it's written in plain English.
-
-3. **Make a change.** For example, if you want the Content Repurposer to always write in an Australian, casual tone, add a line: "Always use Australian English. Keep the tone casual and direct. Avoid corporate jargon."
-
-4. **Save and test.** Run the skill again. See if the change shows up in the output. If not, adjust your wording.
-
-## Example: customising the email triage skill
-
-Say you want the email triage skill to always flag emails from your top 3 clients as high priority, regardless of content. Open the SKILL.md and add:
-
-\`\`\`
-Always classify emails from these senders as High Priority:
-- sarah@bigclient.com
-- james@importantco.com
-- priya@keyaccount.com
-\`\`\`
-
-Now every time you run the triage, those clients get flagged. You've encoded your business knowledge into the skill.
-
-## Adding context about your business
-
-One of the most powerful customisations is giving Cowork context about your business. You can add a section to any skill's instructions:
-
-\`\`\`
-About my business:
-- I run a digital marketing agency with 5 staff
-- Our main clients are in real estate and hospitality
-- We use Monday.com for project management
-- Reports should always include ROI calculations
-\`\`\`
-
-This context shapes every output. Meeting notes will flag marketing-specific follow-ups. Data analysis will highlight the metrics you care about. Content repurposing will match your industry's tone.
-
-## Don't be afraid to experiment
-
-You can't break a skill by editing SKILL.md. If something goes wrong, you can always reinstall the original version. The worst that happens is the output changes in a way you don't like, and you edit again.
-
-Think of it like adjusting settings in any app. You're not rewriting the code. You're telling the skill what you prefer.
-
-## Try it
-
-Open the SKILL.md file for any skill you've installed. Read through it. Then make one small change:
-
-- Add a line about your preferred tone
-- Add context about your business
-- Change the output format for one section
-
-Run the skill again and see the difference. That's customisation.
-`,
-      },
-      {
-        id: "6-2",
-        title: "Connectors and Plugins",
-        content: `# Connectors and Plugins
-
-Until now, everything you've done with Cowork has been with files on your computer. You drag files in, Cowork creates files out. That's powerful, but it's not the whole picture.
-
-Connectors and plugins let Cowork interact with your real tools: email, calendar, project management, and more. This is where "AI assistant" starts becoming "AI infrastructure."
-
-## What's a connector?
-
-A connector links Cowork to an external service. Once connected, Cowork can read from (and sometimes write to) that service.
-
-Examples:
-- **Gmail connector**: Cowork can read your emails, search your inbox, draft responses
-- **Google Calendar connector**: Cowork can see your schedule, find free time, summarise your week
-- **Slack connector**: Cowork can read channels, summarise threads
-
-## How to install a connector
-
-1. Go to **Customize > Connectors** in Cowork
-2. Browse the available connectors
-3. Click the one you want
-4. Follow the authentication steps (usually sign in to the service and grant access)
-
-> [SCREENSHOT: The Connectors panel showing available connectors]
-
-> [SCREENSHOT: Authenticating a Gmail connector]
-
-## What's a plugin?
-
-Plugins are similar to connectors but they add capabilities rather than connecting to services. A plugin gives Cowork new abilities it didn't have before.
-
-Example: The **Design plugin** from Anthropic adds visual analysis and design critique capabilities. With it installed, Cowork can look at a website screenshot and give you detailed design feedback with scores and specific improvement suggestions.
-
-You install plugins from **Customize > Browse Plugins**.
-
-> [SCREENSHOT: The plugin marketplace in Cowork]
-
-## Start with reading, not writing
-
-Here's a sensible approach when you're getting started: **connect your tools for reading first, not writing.**
-
-Let Cowork read your emails and calendar. Let it summarise what's there. Get comfortable with how it interprets your data.
-
-Only after you trust the output should you let it draft emails, create calendar events, or post messages. Start passive, then go active.
-
-## What you can do with connectors
-
-Once Gmail and Calendar are connected, try:
-
-- "Summarise the 20 most recent emails in my inbox. Flag anything urgent."
-- "Look at my calendar for this week. Where do I have back-to-back meetings? Where are the gaps?"
-- "Create a combined summary: what's in my inbox that relates to meetings happening this week?"
-
-That last one is the kind of cross-service insight that you can't easily get from any single tool. Cowork connects the dots because it can see across your tools.
-
-## Try it
-
-Install one connector. Gmail is the most useful starting point. Follow the setup steps, then ask Cowork:
-
-"Summarise my inbox. What needs attention today?"
-
-See how it handles real, live data. That's the bridge from "files on my computer" to "AI working with my real business."
-`,
-      },
-      {
-        id: "6-3",
-        title: "Where to Go Next",
-        content: `# Where to Go Next
-
-You started this course having only used AI in a browser. Let's look at where you are now.
-
-## What you've learned
-
-- **Module 1**: What Cowork is and how it differs from ChatGPT
-- **Module 2**: How to have a conversation and give it files
-- **Module 3**: Working with folders, organising, and understanding access boundaries
-- **Module 4**: What skills are, how to install them, and why they matter
-- **Module 5**: Real examples of skills in action (email, content, data, meetings)
-- **Module 6**: Customising skills and connecting Cowork to your real tools
-
-That's a complete foundation. You can install Cowork, point it at your files, add skills, and connect it to your tools. Most people who use AI haven't gotten this far.
-
-## What's possible from here
-
-There are a few directions you can take this:
-
-### Build your own skills
-
-You've been using pre-built skills. But you can also create your own. If you have a task you do repeatedly and the output always follows a similar structure, that's a skill waiting to be written.
-
-You don't need to write code. A SKILL.md file written in plain English is enough to start. Describe the task, describe the output, add examples of what "good" looks like. Cowork does the rest.
-
-### Go deeper with connectors
-
-Gmail and Calendar are just the start. There are connectors for Slack, project management tools, CRMs, and more. Each one gives Cowork access to another piece of your work, making it more useful across your entire day.
-
-### Combine skills and connectors
-
-The real power comes from combining things. A morning routine that:
-1. Reads your inbox (Gmail connector)
-2. Checks your calendar (Calendar connector)
-3. Triages emails by priority (email triage skill)
-4. Summarises your day ahead
-
-That's not science fiction. That's what people are building right now.
+That's the brain system. It's not a different product. It's Cowork with a full set of skills, connectors, and context about your business. The same tool you've been learning, taken to its full potential.
 
 ## The Ads to AI community
 
-Everything in this course is a starting point. The [Ads to AI community](https://ads2ai.com) is where you go deeper:
+Everything in this course is a starting point. The [Ads to AI community](https://ads2ai.com) is where it goes further:
 
-- **Ready-made skills**: Dozens of pre-built skills for different industries and tasks
+- **50+ ready-made skills** for different industries and tasks
 - **The brain system**: A complete AI infrastructure that manages email, content, projects, contacts, and more
-- **Courses**: From beginner to advanced, including building your own skills
+- **Courses**: From beginner to advanced, including building your own skills and automations
 - **Monthly Q&A calls**: Get your questions answered live
-- **A community of people doing this work**: Share what you're building, learn from others
+- **A community**: People building with AI, sharing what works, helping each other
 
-You don't have to figure this out alone. The community exists specifically for people at your stage: you understand the basics, you can see the potential, and you want to go further.
+You've already experienced the demos. You've seen what a few skills can do. The community is where you get the full toolkit and the support to make it work for your specific business.
 
-## One last thing
+## What to do right now
 
-You know more than most people now. Seriously. Most people are still copy-pasting into ChatGPT. You've got Cowork installed, skills running, connectors live. That puts you ahead.
+1. **Play through any game demos you haven't tried.** Each one teaches you something new and lets you download real skills.
+2. **Install a skill and use it on your own files.** The shift from demo data to your actual work is where it clicks.
+3. **If you want to go deeper**, the Ads to AI community is at [ads2ai.com](https://ads2ai.com). That's where the real transformation happens.
 
-The question isn't whether AI will change how you work. It already has, in the time it took you to go through this course.
-
-The question is how far you want to take it.
-
-[Join the Ads to AI community](https://ads2ai.com) and find out.
+You've got the foundation. The rest is up to you.
 `,
       },
     ],

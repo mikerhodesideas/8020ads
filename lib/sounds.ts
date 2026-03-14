@@ -1140,20 +1140,81 @@ export function stopAmbient(): void {
   if (ambientTimer) { clearInterval(ambientTimer); ambientTimer = null }
 }
 
-// ---- Background Music (file-based, for clair-obscur demos) ----
+// ---- Background Music (file-based, per-world tracks) ----
 
-const CLAIR_OBSCUR_BG_TRACKS = [
-  '/sounds/clair-obscur/bg-lumiere.mp3',
-  '/sounds/clair-obscur/bg-alicia.mp3',
-  '/sounds/clair-obscur/bg-lune.mp3',
-  '/sounds/clair-obscur/bg-sciel.mp3',
-  '/sounds/clair-obscur/bg-paintress.mp3',
-  '/sounds/clair-obscur/bg-contre-le-coeur.mp3',
-  '/sounds/clair-obscur/bg-clea.mp3',
-  '/sounds/clair-obscur/bg-beneath-blue-tree.mp3',
-  '/sounds/clair-obscur/bg-numbers-the-hours.mp3',
-  '/sounds/clair-obscur/bg-music-box.mp3',
-]
+// Track lists and volume levels per world (gallery has no music)
+const BG_MUSIC_CONFIG: Record<string, { tracks: string[]; volume: number }> = {
+  'arcade': {
+    tracks: [
+      '/sounds/mario/bg-overworld.mp3',
+      '/sounds/mario/bg-underground.mp3',
+      '/sounds/mario/bg-starman.mp3',
+      '/sounds/mario/bg-athletic.mp3',
+      '/sounds/mario/bg-castle.mp3',
+      '/sounds/mario/bg-bonus.mp3',
+    ],
+    volume: 0.14,  // 12-15% - bouncy chiptune
+  },
+  'red-alert': {
+    tracks: [
+      '/sounds/red-alert/bg-command.mp3',
+      '/sounds/red-alert/bg-march.mp3',
+      '/sounds/red-alert/bg-radar.mp3',
+      '/sounds/red-alert/bg-assault.mp3',
+      '/sounds/red-alert/bg-briefing.mp3',
+      '/sounds/red-alert/bg-deploy.mp3',
+    ],
+    volume: 0.12,  // 10-15% - industrial/militaristic (louder source)
+  },
+  'clair-obscur': {
+    tracks: [
+      '/sounds/clair-obscur/bg-lumiere.mp3',
+      '/sounds/clair-obscur/bg-alicia.mp3',
+      '/sounds/clair-obscur/bg-lune.mp3',
+      '/sounds/clair-obscur/bg-sciel.mp3',
+      '/sounds/clair-obscur/bg-paintress.mp3',
+      '/sounds/clair-obscur/bg-contre-le-coeur.mp3',
+      '/sounds/clair-obscur/bg-clea.mp3',
+      '/sounds/clair-obscur/bg-beneath-blue-tree.mp3',
+      '/sounds/clair-obscur/bg-numbers-the-hours.mp3',
+      '/sounds/clair-obscur/bg-music-box.mp3',
+    ],
+    volume: 0.2,  // 20% - orchestral/warm
+  },
+  'tetris': {
+    tracks: [
+      '/sounds/tetris/bg-type-a.mp3',
+      '/sounds/tetris/bg-type-b.mp3',
+      '/sounds/tetris/bg-type-c.mp3',
+      '/sounds/tetris/bg-marathon.mp3',
+      '/sounds/tetris/bg-sprint.mp3',
+      '/sounds/tetris/bg-classic.mp3',
+    ],
+    volume: 0.16,  // 15-18% - catchy Game Boy chiptune
+  },
+  'zelda': {
+    tracks: [
+      '/sounds/zelda/bg-field.mp3',
+      '/sounds/zelda/bg-forest.mp3',
+      '/sounds/zelda/bg-village.mp3',
+      '/sounds/zelda/bg-temple.mp3',
+      '/sounds/zelda/bg-quest.mp3',
+      '/sounds/zelda/bg-twilight.mp3',
+    ],
+    volume: 0.16,  // 15-18% - adventurous/pastoral
+  },
+  'elder-scrolls': {
+    tracks: [
+      '/sounds/elder-scrolls/bg-dragonborn.mp3',
+      '/sounds/elder-scrolls/bg-skyrim-wind.mp3',
+      '/sounds/elder-scrolls/bg-sovngarde.mp3',
+      '/sounds/elder-scrolls/bg-ancient-stones.mp3',
+      '/sounds/elder-scrolls/bg-dawn-guard.mp3',
+      '/sounds/elder-scrolls/bg-throat-of-world.mp3',
+    ],
+    volume: 0.16,  // 15-18% - epic Nordic orchestral
+  },
+}
 
 let bgMusicSource: AudioBufferSourceNode | null = null
 let bgMusicGain: GainNode | null = null
@@ -1161,21 +1222,24 @@ let bgMusicStopping = false
 
 export function startBackgroundMusic(worldId: string, demoIndex: number): void {
   stopBackgroundMusic()
-  if (worldId !== 'clair-obscur') return
+  const config = BG_MUSIC_CONFIG[worldId]
+  if (!config) return  // gallery or unknown world
   if (muted || typeof window === 'undefined') return
 
-  const trackIndex = demoIndex % CLAIR_OBSCUR_BG_TRACKS.length
-  const trackPath = CLAIR_OBSCUR_BG_TRACKS[trackIndex]
+  const trackIndex = demoIndex % config.tracks.length
+  const trackPath = config.tracks[trackIndex]
 
   const ctx = getCtx()
   const master = getMaster()
 
-  // Create gain node for this background music at 20% of master
+  // Create gain node with per-world volume level
   const gainNode = ctx.createGain()
   gainNode.gain.setValueAtTime(0, ctx.currentTime)
   gainNode.connect(master)
   bgMusicGain = gainNode
   bgMusicStopping = false
+
+  const targetVolume = config.volume
 
   // Load and play the track
   const loadAndPlay = async () => {
@@ -1198,8 +1262,8 @@ export function startBackgroundMusic(worldId: string, demoIndex: number): void {
       source.start()
       bgMusicSource = source
 
-      // Fade in over 2 seconds to 20% (0.2) relative volume
-      gainNode.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 2)
+      // Fade in over 2 seconds to the world's target volume
+      gainNode.gain.linearRampToValueAtTime(targetVolume, ctx.currentTime + 2)
     } catch {
       // Failed to load background music
     }

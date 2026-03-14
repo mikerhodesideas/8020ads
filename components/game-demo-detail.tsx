@@ -136,10 +136,10 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
     []
   )
 
-  // Background music for clair-obscur demos
+  // Background music for all themed worlds (gallery excluded via sounds.ts)
   useEffect(() => {
-    if (world === 'clair-obscur') {
-      startBackgroundMusic('clair-obscur', demoId)
+    if (world && world !== 'gallery') {
+      startBackgroundMusic(world, demoId)
     }
     return () => {
       stopBackgroundMusic()
