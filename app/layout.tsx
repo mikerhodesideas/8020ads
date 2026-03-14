@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Oxanium, Inter, Cormorant_Garamond, Press_Start_2P, VT323 } from 'next/font/google'
 import Navbar from '@/components/navbar'
-import DevBar from '@/components/dev-bar'
 import { GameProvider } from '@/components/game-provider'
 import { TransitionProvider } from '@/components/transition-overlay'
 import './globals.css'
@@ -53,7 +52,6 @@ export default function RootLayout({
           <TransitionProvider>
             <Navbar />
             <main>{children}</main>
-            <DevBar />
           </TransitionProvider>
         </GameProvider>
       </body>
