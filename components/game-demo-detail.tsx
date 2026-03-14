@@ -1103,7 +1103,7 @@ function SkillUnlockCard({
         'fixed z-40',
         !isDark
           ? 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 skill-card-enter'
-          : 'bottom-20 left-1/2 -translate-x-1/2 skill-card-grow',
+          : 'left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 skill-card-grow',
         shrinking && (!isDark ? 'skill-card-shrink-gallery' : 'skill-card-shrink-arcade')
       )}
     >
@@ -1111,8 +1111,9 @@ function SkillUnlockCard({
         <div
           className="border-[3px] p-8 rounded-[2px] shadow-2xl"
           style={{
-            background: isDark ? '#0c0c1a' : '#faf6ef',
-            borderColor: 'var(--world-skill-card-border)',
+            background: isDark ? 'rgba(20, 30, 50, 0.95)' : '#faf6ef',
+            backdropFilter: isDark ? 'blur(8px)' : undefined,
+            borderColor: isDark ? 'var(--world-accent)' : 'var(--world-skill-card-border)',
           }}
         >
           {!installed ? (
