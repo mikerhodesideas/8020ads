@@ -19,8 +19,8 @@ export const modules: Module[] = [
     lessons: [
       {
         id: "1-1",
-        title: "What Cowork Is",
-        content: `# What Cowork Is
+        title: "What is Cowork?",
+        content: `# What is Cowork?
 
 You've probably used ChatGPT. You type a question, you get an answer. It's useful. But everything happens inside a browser tab. You copy text in. You copy results out. The AI lives in one world, and your actual work lives in another.
 
@@ -36,13 +36,11 @@ That's the core difference. Cowork doesn't just talk about your work. It does yo
 
 ## What it looks like in practice
 
-Here's a simple example. Say you have a messy folder of client notes. In ChatGPT, you'd need to copy each note, paste it in, ask for help, copy the result back out. For ten files, that's painful.
+When you open Cowork, the first thing you do is point it at a folder on your computer. That folder becomes your workspace. Cowork can see every file inside it, read them, create new ones, and edit existing ones.
 
-In Cowork, you point it at the folder and say: "Read all these notes and create a summary document organised by client." Thirty seconds later, there's a new file in your folder with exactly that.
+> [SCREENSHOT: Cowork working in a folder on your computer]
 
-> [SCREENSHOT: Cowork creating a summary document from a folder of files]
-
-That's not magic. It's not complicated. You just need to know how to talk to it, which is what this course is for.
+No copying and pasting. No uploading. The app just has access to everything in that folder. That's what makes it so different from a chat window.
 
 ## What you need
 
@@ -87,7 +85,7 @@ This is the biggest mental shift. When you use ChatGPT, you're having a conversa
 
 With Cowork, you give it a task. "Summarise these meeting notes." "Turn this CSV into a chart." "Draft a follow-up email based on this conversation." And it does the task. The output isn't a chat bubble you need to copy from. It's a file on your computer, ready to use.
 
-| | ChatGPT | Cowork |
+|  | ChatGPT | Cowork |
 |---|---|---|
 | Where it runs | Browser tab | Desktop app |
 | How you share files | Copy-paste or upload | Drag in, or point at a folder |
@@ -128,8 +126,6 @@ Go to [claude.ai/download](https://claude.ai/download) and download Cowork for y
 **On Mac:** Open the downloaded .dmg file and drag Cowork to your Applications folder. Just like installing any other app.
 
 **On Windows:** Run the installer and follow the prompts. Default settings are fine.
-
-> [SCREENSHOT: Dragging Cowork to Applications on Mac]
 
 ## Step 3: Open it
 

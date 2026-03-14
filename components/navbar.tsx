@@ -360,6 +360,43 @@ export default function Navbar() {
                 </button>
               )}
 
+              {/* Sound toggle + volume (light navbar) */}
+              <div className="relative flex items-center gap-1">
+                <button
+                  onClick={handleSoundToggle}
+                  className="text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
+                  title={soundMuted ? 'Unmute sounds' : 'Mute sounds'}
+                >
+                  {soundMuted ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                  )}
+                </button>
+                {showVolume && !soundMuted && (
+                  <div className="flex items-center gap-1 pl-1">
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      value={volume}
+                      onChange={handleVolumeChange}
+                      className="w-16 h-1 cursor-pointer"
+                      style={{ accentColor: 'var(--color-muted)' }}
+                    />
+                  </div>
+                )}
+              </div>
+
               {/* Map link when in demo */}
               {pathname.startsWith('/play/') && (
                 <Link

@@ -4,12 +4,84 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { modules } from '@/lib/course-data'
 import { useGame } from '@/components/game-provider'
 
-// Lesson images - add entries as Mike provides screenshots
-// Format: 'lesson-id': '/images/lessons/cowork-lesson-id.png'
-const lessonImages: Record<string, string> = {}
+// Maps screenshot descriptions from [SCREENSHOT: ...] placeholders to image files
+// Key = text inside the brackets (lowercased, trimmed). Add entries as Mike provides screenshots.
+const screenshotMap: Record<string, string> = {
+  'cowork working in a folder on your computer': '/images/lessons/cowork-home-screen.png',
+  'the cowork download page showing mac and windows options': '/images/lessons/cowork-download-page.png',
+}
+
+function findScreenshot(text: string): string | null {
+  const key = text.toLowerCase().trim()
+  return screenshotMap[key] ?? null
+}
+
+function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithoutRef<'blockquote'>) {
+  // Extract text content from children to check for [SCREENSHOT: ...]
+  const text = extractText(children)
+  const match = text.match(/\[SCREENSHOT:\s*(.+?)\]/)
+  if (match) {
+    const desc = match[1]
+    const src = findScreenshot(desc)
+    if (src) {
+      return (
+        <div className="my-8 border border-[var(--color-border)] rounded-[2px] overflow-hidden">
+          <img src={src} alt={desc} className="w-full h-auto" />
+        </div>
+      )
+    }
+    // No image yet, show placeholder
+    return (
+      <blockquote className="border-l-3 border-[var(--color-brand-orange)] bg-[var(--color-brand-orange-faint)] px-4 py-3 my-5 rounded-[2px]" {...props}>
+        {children}
+      </blockquote>
+    )
+  }
+  // Normal blockquote
+  return (
+    <blockquote className="border-l-3 border-[var(--color-brand-orange)] bg-[var(--color-brand-orange-faint)] px-4 py-3 my-5 rounded-[2px]" {...props}>
+      {children}
+    </blockquote>
+  )
+}
+
+function extractText(node: React.ReactNode): string {
+  if (typeof node === 'string') return node
+  if (Array.isArray(node)) return node.map(extractText).join('')
+  if (node && typeof node === 'object' && 'props' in node) {
+    return extractText((node as React.ReactElement).props.children)
+  }
+  return ''
+}
+
+const mdComponents = {
+  table: ({ children, ...props }: React.ComponentPropsWithoutRef<'table'>) => (
+    <div className="my-8 border border-[var(--color-border)] rounded-[2px] overflow-hidden">
+      <table className="w-full text-sm border-collapse" {...props}>{children}</table>
+    </div>
+  ),
+  thead: ({ children, ...props }: React.ComponentPropsWithoutRef<'thead'>) => (
+    <thead className="bg-[var(--color-cream)]" {...props}>{children}</thead>
+  ),
+  th: ({ children, ...props }: React.ComponentPropsWithoutRef<'th'>) => (
+    <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-[var(--color-muted)] font-heading border-b-2 border-[var(--color-border)]" {...props}>
+      {children}
+    </th>
+  ),
+  td: ({ children, ...props }: React.ComponentPropsWithoutRef<'td'>) => (
+    <td className="px-5 py-3.5 text-[var(--color-ink)] border-b border-[var(--color-border)] first:font-semibold first:text-[var(--color-ink)] first:text-xs first:uppercase first:tracking-wide first:font-heading first:bg-[var(--color-cream)]/60 first:w-[180px]" {...props}>
+      {children}
+    </td>
+  ),
+  tr: ({ children, ...props }: React.ComponentPropsWithoutRef<'tr'>) => (
+    <tr {...props}>{children}</tr>
+  ),
+  blockquote: ScreenshotBlockquote,
+}
 
 export default function LessonPage() {
   const params = useParams()
@@ -116,20 +188,9 @@ export default function LessonPage() {
         </h1>
       </div>
 
-      {/* Whiteboard explainer image */}
-      {lessonImages[lessonId] && (
-        <div className="mb-10 border border-[var(--color-border)] rounded-[2px] overflow-hidden">
-          <img
-            src={lessonImages[lessonId]}
-            alt={`${lesson.title} — whiteboard explainer`}
-            className="w-full h-auto"
-          />
-        </div>
-      )}
-
       {/* Lesson content */}
       <article className="prose-lesson">
-        <ReactMarkdown>{contentWithoutTitle}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{contentWithoutTitle}</ReactMarkdown>
       </article>
 
       {/* Bottom navigation */}
