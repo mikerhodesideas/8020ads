@@ -765,7 +765,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                     className="text-sm font-heading font-semibold"
                     style={{ color: 'var(--world-accent)' }}
                   >
-                    Now try it with your own data
+                    {level && level.id >= 3 ? 'Now try it with your own data' : 'Try it yourself'}
                   </span>
                   <span
                     className="text-lg animate-bounce"
@@ -839,9 +839,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                     {skin.tryThisPrefix}
                   </p>
                   <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-2" style={{ color: 'var(--world-accent)' }}>
-                    Now do it with your own data
+                    {level && level.id >= 3 ? 'Now do it with your own data' : 'Try it yourself'}
                   </h2>
-                  <p className="text-sm text-[var(--world-text-secondary)] mb-8 max-w-xl mx-auto">
+                  <p className="text-sm text-[var(--world-text-secondary)] mb-4 max-w-xl mx-auto">
                     {skill
                       ? 'Install the skill, drag in the data file, and paste the prompt.'
                       : demo.dragFile
@@ -849,6 +849,12 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                         : 'Copy the prompt, open Cowork, and paste it in.'
                     }
                   </p>
+                  {level && level.id < 3 && (
+                    <p className="text-xs text-[var(--world-text-muted)] mb-8 max-w-lg mx-auto">
+                      We&apos;ve created sample data for you to try this out. In Level 3, you&apos;ll connect your own accounts.
+                    </p>
+                  )}
+                  {level && level.id >= 3 && <div className="mb-4" />}
 
                   {/* Skill zip download (Level 2) */}
                   {demo.skillZip && (
