@@ -47,14 +47,14 @@ That's not magic. It's not complicated. You just need to know how to talk to it,
 ## What you need
 
 - A computer (Mac or Windows)
-- A Claude account (free or paid)
+- A Claude Pro account ($20/month) or higher
 - That's it
 
-No coding. No terminal. No technical setup beyond installing the app. If you can install Spotify or Slack, you can install Cowork.
+Cowork is only available on paid Claude plans (Pro, Max, Team, or Enterprise). A free Claude account won't give you access. No coding. No terminal. No technical setup beyond installing the app. If you can install Spotify or Slack, you can install Cowork.
 
 ## Try it
 
-If you haven't already, go to [claude.ai](https://claude.ai) and make sure you have an account. You'll need it in a couple of lessons when we install the app. If you already have one, you're ahead of the game.
+If you haven't already, go to [claude.ai](https://claude.ai) and sign up for at least a Pro plan. You'll need it in a couple of lessons when we install the app. If you already have a paid account, you're ahead of the game.
 `,
       },
       {
@@ -155,7 +155,7 @@ For now, just notice a few things:
 
 - **"I can't find the download"**: Check your Downloads folder. The file is called something like "Cowork-Setup" or "Cowork.dmg".
 - **"It won't open on Mac"**: Right-click the app, choose "Open", then click "Open" again on the security dialog. macOS sometimes blocks new apps the first time.
-- **"I can't sign in"**: Make sure you're using the same email as your Claude account. If you don't have one, create a free account at claude.ai first.
+- **"I can't sign in"**: Make sure you're using the same email as your Claude account. You need a paid plan (Pro or higher) to use Cowork.
 
 ## Try it
 
