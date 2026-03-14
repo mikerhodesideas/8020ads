@@ -1,0 +1,264 @@
+{
+  "emails": [
+    {
+      "id": "1",
+      "from": "Shopify <orders@shopify.com>",
+      "to": "me",
+      "subject": "New booking #1842 - Kitchen Design Consultation",
+      "date": "2026-03-10T06:45:00+11:00",
+      "snippet": "You have a new booking from David & Michelle Park for a Kitchen Design Consultation ($250.00) at your Moorabbin showroom. Date selected: Thursday 13 March, 2:00pm. Contact: david.park@gmail.com.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "2",
+      "from": "Adrian Rossi <adrian@caesarstone.com.au>",
+      "to": "me",
+      "subject": "Re: Delivery schedule - March/April stock",
+      "date": "2026-03-10T08:20:00+11:00",
+      "snippet": "Morning, the Rugged Concrete and Empira White slabs are confirmed for delivery on 19 March. We're short on the Primordia finish though, won't have stock until mid-April. Let me know if you want me to hold the other colours or ship what we've got.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "3",
+      "from": "Sam Whitfield <sam@coastalkitchenco.com.au>",
+      "to": "me",
+      "subject": "Quick question about leave policy",
+      "date": "2026-03-10T10:30:00+11:00",
+      "snippet": "Hey boss, I need to take a day off next Friday for a family thing. I've still got leave days available right? Also, do I need to fill out a form or just let you know? Sorry, I always forget the process.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": false
+    },
+    {
+      "id": "4",
+      "from": "Westpac Business <alerts@westpac.com.au>",
+      "to": "me",
+      "subject": "Transaction alert: $18,500.00 received",
+      "date": "2026-03-10T14:15:00+11:00",
+      "snippet": "A payment of $18,500.00 has been received into your Coastal Kitchen Co business account from JENNINGS P. Reference: INV-1837-FINAL. Current available balance: $47,320.50.",
+      "labels": ["INBOX"],
+      "isImportant": true
+    },
+    {
+      "id": "5",
+      "from": "Contact Form <website@coastalkitchenco.com.au>",
+      "to": "me",
+      "subject": "New inquiry from coastalkitchenco.com.au",
+      "date": "2026-03-10T19:40:00+11:00",
+      "snippet": "Name: Rachel & Tom Henderson. Email: rachel.henderson@outlook.com. Message: We've just bought a 1960s weatherboard in Hawthorn and want a full kitchen renovation. Thinking shaker-style cabinetry with stone benchtops. Budget is $40-50K. Can you come out for a look?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "6",
+      "from": "Aon Insurance <renewals@aon.com.au>",
+      "to": "me",
+      "subject": "Your business insurance renewal - quote attached",
+      "date": "2026-03-11T09:00:00+11:00",
+      "snippet": "Your combined business insurance policy (public liability, product liability, and workshop contents) is due for renewal on 1 April 2026. This year's premium is $4,870 (up from $4,420). Review the attached quote and let us know by 25 March.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "7",
+      "from": "Google Business Profile <noreply@google.com>",
+      "to": "me",
+      "subject": "Coastal Kitchen Co has a new 5-star review",
+      "date": "2026-03-11T16:00:00+11:00",
+      "snippet": "Jenny M. left a 5-star review: 'Absolutely love our new kitchen. The Caesarstone benchtops are stunning and the soft-close cabinetry is so well made. The whole team were great from design through to install. Highly recommend for anyone in Melbourne.'",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "8",
+      "from": "Helen Park <helen@parkaccounting.com.au>",
+      "to": "me",
+      "subject": "Quarterly update - need to chat Thursday",
+      "date": "2026-03-12T10:00:00+11:00",
+      "snippet": "Morning, just finished reviewing your Jan-March numbers. Revenue is up 18% on the same quarter last year which is great. A couple of things to discuss on our call: your equipment depreciation schedule, whether to adjust BAS instalments, and that new ute lease.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "9",
+      "from": "Blum Australia <orders@blum.com.au>",
+      "to": "me",
+      "subject": "Shipping rate changes effective 1 April 2026",
+      "date": "2026-03-12T08:00:00+11:00",
+      "snippet": "We're updating our freight rates from 1 April 2026. Standard pallet deliveries to metro Melbourne will increase by 4.5%. Regional surcharges remain unchanged. See the full rate card attached. Orders placed before 25 March will ship at current rates.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": false
+    },
+    {
+      "id": "10",
+      "from": "Linda Morrison <linda.morrison@bigpond.com>",
+      "to": "me",
+      "subject": "Complaint about splashback tiles - colour doesn't match",
+      "date": "2026-03-12T15:20:00+11:00",
+      "snippet": "Hi, I'm writing about the kitchen you installed last month at our Brighton property. The splashback tiles are noticeably different in colour from the sample we were shown. Under the downlights they look almost grey instead of the warm white we chose. I'm really unhappy and would like this resolved.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "11",
+      "from": "Master Builders Victoria <news@mbav.com.au>",
+      "to": "me",
+      "subject": "MBAV March newsletter - awards, compliance updates",
+      "date": "2026-03-12T07:00:00+11:00",
+      "snippet": "In this issue: Applications open for the 2026 Master Builders Excellence Awards (deadline 15 May). New NCC compliance changes for wet areas effective July. Plus: free webinar on managing subcontractor relationships.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "12",
+      "from": "Adrian Rossi <adrian@caesarstone.com.au>",
+      "to": "me",
+      "subject": "Can we move our Wednesday call to Thursday?",
+      "date": "2026-03-12T17:30:00+11:00",
+      "snippet": "Hey, something's come up with our warehouse team on Wednesday and I need to be on site. Could we push our catch-up to Thursday, same time? I still want to go through the Q2 pricing and the new colour range.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "13",
+      "from": "Rachel Henderson <rachel.henderson@outlook.com>",
+      "to": "me",
+      "subject": "Re: Kitchen renovation inquiry - can you come Saturday?",
+      "date": "2026-03-13T08:15:00+11:00",
+      "snippet": "Hi, thanks for getting back to us so quickly! We'd love you to come out and have a look. We're both working during the week though. Would Saturday morning work? Maybe 10am? We can show you the space and talk through what we're thinking.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "14",
+      "from": "Priya Nair <priya@coastalkitchenco.com.au>",
+      "to": "me",
+      "subject": "Workshop schedule next week - two installs overlapping",
+      "date": "2026-03-13T14:45:00+11:00",
+      "snippet": "Just flagging that next week we've got the Morrison install on Monday-Tuesday AND the Jennings pantry retrofit starting Tuesday. That's going to stretch us thin on installers. Should I push the Jennings job back a day or can we bring in Jake as a subbie?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "15",
+      "from": "Xero <noreply@xero.com>",
+      "to": "me",
+      "subject": "Invoice #1838 to Morrison L is overdue",
+      "date": "2026-03-14T07:00:00+11:00",
+      "snippet": "Invoice #1838 for $2,450.00 (splashback materials - Morrison Brighton) was due on 7 March 2026 and is now 7 days overdue. You may want to send a reminder to your client.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    }
+  ],
+  "calendar": [
+    {
+      "id": "cal1",
+      "title": "Ops standup - workshop team",
+      "start": "2026-03-10T07:30:00+11:00",
+      "end": "2026-03-10T08:00:00+11:00",
+      "attendees": ["sam@coastalkitchenco.com.au", "priya@coastalkitchenco.com.au"],
+      "location": "Workshop floor, 28 Industrial Ave Moorabbin",
+      "description": "Monday standup. Review week's jobs, install schedule, material deliveries."
+    },
+    {
+      "id": "cal2",
+      "title": "Supplier call - Adrian (Caesarstone)",
+      "start": "2026-03-12T10:00:00+11:00",
+      "end": "2026-03-12T10:45:00+11:00",
+      "attendees": ["adrian@caesarstone.com.au"],
+      "location": "Zoom",
+      "description": "Discuss March delivery, Primordia stock shortage, Q2 pricing and new colour range."
+    },
+    {
+      "id": "cal3",
+      "title": "Ops standup - workshop team",
+      "start": "2026-03-12T07:30:00+11:00",
+      "end": "2026-03-12T08:00:00+11:00",
+      "attendees": ["sam@coastalkitchenco.com.au", "priya@coastalkitchenco.com.au"],
+      "location": "Workshop floor",
+      "description": "Mid-week standup. Check production progress, flag any delays."
+    },
+    {
+      "id": "cal4",
+      "title": "School pickup - Lily",
+      "start": "2026-03-11T15:15:00+11:00",
+      "end": "2026-03-11T15:45:00+11:00",
+      "attendees": [],
+      "location": "Brighton Primary School",
+      "description": ""
+    },
+    {
+      "id": "cal5",
+      "title": "Customer site visit - Morrison (Brighton)",
+      "start": "2026-03-11T10:00:00+11:00",
+      "end": "2026-03-11T11:00:00+11:00",
+      "attendees": [],
+      "location": "14 Bay St, Brighton",
+      "description": "Inspect splashback tile issue. Bring replacement samples and colour chart. Need to resolve complaint."
+    },
+    {
+      "id": "cal6",
+      "title": "Design consultation - David & Michelle Park",
+      "start": "2026-03-13T14:00:00+11:00",
+      "end": "2026-03-13T15:00:00+11:00",
+      "attendees": ["david.park@gmail.com"],
+      "location": "Moorabbin showroom",
+      "description": "New client consultation. Show benchtop samples, cabinetry options, discuss their brief and budget."
+    },
+    {
+      "id": "cal7",
+      "title": "School pickup - Lily",
+      "start": "2026-03-13T15:15:00+11:00",
+      "end": "2026-03-13T15:45:00+11:00",
+      "attendees": [],
+      "location": "Brighton Primary School",
+      "description": ""
+    },
+    {
+      "id": "cal8",
+      "title": "Accountant call - Helen Park",
+      "start": "2026-03-13T11:00:00+11:00",
+      "end": "2026-03-13T11:30:00+11:00",
+      "attendees": ["helen@parkaccounting.com.au"],
+      "location": "Phone call",
+      "description": "Quarterly review: revenue trends, depreciation schedule, BAS instalment adjustment, ute lease."
+    },
+    {
+      "id": "cal9",
+      "title": "MBAV networking evening",
+      "start": "2026-03-13T18:00:00+11:00",
+      "end": "2026-03-13T20:30:00+11:00",
+      "attendees": [],
+      "location": "The Timber Yard, Port Melbourne",
+      "description": "Master Builders Victoria quarterly networking evening. Drinks and canapes."
+    },
+    {
+      "id": "cal10",
+      "title": "Ops standup - workshop team",
+      "start": "2026-03-14T07:30:00+11:00",
+      "end": "2026-03-14T08:00:00+11:00",
+      "attendees": ["sam@coastalkitchenco.com.au", "priya@coastalkitchenco.com.au"],
+      "location": "Workshop floor",
+      "description": "Friday standup. Wrap up the week, confirm next week's install schedule and materials."
+    },
+    {
+      "id": "cal11",
+      "title": "Owner time - strategy & planning",
+      "start": "2026-03-14T09:00:00+11:00",
+      "end": "2026-03-14T12:00:00+11:00",
+      "attendees": [],
+      "location": "Office",
+      "description": "Protected block. Review Q1 financials, plan Q2 marketing, insurance renewal decision, hiring needs."
+    },
+    {
+      "id": "cal12",
+      "title": "Site visit - Henderson renovation (Hawthorn)",
+      "start": "2026-03-15T10:00:00+11:00",
+      "end": "2026-03-15T11:00:00+11:00",
+      "attendees": ["rachel.henderson@outlook.com"],
+      "location": "27 Glenferrie Rd, Hawthorn",
+      "description": "Measure up for full kitchen renovation. Bring benchtop samples, cabinetry portfolio, and quote template."
+    }
+  ]
+}

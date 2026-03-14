@@ -3,6 +3,8 @@
 @theme inline {
   --font-oxanium: var(--font-oxanium);
   --font-inter: var(--font-inter);
+  --font-pixel: var(--font-pixel);
+  --font-terminal: var(--font-terminal);
 
   --color-brand-orange: #D64C00;
   --color-brand-orange-hover: #FF6B1A;
@@ -692,6 +694,43 @@ h1, h2, h3, h4, h5, h6 {
   --world-progress-fill: var(--mario-block);
 }
 
+/* Arcade: pixel font for headings, terminal font for body text */
+.skin-arcade h1,
+.skin-arcade h2,
+.skin-arcade h3,
+.skin-arcade h4,
+.skin-arcade h5,
+.skin-arcade h6,
+.skin-arcade .font-heading {
+  font-family: var(--font-pixel), 'Press Start 2P', monospace !important;
+  letter-spacing: 0.02em;
+}
+
+/* Pixel fonts render much smaller, so bump heading sizes */
+.skin-arcade h1 { font-size: 1.25rem !important; line-height: 1.6 !important; }
+.skin-arcade h2 { font-size: 1rem !important; line-height: 1.5 !important; }
+.skin-arcade h3 { font-size: 0.85rem !important; line-height: 1.5 !important; }
+.skin-arcade h4,
+.skin-arcade h5,
+.skin-arcade h6 { font-size: 0.75rem !important; line-height: 1.4 !important; }
+
+/* Arcade body text uses VT323 terminal font as secondary, bumped for readability */
+.skin-arcade {
+  font-family: var(--font-terminal), 'VT323', 'Courier New', monospace;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+/* Data preview cards in arcade should use readable sans-serif, not game font */
+.skin-arcade [class*="data-preview"],
+.skin-arcade .prose,
+.skin-arcade table,
+.skin-arcade td,
+.skin-arcade th {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif !important;
+  font-size: 0.875rem !important;
+  line-height: 1.4 !important;
+}
+
 /* Mario-world: pixel-sharp corners on cards and buttons (not circles) */
 
 .skin-arcade .transition-all,
@@ -1108,6 +1147,51 @@ h1, h2, h3, h4, h5, h6 {
   --world-progress-fill: #1B5E20;
 }
 
+/* Red Alert: Oxanium for headings, system font for body (military command aesthetic) */
+.skin-red-alert .font-heading,
+.skin-red-alert h1,
+.skin-red-alert h2,
+.skin-red-alert h3,
+.skin-red-alert h4,
+.skin-red-alert h5,
+.skin-red-alert h6 {
+  font-family: var(--font-oxanium), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================ */
+/* Per-world navbar styling                      */
+/* ============================================ */
+
+/* Arcade (Mario) - gold border with retro glow */
+.skin-arcade { --nav-border: var(--mario-coin); }
+nav.skin-arcade { box-shadow: 0 1px 8px rgba(255, 215, 0, 0.15); }
+
+/* Red Alert - green scanline border */
+.skin-red-alert { --nav-border: var(--ra-green); }
+nav.skin-red-alert { box-shadow: 0 1px 12px rgba(51, 255, 51, 0.2); }
+
+/* Clair Obscur - warm gold border, elegant shadow */
+.skin-clair-obscur { --nav-border: var(--co-gold, #C5A55A); }
+nav.skin-clair-obscur { box-shadow: 0 1px 6px rgba(197, 165, 90, 0.15); }
+
+/* Tetris - neon cyan border with bright glow */
+.skin-tetris { --nav-border: var(--tetris-i, #00F0F0); }
+nav.skin-tetris { box-shadow: 0 0 12px rgba(0, 240, 240, 0.3), inset 0 -1px 0 rgba(0, 240, 240, 0.2); }
+
+/* Zelda - double gold border with medieval feel */
+.skin-zelda { --nav-border: var(--zelda-gold); }
+nav.skin-zelda {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  box-shadow: 0 2px 0 var(--zelda-dark), 0 3px 0 var(--zelda-gold);
+}
+
+/* Elder Scrolls - starlight gold with deep shadow */
+.skin-elder-scrolls { --nav-border: var(--es-gold, #C9A84C); }
+nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
+
 /* Radar ping expanding ring */
 @keyframes ra-radar-ping {
   0% { box-shadow: 0 0 0 0 rgba(51, 255, 51, 0.4); }
@@ -1141,6 +1225,46 @@ h1, h2, h3, h4, h5, h6 {
   animation: badge-glow-red-alert 3s ease-in-out infinite;
 }
 
+/* Red Alert map card animations */
+@keyframes ra-card-appear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ra-card-glow {
+  0%, 100% { box-shadow: 0 0 16px rgba(51, 255, 51, 0.12), inset 0 0 0 1px rgba(51, 255, 51, 0.15); }
+  50% { box-shadow: 0 0 28px rgba(51, 255, 51, 0.3), inset 0 0 0 1px rgba(51, 255, 51, 0.35); }
+}
+
+@keyframes ra-card-active-border {
+  0%, 100% { border-color: rgba(51, 255, 51, 0.5); }
+  50% { border-color: rgba(51, 255, 51, 0.95); }
+}
+
+.ra-map-card {
+  animation: ra-card-appear 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ra-map-card:nth-child(2) { animation-delay: 0.15s; }
+.ra-map-card:nth-child(3) { animation-delay: 0.3s; }
+
+.ra-map-card:hover {
+  transform: translateY(-4px);
+}
+
+.ra-map-card-active {
+  animation: ra-card-appear 0.6s ease-out both, ra-card-glow 3s ease-in-out infinite 0.6s, ra-card-active-border 3s ease-in-out infinite 0.6s;
+}
+
+@keyframes ra-sector-hint-float {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.45; transform: translateY(-3px); }
+}
+
+.ra-sector-hint {
+  animation: ra-sector-hint-float 4s ease-in-out infinite;
+}
+
 /* ============ SKIN: CLAIR OBSCUR ============ */
 
 .skin-clair-obscur {
@@ -1153,6 +1277,8 @@ h1, h2, h3, h4, h5, h6 {
   --co-glow: #D4AF37;
   --co-card: #FDFBF7;
   --co-border: #E8DCC8;
+  --co-font-heading: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --co-font-body: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
 
   --skin-accent: var(--co-gold);
   --skin-bg: var(--co-cream);
@@ -1242,6 +1368,46 @@ h1, h2, h3, h4, h5, h6 {
 
 .badge-earned-glow-clair-obscur {
   animation: badge-glow-clair-obscur 3s ease-in-out infinite;
+}
+
+/* Clair Obscur map card animations */
+@keyframes co-card-appear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes co-card-glow {
+  0%, 100% { box-shadow: 0 2px 20px rgba(197, 165, 90, 0.15), inset 0 0 0 1px rgba(197, 165, 90, 0.3); }
+  50% { box-shadow: 0 4px 30px rgba(197, 165, 90, 0.35), inset 0 0 0 1px rgba(212, 175, 55, 0.5); }
+}
+
+@keyframes co-card-active-border {
+  0%, 100% { border-color: rgba(197, 165, 90, 0.5); }
+  50% { border-color: rgba(212, 175, 55, 0.9); }
+}
+
+.co-map-card {
+  animation: co-card-appear 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.co-map-card:nth-child(2) { animation-delay: 0.15s; }
+.co-map-card:nth-child(3) { animation-delay: 0.3s; }
+
+.co-map-card:hover {
+  transform: translateY(-4px);
+}
+
+.co-map-card-active {
+  animation: co-card-appear 0.6s ease-out both, co-card-glow 3s ease-in-out infinite 0.6s, co-card-active-border 3s ease-in-out infinite 0.6s;
+}
+
+@keyframes co-chapter-hint-float {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(-3px); }
+}
+
+.co-chapter-hint {
+  animation: co-chapter-hint-float 4s ease-in-out infinite;
 }
 
 /* ============ SKIN: TETRIS ============ */
@@ -1359,6 +1525,46 @@ h1, h2, h3, h4, h5, h6 {
   animation: badge-glow-tetris 3s ease-in-out infinite;
 }
 
+/* Tetris map card animations */
+@keyframes tetris-card-appear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tetris-card-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 240, 0.15), inset 0 0 20px rgba(0, 240, 240, 0.03); }
+  50% { box-shadow: 0 0 35px rgba(0, 240, 240, 0.35), inset 0 0 25px rgba(0, 240, 240, 0.08); }
+}
+
+@keyframes tetris-card-active-border {
+  0%, 100% { border-color: rgba(0, 240, 240, 0.4); }
+  50% { border-color: rgba(0, 240, 240, 0.9); }
+}
+
+.tetris-map-card {
+  animation: tetris-card-appear 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.tetris-map-card:nth-child(2) { animation-delay: 0.15s; }
+.tetris-map-card:nth-child(3) { animation-delay: 0.3s; }
+
+.tetris-map-card:hover {
+  transform: translateY(-4px);
+}
+
+.tetris-map-card-active {
+  animation: tetris-card-appear 0.6s ease-out both, tetris-card-glow 3s ease-in-out infinite 0.6s, tetris-card-active-border 3s ease-in-out infinite 0.6s;
+}
+
+@keyframes tetris-level-hint-float {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(-3px); }
+}
+
+.tetris-level-hint {
+  animation: tetris-level-hint-float 4s ease-in-out infinite;
+}
+
 /* ============ SKIN: ZELDA ============ */
 
 .skin-zelda {
@@ -1380,44 +1586,44 @@ h1, h2, h3, h4, h5, h6 {
 
   /* World immersion vars */
   --page-bg: linear-gradient(to bottom, #F0E8D0, #E5DCBF);
-  --world-accent: #DAA520;
-  --world-accent2: #2D6B22;
-  --world-accent3: #2D6B22;
+  --world-accent: #5C7A2E;
+  --world-accent2: #1A4A15;
+  --world-accent3: #1A4A15;
   --world-accent-border: #DAA520;
   --world-dark: #1A3A1A;
   --world-problem-border: #8B0000;
-  --world-problem-bg: rgba(139, 0, 0, 0.08);
+  --world-problem-bg: rgba(139, 0, 0, 0.1);
   --world-fix-border: #2D6B22;
-  --world-fix-bg: rgba(45, 107, 34, 0.08);
-  --world-data-border: rgba(218, 165, 32, 0.4);
-  --world-data-bg: rgba(255, 255, 255, 0.9);
+  --world-fix-bg: rgba(45, 107, 34, 0.1);
+  --world-data-border: rgba(45, 60, 26, 0.3);
+  --world-data-bg: rgba(26, 58, 26, 0.06);
   --world-brief-bg: rgba(26, 58, 26, 0.9);
   --world-brief-border: #DAA520;
-  --world-selection-bg: rgba(218, 165, 32, 0.1);
-  --world-card-bg: rgba(255, 248, 230, 0.6);
+  --world-selection-bg: rgba(45, 107, 34, 0.08);
+  --world-card-bg: rgba(26, 58, 26, 0.06);
   --world-text: #2D3B1A;
-  --world-text-secondary: #5A6B4A;
-  --world-text-muted: rgba(139, 107, 20, 0.6);
+  --world-text-secondary: #4A5A3A;
+  --world-text-muted: #6B7A5A;
 
   /* Button & overlay vars */
   --world-overlay-bg: rgba(0, 0, 0, 0.50);
   --world-hover-copy: brightness(1);
   --world-btn-shadow: 0 0 16px 4px rgba(218, 165, 32, 0.3);
-  --world-download-border: #DAA520;
-  --world-download-bg: rgba(218, 165, 32, 0.06);
-  --world-download-hover-bg: rgba(255, 255, 255, 0.05);
-  --world-download-badge-bg: #2D6B22;
+  --world-download-border: #5C7A2E;
+  --world-download-bg: rgba(45, 107, 34, 0.06);
+  --world-download-hover-bg: rgba(45, 107, 34, 0.1);
+  --world-download-badge-bg: #1A4A15;
   --world-download-text: #2D3B1A;
-  --world-download-subtext: rgba(139, 107, 20, 0.6);
+  --world-download-subtext: #6B7A5A;
   --world-prompt-bg: rgba(26, 58, 26, 0.15);
 
   /* Skill card vars */
   --world-skill-card-bg: rgba(240, 232, 208, 0.95);
-  --world-skill-card-border: #DAA520;
-  --world-skill-download-border: #DAA520;
-  --world-skill-download-hover-bg: rgba(218, 165, 32, 0.08);
+  --world-skill-card-border: #5C7A2E;
+  --world-skill-download-border: #5C7A2E;
+  --world-skill-download-hover-bg: rgba(45, 107, 34, 0.08);
   --world-skill-download-bg: transparent;
-  --world-skill-subtext: rgba(139, 107, 20, 0.6);
+  --world-skill-subtext: #6B7A5A;
 
   /* Confetti */
   --world-confetti-1: #DAA520;
@@ -1476,6 +1682,46 @@ h1, h2, h3, h4, h5, h6 {
 
 .badge-earned-glow-zelda {
   animation: badge-glow-zelda 3s ease-in-out infinite;
+}
+
+/* Zelda map card animations */
+@keyframes zelda-card-appear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zelda-card-glow {
+  0%, 100% { box-shadow: 0 2px 20px rgba(218, 165, 32, 0.15), inset 0 0 0 1px rgba(218, 165, 32, 0.3); }
+  50% { box-shadow: 0 4px 30px rgba(218, 165, 32, 0.4), inset 0 0 0 1px rgba(218, 165, 32, 0.6); }
+}
+
+@keyframes zelda-card-active-border {
+  0%, 100% { border-color: rgba(218, 165, 32, 0.5); }
+  50% { border-color: rgba(218, 165, 32, 0.95); }
+}
+
+.zelda-map-card {
+  animation: zelda-card-appear 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.zelda-map-card:nth-child(2) { animation-delay: 0.15s; }
+.zelda-map-card:nth-child(3) { animation-delay: 0.3s; }
+
+.zelda-map-card:hover {
+  transform: translateY(-4px);
+}
+
+.zelda-map-card-active {
+  animation: zelda-card-appear 0.6s ease-out both, zelda-card-glow 3s ease-in-out infinite 0.6s, zelda-card-active-border 3s ease-in-out infinite 0.6s;
+}
+
+@keyframes zelda-chapter-hint-float {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(-3px); }
+}
+
+.zelda-chapter-hint {
+  animation: zelda-chapter-hint-float 4s ease-in-out infinite;
 }
 
 /* ============ SKIN: ELDER SCROLLS ============ */
@@ -1605,6 +1851,46 @@ h1, h2, h3, h4, h5, h6 {
 
 .badge-earned-glow-elder-scrolls {
   animation: badge-glow-elder-scrolls 3s ease-in-out infinite;
+}
+
+/* Elder Scrolls map card animations */
+@keyframes es-card-appear {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes es-card-glow {
+  0%, 100% { box-shadow: 0 2px 20px rgba(123, 158, 199, 0.12), inset 0 0 0 1px rgba(123, 158, 199, 0.2); }
+  50% { box-shadow: 0 4px 30px rgba(123, 158, 199, 0.3), inset 0 0 0 1px rgba(123, 158, 199, 0.4); }
+}
+
+@keyframes es-card-active-border {
+  0%, 100% { border-color: rgba(123, 158, 199, 0.6); }
+  50% { border-color: rgba(123, 158, 199, 0.9); }
+}
+
+.es-map-card {
+  animation: es-card-appear 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.es-map-card:nth-child(2) { animation-delay: 0.15s; }
+.es-map-card:nth-child(3) { animation-delay: 0.3s; }
+
+.es-map-card:hover {
+  transform: translateY(-4px);
+}
+
+.es-map-card-active {
+  animation: es-card-appear 0.6s ease-out both, es-card-glow 3s ease-in-out infinite 0.6s, es-card-active-border 3s ease-in-out infinite 0.6s;
+}
+
+@keyframes es-chapter-hint-float {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(-3px); }
+}
+
+.es-chapter-hint {
+  animation: es-chapter-hint-float 4s ease-in-out infinite;
 }
 
 /* ============ BACKGROUND EFFECTS ============ */

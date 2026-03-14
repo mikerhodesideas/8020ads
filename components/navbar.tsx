@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useGame, useSkin } from '@/components/game-provider'
 import { DEMO_SKILLS, DEMO_TIME_SAVED } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
-import { isMuted, toggleMute, playSound } from '@/lib/sounds'
+import { isMuted, toggleMute, playSound, getVolume, setVolume } from '@/lib/sounds'
 
 const typeLabels: Record<string, string> = {
   agency: 'Agency Owner',
@@ -25,6 +25,16 @@ const worldLabels: Record<string, string> = {
   'elder-scrolls': 'Elder Scrolls',
 }
 
+// Map world IDs to sprite filenames (gallery has no sprite)
+const worldSprites: Record<string, string> = {
+  arcade: '/images/sprites/mario.png',
+  'red-alert': '/images/sprites/red-alert.png',
+  'clair-obscur': '/images/sprites/clair-obscur.png',
+  tetris: '/images/sprites/tetris.png',
+  zelda: '/images/sprites/zelda.png',
+  'elder-scrolls': '/images/sprites/elder-scrolls.png',
+}
+
 function formatTimeSaved(hours: number): string {
   if (hours >= 1) {
     return `${hours % 1 === 0 ? hours : hours.toFixed(1)} hrs saved`
@@ -38,6 +48,8 @@ export default function Navbar() {
   const skin = useSkin()
   const [panelOpen, setPanelOpen] = useState(false)
   const [soundMuted, setSoundMuted] = useState(true)
+  const [volume, setVol] = useState(0.7)
+  const [showVolume] = useState(true)
   const [displayTimeSaved, setDisplayTimeSaved] = useState(0)
   const prevTimeSavedRef = useRef(0)
   const [showCoinPlus, setShowCoinPlus] = useState(false)
@@ -86,9 +98,10 @@ export default function Navbar() {
     prevCompletedRef.current = completed.size
   }, [completed.size])
 
-  // Sync mute state on mount
+  // Sync mute/volume state on mount
   useEffect(() => {
     setSoundMuted(isMuted())
+    setVol(getVolume())
   }, [])
 
   const isPlaying = pathname.startsWith('/play') || pathname === '/world'
@@ -121,11 +134,17 @@ export default function Navbar() {
     if (!isMuted()) playSound('coin')
   }
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value)
+    setVolume(v)
+    setVol(v)
+  }
+
   return (
     <>
       {/* ARCADE NAVBAR - Mario HUD style */}
       {skin.navLayout === 'dark-hud' ? (
-        <nav className={cn("sticky top-0 z-50 border-b border-[#333]", skin.skinClass)} style={{ background: 'var(--world-dark)' }}>
+        <nav className={cn("sticky top-0 z-50 border-b", skin.skinClass)} style={{ background: 'var(--world-dark)', borderBottomColor: 'var(--nav-border, #333)' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <Link
               href="/"
@@ -137,6 +156,25 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
+              {/* Character sprite in navbar */}
+              {world && worldSprites[world] && (
+                <div
+                  className="w-7 h-7 overflow-hidden flex-shrink-0"
+                  style={{
+                    borderRadius: '50%',
+                    border: '2px solid var(--world-accent)',
+                    boxShadow: '0 0 6px rgba(255,215,0,0.3)',
+                  }}
+                >
+                  <img
+                    src={worldSprites[world]}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                </div>
+              )}
+
               {/* World indicator */}
               {getCurrentWorldLabel() && (
                 <span className="hidden sm:inline text-xs font-heading font-bold text-white tracking-wider">
@@ -180,26 +218,44 @@ export default function Navbar() {
                 </div>
               )}
 
-              {/* Sound toggle */}
-              <button
-                onClick={handleSoundToggle}
-                className="text-white/60 hover:text-white transition-colors"
-                title={soundMuted ? 'Unmute sounds' : 'Mute sounds'}
-              >
-                {soundMuted ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
-                  </svg>
-                ) : (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-                  </svg>
+              {/* Sound toggle + volume */}
+              <div className="relative flex items-center gap-1">
+                <button
+                  onClick={handleSoundToggle}
+                  className="text-white/60 hover:text-white transition-colors"
+                  title={soundMuted ? 'Unmute sounds' : 'Mute sounds'}
+                >
+                  {soundMuted ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                  )}
+                </button>
+                {showVolume && !soundMuted && (
+                  <div
+                    className="flex items-center gap-1 pl-1"
+                  >
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      value={volume}
+                      onChange={handleVolumeChange}
+                      className="w-16 h-1 accent-white/60 cursor-pointer"
+                      style={{ accentColor: 'currentColor' }}
+                    />
+                  </div>
                 )}
-              </button>
+              </div>
 
               {/* Map link when in demo */}
               {pathname.startsWith('/play/') && (
@@ -255,6 +311,24 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
+              {/* Character sprite in navbar */}
+              {world && worldSprites[world] && (
+                <div
+                  className="hidden sm:block w-7 h-7 overflow-hidden flex-shrink-0"
+                  style={{
+                    borderRadius: '50%',
+                    border: '2px solid var(--world-accent)',
+                  }}
+                >
+                  <img
+                    src={worldSprites[world]}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                </div>
+              )}
+
               {/* Breadcrumb context */}
               {type && (
                 <div className="hidden sm:flex items-center gap-2 text-xs font-heading">

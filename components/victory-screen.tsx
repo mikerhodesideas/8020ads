@@ -52,6 +52,7 @@ const LEVEL_LEARNINGS = [
 ]
 
 const AVATAR_CTA: Record<string, {
+  headline: string
   primaryLabel: string
   primaryHref?: string
   pitch: string
@@ -60,30 +61,43 @@ const AVATAR_CTA: Record<string, {
   showBossLetter?: boolean
 }> = {
   freelancer: {
+    headline: 'Turn Cowork into a service your clients pay for',
     primaryLabel: 'Join Ads to AI',
     primaryHref: 'https://ads2ai.com',
-    pitch: 'Offer Cowork setup as a service. Create skills for your clients and charge for the value you deliver.',
+    pitch: "Inside Ads to AI, you'll build skills that make you indispensable. Skills for audits, reporting, campaign builds, and more. Plus a brain system that runs your freelance business.",
+    secondaryLabel: 'Book a Strategy Call',
+    secondaryHref: 'https://cal.com/ideas/a2ai',
   },
   employee: {
+    headline: 'Show your boss what AI can do for the team',
     primaryLabel: 'Show Your Boss',
-    pitch: "Here's everything you need to make the case for bringing Cowork to your team.",
+    pitch: "You've seen what one person can do. Imagine your whole team. Ads to AI gives you the skills, the training path, and a letter to present to your manager.",
     secondaryLabel: 'Join Ads to AI',
     secondaryHref: 'https://ads2ai.com',
     showBossLetter: true,
   },
   agency: {
+    headline: 'Give every team member an AI co-pilot',
     primaryLabel: 'Set Up Your Team',
     primaryHref: 'https://ads2ai.com',
-    pitch: 'Deploy Cowork across your agency. Create skills that standardize your processes and scale your team\'s output.',
-    secondaryLabel: 'Join Ads to AI',
-    secondaryHref: 'https://ads2ai.com',
+    pitch: "You just played 9 demos. Your team could run these on real client data tomorrow. Ads to AI includes skills, a brain system, and a setup path for your entire agency.",
+    secondaryLabel: 'Book a Strategy Call',
+    secondaryHref: 'https://cal.com/ideas/a2ai',
   },
   business: {
+    headline: 'Your entire business, powered by AI',
     primaryLabel: 'Join Ads to AI',
     primaryHref: 'https://ads2ai.com',
-    pitch: 'The brain system runs your entire business: email, content, projects, contacts, and more. Cowork is just the beginning.',
+    pitch: "Email, content, meetings, data analysis, calendar, contacts. The brain system handles all of it. Not just marketing, everything.",
+    secondaryLabel: 'Book a Strategy Call',
+    secondaryHref: 'https://cal.com/ideas/a2ai',
   },
 }
+
+const CONNECTOR_ECOSYSTEM = [
+  'Gmail', 'Google Calendar', 'HubSpot', 'Asana',
+  'ClickUp', 'Slack', 'Excel', 'Outlook', 'Notion',
+]
 
 const BOSS_LETTER = `Hi [Boss Name],
 
@@ -374,6 +388,12 @@ export default function VictoryScreen() {
             className={cn(cardClass, 'p-6 victory-stats-entrance')}
             style={cardStyle}
           >
+            <h2
+              className="text-lg sm:text-xl font-heading font-bold text-center mb-3"
+              style={{ color: 'var(--world-accent)' }}
+            >
+              {AVATAR_CTA[type].headline}
+            </h2>
             <p
               className={cn(
                 'text-sm text-center mb-4 font-heading'
@@ -556,6 +576,42 @@ export default function VictoryScreen() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Connector Ecosystem */}
+        <div
+          className={cn(cardClass, 'p-6 text-center victory-stats-entrance')}
+          style={cardStyle}
+        >
+          <p className={headingClass}>
+            Cowork connects to everything you already use
+          </p>
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {CONNECTOR_ECOSYSTEM.map((name) => (
+              <span
+                key={name}
+                className={cn(
+                  'px-3 py-1.5 text-xs font-heading font-medium border-[2px]',
+                  isLight
+                    ? 'border-[var(--world-data-border)] rounded-[2px]'
+                    : 'rounded-[2px]'
+                )}
+                style={{
+                  color: 'var(--world-text)',
+                  borderColor: isDark ? 'var(--world-text-muted)' : undefined,
+                  background: isDark ? 'rgba(255,255,255,0.03)' : undefined,
+                }}
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+          <p
+            className="text-xs font-heading"
+            style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
+          >
+            Inside A2AI, you&apos;ll learn how to connect them all.
+          </p>
         </div>
 
         {/* Time Saved section */}

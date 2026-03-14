@@ -1,0 +1,82 @@
+[
+  {
+    "id": "em-001",
+    "from": { "name": "Sarah Mitchell", "email": "s.mitchell@datapulse.com" },
+    "subject": "Q2 budget reallocation - need to discuss before Thursday",
+    "date": "2026-03-13T16:10:00Z",
+    "snippet": "Ian, I want to revisit the Q2 channel mix before Thursday's exec meeting. LinkedIn is eating 30% of budget but CPL is 3x our target. I'm thinking we shift some of that to Google Ads Generic campaigns where we're seeing better MQL quality. Can you pull together a reallocation scenario by Wednesday EOD?",
+    "isRead": false
+  },
+  {
+    "id": "em-002",
+    "from": { "name": "Google Ads", "email": "googleads-noreply@google.com" },
+    "subject": "Competitor bidding alert - DataPulse brand terms",
+    "date": "2026-03-13T11:30:00Z",
+    "snippet": "A new advertiser is bidding on your brand terms in the DataPulse Analytics account (XXX-XXX-7291). Your impression share on brand campaigns dropped from 94% to 78% over the last 7 days. Review your brand bidding strategy to maintain visibility.",
+    "isRead": true
+  },
+  {
+    "id": "em-003",
+    "from": { "name": "Maya Chen", "email": "m.chen@datapulse.com" },
+    "subject": "New ad copy for Generic campaigns - need your approval",
+    "date": "2026-03-12T15:20:00Z",
+    "snippet": "Hey Ian, I've drafted three new RSA variants for the Generic campaigns targeting 'business analytics software' and 'data visualization tools'. Attached the mockups and the testing plan. Can you review and approve so I can push live before end of week?",
+    "isRead": false
+  },
+  {
+    "id": "em-004",
+    "from": { "name": "HR Benefits", "email": "benefits@datapulse.com" },
+    "subject": "Open enrollment closes March 21 - action required",
+    "date": "2026-03-12T09:00:00Z",
+    "snippet": "This is a reminder that benefits open enrollment for FY2026 closes Friday March 21 at 5pm CT. If you haven't reviewed your health, dental, vision, and 401(k) options, please log in to Workday to make your selections before the deadline.",
+    "isRead": true
+  },
+  {
+    "id": "em-005",
+    "from": { "name": "LinkedIn Campaign Manager", "email": "ads-noreply@linkedin.com" },
+    "subject": "Weekly performance summary - DataPulse Analytics",
+    "date": "2026-03-11T14:00:00Z",
+    "snippet": "Your LinkedIn campaigns generated 34 leads last week at a CPL of $287. Conversion rate from click to lead was 2.1%, below your 3.5% target. Top performing campaign: 'DataPulse for Enterprise' (12 leads, $198 CPL). Lowest: 'Analytics Demo Request' (3 leads, $512 CPL).",
+    "isRead": true
+  },
+  {
+    "id": "em-006",
+    "from": { "name": "Greg Holloway", "email": "g.holloway@datapulse.com" },
+    "subject": "MQL quality from paid channels - we need to talk",
+    "date": "2026-03-11T10:45:00Z",
+    "snippet": "Ian, my team is flagging that the MQLs coming through from paid channels the last 6 weeks aren't converting to SQLs at the rate we need. We're at 18% MQL-to-SQL vs our 30% target. Can we sit down this week and go through which campaigns are driving the junk leads? I need this sorted before Q2 pipeline review.",
+    "isRead": false
+  },
+  {
+    "id": "em-007",
+    "from": { "name": "Hannah Park", "email": "hannah@brightmedia.agency" },
+    "subject": "February Meta Ads report - DataPulse",
+    "date": "2026-03-10T13:00:00Z",
+    "snippet": "Hi Ian, attached is the February performance report for your Meta campaigns. Key highlights: CPL down 12% MoM to $134, retargeting campaign drove 28 demo requests (up from 19), and the new lookalike audience is outperforming interest-based targeting by 2.3x. Full breakdown in the deck.",
+    "isRead": false
+  },
+  {
+    "id": "em-008",
+    "from": { "name": "Slack", "email": "notifications@slack.com" },
+    "subject": "Your daily digest for DataPulse workspace",
+    "date": "2026-03-10T07:00:00Z",
+    "snippet": "#marketing: CMO shared the Q1 campaign retrospective deck. #paid-media: Maya posted the A/B test results from the new landing pages (Variant B won, +22% CVR). #general: Office trivia league standings updated, Marketing is in 3rd.",
+    "isRead": true
+  },
+  {
+    "id": "em-009",
+    "from": { "name": "SMX Advanced", "email": "registration@smxadvanced.com" },
+    "subject": "Early bird pricing ends March 28 - your manager approved",
+    "date": "2026-03-09T15:00:00Z",
+    "snippet": "SMX Advanced 2026 in Seattle (June 15-16) early bird pricing ends March 28. Your L&D approval is confirmed. Register now at $1,295 (regular price $1,795). Sessions include: AI-powered bidding strategies, cross-channel attribution, and advanced PMax tactics.",
+    "isRead": true
+  },
+  {
+    "id": "em-010",
+    "from": { "name": "Google Ads", "email": "googleads-noreply@google.com" },
+    "subject": "New recommendations available for 3 campaigns",
+    "date": "2026-03-09T06:00:00Z",
+    "snippet": "3 new optimization recommendations are available for the DataPulse Analytics account. Recommendations include: add responsive search ad variants (est. +8% clicks), adjust target CPA for Competitor campaigns (est. +12% conversions), and expand broad match keywords in Generic campaigns.",
+    "isRead": true
+  }
+]

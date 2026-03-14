@@ -1,873 +1,1231 @@
-type SoundName =
+// ============================================================
+// 8020skill Sound Engine - Complete Procedural Audio
+// ============================================================
+
+export type SoundName =
   // Mario / Arcade
   | 'coin' | 'powerUp' | 'oneUp' | 'pipe' | 'blockHit' | 'fanfare' | 'blip' | 'whoosh' | 'thud' | 'bonk' | 'chime' | 'select' | 'retry'
+  | 'arcade-level-clear' | 'arcade-star' | 'arcade-tick' | 'arcade-glossary' | 'arcade-prompt' | 'arcade-preview' | 'arcade-download' | 'arcade-speed'
   // Red Alert
   | 'ra-radar-ping' | 'ra-tech-researched' | 'ra-deploy' | 'ra-mission-accomplished' | 'ra-campaign-complete' | 'ra-alert-klaxon' | 'ra-command-blip' | 'ra-unit-ready' | 'ra-mission-failed' | 'ra-credits-collect'
+  | 'ra-hover' | 'ra-level-clear' | 'ra-badge' | 'ra-result-great' | 'ra-star' | 'ra-tick' | 'ra-glossary' | 'ra-prompt' | 'ra-preview' | 'ra-download' | 'ra-speed'
   // Clair Obscur
   | 'co-technique-learn' | 'co-expedition-log' | 'co-execute' | 'co-chapter-clear' | 'co-expedition-complete' | 'co-page-chime' | 'co-hover-note' | 'co-select-confirm' | 'co-missed-beat' | 'co-lumina-collect'
+  | 'co-locked' | 'co-badge' | 'co-result-great' | 'co-star' | 'co-tick' | 'co-glossary' | 'co-prompt' | 'co-preview' | 'co-download' | 'co-speed'
   // Tetris
   | 'tetris-piece-drop' | 'tetris-piece-rotate' | 'tetris-line-clear' | 'tetris-tetris-clear' | 'tetris-level-up' | 'tetris-high-score' | 'tetris-soft-drop' | 'tetris-hold-piece' | 'tetris-lock-delay' | 'tetris-points-collect'
+  | 'tetris-hover' | 'tetris-demo-complete' | 'tetris-badge-combo' | 'tetris-locked' | 'tetris-star' | 'tetris-tick' | 'tetris-glossary' | 'tetris-prompt' | 'tetris-preview' | 'tetris-download' | 'tetris-speed'
   // Zelda
   | 'zelda-item-get' | 'zelda-chest-open' | 'zelda-secret-discovered' | 'zelda-quest-accepted' | 'zelda-sword-slash' | 'zelda-dungeon-clear' | 'zelda-heart-collect' | 'zelda-fairy-chime' | 'zelda-rupee-collect' | 'zelda-door-locked'
+  | 'zelda-level-clear' | 'zelda-lock-rattle' | 'zelda-gem-collect' | 'zelda-treasure-reveal' | 'zelda-star' | 'zelda-tick' | 'zelda-glossary' | 'zelda-prompt' | 'zelda-preview' | 'zelda-download' | 'zelda-speed'
   // Elder Scrolls
   | 'es-quest-accept' | 'es-skill-unlock' | 'es-level-complete' | 'es-node-select' | 'es-victory' | 'es-ui-click'
+  | 'es-whisper' | 'es-spell-fizzle' | 'es-ward' | 'es-septim' | 'es-quest-stage' | 'es-skill-increase' | 'es-minor-discovery' | 'es-dragon-soul' | 'es-star' | 'es-tick' | 'es-glossary' | 'es-prompt' | 'es-preview' | 'es-download' | 'es-speed'
+  // Gallery
+  | 'gallery-click' | 'gallery-hover'
+
+// ---- Audio Engine ----
 
 let audioCtx: AudioContext | null = null
-let muted = true // muted by default
+let masterGainNode: GainNode | null = null
+let masterVolume = 0.7
+let muted = true
 
-// Init on first interaction
 function getCtx(): AudioContext {
-  if (!audioCtx) {
-    audioCtx = new AudioContext()
-  }
+  if (!audioCtx) audioCtx = new AudioContext()
   return audioCtx
 }
 
-// Load mute state from localStorage
+function getMaster(): GainNode {
+  const ctx = getCtx()
+  if (!masterGainNode) {
+    masterGainNode = ctx.createGain()
+    masterGainNode.gain.value = masterVolume
+    masterGainNode.connect(ctx.destination)
+  }
+  return masterGainNode
+}
+
 if (typeof window !== 'undefined') {
   const stored = localStorage.getItem('arcade-sound-muted')
   muted = stored === null ? true : stored === 'true'
+  const vol = localStorage.getItem('arcade-sound-volume')
+  if (vol !== null) masterVolume = parseFloat(vol)
 }
 
-export function isMuted(): boolean {
-  return muted
-}
+export function isMuted(): boolean { return muted }
 
 export function toggleMute(): void {
   muted = !muted
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('arcade-sound-muted', String(muted))
-  }
+  if (typeof window !== 'undefined') localStorage.setItem('arcade-sound-muted', String(muted))
+  if (muted) stopAmbient()
 }
 
-function playTone(freq: number, duration: number, type: OscillatorType = 'square', gainVal = 0.15, startTime = 0) {
+export function getVolume(): number { return masterVolume }
+
+export function setVolume(v: number): void {
+  masterVolume = Math.max(0, Math.min(1, v))
+  if (masterGainNode) masterGainNode.gain.value = masterVolume
+  if (typeof window !== 'undefined') localStorage.setItem('arcade-sound-volume', String(masterVolume))
+}
+
+// ---- Synthesis Helpers ----
+
+// pt: Play tone with gain envelope, routed through master
+function pt(freq: number, dur: number, type: OscillatorType = 'square', gain = 0.15, start = 0) {
   const ctx = getCtx()
   const osc = ctx.createOscillator()
-  const gain = ctx.createGain()
+  const g = ctx.createGain()
   osc.type = type
   osc.frequency.value = freq
-  gain.gain.setValueAtTime(gainVal, ctx.currentTime + startTime)
-  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + startTime + duration)
-  osc.connect(gain)
-  gain.connect(ctx.destination)
-  osc.start(ctx.currentTime + startTime)
-  osc.stop(ctx.currentTime + startTime + duration)
+  g.gain.setValueAtTime(gain, ctx.currentTime + start)
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur)
+  osc.connect(g)
+  g.connect(getMaster())
+  osc.start(ctx.currentTime + start)
+  osc.stop(ctx.currentTime + start + dur + 0.01)
 }
 
+// pf: Play filtered tone (lowpass)
+function pf(freq: number, dur: number, type: OscillatorType = 'sine', gain = 0.1, start = 0, fc = 2000, q = 1) {
+  const ctx = getCtx()
+  const osc = ctx.createOscillator()
+  const g = ctx.createGain()
+  const filter = ctx.createBiquadFilter()
+  osc.type = type
+  osc.frequency.value = freq
+  filter.type = 'lowpass'
+  filter.frequency.value = fc
+  filter.Q.value = q
+  g.gain.setValueAtTime(gain, ctx.currentTime + start)
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur)
+  osc.connect(filter)
+  filter.connect(g)
+  g.connect(getMaster())
+  osc.start(ctx.currentTime + start)
+  osc.stop(ctx.currentTime + start + dur + 0.01)
+}
+
+// sw: Frequency sweep
+function sw(f1: number, f2: number, dur: number, type: OscillatorType = 'square', gain = 0.15, start = 0) {
+  const ctx = getCtx()
+  const osc = ctx.createOscillator()
+  const g = ctx.createGain()
+  osc.type = type
+  osc.frequency.setValueAtTime(f1, ctx.currentTime + start)
+  osc.frequency.exponentialRampToValueAtTime(f2, ctx.currentTime + start + dur)
+  g.gain.setValueAtTime(gain, ctx.currentTime + start)
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur)
+  osc.connect(g)
+  g.connect(getMaster())
+  osc.start(ctx.currentTime + start)
+  osc.stop(ctx.currentTime + start + dur + 0.01)
+}
+
+// dc: Detuned chord (multiple slightly detuned oscillators)
+function dc(freqs: number[], dur: number, type: OscillatorType = 'sine', gain = 0.04, start = 0, attack = 0) {
+  const ctx = getCtx()
+  const t = ctx.currentTime
+  freqs.forEach((freq, i) => {
+    const osc = ctx.createOscillator()
+    const g = ctx.createGain()
+    osc.type = type
+    osc.frequency.value = freq * (1 + (i * 0.003 - freqs.length * 0.0015))
+    if (attack > 0) {
+      g.gain.setValueAtTime(0, t + start)
+      g.gain.linearRampToValueAtTime(gain, t + start + attack)
+      g.gain.setValueAtTime(gain, t + start + dur * 0.7)
+    } else {
+      g.gain.setValueAtTime(gain, t + start)
+    }
+    g.gain.exponentialRampToValueAtTime(0.001, t + start + dur)
+    osc.connect(g)
+    g.connect(getMaster())
+    osc.start(t + start)
+    osc.stop(t + start + dur + 0.01)
+  })
+}
+
+// ---- Sound Definitions ----
+
 const sounds: Record<SoundName, () => void> = {
-  // Short rising two-tone (E5-B5)
+
+  // =============== ARCADE / MARIO ===============
+
   coin: () => {
-    playTone(659.25, 0.08, 'square', 0.12) // E5
-    playTone(987.77, 0.15, 'square', 0.12, 0.08) // B5
+    pt(659.25, 0.08, 'square', 0.1)
+    pt(987.77, 0.15, 'square', 0.1, 0.08)
+    pt(1318.5, 0.1, 'sine', 0.03, 0.08) // shimmer overtone
+    pt(329.63, 0.04, 'square', 0.04)     // sub punch
   },
 
-  // Rising arpeggio (C4-E4-G4-C5)
   powerUp: () => {
-    playTone(261.63, 0.1, 'square', 0.1) // C4
-    playTone(329.63, 0.1, 'square', 0.1, 0.1) // E4
-    playTone(392.0, 0.1, 'square', 0.1, 0.2) // G4
-    playTone(523.25, 0.2, 'square', 0.12, 0.3) // C5
+    const notes = [261.63, 329.63, 392.0, 523.25]
+    notes.forEach((f, i) => {
+      pt(f, 0.12, 'square', 0.09, i * 0.1)
+      pt(f * 2, 0.08, 'sine', 0.02, i * 0.1)
+    })
+    pt(130.81, 0.3, 'square', 0.03)
   },
 
-  // Classic 1-UP melody
   oneUp: () => {
-    playTone(330, 0.08, 'square', 0.1) // E4
-    playTone(392, 0.08, 'square', 0.1, 0.08) // G4
-    playTone(659, 0.08, 'square', 0.1, 0.16) // E5
-    playTone(523, 0.08, 'square', 0.1, 0.24) // C5
-    playTone(587, 0.08, 'square', 0.1, 0.32) // D5
-    playTone(784, 0.15, 'square', 0.12, 0.4) // G5
-  },
-
-  // Low descending tone for page transitions
-  pipe: () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'square'
-    osc.frequency.setValueAtTime(200, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.2)
-    gain.gain.setValueAtTime(0.1, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.25)
-  },
-
-  // Short percussive pop
-  blockHit: () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'square'
-    osc.frequency.setValueAtTime(400, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.06)
-    gain.gain.setValueAtTime(0.15, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.08)
-  },
-
-  // 4-bar celebration melody
-  fanfare: () => {
-    const notes = [
-      [523, 0.12], // C5
-      [523, 0.12], // C5
-      [523, 0.12], // C5
-      [523, 0.2],  // C5 (held)
-      [415, 0.15], // Ab4
-      [466, 0.15], // Bb4
-      [523, 0.12], // C5
-      [466, 0.08], // Bb4
-      [523, 0.3],  // C5 (held)
-    ]
-    let time = 0
-    for (const [freq, dur] of notes) {
-      playTone(freq as number, dur as number, 'square', 0.1, time)
-      time += dur as number
+    const notes: [number, number][] = [[330, 0.08], [392, 0.08], [659, 0.08], [523, 0.08], [587, 0.08], [784, 0.15]]
+    let t = 0
+    for (const [f, d] of notes) {
+      pt(f, d, 'square', 0.09, t)
+      pt(f * 2, d * 0.6, 'sine', 0.02, t)
+      t += d
     }
   },
 
-  // Tiny high chirp for button hover
+  pipe: () => {
+    sw(200, 80, 0.2, 'square', 0.1)
+    sw(400, 120, 0.15, 'square', 0.03)     // harmonic layer
+    pt(60, 0.12, 'sine', 0.05)              // sub rumble
+  },
+
+  blockHit: () => {
+    sw(400, 200, 0.06, 'square', 0.13)
+    pt(800, 0.03, 'square', 0.06)           // crack overtone
+    pt(100, 0.04, 'sine', 0.05)             // thump
+  },
+
+  fanfare: () => {
+    const melody: [number, number][] = [
+      [523, 0.12], [523, 0.12], [523, 0.12], [523, 0.2],
+      [415, 0.15], [466, 0.15], [523, 0.12], [466, 0.08], [523, 0.3],
+    ]
+    let t = 0
+    for (const [f, d] of melody) {
+      pt(f, d, 'square', 0.09, t)
+      pt(f * 0.5, d, 'square', 0.03, t)   // bass harmony
+      t += d
+    }
+  },
+
   blip: () => {
-    playTone(1200, 0.03, 'sine', 0.06)
+    pt(1200, 0.03, 'square', 0.05)
+    pt(2400, 0.02, 'sine', 0.015)
   },
 
-  // Quick sweep high to low for phase transitions
   whoosh: () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'sawtooth'
-    osc.frequency.setValueAtTime(1200, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.15)
-    gain.gain.setValueAtTime(0.06, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.15)
+    sw(1200, 200, 0.15, 'sawtooth', 0.06)
+    sw(600, 100, 0.12, 'square', 0.02)
   },
 
-  // Low sine wave hit for result appearing
   thud: () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'sine'
-    osc.frequency.setValueAtTime(80, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.08)
-    gain.gain.setValueAtTime(0.12, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.08)
+    sw(80, 40, 0.08, 'sine', 0.12)
+    pt(160, 0.04, 'square', 0.04)
   },
 
-  // Dull low square wave for locked node click
   bonk: () => {
-    playTone(100, 0.1, 'square', 0.08)
+    pt(100, 0.1, 'square', 0.08)
+    sw(200, 80, 0.06, 'square', 0.04)
   },
 
-  // Two gentle sine tones ascending for page load
   chime: () => {
-    playTone(523.25, 0.1, 'sine', 0.08) // C5
-    playTone(659.25, 0.15, 'sine', 0.08, 0.1) // E5
+    pt(523.25, 0.12, 'sine', 0.07)
+    pt(659.25, 0.18, 'sine', 0.07, 0.1)
+    pt(1046.5, 0.1, 'sine', 0.02, 0.1)   // octave sparkle
   },
 
-  // Quick rising chirp for choice/option selected
   select: () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'sine'
-    osc.frequency.setValueAtTime(800, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.06)
-    gain.gain.setValueAtTime(0.08, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.06)
+    sw(800, 1400, 0.06, 'square', 0.07)
+    pt(1400, 0.04, 'sine', 0.03, 0.03)
   },
 
-  // Three descending tones for retry prompt
   retry: () => {
-    playTone(523.25, 0.08, 'sine', 0.08) // C5
-    playTone(440, 0.08, 'sine', 0.08, 0.1) // A4
-    playTone(349.23, 0.12, 'sine', 0.08, 0.2) // F4
+    pt(523.25, 0.08, 'square', 0.07)
+    pt(440, 0.08, 'square', 0.07, 0.1)
+    pt(349.23, 0.12, 'square', 0.07, 0.2)
+    pt(174.61, 0.08, 'sine', 0.03, 0.2) // sad sub
   },
 
-  // ============ RED ALERT SOUNDS ============
+  'arcade-level-clear': () => {
+    const notes = [523.25, 659.25, 783.99, 1046.5]
+    notes.forEach((f, i) => {
+      pt(f, 0.1, 'square', 0.08, i * 0.08)
+      pt(f * 0.5, 0.08, 'square', 0.03, i * 0.08)
+    })
+    pt(1046.5, 0.3, 'square', 0.06, 0.35)
+    pt(523.25, 0.25, 'square', 0.03, 0.35)
+  },
 
-  // Radar ping - rising sine sweep 600->1200Hz
+  'arcade-star': () => {
+    pt(880, 0.12, 'square', 0.07)
+    pt(1760, 0.08, 'sine', 0.02)
+  },
+
+  'arcade-tick': () => {
+    pt(800, 0.015, 'square', 0.05)
+  },
+
+  'arcade-glossary': () => {
+    sw(600, 900, 0.04, 'square', 0.05)
+    sw(900, 600, 0.04, 'square', 0.04, 0.04)
+  },
+
+  'arcade-prompt': () => {
+    pt(660, 0.04, 'square', 0.06)
+    pt(880, 0.04, 'square', 0.06, 0.04)
+    pt(1100, 0.06, 'square', 0.05, 0.08)
+  },
+
+  'arcade-preview': () => {
+    const notes = [262, 330, 392, 523, 660]
+    notes.forEach((f, i) => pt(f, 0.06, 'square', 0.06, i * 0.06))
+  },
+
+  'arcade-download': () => {
+    sw(400, 1200, 0.1, 'square', 0.08)
+    pt(1200, 0.15, 'square', 0.06, 0.08)
+    pt(600, 0.08, 'sine', 0.03, 0.08)
+  },
+
+  'arcade-speed': () => {
+    const notes = [523, 659, 784, 1047, 784, 659, 523]
+    notes.forEach((f, i) => pt(f, 0.025, 'square', 0.06, i * 0.025))
+  },
+
+  // =============== RED ALERT ===============
+
   'ra-radar-ping': () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'sine'
-    osc.frequency.setValueAtTime(600, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1)
-    gain.gain.setValueAtTime(0.12, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.11)
+    sw(600, 1200, 0.12, 'sine', 0.1)
+    pf(1200, 0.08, 'sine', 0.04, 0.02, 3000, 5)
+    pt(300, 0.05, 'sine', 0.03)
   },
 
-  // Tech researched - ascending two-tone A4->E5 (square)
   'ra-tech-researched': () => {
-    playTone(440, 0.1, 'square', 0.08)
-    playTone(659.25, 0.1, 'square', 0.08, 0.1)
+    pt(440, 0.12, 'sawtooth', 0.07)
+    pt(659.25, 0.12, 'sawtooth', 0.07, 0.1)
+    pf(880, 0.08, 'sine', 0.03, 0.1, 2000)
+    pt(220, 0.1, 'square', 0.03, 0.1)
   },
 
-  // Deploy - quick descending sawtooth burst 400->200Hz
   'ra-deploy': () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'sawtooth'
-    osc.frequency.setValueAtTime(400, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.08)
-    gain.gain.setValueAtTime(0.1, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.09)
+    sw(400, 200, 0.08, 'sawtooth', 0.09)
+    sw(800, 300, 0.06, 'square', 0.03)
+    pt(100, 0.05, 'sine', 0.04)
   },
 
-  // Mission accomplished - C4-E4-G4 ascending + held C5
   'ra-mission-accomplished': () => {
-    playTone(261.63, 0.15, 'square', 0.08)
-    playTone(329.63, 0.15, 'square', 0.08, 0.15)
-    playTone(392.00, 0.15, 'square', 0.08, 0.30)
-    playTone(523.25, 0.3, 'square', 0.1, 0.45)
+    pt(261.63, 0.15, 'sawtooth', 0.07)
+    pt(329.63, 0.15, 'sawtooth', 0.07, 0.15)
+    pt(392.00, 0.15, 'sawtooth', 0.07, 0.30)
+    pt(523.25, 0.3, 'sawtooth', 0.09, 0.45)
+    pf(523.25, 0.2, 'sine', 0.03, 0.45, 1500)
+    pt(130.81, 0.3, 'square', 0.03, 0.45)
   },
 
-  // Campaign complete - military bugle fanfare
   'ra-campaign-complete': () => {
     const notes: [number, number, number][] = [
       [261.63, 0, 0.1], [261.63, 0.12, 0.1], [261.63, 0.24, 0.1],
       [392.00, 0.36, 0.15], [329.63, 0.53, 0.1], [392.00, 0.65, 0.35],
     ]
     for (const [freq, start, dur] of notes) {
-      playTone(freq, dur, 'square', 0.09, start)
+      pt(freq, dur, 'sawtooth', 0.08, start)
+      pt(freq * 0.5, dur, 'square', 0.02, start)
     }
-    playTone(130.81, 0.64, 'sawtooth', 0.04, 0.36)
+    pf(130.81, 0.64, 'sawtooth', 0.04, 0.36, 600)
   },
 
-  // Alert klaxon - two alternating tones played twice
   'ra-alert-klaxon': () => {
-    playTone(440, 0.06, 'sawtooth', 0.1)
-    playTone(520, 0.06, 'sawtooth', 0.1, 0.06)
-    playTone(440, 0.06, 'sawtooth', 0.1, 0.12)
-    playTone(520, 0.06, 'sawtooth', 0.1, 0.18)
-  },
-
-  // Command blip - tiny square wave blip
-  'ra-command-blip': () => {
-    playTone(800, 0.02, 'square', 0.08)
-  },
-
-  // Unit ready - ascending chirp 300->600Hz
-  'ra-unit-ready': () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'square'
-    osc.frequency.setValueAtTime(300, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.05)
-    gain.gain.setValueAtTime(0.1, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.06)
-  },
-
-  // Mission failed - descending two notes G4->C4
-  'ra-mission-failed': () => {
-    playTone(392.00, 0.15, 'sawtooth', 0.1)
-    playTone(261.63, 0.15, 'sawtooth', 0.1, 0.15)
-  },
-
-  // Credits collect - quick double-blip
-  'ra-credits-collect': () => {
-    playTone(1000, 0.03, 'square', 0.09)
-    playTone(1200, 0.03, 'square', 0.09, 0.03)
-  },
-
-  // ============ CLAIR OBSCUR SOUNDS ============
-
-  // Technique learn - ascending piano arpeggio C4-E4-G4-C5
-  'co-technique-learn': () => {
-    playTone(261.63, 0.35, 'sine', 0.08)
-    playTone(329.63, 0.35, 'sine', 0.09, 0.12)
-    playTone(392.00, 0.35, 'sine', 0.10, 0.24)
-    playTone(523.25, 0.45, 'sine', 0.11, 0.36)
-  },
-
-  // Expedition log - two gentle descending piano notes G4-E4
-  'co-expedition-log': () => {
-    playTone(392.00, 0.18, 'sine', 0.06)
-    playTone(329.63, 0.22, 'sine', 0.05, 0.10)
-  },
-
-  // Execute - quick decisive piano chord (C4+E4+G4 simultaneous)
-  'co-execute': () => {
-    playTone(261.63, 0.15, 'sine', 0.07)
-    playTone(329.63, 0.15, 'sine', 0.07)
-    playTone(392.00, 0.15, 'sine', 0.07)
-  },
-
-  // Chapter clear - string pad swell with piano resolution
-  'co-chapter-clear': () => {
-    const ctx = getCtx()
-    // Triangle wave string pads with slow attack
-    const pads: [number, number][] = [[261.63, 0], [329.63, 0.05], [392.00, 0.10]]
-    for (const [freq, start] of pads) {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'triangle'
-      osc.frequency.value = freq
-      gain.gain.setValueAtTime(0, ctx.currentTime + start)
-      gain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + start + 0.24)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + 0.8)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(ctx.currentTime + start)
-      osc.stop(ctx.currentTime + start + 0.81)
-    }
-    // Piano resolution at the peak
-    playTone(523.25, 0.4, 'sine', 0.06, 0.35)
-  },
-
-  // Expedition complete - full arpeggio with sustained string harmony
-  'co-expedition-complete': () => {
-    const ctx = getCtx()
-    // String pad foundation
-    const stringPads: [number, number][] = [[261.63, 0], [392.00, 0]]
-    for (const [freq] of stringPads) {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'triangle'
-      osc.frequency.value = freq
-      gain.gain.setValueAtTime(0, ctx.currentTime)
-      gain.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 0.45)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(ctx.currentTime)
-      osc.stop(ctx.currentTime + 1.51)
-    }
-    // Piano arpeggio over the top
-    playTone(261.63, 0.5, 'sine', 0.08, 0.1)
-    playTone(329.63, 0.5, 'sine', 0.09, 0.3)
-    playTone(392.00, 0.5, 'sine', 0.10, 0.5)
-    playTone(523.25, 0.8, 'sine', 0.12, 0.7)
-  },
-
-  // Page chime - single clear bell tone C6
-  'co-page-chime': () => {
-    playTone(1046.50, 0.08, 'sine', 0.04)
-  },
-
-  // Hover note - tiny grace note G5
-  'co-hover-note': () => {
-    playTone(783.99, 0.03, 'sine', 0.02)
-  },
-
-  // Select confirm - two quick ascending notes E5-G5
-  'co-select-confirm': () => {
-    playTone(659.25, 0.04, 'sine', 0.05)
-    playTone(783.99, 0.06, 'sine', 0.06, 0.04)
-  },
-
-  // Missed beat - descending minor third E4-C4
-  'co-missed-beat': () => {
-    playTone(329.63, 0.12, 'sine', 0.06)
-    playTone(261.63, 0.15, 'sine', 0.05, 0.08)
-  },
-
-  // Lumina collect - gentle harp glissando C5-E5-G5-C6
-  'co-lumina-collect': () => {
-    playTone(523.25, 0.06, 'sine', 0.04)
-    playTone(659.25, 0.06, 'sine', 0.04, 0.03)
-    playTone(783.99, 0.06, 'sine', 0.05, 0.06)
-    playTone(1046.50, 0.10, 'sine', 0.05, 0.09)
-  },
-
-  // ============ TETRIS SOUNDS ============
-
-  // Piece drop - quick thud 200->80Hz
-  'tetris-piece-drop': () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'square'
-    osc.frequency.setValueAtTime(200, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.05)
-    gain.gain.setValueAtTime(0.1, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.06)
-  },
-
-  // Piece rotate - tiny click at 1000Hz
-  'tetris-piece-rotate': () => {
-    playTone(1000, 0.02, 'square', 0.06)
-  },
-
-  // Line clear - satisfying sweep 1200->400Hz with harmonic
-  'tetris-line-clear': () => {
-    const ctx = getCtx()
-    // Main sweep
-    const osc1 = ctx.createOscillator()
-    const gain1 = ctx.createGain()
-    osc1.type = 'square'
-    osc1.frequency.setValueAtTime(1200, ctx.currentTime)
-    osc1.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.15)
-    gain1.gain.setValueAtTime(0.1, ctx.currentTime)
-    gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15)
-    osc1.connect(gain1)
-    gain1.connect(ctx.destination)
-    osc1.start(ctx.currentTime)
-    osc1.stop(ctx.currentTime + 0.16)
-    // Second harmonic
-    const osc2 = ctx.createOscillator()
-    const gain2 = ctx.createGain()
-    osc2.type = 'square'
-    osc2.frequency.setValueAtTime(2400, ctx.currentTime)
-    osc2.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.15)
-    gain2.gain.setValueAtTime(0.04, ctx.currentTime)
-    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15)
-    osc2.connect(gain2)
-    gain2.connect(ctx.destination)
-    osc2.start(ctx.currentTime)
-    osc2.stop(ctx.currentTime + 0.16)
-  },
-
-  // Tetris clear - four-line clear special with ascending fanfare
-  'tetris-tetris-clear': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Four rapid line clear sweeps
     for (let i = 0; i < 4; i++) {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'square'
-      osc.frequency.setValueAtTime(1200, t + i * 0.05)
-      osc.frequency.exponentialRampToValueAtTime(400, t + i * 0.05 + 0.12)
-      gain.gain.setValueAtTime(0.08, t + i * 0.05)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.05 + 0.12)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t + i * 0.05)
-      osc.stop(t + i * 0.05 + 0.13)
+      const f = i % 2 === 0 ? 440 : 520
+      pt(f, 0.06, 'sawtooth', 0.09, i * 0.06)
+      pt(f * 0.5, 0.05, 'square', 0.03, i * 0.06)
     }
-    // Ascending fanfare C5-E5-G5-C6
-    const fanfare = [523.25, 659.25, 783.99, 1046.50]
-    fanfare.forEach((freq, i) => {
-      playTone(freq, 0.08, 'square', 0.09, 0.25 + i * 0.08)
+  },
+
+  'ra-command-blip': () => {
+    pt(800, 0.025, 'square', 0.07)
+    pt(1600, 0.015, 'sine', 0.02)
+  },
+
+  'ra-unit-ready': () => {
+    sw(300, 600, 0.06, 'sawtooth', 0.08)
+    pt(600, 0.04, 'square', 0.03, 0.03)
+  },
+
+  'ra-mission-failed': () => {
+    pt(392, 0.15, 'sawtooth', 0.09)
+    pt(261.63, 0.2, 'sawtooth', 0.09, 0.15)
+    pt(130.81, 0.1, 'square', 0.04, 0.15)
+  },
+
+  'ra-credits-collect': () => {
+    pt(1000, 0.04, 'square', 0.08)
+    pt(1200, 0.04, 'square', 0.08, 0.03)
+    pt(2000, 0.03, 'sine', 0.02, 0.03)
+  },
+
+  'ra-hover': () => {
+    pt(900, 0.02, 'sawtooth', 0.04)
+    pt(1800, 0.01, 'sine', 0.01)
+  },
+
+  'ra-level-clear': () => {
+    const notes = [392, 440, 523, 659, 784]
+    notes.forEach((f, i) => {
+      pt(f, 0.12, 'sawtooth', 0.06, i * 0.1)
+      pt(f * 0.5, 0.1, 'square', 0.02, i * 0.1)
+    })
+    pt(784, 0.4, 'sawtooth', 0.05, 0.5)
+  },
+
+  'ra-badge': () => {
+    pt(440, 0.1, 'sawtooth', 0.06)
+    pt(554, 0.1, 'sawtooth', 0.06, 0.1)
+    pt(659, 0.2, 'sawtooth', 0.08, 0.2)
+    pf(659, 0.15, 'sine', 0.03, 0.2, 2000)
+  },
+
+  'ra-result-great': () => {
+    pt(523.25, 0.08, 'sawtooth', 0.07)
+    pt(659.25, 0.08, 'sawtooth', 0.07, 0.08)
+    pt(783.99, 0.15, 'sawtooth', 0.08, 0.16)
+    pt(391.99, 0.1, 'square', 0.03, 0.16)
+  },
+
+  'ra-star': () => {
+    sw(500, 800, 0.08, 'sawtooth', 0.06)
+    pt(1600, 0.05, 'sine', 0.02, 0.03)
+  },
+
+  'ra-tick': () => {
+    pt(200, 0.02, 'sawtooth', 0.04)
+    pt(400, 0.01, 'square', 0.02)
+  },
+
+  'ra-glossary': () => {
+    sw(400, 700, 0.05, 'sawtooth', 0.04)
+    pt(700, 0.03, 'square', 0.02, 0.03)
+  },
+
+  'ra-prompt': () => {
+    pt(500, 0.03, 'sawtooth', 0.05)
+    pt(700, 0.05, 'sawtooth', 0.05, 0.03)
+  },
+
+  'ra-preview': () => {
+    sw(200, 400, 0.2, 'sawtooth', 0.04)
+    pt(400, 0.3, 'square', 0.03, 0.1)
+    pf(800, 0.15, 'sine', 0.02, 0.15, 1200)
+  },
+
+  'ra-download': () => {
+    sw(1200, 400, 0.15, 'sawtooth', 0.06)
+    sw(600, 200, 0.12, 'square', 0.03)
+    pt(400, 0.1, 'sawtooth', 0.04, 0.1)
+  },
+
+  'ra-speed': () => {
+    sw(300, 900, 0.08, 'sawtooth', 0.06)
+    sw(600, 1800, 0.06, 'sine', 0.02)
+  },
+
+  // =============== CLAIR OBSCUR ===============
+
+  'co-technique-learn': () => {
+    dc([261.63, 329.63, 392.00, 523.25], 0.7, 'sine', 0.06, 0, 0.15)
+    pf(523.25, 0.35, 'triangle', 0.04, 0.35, 1500)
+    pt(1046.5, 0.2, 'sine', 0.015, 0.4)
+  },
+
+  'co-expedition-log': () => {
+    pf(392, 0.2, 'sine', 0.06, 0, 1200)
+    pf(329.63, 0.25, 'sine', 0.05, 0.1, 1000)
+    pt(784, 0.08, 'sine', 0.015, 0.1)
+  },
+
+  'co-execute': () => {
+    dc([261.63, 329.63, 392.00], 0.18, 'sine', 0.06)
+    pt(523.25, 0.1, 'triangle', 0.03, 0.05)
+  },
+
+  'co-chapter-clear': () => {
+    dc([261.63, 329.63, 392.00], 0.8, 'triangle', 0.04, 0, 0.2)
+    pf(523.25, 0.4, 'sine', 0.05, 0.35, 1500)
+    pt(1046.5, 0.25, 'sine', 0.02, 0.5)
+  },
+
+  'co-expedition-complete': () => {
+    dc([261.63, 392.00], 1.5, 'triangle', 0.035, 0, 0.4)
+    pf(261.63, 0.5, 'sine', 0.06, 0.1, 1200)
+    pf(329.63, 0.5, 'sine', 0.07, 0.3, 1200)
+    pf(392.00, 0.5, 'sine', 0.08, 0.5, 1200)
+    pf(523.25, 0.8, 'sine', 0.09, 0.7, 1500)
+    pt(1046.5, 0.4, 'sine', 0.02, 0.9)
+  },
+
+  'co-page-chime': () => {
+    pt(1046.50, 0.1, 'sine', 0.04)
+    pt(2093, 0.06, 'sine', 0.01)
+  },
+
+  'co-hover-note': () => {
+    pt(783.99, 0.035, 'sine', 0.02)
+  },
+
+  'co-select-confirm': () => {
+    pf(659.25, 0.05, 'sine', 0.05, 0, 2000)
+    pf(783.99, 0.07, 'sine', 0.06, 0.04, 2000)
+  },
+
+  'co-missed-beat': () => {
+    pf(329.63, 0.14, 'sine', 0.05, 0, 800)
+    pf(261.63, 0.18, 'sine', 0.04, 0.08, 600)
+  },
+
+  'co-lumina-collect': () => {
+    const freqs = [523.25, 659.25, 783.99, 1046.50]
+    freqs.forEach((f, i) => {
+      pt(f, 0.08, 'sine', 0.04, i * 0.03)
+      pt(f * 2, 0.05, 'sine', 0.01, i * 0.03)
     })
   },
 
-  // Level up - ascending C major scale
+  'co-locked': () => {
+    pf(220, 0.15, 'triangle', 0.04, 0, 400)
+    pf(196, 0.12, 'sine', 0.03, 0.05, 300)
+  },
+
+  'co-badge': () => {
+    dc([392, 493.88, 587.33], 0.5, 'sine', 0.05, 0, 0.1)
+    pf(783.99, 0.3, 'sine', 0.04, 0.2, 2000)
+    pt(1567.98, 0.15, 'sine', 0.015, 0.3)
+  },
+
+  'co-result-great': () => {
+    dc([523.25, 659.25, 783.99], 0.4, 'sine', 0.05, 0, 0.08)
+    pf(1046.5, 0.25, 'sine', 0.04, 0.15, 2500)
+  },
+
+  'co-star': () => {
+    pf(880, 0.15, 'sine', 0.04, 0, 2000)
+    pt(1760, 0.08, 'sine', 0.015, 0.02)
+  },
+
+  'co-tick': () => {
+    pt(660, 0.02, 'sine', 0.025)
+  },
+
+  'co-glossary': () => {
+    pf(440, 0.06, 'sine', 0.03, 0, 1000)
+    pf(523, 0.04, 'sine', 0.02, 0.04, 1200)
+  },
+
+  'co-prompt': () => {
+    pf(523.25, 0.06, 'triangle', 0.04, 0, 1500)
+    pf(659.25, 0.08, 'sine', 0.04, 0.05, 1500)
+  },
+
+  'co-preview': () => {
+    dc([261.63, 329.63, 392], 0.6, 'sine', 0.03, 0, 0.3)
+    pt(523.25, 0.2, 'triangle', 0.02, 0.3)
+  },
+
+  'co-download': () => {
+    const freqs = [392, 523.25, 659.25, 783.99]
+    freqs.forEach((f, i) => pf(f, 0.12, 'sine', 0.04, i * 0.06, 1500))
+    pt(1046.5, 0.2, 'sine', 0.03, 0.3)
+  },
+
+  'co-speed': () => {
+    const freqs = [523, 659, 784, 1047]
+    freqs.forEach((f, i) => pt(f, 0.03, 'sine', 0.03, i * 0.02))
+  },
+
+  // =============== TETRIS ===============
+
+  'tetris-piece-drop': () => {
+    sw(200, 80, 0.05, 'square', 0.09)
+    pt(400, 0.03, 'square', 0.04)
+    pt(60, 0.04, 'sine', 0.05)
+  },
+
+  'tetris-piece-rotate': () => {
+    pt(1000, 0.025, 'square', 0.06)
+    pt(2000, 0.015, 'square', 0.02)
+  },
+
+  'tetris-line-clear': () => {
+    sw(1200, 400, 0.15, 'square', 0.09)
+    sw(2400, 800, 0.15, 'square', 0.03)
+    pf(200, 0.1, 'square', 0.04, 0, 800)
+  },
+
+  'tetris-tetris-clear': () => {
+    for (let i = 0; i < 4; i++) {
+      sw(1200, 400, 0.12, 'square', 0.07, i * 0.05)
+      pt(2400, 0.08, 'square', 0.02, i * 0.05)
+    }
+    const fanfare = [523.25, 659.25, 783.99, 1046.50]
+    fanfare.forEach((f, i) => {
+      pt(f, 0.1, 'square', 0.07, 0.25 + i * 0.08)
+      pt(f * 0.5, 0.08, 'square', 0.02, 0.25 + i * 0.08)
+    })
+  },
+
   'tetris-level-up': () => {
     const scale = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
-    scale.forEach((freq, i) => {
-      playTone(freq, 0.05, 'square', 0.07, i * 0.05)
+    scale.forEach((f, i) => {
+      pt(f, 0.06, 'square', 0.06, i * 0.05)
+      pt(f * 2, 0.04, 'sine', 0.015, i * 0.05)
     })
   },
 
-  // High score - fast arpeggio + held chord
   'tetris-high-score': () => {
     const arpeggio = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50]
-    arpeggio.forEach((freq, i) => {
-      playTone(freq, 0.04, 'square', 0.07, i * 0.04)
-    })
-    // Held chord
-    playTone(523.25, 0.4, 'square', 0.06, 0.30)
-    playTone(659.25, 0.4, 'square', 0.05, 0.30)
-    playTone(783.99, 0.4, 'square', 0.05, 0.30)
+    arpeggio.forEach((f, i) => pt(f, 0.05, 'square', 0.06, i * 0.04))
+    dc([523.25, 659.25, 783.99], 0.4, 'square', 0.04, 0.30)
+    pt(1046.5, 0.3, 'square', 0.03, 0.30)
   },
 
-  // Soft drop - quick descending blip 600->400Hz
   'tetris-soft-drop': () => {
-    const ctx = getCtx()
-    const osc = ctx.createOscillator()
-    const gain = ctx.createGain()
-    osc.type = 'square'
-    osc.frequency.setValueAtTime(600, ctx.currentTime)
-    osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.03)
-    gain.gain.setValueAtTime(0.07, ctx.currentTime)
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03)
-    osc.connect(gain)
-    gain.connect(ctx.destination)
-    osc.start(ctx.currentTime)
-    osc.stop(ctx.currentTime + 0.04)
+    sw(600, 400, 0.03, 'square', 0.06)
+    pt(800, 0.02, 'square', 0.02)
   },
 
-  // Hold piece - two alternating tones
   'tetris-hold-piece': () => {
-    playTone(800, 0.03, 'square', 0.07)
-    playTone(1000, 0.03, 'square', 0.07, 0.03)
+    pt(800, 0.035, 'square', 0.06)
+    pt(1000, 0.035, 'square', 0.06, 0.03)
   },
 
-  // Lock delay - low warning hum
   'tetris-lock-delay': () => {
-    playTone(150, 0.08, 'square', 0.06)
+    pf(150, 0.1, 'square', 0.06, 0, 400)
+    pt(300, 0.05, 'square', 0.02)
   },
 
-  // Points collect - ascending two-note 880->1200Hz
   'tetris-points-collect': () => {
-    playTone(880, 0.03, 'square', 0.07)
-    playTone(1200, 0.03, 'square', 0.07, 0.03)
+    pt(880, 0.035, 'square', 0.06)
+    pt(1200, 0.035, 'square', 0.06, 0.03)
+    pt(1760, 0.02, 'sine', 0.02, 0.03)
   },
 
-  // ============ ZELDA SOUNDS ============
+  'tetris-hover': () => {
+    pt(1200, 0.015, 'square', 0.04)
+  },
 
-  // Item get - THE iconic ascending 4-note jingle F4-A4-C5-F5
-  'zelda-item-get': () => {
-    const notes: [number, number, number][] = [
-      [349.23, 0.12, 0], [440.00, 0.12, 0.1], [523.25, 0.12, 0.2], [698.46, 0.45, 0.3],
-    ]
-    for (const [freq, dur, start] of notes) {
-      playTone(freq, dur, 'triangle', start === 0.3 ? 0.15 : 0.12, start)
+  'tetris-demo-complete': () => {
+    sw(800, 1200, 0.1, 'square', 0.07)
+    pt(1200, 0.12, 'square', 0.06, 0.08)
+    pt(600, 0.06, 'square', 0.03, 0.08)
+  },
+
+  'tetris-badge-combo': () => {
+    for (let i = 0; i < 3; i++) {
+      sw(800 + i * 200, 400, 0.08, 'square', 0.06, i * 0.06)
     }
-    // Subtle sine harmonic on final note
-    playTone(698.46 * 2, 0.27, 'sine', 0.04, 0.3)
+    pt(1400, 0.15, 'square', 0.07, 0.2)
+    pt(700, 0.1, 'square', 0.03, 0.2)
   },
 
-  // Chest open - ascending chromatic run building anticipation
+  'tetris-locked': () => {
+    pt(120, 0.08, 'square', 0.07)
+    sw(250, 100, 0.06, 'square', 0.04, 0.02)
+  },
+
+  'tetris-star': () => {
+    pt(660, 0.08, 'square', 0.06)
+    pt(1320, 0.05, 'sine', 0.02)
+  },
+
+  'tetris-tick': () => {
+    pt(500, 0.012, 'square', 0.04)
+  },
+
+  'tetris-glossary': () => {
+    pt(700, 0.03, 'square', 0.04)
+    sw(700, 500, 0.03, 'square', 0.03, 0.03)
+  },
+
+  'tetris-prompt': () => {
+    pt(500, 0.04, 'square', 0.05)
+    pt(700, 0.05, 'square', 0.05, 0.04)
+  },
+
+  'tetris-preview': () => {
+    const notes = [262, 294, 330, 392, 523]
+    notes.forEach((f, i) => pt(f, 0.05, 'square', 0.05, i * 0.06))
+  },
+
+  'tetris-download': () => {
+    sw(400, 800, 0.08, 'square', 0.06)
+    pt(800, 0.12, 'square', 0.05, 0.06)
+    pt(400, 0.06, 'square', 0.02, 0.06)
+  },
+
+  'tetris-speed': () => {
+    const notes = [523, 659, 784, 1047, 784, 523]
+    notes.forEach((f, i) => pt(f, 0.02, 'square', 0.05, i * 0.02))
+  },
+
+  // =============== ZELDA ===============
+
+  'zelda-item-get': () => {
+    const notes: [number, number][] = [[349.23, 0.12], [440, 0.12], [523.25, 0.12], [698.46, 0.45]]
+    let t = 0
+    for (const [f, d] of notes) {
+      pt(f, d, 'triangle', 0.11, t)
+      pt(f * 2, d * 0.5, 'sine', 0.03, t)
+      t += 0.1
+    }
+    dc([698.46, 880, 1046.5], 0.3, 'sine', 0.015, 0.35)
+  },
+
   'zelda-chest-open': () => {
     const notes = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23]
-    notes.forEach((freq, i) => {
-      playTone(freq, 0.06, 'sine', 0.04 + i * 0.02, i * 0.04)
+    notes.forEach((f, i) => {
+      pt(f, 0.07, 'triangle', 0.04 + i * 0.015, i * 0.04)
+      pt(f * 2, 0.04, 'sine', 0.01, i * 0.04)
     })
   },
 
-  // Secret discovered - classic flourish B4-F5-B5-F5-B5-F6
   'zelda-secret-discovered': () => {
     const notes = [493.88, 698.46, 987.77, 698.46, 987.77, 1396.91]
-    notes.forEach((freq, i) => {
-      playTone(freq, 0.1, 'triangle', 0.1, i * 0.06)
+    notes.forEach((f, i) => {
+      pt(f, 0.12, 'triangle', 0.09, i * 0.06)
+      pt(f * 2, 0.06, 'sine', 0.02, i * 0.06)
     })
   },
 
-  // Quest accepted - two warm tones G4->C5
   'zelda-quest-accepted': () => {
-    playTone(392.00, 0.15, 'triangle', 0.1)
-    playTone(523.25, 0.2, 'triangle', 0.12, 0.1)
+    pt(392, 0.18, 'triangle', 0.1)
+    pt(523.25, 0.22, 'triangle', 0.11, 0.1)
+    pt(784, 0.1, 'sine', 0.02, 0.1)
   },
 
-  // Sword slash - quick noise burst with pitch sweep
   'zelda-sword-slash': () => {
-    const ctx = getCtx()
-    // Main sweep
-    const osc1 = ctx.createOscillator()
-    const gain1 = ctx.createGain()
-    osc1.type = 'sawtooth'
-    osc1.frequency.setValueAtTime(800, ctx.currentTime)
-    osc1.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.06)
-    gain1.gain.setValueAtTime(0.12, ctx.currentTime)
-    gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06)
-    osc1.connect(gain1)
-    gain1.connect(ctx.destination)
-    osc1.start(ctx.currentTime)
-    osc1.stop(ctx.currentTime + 0.07)
-    // Noise burst
-    const osc2 = ctx.createOscillator()
-    const gain2 = ctx.createGain()
-    osc2.type = 'square'
-    osc2.frequency.setValueAtTime(600, ctx.currentTime)
-    osc2.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.04)
-    gain2.gain.setValueAtTime(0.06, ctx.currentTime)
-    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05)
-    osc2.connect(gain2)
-    gain2.connect(ctx.destination)
-    osc2.start(ctx.currentTime)
-    osc2.stop(ctx.currentTime + 0.06)
+    sw(800, 200, 0.06, 'sawtooth', 0.11)
+    sw(600, 100, 0.04, 'square', 0.05)
+    pt(1600, 0.03, 'sine', 0.04) // blade ring
   },
 
-  // Dungeon clear - triumphant ascending fanfare with held chord
   'zelda-dungeon-clear': () => {
-    const ascend = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99]
-    ascend.forEach((freq, i) => {
-      playTone(freq, 0.12, 'triangle', 0.1, i * 0.08)
+    const ascend = [261.63, 329.63, 392, 523.25, 659.25, 783.99]
+    ascend.forEach((f, i) => {
+      pt(f, 0.14, 'triangle', 0.09, i * 0.08)
+      pt(f * 2, 0.08, 'sine', 0.02, i * 0.08)
     })
-    // Held chord
-    const chordStart = ascend.length * 0.08
-    playTone(523.25, 0.5, 'triangle', 0.1, chordStart)
-    playTone(659.25, 0.5, 'triangle', 0.08, chordStart)
-    playTone(783.99, 0.5, 'triangle', 0.08, chordStart)
+    dc([523.25, 659.25, 783.99], 0.5, 'triangle', 0.06, ascend.length * 0.08)
   },
 
-  // Heart collect - gentle ascending E5->A5
   'zelda-heart-collect': () => {
-    playTone(659.25, 0.12, 'sine', 0.08)
-    playTone(880.00, 0.15, 'sine', 0.08, 0.08)
+    pt(659.25, 0.14, 'triangle', 0.08)
+    pt(880, 0.17, 'triangle', 0.08, 0.08)
+    pt(1760, 0.08, 'sine', 0.02, 0.08)
   },
 
-  // Fairy chime - tiny high sparkle
   'zelda-fairy-chime': () => {
     const freqs = [2200, 2800, 2400, 3000]
-    freqs.forEach((freq, i) => {
-      playTone(freq, 0.05, 'sine', 0.04, i * 0.04)
+    freqs.forEach((f, i) => {
+      pt(f, 0.06, 'sine', 0.03, i * 0.04)
+      pt(f * 0.5, 0.04, 'sine', 0.01, i * 0.04)
     })
   },
 
-  // Rupee collect - quick bright blip with sparkle overtone
   'zelda-rupee-collect': () => {
-    playTone(1500, 0.05, 'sine', 0.1)
-    playTone(3000, 0.03, 'sine', 0.03)
+    pt(1500, 0.06, 'triangle', 0.09)
+    pt(3000, 0.04, 'sine', 0.03)
+    pt(750, 0.03, 'sine', 0.03)
   },
 
-  // Door locked - low thud
   'zelda-door-locked': () => {
-    playTone(100, 0.1, 'square', 0.1)
-    playTone(80, 0.08, 'square', 0.06, 0.02)
+    pt(100, 0.12, 'square', 0.09)
+    pt(80, 0.08, 'square', 0.05, 0.02)
+    sw(200, 80, 0.06, 'triangle', 0.03, 0.04)
   },
 
-  // ============ ELDER SCROLLS SOUNDS ============
+  'zelda-level-clear': () => {
+    // Triumphant horn sequence distinct from dungeon-clear
+    const melody = [392, 523.25, 659.25, 783.99, 1046.5]
+    melody.forEach((f, i) => {
+      pt(f, 0.1, 'triangle', 0.08, i * 0.1)
+      pf(f * 0.5, 0.08, 'triangle', 0.03, i * 0.1, 600)
+    })
+    dc([783.99, 1046.5, 1318.5], 0.4, 'sine', 0.03, 0.5)
+  },
 
-  // Quest accept - deep Dragonborn horn call C3+G3
+  'zelda-lock-rattle': () => {
+    // Chain/lock rattling sound distinct from door-locked
+    for (let i = 0; i < 3; i++) {
+      sw(300, 150, 0.04, 'square', 0.06, i * 0.05)
+      pt(600, 0.02, 'triangle', 0.03, i * 0.05)
+    }
+  },
+
+  'zelda-gem-collect': () => {
+    // Gem sparkle - higher pitched than rupee
+    pt(1800, 0.06, 'sine', 0.07)
+    pt(2200, 0.08, 'sine', 0.06, 0.04)
+    pt(3600, 0.04, 'sine', 0.02, 0.04)
+  },
+
+  'zelda-treasure-reveal': () => {
+    // Dramatic reveal - chest opening leads to magical reveal
+    dc([440, 523.25, 659.25], 0.4, 'triangle', 0.05, 0, 0.1)
+    pf(880, 0.3, 'sine', 0.06, 0.2, 2000)
+    pt(1760, 0.15, 'sine', 0.02, 0.3)
+  },
+
+  'zelda-star': () => {
+    pt(880, 0.12, 'triangle', 0.06)
+    pt(1760, 0.08, 'sine', 0.02, 0.02)
+  },
+
+  'zelda-tick': () => {
+    pt(440, 0.02, 'triangle', 0.03)
+  },
+
+  'zelda-glossary': () => {
+    pt(523, 0.04, 'triangle', 0.04)
+    pt(659, 0.06, 'sine', 0.03, 0.03)
+  },
+
+  'zelda-prompt': () => {
+    pt(440, 0.05, 'triangle', 0.05)
+    pt(523, 0.06, 'triangle', 0.05, 0.04)
+    pt(659, 0.04, 'sine', 0.02, 0.04)
+  },
+
+  'zelda-preview': () => {
+    dc([261.63, 329.63, 392], 0.5, 'triangle', 0.04, 0, 0.2)
+    pt(523.25, 0.3, 'sine', 0.03, 0.25)
+  },
+
+  'zelda-download': () => {
+    const notes = [349.23, 440, 523.25, 659.25]
+    notes.forEach((f, i) => pt(f, 0.1, 'triangle', 0.06, i * 0.08))
+    pt(659.25, 0.25, 'sine', 0.04, 0.35)
+  },
+
+  'zelda-speed': () => {
+    const notes = [880, 1047, 1319, 1568]
+    notes.forEach((f, i) => pt(f, 0.03, 'sine', 0.03, i * 0.02))
+  },
+
+  // =============== ELDER SCROLLS ===============
+
   'es-quest-accept': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Primary horn C3
-    const osc1 = ctx.createOscillator()
-    const gain1 = ctx.createGain()
-    osc1.type = 'triangle'
-    osc1.frequency.value = 130.81
-    gain1.gain.setValueAtTime(0, t)
-    gain1.gain.linearRampToValueAtTime(0.1, t + 0.08)
-    gain1.gain.setValueAtTime(0.09, t + 0.42)
-    gain1.gain.exponentialRampToValueAtTime(0.001, t + 0.7)
-    osc1.connect(gain1)
-    gain1.connect(ctx.destination)
-    osc1.start(t)
-    osc1.stop(t + 0.71)
-    // Harmonic fifth G3
-    const osc2 = ctx.createOscillator()
-    const gain2 = ctx.createGain()
-    osc2.type = 'triangle'
-    osc2.frequency.value = 196.00
-    gain2.gain.setValueAtTime(0, t + 0.03)
-    gain2.gain.linearRampToValueAtTime(0.06, t + 0.13)
-    gain2.gain.setValueAtTime(0.054, t + 0.39)
-    gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.63)
-    osc2.connect(gain2)
-    gain2.connect(ctx.destination)
-    osc2.start(t + 0.03)
-    osc2.stop(t + 0.64)
-    // Sub-bass
-    playTone(65.41, 0.5, 'sine', 0.05)
+    // Deep Dragonborn horn C3+G3
+    dc([130.81, 196], 0.7, 'triangle', 0.07, 0, 0.08)
+    pt(65.41, 0.5, 'sine', 0.04)              // sub-bass
+    dc([130.81, 196, 261.63], 0.5, 'sine', 0.02, 0.1, 0.1) // choir pad
   },
 
-  // Skill unlock - constellation chime with vibrato + rising choir pad
   'es-skill-unlock': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Chime with vibrato C6
-    const chime = ctx.createOscillator()
-    const chimeGain = ctx.createGain()
-    const vibrato = ctx.createOscillator()
-    const vibratoGain = ctx.createGain()
-    chime.type = 'sine'
-    chime.frequency.value = 1046.50
-    vibrato.type = 'sine'
-    vibrato.frequency.value = 6
-    vibratoGain.gain.value = 10
-    vibrato.connect(vibratoGain)
-    vibratoGain.connect(chime.frequency)
-    chimeGain.gain.setValueAtTime(0.06, t)
-    chimeGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3)
-    chime.connect(chimeGain)
-    chimeGain.connect(ctx.destination)
-    chime.start(t)
-    vibrato.start(t)
-    chime.stop(t + 0.35)
-    vibrato.stop(t + 0.35)
-    // Secondary chime G6
-    playTone(1567.98, 0.25, 'sine', 0.03, 0.05)
-    // Rising choir pad E4+G4+B4+E5
-    const choirFreqs = [329.63, 392.00, 493.88, 659.25]
-    choirFreqs.forEach((freq, i) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = freq * (1 + (i * 0.003 - choirFreqs.length * 0.0015))
-      gain.gain.setValueAtTime(0, t + 0.1)
-      gain.gain.linearRampToValueAtTime(0.04, t + 0.25)
-      gain.gain.setValueAtTime(0.04, t + 0.73)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.0)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t + 0.1)
-      osc.stop(t + 1.01)
-    })
+    // Constellation chime with choir pad
+    pt(1046.50, 0.3, 'sine', 0.05)
+    pt(1567.98, 0.25, 'sine', 0.03, 0.05)
+    dc([329.63, 392, 493.88, 659.25], 0.9, 'sine', 0.03, 0.1, 0.15)
   },
 
-  // Level complete - Nordic chant Dm -> C major
   'es-level-complete': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Dm chord voices
-    const dm = [146.83, 174.61, 220.00, 293.66]
-    dm.forEach((freq, i) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = freq * (1 + (i * 0.003 - dm.length * 0.0015))
-      gain.gain.setValueAtTime(0, t)
-      gain.gain.linearRampToValueAtTime(0.05, t + 0.1)
-      gain.gain.setValueAtTime(0.05, t + 0.56)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.8)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t)
-      osc.stop(t + 0.81)
-    })
-    // C major resolution
-    const cmaj = [130.81, 164.81, 196.00, 261.63]
-    cmaj.forEach((freq, i) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = freq * (1 + (i * 0.003 - cmaj.length * 0.0015))
-      gain.gain.setValueAtTime(0, t + 0.7)
-      gain.gain.linearRampToValueAtTime(0.06, t + 0.82)
-      gain.gain.setValueAtTime(0.06, t + 1.4)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.7)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t + 0.7)
-      osc.stop(t + 1.71)
-    })
-    // Horn accent on D3 and C3
-    playTone(146.83, 0.6, 'triangle', 0.07)
-    playTone(130.81, 0.8, 'triangle', 0.08, 0.7)
+    // Nordic chant Dm -> C major
+    dc([146.83, 174.61, 220, 293.66], 0.8, 'sine', 0.04, 0, 0.1)
+    dc([130.81, 164.81, 196, 261.63], 0.9, 'sine', 0.05, 0.7, 0.12)
+    pt(146.83, 0.6, 'triangle', 0.06)
+    pt(130.81, 0.8, 'triangle', 0.07, 0.7)
   },
 
-  // Node select - stone rune activation (percussive hit + resonant tail)
   'es-node-select': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Percussive stone hit
-    const noise = ctx.createOscillator()
-    const noiseGain = ctx.createGain()
-    noise.type = 'square'
-    noise.frequency.setValueAtTime(80, t)
-    noise.frequency.exponentialRampToValueAtTime(40, t + 0.04)
-    noiseGain.gain.setValueAtTime(0.08, t)
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.04)
-    noise.connect(noiseGain)
-    noiseGain.connect(ctx.destination)
-    noise.start(t)
-    noise.stop(t + 0.05)
-    // Resonant tone A4
-    playTone(440.00, 0.2, 'triangle', 0.06, 0.01)
-    // Sub-thud
-    playTone(110.00, 0.08, 'sine', 0.04)
+    // Stone rune activation
+    sw(80, 40, 0.04, 'square', 0.07)
+    pt(440, 0.2, 'triangle', 0.05, 0.01)
+    pt(110, 0.08, 'sine', 0.03)
   },
 
-  // Victory - epic Dragonborn fanfare (horn + choir + resolution)
   'es-victory': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    // Phase 1: Horn call
-    const horn1 = ctx.createOscillator()
-    const horn1Gain = ctx.createGain()
-    horn1.type = 'triangle'
-    horn1.frequency.value = 130.81
-    horn1Gain.gain.setValueAtTime(0, t)
-    horn1Gain.gain.linearRampToValueAtTime(0.1, t + 0.04)
-    horn1Gain.gain.setValueAtTime(0.09, t + 0.21)
-    horn1Gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35)
-    horn1.connect(horn1Gain)
-    horn1Gain.connect(ctx.destination)
-    horn1.start(t)
-    horn1.stop(t + 0.36)
-    // Phase 2: Choir chord C4+E4+G4+C5
-    const choirFreqs = [261.63, 329.63, 392.00, 523.25]
-    choirFreqs.forEach((freq, i) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = freq * (1 + (i * 0.003 - choirFreqs.length * 0.0015))
-      gain.gain.setValueAtTime(0, t + 0.3)
-      gain.gain.linearRampToValueAtTime(0.06, t + 0.4)
-      gain.gain.setValueAtTime(0.06, t + 0.94)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t + 0.3)
-      osc.stop(t + 1.21)
-    })
-    // Phase 3: Rising resolution E4+G#4+B4+E5
-    const riseFreqs = [329.63, 415.30, 493.88, 659.25]
-    riseFreqs.forEach((freq, i) => {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = freq * (1 + (i * 0.003 - riseFreqs.length * 0.0015))
-      gain.gain.setValueAtTime(0, t + 1.1)
-      gain.gain.linearRampToValueAtTime(0.05, t + 1.22)
-      gain.gain.setValueAtTime(0.05, t + 1.66)
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.9)
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.start(t + 1.1)
-      osc.stop(t + 1.91)
-    })
-    // Final sub-bass
-    playTone(130.81, 0.9, 'triangle', 0.05, 1.1)
+    // Epic Dragonborn fanfare
+    dc([130.81], 0.35, 'triangle', 0.08, 0, 0.04) // horn
+    dc([261.63, 329.63, 392, 523.25], 0.9, 'sine', 0.04, 0.3, 0.1) // choir
+    dc([329.63, 415.30, 493.88, 659.25], 0.8, 'sine', 0.04, 1.1, 0.12) // resolution
+    pt(130.81, 0.9, 'triangle', 0.04, 1.1)  // final bass
+    pt(65.41, 0.6, 'sine', 0.03, 1.1)       // sub
   },
 
-  // UI click - parchment rustle (filtered noise burst)
   'es-ui-click': () => {
-    const ctx = getCtx()
-    const t = ctx.currentTime
-    const osc1 = ctx.createOscillator()
-    const gain1 = ctx.createGain()
-    osc1.type = 'square'
-    osc1.frequency.setValueAtTime(150, t)
-    osc1.frequency.exponentialRampToValueAtTime(60, t + 0.03)
-    gain1.gain.setValueAtTime(0.04, t)
-    gain1.gain.exponentialRampToValueAtTime(0.001, t + 0.035)
-    osc1.connect(gain1)
-    gain1.connect(ctx.destination)
-    osc1.start(t)
-    osc1.stop(t + 0.04)
-    const osc2 = ctx.createOscillator()
-    const gain2 = ctx.createGain()
-    osc2.type = 'square'
-    osc2.frequency.setValueAtTime(400, t)
-    osc2.frequency.exponentialRampToValueAtTime(200, t + 0.02)
-    gain2.gain.setValueAtTime(0.02, t)
-    gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.025)
-    osc2.connect(gain2)
-    gain2.connect(ctx.destination)
-    osc2.start(t)
-    osc2.stop(t + 0.03)
+    // Parchment rustle
+    sw(150, 60, 0.03, 'square', 0.035)
+    sw(400, 200, 0.02, 'square', 0.015)
+  },
+
+  'es-whisper': () => {
+    // Ethereal hover - breathy shimmer
+    pf(800, 0.04, 'sine', 0.02, 0, 1200)
+    pt(1600, 0.025, 'sine', 0.008)
+  },
+
+  'es-spell-fizzle': () => {
+    // Failed spell - descending with crackle
+    sw(600, 150, 0.15, 'sawtooth', 0.05)
+    sw(1200, 200, 0.1, 'square', 0.02)
+    pt(80, 0.08, 'sine', 0.04, 0.08)
+  },
+
+  'es-ward': () => {
+    // Sealed ward barrier - deep resonance with rejection
+    pf(110, 0.15, 'triangle', 0.06, 0, 300)
+    sw(400, 200, 0.1, 'square', 0.04, 0.02)
+    pt(55, 0.1, 'sine', 0.04)
+  },
+
+  'es-septim': () => {
+    // Coin clink - metallic with resonance
+    pt(2000, 0.06, 'sine', 0.06)
+    pt(3000, 0.04, 'sine', 0.03)
+    pt(1000, 0.03, 'triangle', 0.03)
+    pf(500, 0.08, 'triangle', 0.02, 0.02, 2000)
+  },
+
+  'es-quest-stage': () => {
+    // Quest stage complete - shorter than quest-accept
+    dc([196, 261.63], 0.4, 'triangle', 0.05, 0, 0.05)
+    pt(130.81, 0.3, 'sine', 0.03)
+    pt(523.25, 0.15, 'sine', 0.02, 0.2)
+  },
+
+  'es-skill-increase': () => {
+    // Skill gained - ascending warmth
+    dc([329.63, 392, 493.88], 0.5, 'sine', 0.04, 0, 0.08)
+    pt(659.25, 0.2, 'triangle', 0.03, 0.25)
+  },
+
+  'es-minor-discovery': () => {
+    // Small lore find - subtle
+    pf(440, 0.15, 'triangle', 0.04, 0, 800)
+    pt(880, 0.08, 'sine', 0.015, 0.05)
+  },
+
+  'es-dragon-soul': () => {
+    // Dragon soul absorbed - epic swell
+    dc([130.81, 164.81, 196, 261.63], 0.8, 'sine', 0.05, 0, 0.2)
+    dc([261.63, 329.63, 392, 523.25], 0.6, 'sine', 0.04, 0.4, 0.15)
+    pt(65.41, 0.8, 'triangle', 0.04)
+    pt(1046.5, 0.3, 'sine', 0.02, 0.6)
+  },
+
+  'es-star': () => {
+    // Constellation point - deep bell
+    pf(440, 0.2, 'triangle', 0.04, 0, 1000)
+    pt(880, 0.1, 'sine', 0.015, 0.02)
+    pt(220, 0.08, 'sine', 0.02)
+  },
+
+  'es-tick': () => {
+    // Arcane pulse
+    pf(220, 0.025, 'triangle', 0.03, 0, 500)
+  },
+
+  'es-glossary': () => {
+    // Ancient tome opening
+    pf(330, 0.08, 'triangle', 0.03, 0, 600)
+    sw(200, 400, 0.06, 'sine', 0.02)
+  },
+
+  'es-prompt': () => {
+    // Spell school selection
+    pf(392, 0.06, 'triangle', 0.04, 0, 800)
+    pf(523, 0.08, 'sine', 0.03, 0.05, 1000)
+  },
+
+  'es-preview': () => {
+    // Skyrim wind - distant atmosphere
+    dc([110, 130.81, 164.81], 0.8, 'sine', 0.02, 0, 0.4)
+    pf(65.41, 0.6, 'triangle', 0.03, 0, 200)
+  },
+
+  'es-download': () => {
+    // Soul absorb - ethereal pull
+    sw(400, 800, 0.3, 'sine', 0.04)
+    dc([261.63, 329.63, 392], 0.4, 'sine', 0.03, 0.1, 0.1)
+    pt(523.25, 0.2, 'triangle', 0.03, 0.25)
+  },
+
+  'es-speed': () => {
+    // Shout power - quick ascending force
+    dc([130.81, 196, 261.63], 0.15, 'triangle', 0.05, 0, 0.02)
+    sw(200, 600, 0.1, 'sine', 0.03)
+  },
+
+  // =============== GALLERY ===============
+
+  'gallery-click': () => {
+    pt(800, 0.02, 'sine', 0.04)
+  },
+
+  'gallery-hover': () => {
+    pt(1200, 0.012, 'sine', 0.02)
   },
 }
 
-export function playSound(name: SoundName): void {
+// ---- File-based Sound Playback ----
+
+// SoundRef: either a synthesized SoundName or a file path prefixed with "file:"
+export type SoundRef = SoundName | `file:${string}`
+
+// Cache for decoded audio buffers (on-demand loading)
+const audioBufferCache = new Map<string, AudioBuffer>()
+const fetchingBuffers = new Set<string>()
+
+async function playSampleSound(filePath: string): Promise<void> {
+  const ctx = getCtx()
+  const master = getMaster()
+
+  // Check cache first
+  let buffer = audioBufferCache.get(filePath)
+  if (!buffer) {
+    // Avoid duplicate fetches for the same file
+    if (fetchingBuffers.has(filePath)) return
+    fetchingBuffers.add(filePath)
+    try {
+      const response = await fetch(filePath)
+      const arrayBuffer = await response.arrayBuffer()
+      buffer = await ctx.decodeAudioData(arrayBuffer)
+      audioBufferCache.set(filePath, buffer)
+    } catch {
+      // Failed to load audio file
+      return
+    } finally {
+      fetchingBuffers.delete(filePath)
+    }
+  }
+
+  const source = ctx.createBufferSource()
+  source.buffer = buffer
+  source.connect(master)
+  source.start()
+}
+
+// ---- Play Sound ----
+
+export function playSound(name: SoundRef): void {
   if (muted) return
   if (typeof window === 'undefined') return
   try {
-    sounds[name]()
+    if (typeof name === 'string' && name.startsWith('file:')) {
+      const filePath = name.slice(5) // strip "file:" prefix
+      playSampleSound(filePath)
+    } else {
+      sounds[name as SoundName]()
+    }
   } catch {
-    // Audio context may not be ready yet
+    // Audio context may not be ready
   }
+}
+
+// ---- Star Reveal (dynamic ascending notes) ----
+
+export function playStarReveal(count: number, worldId: string): void {
+  if (muted || typeof window === 'undefined') return
+  const worldScales: Record<string, { notes: number[], type: OscillatorType }> = {
+    'arcade':        { notes: [523.25, 659.25, 783.99], type: 'square' },
+    'red-alert':     { notes: [440, 554.37, 659.25],    type: 'sawtooth' },
+    'clair-obscur':  { notes: [523.25, 659.25, 783.99], type: 'sine' },
+    'tetris':        { notes: [523.25, 587.33, 659.25], type: 'square' },
+    'zelda':         { notes: [440, 523.25, 659.25],    type: 'triangle' },
+    'elder-scrolls': { notes: [261.63, 329.63, 392],    type: 'triangle' },
+  }
+  const config = worldScales[worldId] || worldScales['arcade']
+  try {
+    for (let i = 0; i < Math.min(count, 3); i++) {
+      pt(config.notes[i], 0.2, config.type, 0.07, i * 0.18)
+      pt(config.notes[i] * 2, 0.12, 'sine', 0.02, i * 0.18)
+    }
+    if (count >= 3) {
+      pt(config.notes[2] * 2, 0.35, config.type, 0.04, 0.54)
+    }
+  } catch {}
+}
+
+// ---- Progress Tick (builds tempo during AI execution) ----
+
+let tickTimer: ReturnType<typeof setTimeout> | null = null
+let tickCount = 0
+
+export function startProgressTick(soundName: SoundRef): void {
+  stopProgressTick()
+  if (muted) return
+  tickCount = 0
+  const baseTempo = 400
+  const tick = () => {
+    if (muted) { stopProgressTick(); return }
+    tickCount++
+    try { sounds[soundName]() } catch {}
+    const tempo = Math.max(120, baseTempo - tickCount * 8)
+    tickTimer = setTimeout(tick, tempo)
+  }
+  tickTimer = setTimeout(tick, baseTempo)
+}
+
+export function stopProgressTick(): void {
+  if (tickTimer) clearTimeout(tickTimer)
+  tickTimer = null
+  tickCount = 0
+}
+
+// ---- Ambient (very subtle background loops) ----
+
+let ambientNodes: { osc: OscillatorNode; gain: GainNode }[] = []
+let ambientTimer: ReturnType<typeof setInterval> | null = null
+
+export function startAmbient(worldId: string): void {
+  stopAmbient()
+  if (muted || typeof window === 'undefined') return
+  const ctx = getCtx()
+  const master = getMaster()
+  const vol = 0.012 // barely perceptible
+
+  const makeOsc = (freq: number, type: OscillatorType, g: number): void => {
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.type = type
+    osc.frequency.value = freq
+    gain.gain.value = g * vol
+    osc.connect(gain)
+    gain.connect(master)
+    osc.start()
+    ambientNodes.push({ osc, gain })
+  }
+
+  switch (worldId) {
+    case 'arcade':
+      makeOsc(110, 'square', 0.3)
+      makeOsc(55, 'square', 0.2)
+      break
+    case 'red-alert':
+      makeOsc(60, 'sawtooth', 0.4)
+      makeOsc(120, 'square', 0.15)
+      // Slow radar sweep modulation
+      if (ambientNodes[0]) {
+        const lfo = ctx.createOscillator()
+        const lfoGain = ctx.createGain()
+        lfo.type = 'sine'
+        lfo.frequency.value = 0.3
+        lfoGain.gain.value = 0.005
+        lfo.connect(lfoGain)
+        lfoGain.connect(ambientNodes[0].gain.gain)
+        lfo.start()
+      }
+      break
+    case 'clair-obscur':
+      makeOsc(220, 'sine', 0.2)
+      makeOsc(330, 'sine', 0.1)
+      break
+    case 'tetris':
+      makeOsc(82.41, 'square', 0.25) // low E
+      makeOsc(123.47, 'square', 0.15) // B2
+      break
+    case 'zelda':
+      makeOsc(196, 'triangle', 0.2)
+      makeOsc(293.66, 'sine', 0.1)
+      break
+    case 'elder-scrolls':
+      makeOsc(55, 'sine', 0.4)      // deep drone
+      makeOsc(82.41, 'triangle', 0.2) // wind
+      makeOsc(110, 'sine', 0.1)      // shimmer
+      break
+    default:
+      // Gallery: silence
+      break
+  }
+}
+
+export function stopAmbient(): void {
+  for (const { osc } of ambientNodes) {
+    try { osc.stop() } catch {}
+  }
+  ambientNodes = []
+  if (ambientTimer) { clearInterval(ambientTimer); ambientTimer = null }
+}
+
+// ---- Background Music (file-based, for clair-obscur demos) ----
+
+const CLAIR_OBSCUR_BG_TRACKS = [
+  '/sounds/clair-obscur/bg-lumiere.mp3',
+  '/sounds/clair-obscur/bg-alicia.mp3',
+  '/sounds/clair-obscur/bg-lune.mp3',
+  '/sounds/clair-obscur/bg-sciel.mp3',
+  '/sounds/clair-obscur/bg-paintress.mp3',
+  '/sounds/clair-obscur/bg-contre-le-coeur.mp3',
+  '/sounds/clair-obscur/bg-clea.mp3',
+  '/sounds/clair-obscur/bg-beneath-blue-tree.mp3',
+  '/sounds/clair-obscur/bg-numbers-the-hours.mp3',
+  '/sounds/clair-obscur/bg-music-box.mp3',
+]
+
+let bgMusicSource: AudioBufferSourceNode | null = null
+let bgMusicGain: GainNode | null = null
+let bgMusicStopping = false
+
+export function startBackgroundMusic(worldId: string, demoIndex: number): void {
+  stopBackgroundMusic()
+  if (worldId !== 'clair-obscur') return
+  if (muted || typeof window === 'undefined') return
+
+  const trackIndex = demoIndex % CLAIR_OBSCUR_BG_TRACKS.length
+  const trackPath = CLAIR_OBSCUR_BG_TRACKS[trackIndex]
+
+  const ctx = getCtx()
+  const master = getMaster()
+
+  // Create gain node for this background music at 20% of master
+  const gainNode = ctx.createGain()
+  gainNode.gain.setValueAtTime(0, ctx.currentTime)
+  gainNode.connect(master)
+  bgMusicGain = gainNode
+  bgMusicStopping = false
+
+  // Load and play the track
+  const loadAndPlay = async () => {
+    try {
+      let buffer = audioBufferCache.get(trackPath)
+      if (!buffer) {
+        const response = await fetch(trackPath)
+        const arrayBuffer = await response.arrayBuffer()
+        buffer = await ctx.decodeAudioData(arrayBuffer)
+        audioBufferCache.set(trackPath, buffer)
+      }
+
+      // Check if we were stopped while loading
+      if (bgMusicStopping || bgMusicGain !== gainNode) return
+
+      const source = ctx.createBufferSource()
+      source.buffer = buffer
+      source.loop = true
+      source.connect(gainNode)
+      source.start()
+      bgMusicSource = source
+
+      // Fade in over 2 seconds to 20% (0.2) relative volume
+      gainNode.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 2)
+    } catch {
+      // Failed to load background music
+    }
+  }
+
+  loadAndPlay()
+}
+
+export function stopBackgroundMusic(): void {
+  bgMusicStopping = true
+  if (bgMusicSource && bgMusicGain) {
+    const ctx = getCtx()
+    const source = bgMusicSource
+    const gain = bgMusicGain
+
+    // Fade out over 1 second
+    gain.gain.cancelScheduledValues(ctx.currentTime)
+    gain.gain.setValueAtTime(gain.gain.value, ctx.currentTime)
+    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1)
+
+    // Stop the source after fade completes
+    setTimeout(() => {
+      try { source.stop() } catch {}
+      try { gain.disconnect() } catch {}
+    }, 1100)
+  }
+  bgMusicSource = null
+  bgMusicGain = null
 }

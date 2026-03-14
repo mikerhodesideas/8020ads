@@ -1,0 +1,82 @@
+[
+  {
+    "id": "bz-001",
+    "from": { "name": "Karen Walsh", "email": "karen.walsh84@gmail.com" },
+    "subject": "Kitchen renovation delays - very frustrated",
+    "date": "2026-03-13T13:45:00Z",
+    "snippet": "I was told the tiles would be delivered within 10 days and it's now been over 3 weeks. The tilers can't start until they arrive and the whole project is falling behind. We were supposed to have a working kitchen by Easter. Can someone please call me today to sort this out?",
+    "isRead": false
+  },
+  {
+    "id": "bz-002",
+    "from": { "name": "Stone & Surface Co", "email": "accounts@stoneandsurface.com.au" },
+    "subject": "Price increase notice - Caesarstone benchtops",
+    "date": "2026-03-13T09:30:00Z",
+    "snippet": "Due to rising material and shipping costs, we're implementing an 8% price increase on all Caesarstone benchtop products effective 1 April 2026. Current pricing will be honoured for orders placed before 31 March. Attached is the updated price list including Splashback range.",
+    "isRead": false
+  },
+  {
+    "id": "bz-003",
+    "from": { "name": "Sam Decker", "email": "sam@coastalkitchenco.com.au" },
+    "subject": "Leave request - 14-25 April",
+    "date": "2026-03-12T16:00:00Z",
+    "snippet": "Hi, I'd like to request two weeks annual leave from Monday 14 April to Friday 25 April. My brother's getting married in Bali on the 19th. I've spoken to Jake about covering workshop jobs while I'm away and he's happy to step in. Let me know if that works.",
+    "isRead": true
+  },
+  {
+    "id": "bz-004",
+    "from": { "name": "ANZ Business", "email": "statements@anz.com.au" },
+    "subject": "Your February business account statement is ready",
+    "date": "2026-03-12T06:00:00Z",
+    "snippet": "Your monthly statement for account ending in 4471 is now available. Closing balance: $47,832.16. Download your statement from ANZ Internet Banking or the ANZ App.",
+    "isRead": true
+  },
+  {
+    "id": "bz-005",
+    "from": { "name": "Website Enquiry", "email": "noreply@coastalkitchenco.com.au" },
+    "subject": "New enquiry from David & Michelle Chen",
+    "date": "2026-03-11T19:20:00Z",
+    "snippet": "Name: David Chen. Phone: 0412 555 831. Message: We've just bought a place in Brighton East and the kitchen needs a complete renovation. Looking at new Caesarstone benchtops, soft-close cabinetry, and a tiled splashback. Budget is $35-50K. Hoping to have it done before Christmas.",
+    "isRead": false
+  },
+  {
+    "id": "bz-006",
+    "from": { "name": "AIG Australia", "email": "renewals@aig.com.au" },
+    "subject": "Business insurance renewal - policy #BP-229841",
+    "date": "2026-03-11T10:00:00Z",
+    "snippet": "Your business insurance policy (public liability, professional indemnity, and contents) expires on 15 April 2026. Your renewal premium is $6,840 (up from $6,200 last year). Please review the attached renewal schedule and confirm by 1 April.",
+    "isRead": true
+  },
+  {
+    "id": "bz-007",
+    "from": { "name": "Amanda Peters", "email": "amanda.peters@jellis.com.au" },
+    "subject": "Client referral - kitchen reno needed",
+    "date": "2026-03-10T14:30:00Z",
+    "snippet": "Hi, I've just sold a property in Bentleigh and the new owners are looking to completely redo the kitchen. They loved the photos on your website, especially the Hampton-style kitchen with the Shaker cabinetry. I've given them your number but wanted to give you a heads up. Their name is Singh, great people.",
+    "isRead": true
+  },
+  {
+    "id": "bz-008",
+    "from": { "name": "Sandra Koh", "email": "sandra.koh@pkf.com.au" },
+    "subject": "EOFY planning - meeting request",
+    "date": "2026-03-10T09:15:00Z",
+    "snippet": "With end of financial year approaching, I'd like to schedule a planning session to review your tax position, asset depreciation schedule, and discuss any capital purchases you're considering before 30 June. Do you have 45 minutes in the next fortnight?",
+    "isRead": false
+  },
+  {
+    "id": "bz-009",
+    "from": { "name": "Google", "email": "noreply@google.com" },
+    "subject": "You have a new 5-star review!",
+    "date": "2026-03-09T11:00:00Z",
+    "snippet": "A customer just left you a 5-star review: 'Absolutely love our new kitchen! The Caesarstone benchtops are stunning and the soft-close cabinetry is such a nice touch. The team was professional and kept us informed throughout the whole build. Highly recommend Coastal Kitchen Co.'",
+    "isRead": true
+  },
+  {
+    "id": "bz-010",
+    "from": { "name": "Master Builders Association", "email": "news@masterbuilders.com.au" },
+    "subject": "Industry update: New building codes and energy efficiency",
+    "date": "2026-03-09T07:00:00Z",
+    "snippet": "This month: updated NCC energy efficiency requirements take effect 1 May (impacts kitchen ventilation and lighting specifications), member networking breakfast on 27 March in Melbourne, and new guidance on waterproofing standards for wet areas adjacent to kitchens.",
+    "isRead": true
+  }
+]

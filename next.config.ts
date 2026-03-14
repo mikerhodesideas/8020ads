@@ -12,6 +12,19 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   allowedDevOrigins: ['*'],
+  async headers() {
+    return [
+      {
+        source: '/demo-assets/skills/:path*',
+        headers: [
+          {
+            key: 'Content-Disposition',
+            value: 'attachment',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default nextConfig

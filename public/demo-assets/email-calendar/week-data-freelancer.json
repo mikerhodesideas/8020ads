@@ -1,0 +1,264 @@
+{
+  "emails": [
+    {
+      "id": "1",
+      "from": "Steve Bartlett <steve@aceplumbing.com.au>",
+      "to": "me",
+      "subject": "March report looks off - can we chat?",
+      "date": "2026-03-09T20:45:00+11:00",
+      "snippet": "Hey Fiona, just had a look at last month's report and our cost per lead has jumped from $38 to $67. The emergency services campaign seems to be the main issue. Can we jump on a call early this week to go through it?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "2",
+      "from": "Xero <noreply@xero.com>",
+      "to": "me",
+      "subject": "Invoice #1093 to Green Valley Roofing is overdue",
+      "date": "2026-03-10T07:02:00+11:00",
+      "snippet": "Invoice #1093 for $3,850.00 was due on 28 February 2026 and is now 10 days overdue. You may want to send a reminder to your client.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "3",
+      "from": "Google Ads <googleads-noreply@google.com>",
+      "to": "me",
+      "subject": "Budget anomaly detected - Ace Plumbing",
+      "date": "2026-03-10T09:18:00+11:00",
+      "snippet": "The campaign 'Emergency Plumber - Melbourne' in account Ace Plumbing (xxx-xxx-3847) spent $412 yesterday, which is 285% above the daily average of $145. This may indicate a bidding or budget issue.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "4",
+      "from": "Natalie Ong <natalie@brightonsmilesdental.com.au>",
+      "to": "me",
+      "subject": "Need to reschedule Thursday's review call",
+      "date": "2026-03-10T11:35:00+11:00",
+      "snippet": "Hi Fiona, sorry but something came up with a supplier and I can't make our Thursday 10am call. Could we move it to Friday morning, maybe 9:30? I still want to go through the implant campaign numbers.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "5",
+      "from": "Search Engine Land <newsletter@searchengineland.com>",
+      "to": "me",
+      "subject": "Google Ads rolling out new PMax reporting features",
+      "date": "2026-03-10T16:00:00+11:00",
+      "snippet": "This week: Google adds asset-level conversion reporting to Performance Max, new search term insights for broad match, and an interview with the Google Ads product team on AI bidding changes coming in Q2.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "6",
+      "from": "Marcus Tran <marcus.tran@greenvalleyroofing.com.au>",
+      "to": "me",
+      "subject": "Increasing budget for April - how much do you recommend?",
+      "date": "2026-03-11T08:50:00+11:00",
+      "snippet": "Fiona, we've had our best quarter for leads thanks to the Google Ads. Thinking of bumping the monthly budget from $4k to $6k for April when the storm season kicks in. What would you recommend and where would you put the extra spend?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "7",
+      "from": "Google Ads <googleads-noreply@google.com>",
+      "to": "me",
+      "subject": "Recommendation available: Add responsive search ad",
+      "date": "2026-03-11T14:00:00+11:00",
+      "snippet": "Your account Ace Plumbing has a new recommendation: Add a responsive search ad to the 'Drain Cleaning Melbourne' ad group. Estimated impact: +12% clicks. Optimization score will increase by 3.2 points.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "8",
+      "from": "Optmyzr <billing@optmyzr.com>",
+      "to": "me",
+      "subject": "Your Optmyzr subscription renews in 7 days",
+      "date": "2026-03-11T22:00:00+11:00",
+      "snippet": "Your annual Optmyzr Pro plan (US$499.00) will auto-renew on 18 March 2026. Your current usage: 7 of 25 accounts connected. If you'd like to make changes, update your billing settings before renewal.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "9",
+      "from": "Rebecca Lowe <rebecca.lowe@outlook.com>",
+      "to": "me",
+      "subject": "Google Ads help for my physio practice?",
+      "date": "2026-03-12T09:20:00+11:00",
+      "snippet": "Hi Fiona, I got your name from Steve at Ace Plumbing. I run a physiotherapy practice in Camberwell and we've been trying to do Google Ads ourselves but getting nowhere. Spending about $2k/month with barely any calls. Would you have time for a coffee this week to discuss?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "10",
+      "from": "ATO <noreply@ato.gov.au>",
+      "to": "me",
+      "subject": "Activity statement reminder - March quarter BAS",
+      "date": "2026-03-12T06:00:00+11:00",
+      "snippet": "Your activity statement for the quarter ending 31 March 2026 is due by 28 April 2026. Lodge and pay on time to avoid penalties and interest charges.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "11",
+      "from": "David Chen <david@chenparkaccounting.com.au>",
+      "to": "me",
+      "subject": "BAS prep - need your docs by Friday",
+      "date": "2026-03-12T10:15:00+11:00",
+      "snippet": "Hi Fiona, just a heads up I need your Xero reports and any outstanding receipts by this Friday so I can start on your March quarter BAS. Can you export the profit & loss and trial balance and send them through? Also need that home office percentage confirmed.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "12",
+      "from": "PPC Newsletter <hello@ppcnewsletter.com>",
+      "to": "me",
+      "subject": "Issue #147: The death of exact match (again)",
+      "date": "2026-03-12T17:00:00+11:00",
+      "snippet": "This week: Why your exact match keywords are now basically broad match, three scripts to catch wasted spend before your client sees it, and the best way to structure a PMax campaign for local services.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "13",
+      "from": "SEMrush <billing@semrush.com>",
+      "to": "me",
+      "subject": "Payment failed - please update your card",
+      "date": "2026-03-13T08:30:00+11:00",
+      "snippet": "We were unable to process your payment of US$129.95 for your SEMrush Pro subscription. Please update your payment method within 5 days to avoid service interruption. Your next retry will be on 18 March.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "14",
+      "from": "Steve Bartlett <steve@aceplumbing.com.au>",
+      "to": "me",
+      "subject": "Also - we're getting spam calls from the ads",
+      "date": "2026-03-13T11:20:00+11:00",
+      "snippet": "Forgot to mention - the guys in the office reckon about half the calls from Google Ads last week were tyre kickers or wrong numbers. One bloke called asking about gas fitting which we don't even do. Can you look at the search terms?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "15",
+      "from": "Gym+Coffee Coworking <hello@gympluscoffee.com.au>",
+      "to": "me",
+      "subject": "Your hot desk booking confirmed - Friday 14 March",
+      "date": "2026-03-14T07:00:00+11:00",
+      "snippet": "Your hot desk is booked for Friday 14 March, 8:00am - 5:00pm. Meeting room access included. Wi-Fi password: GymCoffee2026. See you there!",
+      "labels": ["INBOX"],
+      "isImportant": false
+    }
+  ],
+  "calendar": [
+    {
+      "id": "cal1",
+      "title": "Client call - Steve (Ace Plumbing)",
+      "start": "2026-03-10T10:00:00+11:00",
+      "end": "2026-03-10T10:30:00+11:00",
+      "attendees": ["steve@aceplumbing.com.au"],
+      "location": "Google Meet",
+      "description": "Monthly review. Go through February performance, discuss cost per lead increase, review search terms."
+    },
+    {
+      "id": "cal2",
+      "title": "Admin & invoicing",
+      "start": "2026-03-10T14:00:00+11:00",
+      "end": "2026-03-10T15:30:00+11:00",
+      "attendees": [],
+      "location": "",
+      "description": "Chase overdue invoices, update Xero, reconcile expenses."
+    },
+    {
+      "id": "cal3",
+      "title": "Deep work - campaign builds",
+      "start": "2026-03-11T09:00:00+11:00",
+      "end": "2026-03-11T12:00:00+11:00",
+      "attendees": [],
+      "location": "",
+      "description": "No meetings. Build out new ad groups for Green Valley Roofing storm season push. Restructure Ace Plumbing emergency campaign."
+    },
+    {
+      "id": "cal4",
+      "title": "Client call - Marcus (Green Valley Roofing)",
+      "start": "2026-03-11T14:00:00+11:00",
+      "end": "2026-03-11T14:30:00+11:00",
+      "attendees": ["marcus.tran@greenvalleyroofing.com.au"],
+      "location": "Zoom",
+      "description": "Discuss Q1 results and April budget increase. Present storm season campaign plan."
+    },
+    {
+      "id": "cal5",
+      "title": "Gym - F45",
+      "start": "2026-03-12T06:30:00+11:00",
+      "end": "2026-03-12T07:15:00+11:00",
+      "attendees": [],
+      "location": "F45 Richmond",
+      "description": ""
+    },
+    {
+      "id": "cal6",
+      "title": "Coffee - Rebecca Lowe (potential new client)",
+      "start": "2026-03-12T10:00:00+11:00",
+      "end": "2026-03-12T10:45:00+11:00",
+      "attendees": ["rebecca.lowe@outlook.com"],
+      "location": "Padre Coffee, 438 Brunswick St Fitzroy",
+      "description": "Intro chat about Google Ads for her physio practice. Referred by Steve at Ace Plumbing."
+    },
+    {
+      "id": "cal7",
+      "title": "Deep work - reporting & analysis",
+      "start": "2026-03-12T13:00:00+11:00",
+      "end": "2026-03-12T16:00:00+11:00",
+      "attendees": [],
+      "location": "",
+      "description": "Build monthly reports for Ace Plumbing and Brighton Smiles Dental. Search term review across all accounts."
+    },
+    {
+      "id": "cal8",
+      "title": "Client call - Natalie (Brighton Smiles Dental)",
+      "start": "2026-03-13T10:00:00+11:00",
+      "end": "2026-03-13T10:30:00+11:00",
+      "attendees": ["natalie@brightonsmilesdental.com.au"],
+      "location": "Google Meet",
+      "description": "Monthly review. Discuss implant campaign performance and new patient numbers."
+    },
+    {
+      "id": "cal9",
+      "title": "BAS prep",
+      "start": "2026-03-13T14:00:00+11:00",
+      "end": "2026-03-13T16:00:00+11:00",
+      "attendees": [],
+      "location": "",
+      "description": "Export Xero reports, gather receipts, calculate home office percentage. Send everything to David at Chen Park Accounting."
+    },
+    {
+      "id": "cal10",
+      "title": "Gym - F45",
+      "start": "2026-03-14T06:30:00+11:00",
+      "end": "2026-03-14T07:15:00+11:00",
+      "attendees": [],
+      "location": "F45 Richmond",
+      "description": ""
+    },
+    {
+      "id": "cal11",
+      "title": "Proposal writing - Rebecca Lowe (physio)",
+      "start": "2026-03-14T09:00:00+11:00",
+      "end": "2026-03-14T10:30:00+11:00",
+      "attendees": [],
+      "location": "",
+      "description": "Draft proposal and pricing for Camberwell Physio Google Ads management."
+    },
+    {
+      "id": "cal12",
+      "title": "Parkrun",
+      "start": "2026-03-15T08:00:00+11:00",
+      "end": "2026-03-15T09:00:00+11:00",
+      "attendees": [],
+      "location": "Albert Park",
+      "description": ""
+    }
+  ]
+}

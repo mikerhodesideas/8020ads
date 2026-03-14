@@ -17,6 +17,8 @@ const CONNECTORS = [
   { name: 'Design Plugin', description: '12 specialized design skills', icon: '\u{1F3A8}' },
 ]
 
+const MORE_CONNECTORS = ['HubSpot', 'Asana', 'ClickUp', 'Slack', 'Excel', 'Outlook']
+
 export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransitionProps) {
   const isDark = skin.isDark
   const [visible, setVisible] = useState(false)
@@ -166,6 +168,15 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
                 </div>
               ))}
             </div>
+
+            <p
+              className={cn(
+                'text-xs sm:text-sm text-center',
+                textMuted
+              )}
+            >
+              Plus {MORE_CONNECTORS.join(', ')}, and more.
+            </p>
 
             <p
               className={cn(

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useGame, useSkin } from '@/components/game-provider'
+import { playSound } from '@/lib/sounds'
 
 const GLOSSARY: Record<string, string> = {
   skill: 'A specialized instruction set that focuses AI on a specific task',
@@ -21,9 +22,12 @@ export default function GlossaryTip({
   const skin = useSkin()
 
   const handleClick = useCallback(() => {
-    if (!open) openGlossaryTerm(termId)
+    if (!open) {
+      openGlossaryTerm(termId)
+      if (skin.sounds.glossaryOpen) playSound(skin.sounds.glossaryOpen)
+    }
     setOpen((prev) => !prev)
-  }, [open, openGlossaryTerm, termId])
+  }, [open, openGlossaryTerm, termId, skin.sounds.glossaryOpen])
 
   // Close on click outside
   useEffect(() => {

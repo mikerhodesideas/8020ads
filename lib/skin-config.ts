@@ -1,18 +1,5 @@
 import type { WorldId, DemoType } from './game-data'
-
-type SoundName =
-  // Mario / Arcade
-  | 'coin' | 'powerUp' | 'oneUp' | 'pipe' | 'blockHit' | 'fanfare' | 'blip' | 'whoosh' | 'thud' | 'bonk' | 'chime' | 'select' | 'retry'
-  // Red Alert
-  | 'ra-radar-ping' | 'ra-tech-researched' | 'ra-deploy' | 'ra-mission-accomplished' | 'ra-campaign-complete' | 'ra-alert-klaxon' | 'ra-command-blip' | 'ra-unit-ready' | 'ra-mission-failed' | 'ra-credits-collect'
-  // Clair Obscur
-  | 'co-technique-learn' | 'co-expedition-log' | 'co-execute' | 'co-chapter-clear' | 'co-expedition-complete' | 'co-page-chime' | 'co-hover-note' | 'co-select-confirm' | 'co-missed-beat' | 'co-lumina-collect'
-  // Tetris
-  | 'tetris-piece-drop' | 'tetris-piece-rotate' | 'tetris-line-clear' | 'tetris-tetris-clear' | 'tetris-level-up' | 'tetris-high-score' | 'tetris-soft-drop' | 'tetris-hold-piece' | 'tetris-lock-delay' | 'tetris-points-collect'
-  // Zelda
-  | 'zelda-item-get' | 'zelda-chest-open' | 'zelda-secret-discovered' | 'zelda-quest-accepted' | 'zelda-sword-slash' | 'zelda-dungeon-clear' | 'zelda-heart-collect' | 'zelda-fairy-chime' | 'zelda-rupee-collect' | 'zelda-door-locked'
-  // Elder Scrolls
-  | 'es-quest-accept' | 'es-skill-unlock' | 'es-level-complete' | 'es-node-select' | 'es-victory' | 'es-ui-click'
+import type { SoundName, SoundRef } from './sounds'
 
 // Layout template types
 type NavLayout = 'light-bar' | 'dark-hud'
@@ -79,20 +66,27 @@ export interface SkinConfig {
 
   // Sound mapping
   sounds: {
-    demoStart: SoundName | null
-    skillUnlock: SoundName | null
-    demoComplete: SoundName | null
-    victory: SoundName | null
-    transition: SoundName | null
-    hover: SoundName | null
-    selection: SoundName | null
-    retry: SoundName | null
-    badgeEarned: SoundName | null
-    locked: SoundName | null
-    levelComplete: SoundName | null
-    resultGood: SoundName | null
-    resultGreat: SoundName | null
-    resultOk: SoundName | null
+    demoStart: SoundRef | null
+    skillUnlock: SoundRef | null
+    demoComplete: SoundRef | null
+    victory: SoundRef | null
+    transition: SoundRef | null
+    hover: SoundRef | null
+    selection: SoundRef | null
+    retry: SoundRef | null
+    badgeEarned: SoundRef | null
+    locked: SoundRef | null
+    levelComplete: SoundRef | null
+    resultGood: SoundRef | null
+    resultGreat: SoundRef | null
+    resultOk: SoundRef | null
+    starReveal: SoundRef | null
+    progressTick: SoundRef | null
+    speedBonus: SoundRef | null
+    glossaryOpen: SoundRef | null
+    promptSelect: SoundRef | null
+    worldPreview: SoundRef | null
+    skillDownload: SoundRef | null
   }
 
   // Layout Template Selection
@@ -196,6 +190,13 @@ const gallerySkin: SkinConfig = {
     resultGood: null,
     resultGreat: null,
     resultOk: null,
+    starReveal: null,
+    progressTick: null,
+    speedBonus: null,
+    glossaryOpen: null,
+    promptSelect: null,
+    worldPreview: null,
+    skillDownload: null,
   },
 
   // Layout
@@ -292,22 +293,29 @@ const arcadeSkin: SkinConfig = {
     navBorder: 'border-[#333]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
     demoStart: 'blockHit',
-    skillUnlock: 'powerUp',
-    demoComplete: 'coin',
-    victory: 'fanfare',
+    skillUnlock: 'file:/sounds/mario/mario-1up.wav',
+    demoComplete: 'file:/sounds/mario/mario-powerup.wav',
+    victory: 'file:/sounds/mario/mario-flagpole.wav',
     transition: 'pipe',
-    hover: null,
-    selection: 'coin',
-    retry: 'pipe',
+    hover: 'blip',
+    selection: 'file:/sounds/mario/mario-coin.wav',
+    retry: 'retry',
     badgeEarned: 'oneUp',
-    locked: null,
-    levelComplete: 'oneUp',
-    resultGood: 'coin',
-    resultGreat: 'fanfare',
-    resultOk: 'pipe',
+    locked: 'bonk',
+    levelComplete: 'arcade-level-clear',
+    resultGood: 'chime',
+    resultGreat: 'whoosh',
+    resultOk: 'thud',
+    starReveal: 'arcade-star',
+    progressTick: 'arcade-tick',
+    speedBonus: 'arcade-speed',
+    glossaryOpen: 'arcade-glossary',
+    promptSelect: 'arcade-prompt',
+    worldPreview: 'arcade-preview',
+    skillDownload: 'arcade-download',
   },
 
   // Layout
@@ -360,7 +368,7 @@ const redAlertSkin: SkinConfig = {
   intelLabel: '// INTEL //',
   runButtonLabel: 'DEPLOY',
   runAgainLabel: 'Re-Deploy with Technology',
-  celebrationText: (n) => `SECTOR ${n} CLEAR`,
+  celebrationText: (n) => ['SECTOR ALPHA', 'SECTOR BRAVO', 'SECTOR CHARLIE'][n - 1] + ' CLEAR',
   victoryHeading: 'CAMPAIGN COMPLETE',
   skillUnlockLabel: 'TECHNOLOGY RESEARCHED',
   installLabel: 'RESEARCH COMPLETE',
@@ -404,22 +412,29 @@ const redAlertSkin: SkinConfig = {
     navBorder: 'border-[var(--ra-green)]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
-    demoStart: 'ra-radar-ping',
+    demoStart: 'file:/sounds/red-alert/affirmative.mp3',
     skillUnlock: 'ra-tech-researched',
-    demoComplete: 'ra-mission-accomplished',
-    victory: 'ra-campaign-complete',
-    transition: 'ra-deploy',
-    hover: null,
-    selection: 'ra-unit-ready',
+    demoComplete: 'file:/sounds/red-alert/mission-sir.mp3',
+    victory: 'file:/sounds/red-alert/chaching.mp3',
+    transition: 'file:/sounds/red-alert/rolling.wav',
+    hover: 'ra-hover',
+    selection: 'file:/sounds/red-alert/acknowledged.mp3',
     retry: 'ra-mission-failed',
-    badgeEarned: 'ra-mission-accomplished',
+    badgeEarned: 'ra-badge',
     locked: 'ra-alert-klaxon',
-    levelComplete: 'ra-mission-accomplished',
+    levelComplete: 'file:/sounds/red-alert/too-easy.wav',
     resultGood: 'ra-credits-collect',
-    resultGreat: 'ra-mission-accomplished',
+    resultGreat: 'ra-result-great',
     resultOk: 'ra-command-blip',
+    starReveal: 'ra-star',
+    progressTick: 'ra-tick',
+    speedBonus: 'ra-speed',
+    glossaryOpen: 'ra-glossary',
+    promptSelect: 'ra-prompt',
+    worldPreview: 'ra-preview',
+    skillDownload: 'ra-download',
   },
 
   // Layout
@@ -434,6 +449,13 @@ const redAlertSkin: SkinConfig = {
 
   // Victory image
   victoryImage: '/images/victory/red-alert-victory.png',
+
+  // Level preview images
+  levelImages: {
+    1: '/images/maps/red-alert-level-1.png',
+    2: '/images/maps/red-alert-level-2.png',
+    3: '/images/maps/red-alert-level-3.png',
+  },
 
   // Background
   backgroundEffect: 'radar-grid',
@@ -501,22 +523,29 @@ const clairObscurSkin: SkinConfig = {
     navBorder: 'border-[var(--co-border)]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
-    demoStart: 'co-execute',
-    skillUnlock: 'co-technique-learn',
-    demoComplete: 'co-lumina-collect',
-    victory: 'co-expedition-complete',
+    demoStart: 'file:/sounds/clair-obscur/lumiere-intro.mp3',
+    skillUnlock: 'file:/sounds/clair-obscur/music-box.mp3',
+    demoComplete: 'file:/sounds/clair-obscur/title-theme.mp3',
+    victory: 'file:/sounds/clair-obscur/getup-lumiere.mp3',
     transition: 'co-page-chime',
     hover: 'co-hover-note',
     selection: 'co-select-confirm',
     retry: 'co-missed-beat',
-    badgeEarned: 'co-technique-learn',
-    locked: null,
+    badgeEarned: 'co-badge',
+    locked: 'co-locked',
     levelComplete: 'co-chapter-clear',
-    resultGood: 'co-lumina-collect',
-    resultGreat: 'co-technique-learn',
-    resultOk: 'co-expedition-log',
+    resultGood: 'co-expedition-log',
+    resultGreat: 'co-result-great',
+    resultOk: 'co-locked',
+    starReveal: 'co-star',
+    progressTick: 'co-tick',
+    speedBonus: 'co-speed',
+    glossaryOpen: 'co-glossary',
+    promptSelect: 'co-prompt',
+    worldPreview: 'co-preview',
+    skillDownload: 'co-download',
   },
 
   // Layout
@@ -598,22 +627,29 @@ const tetrisSkin: SkinConfig = {
     navBorder: 'border-[var(--tetris-grid)]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
     demoStart: 'tetris-piece-drop',
     skillUnlock: 'tetris-line-clear',
-    demoComplete: 'tetris-line-clear',
-    victory: 'tetris-high-score',
+    demoComplete: 'file:/sounds/tetris/korobeiniki-short.mp3',
+    victory: 'file:/sounds/tetris/korobeiniki.mp3',
     transition: 'tetris-soft-drop',
-    hover: null,
+    hover: 'tetris-hover',
     selection: 'tetris-hold-piece',
     retry: 'tetris-lock-delay',
     badgeEarned: 'tetris-tetris-clear',
-    locked: 'tetris-lock-delay',
+    locked: 'tetris-locked',
     levelComplete: 'tetris-level-up',
     resultGood: 'tetris-points-collect',
-    resultGreat: 'tetris-tetris-clear',
+    resultGreat: 'tetris-badge-combo',
     resultOk: 'tetris-piece-rotate',
+    starReveal: 'tetris-star',
+    progressTick: 'tetris-tick',
+    speedBonus: 'tetris-speed',
+    glossaryOpen: 'tetris-glossary',
+    promptSelect: 'tetris-prompt',
+    worldPreview: 'tetris-preview',
+    skillDownload: 'tetris-download',
   },
 
   // Layout
@@ -651,7 +687,7 @@ const zeldaSkin: SkinConfig = {
   intelLabel: 'DUNGEON INTEL',
   runButtonLabel: 'Enter Dungeon',
   runAgainLabel: 'Re-enter with Treasure',
-  celebrationText: (n) => `Dungeon ${n} Clear!`,
+  celebrationText: (n) => 'Dungeon ' + n + ' Clear!',
   victoryHeading: 'TRIFORCE COMPLETE',
   skillUnlockLabel: 'Treasure Found!',
   installLabel: 'Take Item',
@@ -695,22 +731,29 @@ const zeldaSkin: SkinConfig = {
     navBorder: 'border-[var(--zelda-grass)]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
     demoStart: 'zelda-sword-slash',
-    skillUnlock: 'zelda-item-get',
-    demoComplete: 'zelda-rupee-collect',
+    skillUnlock: 'file:/sounds/zelda/zelda-item-get.wav',
+    demoComplete: 'file:/sounds/zelda/zelda-chest-open.mp3',
     victory: 'zelda-dungeon-clear',
     transition: 'zelda-quest-accepted',
     hover: 'zelda-fairy-chime',
     selection: 'zelda-heart-collect',
     retry: 'zelda-door-locked',
-    badgeEarned: 'zelda-secret-discovered',
-    locked: 'zelda-door-locked',
-    levelComplete: 'zelda-dungeon-clear',
-    resultGood: 'zelda-rupee-collect',
-    resultGreat: 'zelda-item-get',
+    badgeEarned: 'file:/sounds/zelda/zelda-heart.wav',
+    locked: 'zelda-lock-rattle',
+    levelComplete: 'file:/sounds/zelda/zelda-secret.wav',
+    resultGood: 'zelda-gem-collect',
+    resultGreat: 'zelda-treasure-reveal',
     resultOk: 'zelda-chest-open',
+    starReveal: 'zelda-star',
+    progressTick: 'zelda-tick',
+    speedBonus: 'zelda-speed',
+    glossaryOpen: 'zelda-glossary',
+    promptSelect: 'zelda-prompt',
+    worldPreview: 'zelda-preview',
+    skillDownload: 'zelda-download',
   },
 
   // Layout
@@ -748,7 +791,7 @@ const elderScrollsSkin: SkinConfig = {
   intelLabel: 'LORE',
   runButtonLabel: 'Cast Spell',
   runAgainLabel: 'Invoke with Perk',
-  celebrationText: (n) => `Quest Line ${n} Complete`,
+  celebrationText: (n) => ['Constellation I', 'Constellation II', 'Constellation III'][n - 1] + ' Complete',
   victoryHeading: 'DRAGONBORN',
   skillUnlockLabel: 'Perk Activated',
   installLabel: 'Activate Perk',
@@ -792,22 +835,29 @@ const elderScrollsSkin: SkinConfig = {
     navBorder: 'border-[rgba(201,168,76,0.2)]',
   },
 
-  // Sounds
+  // Sounds (hero moments use real audio files, rest are synthesized)
   sounds: {
-    demoStart: 'es-node-select',
+    demoStart: 'file:/sounds/elder-scrolls/skyrim-fusrodah.mp3',
     skillUnlock: 'es-skill-unlock',
-    demoComplete: 'es-node-select',
-    victory: 'es-victory',
+    demoComplete: 'file:/sounds/elder-scrolls/quest-complete.mp3',
+    victory: 'file:/sounds/elder-scrolls/skyrim-levelup.mp3',
     transition: 'es-ui-click',
-    hover: null,
-    selection: 'es-ui-click',
-    retry: 'es-ui-click',
-    badgeEarned: 'es-skill-unlock',
-    locked: null,
-    levelComplete: 'es-level-complete',
-    resultGood: 'es-node-select',
-    resultGreat: 'es-skill-unlock',
-    resultOk: 'es-ui-click',
+    hover: 'es-whisper',
+    selection: 'es-node-select',
+    retry: 'es-spell-fizzle',
+    badgeEarned: 'es-dragon-soul',
+    locked: 'es-ward',
+    levelComplete: 'file:/sounds/elder-scrolls/skill-level-up.mp3',
+    resultGood: 'es-skill-increase',
+    resultGreat: 'es-septim',
+    resultOk: 'es-minor-discovery',
+    starReveal: 'es-star',
+    progressTick: 'es-tick',
+    speedBonus: 'es-speed',
+    glossaryOpen: 'es-glossary',
+    promptSelect: 'es-prompt',
+    worldPreview: 'es-preview',
+    skillDownload: 'es-download',
   },
 
   // Layout

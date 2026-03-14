@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef, useCallback } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { useGame, useSkin } from '@/components/game-provider'
@@ -9,10 +9,20 @@ import DragFile from './drag-file'
 import GlossaryTip from './glossary-tip'
 import { demoContent } from './demo-content'
 import { cn } from '@/lib/utils'
-import { playSound } from '@/lib/sounds'
+import { playSound, startProgressTick, stopProgressTick, playStarReveal, startBackgroundMusic, stopBackgroundMusic } from '@/lib/sounds'
 import { useTransition } from '@/components/transition-overlay'
 
 type QuestPhase = 'briefing' | 'running-before' | 'skill-unlock' | 'setup-guide' | 'celebration'
+
+// Map world IDs to sprite filenames (gallery has no sprite)
+const worldSprites: Record<string, string> = {
+  arcade: '/images/sprites/mario.png',
+  'red-alert': '/images/sprites/red-alert.png',
+  'clair-obscur': '/images/sprites/clair-obscur.png',
+  tetris: '/images/sprites/tetris.png',
+  zelda: '/images/sprites/zelda.png',
+  'elder-scrolls': '/images/sprites/elder-scrolls.png',
+}
 
 function getDemoLevel(demoId: number): number {
   if (ALL_LEVEL_2_IDS.has(demoId)) return 2
@@ -20,17 +30,8 @@ function getDemoLevel(demoId: number): number {
   return 1
 }
 
-// Setup guide content for Level 3 demos
+// Setup guide content for Level 3 demos (shown before demo runs)
 const SETUP_GUIDES: Record<number, { title: string; instructions: string[]; note?: string }> = {
-  7: {
-    title: 'Connect Gmail and Google Calendar',
-    instructions: [
-      'Open Cowork and go to Customize > Connectors',
-      'Find Gmail and click Connect',
-      'Find Google Calendar and click Connect',
-      'Grant the permissions when prompted',
-    ],
-  },
   8: {
     title: 'Install the Design Plugin',
     instructions: [
@@ -39,6 +40,20 @@ const SETUP_GUIDES: Record<number, { title: string; instructions: string[]; note
       'Click Install',
       'The plugin adds 12 specialized design skills',
     ],
+  },
+}
+
+// Post-demo connector guidance (shown after demo completes)
+const POST_DEMO_GUIDES: Record<number, { title: string; instructions: string[]; connectors: string[] }> = {
+  7: {
+    title: 'Now connect your REAL accounts',
+    instructions: [
+      'Open Cowork and go to Customize > Connectors',
+      'Find Gmail and click Connect',
+      'Find Google Calendar and click Connect',
+      'Grant the permissions when prompted',
+    ],
+    connectors: ['Gmail', 'Google Calendar', 'HubSpot', 'Asana', 'ClickUp', 'Slack', 'Excel', 'Outlook', 'Notion'],
   },
 }
 
@@ -119,6 +134,16 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
     []
   )
 
+  // Background music for clair-obscur demos
+  useEffect(() => {
+    if (world === 'clair-obscur') {
+      startBackgroundMusic('clair-obscur', demoId)
+    }
+    return () => {
+      stopBackgroundMusic()
+    }
+  }, [world, demoId])
+
   if (!type || !world) {
     router.replace('/')
     return null
@@ -183,11 +208,14 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   // Shared: run progress bar -> celebration
   const runSingleDemo = async () => {
     setPhase('running-before')
+    if (skin.sounds.progressTick) startProgressTick(skin.sounds.progressTick)
     const stages = demo.afterStages || BEFORE_STAGES
     await runProgressBar(stages, 600)
+    stopProgressTick()
     await delay(300)
     if (skin.sounds.demoComplete) playSound(skin.sounds.demoComplete)
     setChoiceScore(demo.id, 3)
+    playStarReveal(3, skin.id)
     setPhase('celebration')
     setJustCompleted(true)
     markComplete(demo.id)
@@ -257,7 +285,63 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
       {/* Arcade: pixel star background */}
       {skin.backgroundEffect === 'pixel-stars' && <PixelStars />}
 
-      <div className={cn('flex-1 px-4 sm:px-6 py-8 sm:py-10 max-w-6xl mx-auto w-full', isDark && 'pb-16')}>
+      {/* World-specific atmospheric background images for play pages */}
+      {skin.id !== 'gallery' && level && (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <img
+            src={`/images/maps/${skin.id}-level-${level.id}.png`}
+            alt=""
+            className="w-full h-full"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              opacity: skin.id === 'clair-obscur' ? 0.08
+                : skin.id === 'arcade' ? 0.15
+                : skin.id === 'zelda' ? 0.15
+                : skin.id === 'elder-scrolls' ? 0.15
+                : skin.id === 'tetris' ? 0.12
+                : 0.2,
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: skin.id === 'arcade'
+                ? 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(26, 26, 46, 0.7) 100%)'
+                : skin.id === 'clair-obscur'
+                ? 'none'
+                : skin.id === 'zelda'
+                ? 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(16, 40, 16, 0.7) 100%)'
+                : skin.id === 'elder-scrolls'
+                ? 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(10, 10, 30, 0.7) 100%)'
+                : skin.id === 'tetris'
+                ? 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(10, 10, 30, 0.7) 100%)'
+                : 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(10, 18, 8, 0.75) 100%)',
+            }}
+          />
+        </div>
+      )}
+
+      <div
+        className={cn('flex-1 px-4 sm:px-6 py-8 sm:py-10 max-w-6xl mx-auto w-full relative z-[1]', isDark && 'pb-16')}
+        style={
+          skin.id === 'clair-obscur' ? {
+            background: 'rgba(250, 246, 239, 0.95)',
+            marginTop: '1rem',
+            marginBottom: '2rem',
+            borderLeft: '1px solid rgba(197, 165, 90, 0.2)',
+            borderRight: '1px solid rgba(197, 165, 90, 0.2)',
+          }
+          : skin.id === 'zelda' ? {
+            background: 'rgba(240, 232, 208, 0.92)',
+            marginTop: '1rem',
+            marginBottom: '2rem',
+            borderLeft: '1px solid rgba(218, 165, 32, 0.15)',
+            borderRight: '1px solid rgba(218, 165, 32, 0.15)',
+          }
+          : undefined
+        }
+      >
         {/* Header - compact after briefing phase */}
         {effectivePhase === 'briefing' ? (
           <div className="mb-8 sm:mb-10">
@@ -314,7 +398,24 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
         {effectivePhase === 'briefing' && (
           <div className="quest-phase-in">
             {skin.showMissionBrief && (
-              <div className="text-center mb-6">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                {world && worldSprites[world] && (
+                  <div
+                    className="w-11 h-11 overflow-hidden flex-shrink-0"
+                    style={{
+                      borderRadius: '50%',
+                      border: '2px solid var(--world-accent)',
+                      boxShadow: '0 0 8px rgba(255,215,0,0.25)',
+                    }}
+                  >
+                    <img
+                      src={worldSprites[world]}
+                      alt=""
+                      className="w-full h-full object-cover"
+                      style={{ imageRendering: 'pixelated' }}
+                    />
+                  </div>
+                )}
                 <p className="text-xs font-bold uppercase tracking-[0.3em] font-heading text-[var(--world-accent)] terminal-cursor">
                   {skin.briefingHeader}
                 </p>
@@ -390,7 +491,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                       <button
                         key={option.id}
                         onClick={() => {
-                          if (skin.sounds.selection) playSound(skin.sounds.selection)
+                          if (skin.sounds.promptSelect) playSound(skin.sounds.promptSelect)
                           setPlayerChoice(demoId, option.id)
                         }}
                         className={cn(
@@ -642,13 +743,61 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                   'border-2 rounded-[2px] overflow-hidden',
                   'border-[var(--world-accent)]'
                 )} style={{ maxHeight: 700, overflowY: 'hidden' }}>
-                  {(() => { const A = demoContent[demo.id].after; return <A /> })()}
+                  {(() => { const A = demoContent[demo.id].after; return <A playerType={type as PlayerType} /> })()}
                 </div>
               </div>
             )}
 
             {(showTryThis || done) && (
               <div className="mt-10 max-w-5xl mx-auto quest-phase-in">
+                {/* Post-demo connector guide (Demo 7) */}
+                {POST_DEMO_GUIDES[demo.id] && (
+                  <div
+                    className="p-6 sm:p-8 rounded-[2px] mb-6"
+                    style={{
+                      background: 'var(--world-card-bg)',
+                      border: '2px solid var(--world-accent)',
+                    }}
+                  >
+                    <h3 className="text-lg font-heading font-bold mb-4 text-[var(--world-text)]">
+                      {POST_DEMO_GUIDES[demo.id].title}
+                    </h3>
+                    <ol className="space-y-2 mb-6">
+                      {POST_DEMO_GUIDES[demo.id].instructions.map((step, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-3 text-sm text-[var(--world-text-secondary)]"
+                        >
+                          <span
+                            className="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold font-heading shrink-0 mt-0.5 text-white"
+                            style={{ background: 'var(--world-accent)' }}
+                          >
+                            {i + 1}
+                          </span>
+                          {step}
+                        </li>
+                      ))}
+                    </ol>
+                    <p className="text-xs font-bold uppercase tracking-widest font-heading mb-3 text-[var(--world-text-muted)]">
+                      Cowork connects to everything you already use
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {POST_DEMO_GUIDES[demo.id].connectors.map((name) => (
+                        <span
+                          key={name}
+                          className="px-3 py-1 text-xs font-heading font-medium rounded-[2px]"
+                          style={{
+                            background: 'var(--world-selection-bg)',
+                            color: 'var(--world-text)',
+                            border: '1px solid var(--world-data-border)',
+                          }}
+                        >
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {/* Big CTA section */}
                 <div
                   className="p-8 sm:p-10 rounded-[2px] text-center"
@@ -691,6 +840,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.background = 'var(--world-download-hover-bg)'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'var(--world-download-bg)'}
+                        onClick={() => { if (skin.sounds.skillDownload) playSound(skin.sounds.skillDownload) }}
                       >
                         <span className="text-2xl shrink-0">&#128230;</span>
                         <span
@@ -975,7 +1125,17 @@ function SkillUnlockCard({
               </p>
 
               <button
-                onClick={onInstall}
+                onClick={() => {
+                  if (skillZip) {
+                    const a = document.createElement('a')
+                    a.href = skillZip.path
+                    a.download = skillZip.name
+                    document.body.appendChild(a)
+                    a.click()
+                    document.body.removeChild(a)
+                  }
+                  onInstall()
+                }}
                 className={cn(
                   'w-full font-heading font-bold rounded-[2px] text-white transition-all',
                   isDark ? 'py-3.5 text-base power-pulse' : 'py-2.5 text-sm'

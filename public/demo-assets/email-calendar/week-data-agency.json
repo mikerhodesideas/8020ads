@@ -1,0 +1,282 @@
+{
+  "emails": [
+    {
+      "id": "1",
+      "from": "Google Ads Alerts <googleads-noreply@google.com>",
+      "to": "me",
+      "subject": "Spend anomaly detected - Pinnacle Fitness account",
+      "date": "2026-03-09T23:15:00+00:00",
+      "snippet": "The campaign 'PMax - Gym Memberships' in account Pinnacle Fitness (xxx-xxx-4821) spent \u00a31,247 yesterday, which is 340% above the daily average. This may indicate a budget or bidding issue.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "2",
+      "from": "Tom Greenwood <tom@northstardigital.co.uk>",
+      "to": "me",
+      "subject": "Creative approval needed - CloudBase display ads",
+      "date": "2026-03-10T08:40:00+00:00",
+      "snippet": "Hey Alex, CloudBase sent through their new display ads but I'm not sure if they've signed off on the updated disclaimer copy. Should I go ahead and upload them or wait for written approval? Don't want to hold up the campaign launch on Thursday.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": false
+    },
+    {
+      "id": "3",
+      "from": "Daniel Ostrowski <daniel@revscale.io>",
+      "to": "me",
+      "subject": "PPC management for our SaaS - interested in chatting",
+      "date": "2026-03-10T10:20:00+00:00",
+      "snippet": "Hi Alex, we're a B2B SaaS company doing about \u00a32M ARR and currently spending around \u00a325k/month on Google Ads with mediocre results. Found your agency through a Search Engine Journal article. Would love to chat about what working together could look like.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "4",
+      "from": "Google Partners <partners@google.com>",
+      "to": "me",
+      "subject": "Your Q1 Google Partner scorecard is ready",
+      "date": "2026-03-10T14:00:00+00:00",
+      "snippet": "Your agency scorecard for Q1 2026 is now available. Current status: Premier Partner. You've met the spend threshold and optimisation score requirements. Review your scorecard for areas to improve.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "5",
+      "from": "Raj Patel <raj@pinnaclefitness.co.uk>",
+      "to": "me",
+      "subject": "URGENT: Results are down and I want answers",
+      "date": "2026-03-10T16:55:00+00:00",
+      "snippet": "Alex, I've just looked at the dashboard and leads are down 40% from last month. My credit card got hit way harder than expected too. I need to understand what's going on. Can we get on a call first thing tomorrow? I'm seriously considering whether this is working.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "6",
+      "from": "Sophie Grant <sophie@grantcreative.co.uk>",
+      "to": "me",
+      "subject": "March invoice - retainer + additional hours",
+      "date": "2026-03-11T07:30:00+00:00",
+      "snippet": "Attached is my invoice for March. The retainer is the usual \u00a33,400 plus 8 additional hours for the Pinnacle Fitness video shoot at \u00a395/hr. Total: \u00a34,160. Payment terms: 14 days.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "7",
+      "from": "Mia Chen <mia.chen@gmail.com>",
+      "to": "me",
+      "subject": "Application: Senior Account Manager position",
+      "date": "2026-03-11T09:15:00+00:00",
+      "snippet": "Hi, I saw the Senior Account Manager role on LinkedIn. I've spent 5 years at Brainlabs managing \u00a31.5M+ monthly in Google and Meta spend across retail and finance verticals. I'd love to chat about the role. CV attached.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": false
+    },
+    {
+      "id": "8",
+      "from": "Tom Greenwood <tom@northstardigital.co.uk>",
+      "to": "me",
+      "subject": "Leave request - 24-28 March",
+      "date": "2026-03-11T11:00:00+00:00",
+      "snippet": "Hey Alex, just a heads up that I'd like to take the last week of March off. I'll make sure all client reports are done before I go and brief Lauren on anything urgent. Let me know if that works.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": false
+    },
+    {
+      "id": "9",
+      "from": "Karen Liu <karen@cloudbase.io>",
+      "to": "me",
+      "subject": "Re: Display campaign assets - approved with changes",
+      "date": "2026-03-12T08:45:00+00:00",
+      "snippet": "All approved. Just one change: swap the CTA from 'Start Free Trial' to 'See It In Action' on the 300x250 and 728x90 sizes. Everything else is good to go. Please launch by Thursday.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "10",
+      "from": "Looker Studio <noreply@google.com>",
+      "to": "me",
+      "subject": "Scheduled report ready: Weekly Agency Dashboard",
+      "date": "2026-03-12T06:00:00+00:00",
+      "snippet": "Your scheduled Looker Studio report 'Weekly Agency Dashboard' for the period 3-9 March is ready. Key highlights: total managed spend \u00a3142k, average CPA down 8% WoW, 3 accounts above target ROAS.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "11",
+      "from": "Lauren Nash <lauren@northstardigital.co.uk>",
+      "to": "me",
+      "subject": "FYI: Jake from True Digital poached by Merkle",
+      "date": "2026-03-12T13:30:00+00:00",
+      "snippet": "Just saw on LinkedIn that Jake Rivera left True Digital for a Head of Paid role at Merkle. He managed the Pinnacle and CloudBase accounts before they came to us. Might be worth reaching out to his old clients at True Digital while they're reshuffling.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "12",
+      "from": "Search Engine Land <newsletter@searchengineland.com>",
+      "to": "me",
+      "subject": "Google Ads rolling out new automated asset generation",
+      "date": "2026-03-12T18:00:00+00:00",
+      "snippet": "Google announced a major expansion of AI-generated ad assets within Performance Max campaigns. Starting April, advertisers will see auto-generated headlines and images unless they opt out. Here's what agencies need to know.",
+      "labels": ["INBOX"],
+      "isImportant": false
+    },
+    {
+      "id": "13",
+      "from": "Raj Patel <raj@pinnaclefitness.co.uk>",
+      "to": "me",
+      "subject": "Re: Performance update - let's give it another month",
+      "date": "2026-03-13T09:10:00+00:00",
+      "snippet": "Thanks for the detailed breakdown Alex. I understand the spend spike was a PMax issue and you've fixed it. I'm willing to give it another month but I need to see leads back above 80/week or we'll need to have a harder conversation. Can you send me a revised forecast?",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "14",
+      "from": "Finance <finance@northstardigital.co.uk>",
+      "to": "me",
+      "subject": "Q1 forecast vs actuals - spreadsheet attached",
+      "date": "2026-03-14T08:00:00+00:00",
+      "snippet": "Hi Alex, attached is the Q1 forecast vs actuals spreadsheet. Revenue is tracking 4% below forecast mainly due to the MoveRight account reducing spend. Two items to flag: Sophie's contractor invoice came in higher than budgeted, and we still need to invoice RevScale for the audit.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    },
+    {
+      "id": "15",
+      "from": "Lisa Hart <lisa@moveright.co.uk>",
+      "to": "me",
+      "subject": "Need to discuss reducing our retainer",
+      "date": "2026-03-14T10:20:00+00:00",
+      "snippet": "Hi Alex, the property market has slowed right down and our board wants to cut marketing spend by 30% for Q2. I know this isn't what you want to hear. Can we schedule a call next week to discuss what a reduced package would look like? We definitely want to keep working with you.",
+      "labels": ["INBOX", "UNREAD"],
+      "isImportant": true
+    }
+  ],
+  "calendar": [
+    {
+      "id": "cal1",
+      "title": "Team standup",
+      "start": "2026-03-10T09:00:00+00:00",
+      "end": "2026-03-10T09:15:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Daily team standup. Client updates, blockers, priorities."
+    },
+    {
+      "id": "cal2",
+      "title": "Pipeline review",
+      "start": "2026-03-10T14:00:00+00:00",
+      "end": "2026-03-10T15:00:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Boardroom",
+      "description": "Review sales pipeline, discuss RevScale inquiry, capacity planning for Q2."
+    },
+    {
+      "id": "cal3",
+      "title": "Client call - Raj (Pinnacle Fitness)",
+      "start": "2026-03-11T09:00:00+00:00",
+      "end": "2026-03-11T09:30:00+00:00",
+      "attendees": ["raj@pinnaclefitness.co.uk"],
+      "location": "Zoom",
+      "description": "Discuss spend anomaly, review campaign performance, address budget concerns."
+    },
+    {
+      "id": "cal4",
+      "title": "Team standup",
+      "start": "2026-03-11T09:45:00+00:00",
+      "end": "2026-03-11T10:00:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Daily team standup"
+    },
+    {
+      "id": "cal5",
+      "title": "Dentist",
+      "start": "2026-03-11T15:00:00+00:00",
+      "end": "2026-03-11T15:45:00+00:00",
+      "attendees": [],
+      "location": "Deansgate Dental, 12 Deansgate, Manchester",
+      "description": "Regular checkup and clean"
+    },
+    {
+      "id": "cal6",
+      "title": "Team standup",
+      "start": "2026-03-12T09:00:00+00:00",
+      "end": "2026-03-12T09:15:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Daily team standup"
+    },
+    {
+      "id": "cal7",
+      "title": "New business pitch - RevScale",
+      "start": "2026-03-12T11:00:00+00:00",
+      "end": "2026-03-12T12:00:00+00:00",
+      "attendees": ["daniel@revscale.io", "tom@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Initial pitch meeting with RevScale SaaS. Present agency capabilities, discuss their Google Ads challenges, scope potential engagement."
+    },
+    {
+      "id": "cal8",
+      "title": "Client call - Karen (CloudBase)",
+      "start": "2026-03-12T14:00:00+00:00",
+      "end": "2026-03-12T14:30:00+00:00",
+      "attendees": ["karen@cloudbase.io"],
+      "location": "Zoom",
+      "description": "Display campaign launch check-in, review creative approvals, confirm go-live date."
+    },
+    {
+      "id": "cal9",
+      "title": "Team standup",
+      "start": "2026-03-13T09:00:00+00:00",
+      "end": "2026-03-13T09:15:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Daily team standup"
+    },
+    {
+      "id": "cal10",
+      "title": "Client call - Lisa (MoveRight Property)",
+      "start": "2026-03-13T10:00:00+00:00",
+      "end": "2026-03-13T10:30:00+00:00",
+      "attendees": ["lisa@moveright.co.uk"],
+      "location": "Zoom",
+      "description": "Monthly performance review. Lead quality discussion, upcoming spring campaign."
+    },
+    {
+      "id": "cal11",
+      "title": "1:1 with Tom (Account Manager)",
+      "start": "2026-03-13T16:00:00+00:00",
+      "end": "2026-03-13T16:30:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk"],
+      "location": "Office",
+      "description": "Weekly 1:1. Discuss leave request, client handoff plan, CloudBase launch status."
+    },
+    {
+      "id": "cal12",
+      "title": "Team standup",
+      "start": "2026-03-14T09:00:00+00:00",
+      "end": "2026-03-14T09:15:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk"],
+      "location": "Google Meet",
+      "description": "Daily team standup"
+    },
+    {
+      "id": "cal13",
+      "title": "Agency all-hands",
+      "start": "2026-03-14T16:00:00+00:00",
+      "end": "2026-03-14T17:00:00+00:00",
+      "attendees": ["tom@northstardigital.co.uk", "lauren@northstardigital.co.uk", "sophie@grantcreative.co.uk"],
+      "location": "Boardroom",
+      "description": "Monthly all-hands. Q1 results, Q2 priorities, team updates, hiring plans."
+    },
+    {
+      "id": "cal14",
+      "title": "5-a-side football",
+      "start": "2026-03-15T10:00:00+00:00",
+      "end": "2026-03-15T11:00:00+00:00",
+      "attendees": [],
+      "location": "Goals Manchester, Trafford Park",
+      "description": ""
+    }
+  ]
+}

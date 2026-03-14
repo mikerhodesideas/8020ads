@@ -167,6 +167,7 @@ export default function MarioMap({
     const levelIdx = Math.floor(nodeIdx / 3)
     const isLocked = levelIdx > 0 && !isLevelComplete(levelIdx)
     if (isLocked) return
+    if (skin.sounds.selection) playSound(skin.sounds.selection)
     navigateWithTransition(`/play/${demo.id}`)
   }
 
@@ -179,11 +180,22 @@ export default function MarioMap({
     pathSegments.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, completed: segCompleted, idx: i })
   }
 
+  // Which background level image to use
+  const bgLevel = isLevelComplete(2) ? 3 : isLevelComplete(1) ? 2 : 1
+
   return (
     <div className="page-enter min-h-[calc(100vh-3.5rem)] flex flex-col skin-arcade arcade-scanlines">
       <BadgeToast />
 
       <div className="flex-1 relative overflow-hidden" style={{ background: 'var(--mario-sky)' }}>
+        {/* Full-screen background image */}
+        <img
+          src={`/images/maps/arcade-level-${bgLevel}.png`}
+          alt=""
+          className="absolute inset-0 w-full h-full"
+          style={{ objectFit: 'cover', objectPosition: 'center bottom', opacity: 0.4 }}
+        />
+
         {/* SVG Overworld Map */}
         <svg
           viewBox="0 0 1000 700"
@@ -505,29 +517,6 @@ export default function MarioMap({
             )
           })()}
 
-          {/* Player indicator */}
-          {playerNodeIdx >= 0 && (
-            <g className="character-bounce">
-              <circle
-                cx={MARIO_NODES[playerNodeIdx].x}
-                cy={MARIO_NODES[playerNodeIdx].y - 38}
-                r={10}
-                fill="#FF0000"
-                stroke="white"
-                strokeWidth={2}
-              />
-              <text
-                x={MARIO_NODES[playerNodeIdx].x}
-                y={MARIO_NODES[playerNodeIdx].y - 34}
-                textAnchor="middle"
-                fill="white"
-                fontSize="10"
-                fontWeight="bold"
-              >
-                M
-              </text>
-            </g>
-          )}
         </svg>
 
         {/* Overlay UI elements */}

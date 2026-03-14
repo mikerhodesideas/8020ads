@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ag-001",
+    "from": { "name": "Mark Davidson", "email": "m.davidson@burtonhotels.co.uk" },
+    "subject": "Re: February campaign performance - not happy",
+    "date": "2026-03-13T15:30:00Z",
+    "snippet": "Alex, I've just reviewed the February report and conversions are down 34% month-on-month. We're paying £18K/month for this and I need to understand what happened before the board meeting on Monday. Can we get on a call tomorrow? This needs sorting urgently.",
+    "isRead": false
+  },
+  {
+    "id": "ag-002",
+    "from": { "name": "Rachel Thompson", "email": "rachel@theedgeagency.co.uk" },
+    "subject": "Senior media buyer interviews - my recommendation",
+    "date": "2026-03-13T10:15:00Z",
+    "snippet": "Finished the final round interviews yesterday. My top pick is Priya Sharma - 6 years experience, strong on PMax and YouTube, currently at a Leeds agency managing £800K/month in spend. Second choice is Tom Hadley, great Google Ads fundamentals but less cross-channel. Happy to chat through it this afternoon.",
+    "isRead": false
+  },
+  {
+    "id": "ag-003",
+    "from": { "name": "James Whitworth", "email": "j.whitworth@cleverstack.io" },
+    "subject": "Interested in your Google Ads services",
+    "date": "2026-03-12T17:20:00Z",
+    "snippet": "We're a B2B SaaS company based in London doing about £3M ARR and currently spending £25K/month on Google Ads in-house. Results have plateaued and we're looking for an agency partner. Found you through the Google Partner directory. Could we set up a discovery call next week?",
+    "isRead": false
+  },
+  {
+    "id": "ag-004",
+    "from": { "name": "Xero", "email": "notifications@xero.com" },
+    "subject": "Your March P&L is ready to review",
+    "date": "2026-03-12T08:00:00Z",
+    "snippet": "Your Profit & Loss report for March 2026 has been generated and is ready to review. Revenue: £118,400. Expenses: £82,200. Net Profit: £36,200. View the full breakdown in Xero.",
+    "isRead": true
+  },
+  {
+    "id": "ag-005",
+    "from": { "name": "Tom Bradshaw", "email": "tom@theedgeagency.co.uk" },
+    "subject": "Heads up - Bayside Dental might churn",
+    "date": "2026-03-11T14:00:00Z",
+    "snippet": "I've sent Bayside Dental three emails and left two voicemails over the past fortnight and haven't heard back. Their contract renewal is due 1 April. Last time we spoke, Dr Patel mentioned they were reviewing costs across the board. Want me to escalate?",
+    "isRead": true
+  },
+  {
+    "id": "ag-006",
+    "from": { "name": "BrightHR", "email": "reminders@brighthr.com" },
+    "subject": "Performance reviews due by 21 March",
+    "date": "2026-03-11T09:00:00Z",
+    "snippet": "You have 4 team member performance reviews due by 21 March. Incomplete: Rachel Thompson, Tom Bradshaw, Jade Kim, Sam Morrison. Log in to BrightHR to complete your assessments.",
+    "isRead": true
+  },
+  {
+    "id": "ag-007",
+    "from": { "name": "Liam Foster", "email": "liam.foster@google.com" },
+    "subject": "Referral - e-commerce brand looking for PMax help",
+    "date": "2026-03-10T11:50:00Z",
+    "snippet": "Alex, I've got a client on my book who's spending about £15K/month and struggling with PMax asset group structure. They're a homeware brand based in Birmingham. Would you be open to an intro? They're looking to move agencies by end of March.",
+    "isRead": true
+  },
+  {
+    "id": "ag-008",
+    "from": { "name": "Brighton SEO", "email": "speakers@brightonseo.com" },
+    "subject": "Invitation to speak at Brighton SEO 2026",
+    "date": "2026-03-10T08:00:00Z",
+    "snippet": "We'd love to invite you to present at Brighton SEO on 9-10 October 2026. We're looking for a session on AI-driven PPC management for agencies. Speaker package includes full conference pass, travel, and hotel. Deadline to confirm: 28 March.",
+    "isRead": false
+  },
+  {
+    "id": "ag-009",
+    "from": { "name": "SEMrush", "email": "billing@semrush.com" },
+    "subject": "Your annual plan expires on 31 March",
+    "date": "2026-03-09T12:00:00Z",
+    "snippet": "Your SEMrush Business plan (£380/month billed annually) expires on 31 March 2026. Renew before expiry to lock in your current rate. Prices increase 15% for new subscriptions from 1 April.",
+    "isRead": true
+  },
+  {
+    "id": "ag-010",
+    "from": { "name": "Search Engine Land", "email": "newsletter@searchengineland.com" },
+    "subject": "Google Ads rolls out new AI-powered bidding controls",
+    "date": "2026-03-09T06:30:00Z",
+    "snippet": "Google announced expanded AI bidding controls for PMax campaigns including channel-level bid adjustments and new audience signal options. Plus: Microsoft Ads launches its competitor to Demand Gen, and the latest on cookie deprecation timelines.",
+    "isRead": true
+  }
+]

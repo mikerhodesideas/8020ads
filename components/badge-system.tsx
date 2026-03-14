@@ -134,7 +134,7 @@ export function BadgeTray() {
               <BadgeIcon id={def.id} size={18} />
             </div>
             {/* Tooltip */}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--color-ink)] text-white text-[10px] font-heading rounded-[2px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2.5 py-1.5 text-white text-xs font-heading rounded-[2px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20" style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
               {def.name}
               {!earned && <span className="text-white/50"> (locked)</span>}
             </div>

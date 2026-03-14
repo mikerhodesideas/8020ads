@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import type { PlayerType } from '@/lib/game-data'
 
 const ff = "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
 
@@ -617,7 +618,14 @@ function BeforeTriage() {
   )
 }
 
-function AfterTriage() {
+function AfterTriage({ playerType }: { playerType?: PlayerType }) {
+  const triageTitle: Record<string, string> = {
+    freelancer: 'Freelancer Inbox Triage',
+    employee: 'Work Inbox Triage',
+    agency: 'Agency Owner Inbox Triage',
+    business: 'Business Owner Inbox Triage',
+  }
+  const title = triageTitle[playerType || ''] || 'Monday Morning Inbox Triage'
   const tagStyles: Record<string,React.CSSProperties> = {
     reply: { background: '#eff6ff', color: '#2563eb' },
     review: { background: '#fef3c7', color: '#92400e' },
@@ -657,7 +665,7 @@ function AfterTriage() {
     <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 32 }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <div style={{ background: '#0f172a', color: 'white', padding: 32, marginBottom: 24, borderRadius: 2 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>Monday Morning Inbox Triage</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>{title}</h1>
           <p style={{ color: '#94a3b8', fontSize: 14 }}>12 emails analyzed and prioritized | Recommended processing order below</p>
           <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
             <div><div style={{ fontSize: 28, fontWeight: 700, color: '#ef4444' }}>2</div><div style={{ fontSize: 14, color: '#94a3b8', marginTop: 2 }}>Urgent</div></div>
@@ -848,165 +856,351 @@ function AfterContacts() {
 }
 
 // === DEMO 6: Campaign ===
-function BeforeCampaign() {
+const campaignBeforeMap: Record<string, { business: string; channels: string[][]; summary: string }> = {
+  freelancer: {
+    business: 'Ace Plumbing',
+    channels: [
+      ['Google Ads - Brand', '$5,941', '3,127', '240'],
+      ['Google Ads - Non-Brand', '$20,521', '3,181', '312'],
+      ['Google Ads - Remarketing', '$2,694', '1,626', '71'],
+      ['Meta Ads', '$5,879', '4,778', '61'],
+      ['Google LSA', '$14,174', '1,720', '351'],
+    ],
+    summary: "Here's a summary of your Ace Plumbing campaign data across all channels. Google LSA has the most conversions at 351, followed by Non-Brand at 312. Meta appears to have the lowest conversion count at 61. You may want to review your Meta strategy.",
+  },
+  employee: {
+    business: 'DataPulse',
+    channels: [
+      ['Google Ads - Brand', '$24,113', '8,905', '395'],
+      ['Google Ads - Generic', '$30,633', '5,649', '172'],
+      ['Google Ads - Competitor', '$17,619', '2,559', '49'],
+      ['LinkedIn', '$40,894', '2,348', '87'],
+      ['Meta', '$13,871', '3,433', '87'],
+    ],
+    summary: "Here's a summary of your DataPulse campaign data. Google Ads Brand has the most conversions at 395. LinkedIn and Meta are tied at 87 conversions each. Competitor keywords have the fewest at 49. Let me know if you'd like me to break this down further.",
+  },
+  agency: {
+    business: 'Portfolio',
+    channels: [
+      ['Client A (Dental)', '\u00A317,915', '6,681', '461'],
+      ['Client B (HVAC)', '\u00A326,907', '7,485', '538'],
+      ['Client C (Legal)', '\u00A336,569', '2,767', '228'],
+      ['Client D (E-com)', '\u00A321,424', '29,728', '1,287'],
+    ],
+    summary: "Here's a summary of your multi-client campaign data. Client D (E-commerce) has the most conversions at 1,287, followed by Client B (HVAC) at 538. Client C (Legal) has the fewest at 228 but the highest spend. Let me know if you'd like a deeper dive into any client.",
+  },
+  business: {
+    business: 'Coastal Kitchen Co',
+    channels: [
+      ['Google Ads', '$26,153', '6,341', '302'],
+      ['Meta Ads', '$8,146', '6,283', '50'],
+      ['Instagram', '$2,718', '2,909', '34'],
+      ['Email', '$777', '12,449', '117'],
+      ['Referral', '$525', '3,128', '45'],
+    ],
+    summary: "Here's a summary of your Coastal Kitchen Co marketing data. Google Ads has the most conversions at 302, followed by Email at 117. Instagram has the lowest conversion count at 34. You may want to look into your Instagram performance.",
+  },
+}
+
+function BeforeCampaign({ playerType }: { playerType?: PlayerType }) {
+  const data = campaignBeforeMap[playerType || 'freelancer'] || campaignBeforeMap.freelancer
+  const thS: React.CSSProperties = { textAlign: 'left', padding: '10px 12px', background: '#f5f5f5', border: '1px solid #ddd', fontWeight: 600, color: '#555' }
   return (
     <div style={{ fontFamily: ff, background: '#fff', color: '#333', padding: 40, minHeight: '100%', lineHeight: 1.7 }}>
       <div style={{ fontSize: 14, color: '#999', marginBottom: 24 }}>AI Analysis Result</div>
-      <h2 style={{ color: '#333', fontSize: 20, marginBottom: 16, borderBottom: '1px solid #ddd', paddingBottom: 8 }}>Cross-Channel Marketing Report</h2>
+      <h2 style={{ color: '#333', fontSize: 20, marginBottom: 16, borderBottom: '1px solid #ddd', paddingBottom: 8 }}>{data.business} Campaign Summary</h2>
       <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16, fontSize: 14 }}>
         <thead><tr>
-          <th style={{ textAlign: 'left', padding: '10px 12px', background: '#f5f5f5', border: '1px solid #ddd', fontWeight: 600, color: '#555' }}>Channel</th>
-          <th style={{ textAlign: 'left', padding: '10px 12px', background: '#f5f5f5', border: '1px solid #ddd', fontWeight: 600, color: '#555' }}>Cost</th>
-          <th style={{ textAlign: 'left', padding: '10px 12px', background: '#f5f5f5', border: '1px solid #ddd', fontWeight: 600, color: '#555' }}>Clicks</th>
-          <th style={{ textAlign: 'left', padding: '10px 12px', background: '#f5f5f5', border: '1px solid #ddd', fontWeight: 600, color: '#555' }}>Conversions</th>
+          {['Channel', 'Cost', 'Clicks', 'Conversions'].map(h => (<th key={h} style={thS}>{h}</th>))}
         </tr></thead>
         <tbody>
-          {[
-            ['Google Ads - Brand','$2,340','4,210','89'],
-            ['Google Ads - Non-Brand','$5,670','3,890','52'],
-            ['Facebook Ads','$3,200','8,450','41'],
-            ['LinkedIn Ads','$2,800','1,120','14'],
-            ['Email Campaigns','$180','6,320','78'],
-          ].map(r=>(
-            <tr key={r[0]}>{r.map((c,i)=>(<td key={i} style={{ padding: '10px 12px', border: '1px solid #ddd' }}>{c}</td>))}</tr>
+          {data.channels.map(r => (
+            <tr key={r[0]}>{r.map((c, i) => (<td key={i} style={{ padding: '10px 12px', border: '1px solid #ddd' }}>{c}</td>))}</tr>
           ))}
         </tbody>
       </table>
-      <p style={{ fontSize: 15, color: '#444', marginTop: 20 }}>Here&apos;s a summary of your campaign data across channels. Google Ads Brand has the most conversions at 89, followed by Email at 78. LinkedIn appears to have the lowest conversion count. You may want to review your LinkedIn strategy.</p>
+      <p style={{ fontSize: 15, color: '#444', marginTop: 20 }}>{data.summary}</p>
       <p style={{ fontSize: 15, color: '#444', marginTop: 16 }}>Let me know if you&apos;d like me to analyze any specific channel in more detail.</p>
     </div>
   )
 }
 
-function AfterCampaign() {
-  const thS: React.CSSProperties = { background: '#f8fafc', textAlign: 'left', padding: '10px 12px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', fontSize: 14, letterSpacing: 0.5, borderBottom: '2px solid #e2e8f0' }
+const campaignDash: Record<string, {
+  title: string; subtitle: string; currency: string
+  channels: { name: string; spend: number; clicks: number; conversions: number; revenue: number; verdict: 'scale' | 'optimize' | 'review' | 'cut' }[]
+  findings: { value: string; label: string; type: 'good' | 'bad' | 'warn' }[]
+  reallocation: { title: string; detail: string; projected: string }[]
+  actions: { title: string; detail: string; impact: string }[]
+}> = {
+  freelancer: {
+    title: 'Ace Plumbing Campaign Analysis',
+    subtitle: '17 campaigns | 12 weeks | 204 data points',
+    currency: '$',
+    channels: [
+      { name: 'Google LSA', spend: 14174, clicks: 1720, conversions: 351, revenue: 77299, verdict: 'scale' },
+      { name: 'Google Ads Brand', spend: 5941, clicks: 3127, conversions: 240, revenue: 41981, verdict: 'scale' },
+      { name: 'Google Ads Non-Brand', spend: 20521, clicks: 3181, conversions: 312, revenue: 62141, verdict: 'optimize' },
+      { name: 'Google Remarketing', spend: 2694, clicks: 1626, conversions: 71, revenue: 12334, verdict: 'scale' },
+      { name: 'Meta Ads', spend: 5879, clicks: 4778, conversions: 61, revenue: 8341, verdict: 'cut' },
+    ],
+    findings: [
+      { value: '$5,879', label: 'Meta spend returning just 1.42x ROAS. Every $1 barely returns $1.42.', type: 'bad' },
+      { value: '7.07x', label: 'Google Brand ROAS. Your cheapest, highest-returning channel.', type: 'good' },
+      { value: '42%', label: 'Of budget on Non-Brand generating just 31% of revenue', type: 'warn' },
+    ],
+    reallocation: [
+      { title: 'Move $3,000/month from Meta to Google LSA', detail: 'Meta is generating $1.42 per $1 spent. LSA returns $5.45 per $1 with proven local intent. Plumbing customers search when they need help now.', projected: '+55 conversions/quarter at $40 CPA instead of 31 at $96 CPA' },
+      { title: 'Shift $5,000 from Non-Brand General to Brand + LSA', detail: 'General Plumbing keywords cost $55/CPA with just 0.98x ROAS. Brand and LSA convert at 3-4x the rate.', projected: '+$15K revenue/quarter from better channel allocation' },
+    ],
+    actions: [
+      { title: 'Cut Meta awareness spend by 80% this week', detail: 'Meta Awareness generates 1 conversion per $200 at $133/CPA. For a local plumber, search intent channels outperform awareness by 4-5x. Keep only retargeting.', impact: 'Save $2,000/quarter, redirect to LSA' },
+      { title: 'Scale Google LSA by 25%', detail: 'LSA is your second-highest ROAS channel (5.45x) with the most conversions (351). Emergency and General categories are seasonally strong.', impact: 'Projected: +88 conversions/quarter' },
+      { title: 'Consolidate Non-Brand to top 3 campaigns', detail: 'Bathroom Renovations generates $28/conversion in revenue at $147 CPA, a net loss. Focus on Emergency, Hot Water, and General only.', impact: 'Improve Non-Brand ROAS from 3.03x to ~4.2x' },
+    ],
+  },
+  employee: {
+    title: 'DataPulse SaaS Campaign Analysis',
+    subtitle: '19 campaigns | 12 weeks | 228 data points',
+    currency: '$',
+    channels: [
+      { name: 'Google Ads Brand', spend: 24113, clicks: 8905, conversions: 395, revenue: 218983, verdict: 'scale' },
+      { name: 'Google Ads Generic', spend: 30633, clicks: 5649, conversions: 172, revenue: 82432, verdict: 'optimize' },
+      { name: 'Google Ads Competitor', spend: 17619, clicks: 2559, conversions: 49, revenue: 30882, verdict: 'optimize' },
+      { name: 'LinkedIn', spend: 40894, clicks: 2348, conversions: 87, revenue: 34435, verdict: 'cut' },
+      { name: 'Meta', spend: 13871, clicks: 3433, conversions: 87, revenue: 34024, verdict: 'optimize' },
+    ],
+    findings: [
+      { value: '$40,894', label: 'LinkedIn spend at 0.84x ROAS. Losing $6,459 over 12 weeks.', type: 'bad' },
+      { value: '9.08x', label: 'Google Brand ROAS. Your strongest channel, converting at $61 CPA.', type: 'good' },
+      { value: '32%', label: 'Of total budget goes to LinkedIn (worst ROAS). Brand gets just 19%.', type: 'warn' },
+    ],
+    reallocation: [
+      { title: 'Cut LinkedIn by 50% ($20K), move to Google Brand', detail: 'LinkedIn costs $470/conversion and returns $0.84 per $1. Brand returns $9.08 per $1. Even with diminishing returns, doubling Brand should maintain 6-7x ROAS.', projected: '+$120K revenue/quarter at current Brand efficiency' },
+      { title: 'Shift $8K from Generic to Competitor terms', detail: 'Generic CPA is $178 with 2.69x ROAS. Competitor terms have higher intent. Reallocate from Dashboard Tools and Data Visualization to vs Tableau and vs Power BI.', projected: 'Higher-intent traffic, projected 15% conversion rate lift' },
+    ],
+    actions: [
+      { title: 'Reduce LinkedIn to retargeting only', detail: 'Content Syndication (1x ROAS) and InMail ($430 CPA) are net losses. Decision Makers and IT Directors barely break even. Keep only Retargeting.', impact: 'Save $35K/quarter, redirect to proven channels' },
+      { title: 'Double Google Brand budget', detail: 'Brand converts at $61 CPA with 9.08x ROAS and has the highest volume (395 conversions). Product Names convert at $55 CPA. Scale aggressively.', impact: 'Projected: +200 conversions/quarter' },
+      { title: 'Build dedicated Competitor landing pages', detail: 'Competitor terms have high intent but $360 CPA. Create vs Tableau, vs Power BI, vs Looker comparison pages to improve Quality Score and conversion rate.', impact: 'Projected: 2x conversion rate on Competitor terms' },
+    ],
+  },
+  agency: {
+    title: 'Multi-Client Portfolio Analysis',
+    subtitle: '4 clients | 20 campaigns | 12 weeks | 240 data points',
+    currency: '\u00A3',
+    channels: [
+      { name: 'Client A (Dental)', spend: 17915, clicks: 6681, conversions: 461, revenue: 64462, verdict: 'scale' },
+      { name: 'Client B (HVAC)', spend: 26907, clicks: 7485, conversions: 538, revenue: 106897, verdict: 'scale' },
+      { name: 'Client C (Legal)', spend: 36569, clicks: 2767, conversions: 228, revenue: 103325, verdict: 'optimize' },
+      { name: 'Client D (E-com)', spend: 21424, clicks: 29728, conversions: 1287, revenue: 74743, verdict: 'optimize' },
+    ],
+    findings: [
+      { value: '\u00A336,569', label: 'Legal spend (36% of portfolio) but lowest ROAS at 2.83x.', type: 'warn' },
+      { value: '3.97x', label: 'HVAC is your best performer. Summer will push this higher.', type: 'good' },
+      { value: '\u00A34,566', label: 'E-com Generic spend at 1.65x ROAS. Move to Shopping (4.84x).', type: 'bad' },
+    ],
+    reallocation: [
+      { title: 'Legal: Cut Family Law, double Personal Injury', detail: 'Personal Injury returns 3.17x and generates the most revenue (\u00A345.5K). Family Law (1.49x) and Employment (1.84x) barely break even. Reallocate \u00A313.5K to PI.', projected: '+\u00A320K revenue/quarter from higher-value cases' },
+      { title: 'E-com: Shift Generic budget to Shopping', detail: 'Generic Google Ads returns 1.65x. Shopping returns 4.84x with 3.7x the conversions. Every pound moved triples in effectiveness.', projected: '+150 conversions/quarter at \u00A312 CPA vs \u00A332 CPA' },
+    ],
+    actions: [
+      { title: 'HVAC: Prepare for summer scale-up now', detail: 'Cooling campaigns spiked 2x in weeks 5-8. Brand and Emergency follow the same pattern. Increase budgets 50% for peak weeks, set automated rules.', impact: 'Projected: +80 conversions during peak season' },
+      { title: 'Dental: Scale Emergency and Brand campaigns', detail: 'Emergency converts at \u00A331 CPA (3.82x) and Brand at \u00A323 CPA (6.04x). Cut Meta Awareness (\u00A32.3K at 0.94x) and redirect to these.', impact: '+\u00A38K revenue/quarter from better allocation' },
+      { title: 'E-com: Cut Meta Prospecting by 50%', detail: 'Meta Prospecting costs \u00A34.4K and returns just 1.55x. Retargeting returns 3.30x. Shift budget to retargeting and Shopping.', impact: 'Save \u00A32.2K/quarter, improve blended ROAS to 4.0x' },
+    ],
+  },
+  business: {
+    title: 'Coastal Kitchen Co Marketing Analysis',
+    subtitle: '19 campaigns | 12 weeks | 228 data points',
+    currency: '$',
+    channels: [
+      { name: 'Google Ads', spend: 26153, clicks: 6341, conversions: 302, revenue: 101307, verdict: 'optimize' },
+      { name: 'Meta', spend: 8146, clicks: 6283, conversions: 50, revenue: 15145, verdict: 'review' },
+      { name: 'Instagram', spend: 2718, clicks: 2909, conversions: 34, revenue: 1304, verdict: 'cut' },
+      { name: 'Email', spend: 777, clicks: 12449, conversions: 117, revenue: 9829, verdict: 'scale' },
+      { name: 'Referral', spend: 525, clicks: 3128, conversions: 45, revenue: 5819, verdict: 'scale' },
+    ],
+    findings: [
+      { value: '$2,718', label: 'Instagram spend returning 0.48x. Losing $1,414 over 12 weeks.', type: 'bad' },
+      { value: '12.65x', label: 'Email ROAS. Your most efficient channel at just $7 per conversion.', type: 'good' },
+      { value: '68%', label: 'Of budget on Google Ads alone. Email and Referral combined are just 3%.', type: 'warn' },
+    ],
+    reallocation: [
+      { title: 'Cut Instagram completely, move $2,700 to Email', detail: 'Instagram returns $0.48 per $1 across Feed, Stories, and Reels. Reels generated 5 conversions in 12 weeks. Email returns $12.65 per $1. Every dollar moved generates 26x more return.', projected: '+$34K revenue/year from email expansion' },
+      { title: 'Invest $1,000/quarter in Referral program growth', detail: 'Referral returns 11.08x with $12 CPA. Builder and Designer partners deliver consistent monthly referrals. A small investment could double this channel.', projected: '+22 high-quality leads/quarter at $12 CPA' },
+    ],
+    actions: [
+      { title: 'Double email send frequency immediately', detail: 'Email is your best channel at 12.65x ROAS and $7 CPA. Even with a 50% drop in per-email conversion rate, you would still achieve 6x ROAS. The cost is nearly zero.', impact: 'Projected: +58 conversions/year at negligible cost' },
+      { title: 'Kill Instagram advertising entirely', detail: 'Feed Posts: 0.57x ROAS. Stories: 0.47x. Reels: 0.28x. Not a single Instagram sub-channel is profitable. Keep organic posting but stop paying.', impact: 'Save $2,718/quarter, eliminate waste' },
+      { title: 'Expand referral partner network', detail: 'Builder Partners return 11.60x, Designer Partners return 16.91x. These are your second and third most efficient channels behind Email.', impact: 'Projected: +$10K revenue/quarter with minimal spend' },
+    ],
+  },
+}
+
+function AfterCampaign({ playerType }: { playerType?: PlayerType }) {
+  const type = playerType || 'freelancer'
+  const d = campaignDash[type] || campaignDash.freelancer
+  const totalSpend = d.channels.reduce((s, c) => s + c.spend, 0)
+  const totalConv = d.channels.reduce((s, c) => s + c.conversions, 0)
+  const totalRev = d.channels.reduce((s, c) => s + c.revenue, 0)
+  const blendedCPA = Math.round(totalSpend / totalConv)
+  const blendedROAS = (totalRev / totalSpend).toFixed(2)
+  const fmtN = (n: number) => n.toLocaleString('en-US')
+  const fmtC = (n: number) => d.currency + fmtN(n)
+  const verdictStyle: Record<string, { label: string; color: string; bg: string }> = {
+    scale: { label: 'Scale up', color: '#16a34a', bg: '#f0fdf4' },
+    optimize: { label: 'Optimize', color: '#d97706', bg: '#fffbeb' },
+    review: { label: 'Review', color: '#d97706', bg: '#fffbeb' },
+    cut: { label: 'Cut spend', color: '#dc2626', bg: '#fef2f2' },
+  }
+  const colorMap: Record<string, string> = { good: '#16a34a', bad: '#dc2626', warn: '#d97706' }
+  const thS: React.CSSProperties = { background: '#f8fafc', textAlign: 'left', padding: '10px 12px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', fontSize: 11, letterSpacing: 0.5, borderBottom: '2px solid #e2e8f0' }
   const thR: React.CSSProperties = { ...thS, textAlign: 'right' }
-  const tdS: React.CSSProperties = { padding: '10px 12px', borderBottom: '1px solid #f1f5f9', fontSize: 14 }
+  const tdS: React.CSSProperties = { padding: '10px 12px', borderBottom: '1px solid #f1f5f9', fontSize: 13 }
   const tdR: React.CSSProperties = { ...tdS, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }
-  const good: React.CSSProperties = { color: '#16a34a', fontWeight: 600 }
-  const bad: React.CSSProperties = { color: '#dc2626', fontWeight: 600 }
-  const warn: React.CSSProperties = { color: '#d97706', fontWeight: 600 }
+  const verdictColors: Record<string, string> = { scale: '#16a34a', optimize: '#d97706', review: '#d97706', cut: '#dc2626' }
+  const barColors: Record<string, string> = { scale: '#16a34a', optimize: '#f59e0b', review: '#d97706', cut: '#ef4444' }
   return (
-    <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 32 }}>
+    <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 24 }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-        <div style={{ background: '#0f172a', color: 'white', padding: 32, marginBottom: 24, borderRadius: 2 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Cross-Channel Marketing Analysis</h1>
-          <p style={{ color: '#94a3b8', fontSize: 14 }}>5 channels analyzed | Last 30 days | Revenue attribution included</p>
-          <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
-            {[{v:'$14,190',l:'Total Spend'},{v:'274',l:'Conversions'},{v:'$51.79',l:'Blended CPA'},{v:'4.8x',l:'Blended ROAS'}].map(m=>(
-              <div key={m.l}><div style={{ fontSize: 24, fontWeight: 700, color: '#f59e0b' }}>{m.v}</div><div style={{ color: '#94a3b8', marginTop: 2, fontSize: 14 }}>{m.l}</div></div>
-            ))}
-          </div>
-        </div>
-        {/* CPA cards */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a' }}>Cost Per Acquisition by Channel</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12 }}>
+        {/* Header */}
+        <div style={{ background: '#0f172a', color: 'white', padding: '24px 28px', marginBottom: 16, borderRadius: 2 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{d.title}</h1>
+          <p style={{ color: '#94a3b8', fontSize: 13, marginBottom: 16 }}>{d.subtitle}</p>
+          <div style={{ display: 'flex', gap: 32 }}>
             {[
-              {name:'Email',cpa:'$2.31',trend:'-12% vs last month',color:'#16a34a',tdir:'down'},
-              {name:'Google Brand',cpa:'$26.29',trend:'-8% vs last month',color:'#16a34a',tdir:'down'},
-              {name:'Facebook',cpa:'$78.05',trend:'+15% vs last month',color:'#d97706',tdir:'up'},
-              {name:'Google Non-Brand',cpa:'$109.04',trend:'+3% vs last month',color:'#d97706',tdir:'up'},
-              {name:'LinkedIn',cpa:'$200.00',trend:'+22% vs last month',color:'#dc2626',tdir:'up'},
-            ].map(c=>(
-              <div key={c.name} style={{ padding: 16, border: '1px solid #e2e8f0', borderRadius: 2, borderTop: `3px solid ${c.color}` }}>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5 }}>{c.name}</div>
-                <div style={{ fontSize: 22, fontWeight: 800, margin: '8px 0 4px', color: c.color }}>{c.cpa}</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: c.tdir==='up' ? '#dc2626' : '#16a34a' }}>{c.trend}</div>
-              </div>
+              { v: fmtC(totalSpend), l: 'Total Spend' },
+              { v: fmtN(totalConv), l: 'Conversions' },
+              { v: fmtC(blendedCPA), l: 'Blended CPA' },
+              { v: blendedROAS + 'x', l: 'Blended ROAS' },
+            ].map(m => (
+              <div key={m.l}><div style={{ fontSize: 22, fontWeight: 700, color: '#f59e0b' }}>{m.v}</div><div style={{ color: '#94a3b8', marginTop: 2, fontSize: 13 }}>{m.l}</div></div>
             ))}
           </div>
         </div>
-        {/* Performance table */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a' }}>Channel Performance Comparison</h2>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
-            <thead><tr><th style={thS}>Channel</th><th style={thR}>Spend</th><th style={thR}>Clicks</th><th style={thR}>Conv</th><th style={thR}>CPA</th><th style={thR}>Revenue</th><th style={thR}>ROAS</th><th style={thS}>Verdict</th></tr></thead>
+        {/* Performance Table */}
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>Channel Performance</h2>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead><tr>
+              <th style={thS}>Channel</th><th style={thR}>Spend</th><th style={thR}>Clicks</th><th style={thR}>Conv</th><th style={thR}>CPA</th><th style={thR}>Revenue</th><th style={thR}>ROAS</th><th style={thS}>Verdict</th>
+            </tr></thead>
             <tbody>
-              {[
-                ['Email Campaigns','$180','6,320','78',{s:'$2.31',...good},'$19,500',{s:'108.3x',...good},'Star','green'],
-                ['Google Ads - Brand','$2,340','4,210','89',{s:'$26.29',...good},'$22,250',{s:'9.5x',...good},'Scale up','green'],
-                ['Facebook Ads','$3,200','8,450','41',{s:'$78.05',...warn},'$14,350',{s:'4.5x'},'Optimize','amber'],
-                ['Google Ads - Non-Brand','$5,670','3,890','52',{s:'$109.04',...warn},'$10,400',{s:'1.8x',...warn},'Review','amber'],
-                ['LinkedIn Ads','$2,800','1,120','14',{s:'$200.00',...bad},'$1,400',{s:'0.5x',...bad},'Cut spend','red'],
-              ].map((r: any)=>(
-                <tr key={r[0]}>
-                  <td style={tdS}><strong>{r[0]}</strong></td><td style={tdR}>{r[1]}</td><td style={tdR}>{r[2]}</td><td style={tdR}>{r[3]}</td>
-                  <td style={{...tdR,color:r[4].color,fontWeight:r[4].fontWeight}}>{r[4].s}</td><td style={tdR}>{r[5]}</td>
-                  <td style={{...tdR,color:r[6].color,fontWeight:r[6].fontWeight}}>{r[6].s}</td>
-                  <td style={tdS}><span style={{fontSize:14,fontWeight:600,padding:'2px 8px',borderRadius:2,background:r[8]==='green'?'#f0fdf4':r[8]==='red'?'#fef2f2':'#fffbeb',color:r[8]==='green'?'#16a34a':r[8]==='red'?'#dc2626':'#d97706'}}>{r[7]}</span></td>
-                </tr>
-              ))}
+              {d.channels.map(c => {
+                const cpa = Math.round(c.spend / c.conversions)
+                const roas = (c.revenue / c.spend).toFixed(2)
+                const v = verdictStyle[c.verdict]
+                return (
+                  <tr key={c.name}>
+                    <td style={tdS}><strong>{c.name}</strong></td>
+                    <td style={tdR}>{fmtC(c.spend)}</td>
+                    <td style={tdR}>{fmtN(c.clicks)}</td>
+                    <td style={tdR}>{fmtN(c.conversions)}</td>
+                    <td style={{ ...tdR, color: cpa > blendedCPA ? '#dc2626' : '#16a34a', fontWeight: 600 }}>{fmtC(cpa)}</td>
+                    <td style={tdR}>{fmtC(c.revenue)}</td>
+                    <td style={{ ...tdR, color: verdictColors[c.verdict], fontWeight: 600 }}>{roas}x</td>
+                    <td style={tdS}><span style={{ fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: v.bg, color: v.color }}>{v.label}</span></td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
-          <div style={{ height: 8, display: 'flex', borderRadius: 2, overflow: 'hidden', marginTop: 16 }}>
-            <div style={{ width: '1%', background: '#22c55e' }} /><div style={{ width: '17%', background: '#16a34a' }} /><div style={{ width: '23%', background: '#f59e0b' }} /><div style={{ width: '40%', background: '#d97706' }} /><div style={{ width: '19%', background: '#ef4444' }} />
+          <div style={{ height: 8, display: 'flex', borderRadius: 2, overflow: 'hidden', marginTop: 12 }}>
+            {d.channels.map(c => {
+              const pct = (c.spend / totalSpend) * 100
+              return <div key={c.name} style={{ width: pct + '%', background: barColors[c.verdict] }} />
+            })}
           </div>
-          <div style={{ display: 'flex', gap: 12, fontSize: 14, color: '#64748b', marginTop: 4, flexWrap: 'wrap' }}>
-            <span style={{color:'#22c55e'}}>{'\u25A0'} Email 1%</span><span style={{color:'#16a34a'}}>{'\u25A0'} Google Brand 17%</span><span style={{color:'#f59e0b'}}>{'\u25A0'} Facebook 23%</span><span style={{color:'#d97706'}}>{'\u25A0'} Google Non-Brand 40%</span><span style={{color:'#ef4444'}}>{'\u25A0'} LinkedIn 19%</span>
+          <div style={{ display: 'flex', gap: 12, fontSize: 11, color: '#64748b', marginTop: 4, flexWrap: 'wrap' }}>
+            {d.channels.map(c => {
+              const pct = Math.round((c.spend / totalSpend) * 100)
+              return <span key={c.name} style={{ color: barColors[c.verdict] }}>{'\u25A0'} {c.name} {pct}%</span>
+            })}
           </div>
         </div>
-        {/* Revenue Attribution */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a' }}>Revenue Attribution</h2>
-          <div style={{ fontSize: 14, color: '#64748b', marginBottom: 16 }}>Revenue share by channel vs spend share</div>
-          {[
-            {name:'Email',pct:'29',rev:'$19,500',spend:'1',color:'#16a34a',cs:good},
-            {name:'Google Brand',pct:'33',rev:'$22,250',spend:'17',color:'#16a34a',cs:good},
-            {name:'Facebook',pct:'21',rev:'$14,350',spend:'23',color:'#f59e0b',cs:{}},
-            {name:'Google Non-Brand',pct:'15',rev:'$10,400',spend:'40',color:'#d97706',cs:warn},
-            {name:'LinkedIn',pct:'2',rev:'$1,400',spend:'19',color:'#ef4444',cs:bad},
-          ].map(c=>(
-            <div key={c.name} style={{ marginBottom: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, marginBottom: 4 }}><span><strong>{c.name}</strong> ({c.pct}% of revenue, {c.spend}% of spend)</span><span style={c.cs}>{c.rev}</span></div>
-              <div style={{ height: 24, background: '#f1f5f9', borderRadius: 2, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${c.pct}%`, background: c.color, display: 'flex', alignItems: 'center', paddingLeft: 8, fontSize: 14, fontWeight: 600, color: 'white' }}>{c.pct}%</div>
+        {/* ROAS Comparison */}
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>ROAS by Channel</h2>
+          {d.channels.map(c => {
+            const roas = c.revenue / c.spend
+            const maxRoas = Math.max(...d.channels.map(ch => ch.revenue / ch.spend))
+            const barPct = (roas / maxRoas) * 100
+            const color = verdictColors[c.verdict]
+            return (
+              <div key={c.name} style={{ marginBottom: 8 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 3 }}>
+                  <span>{c.name}</span><span style={{ fontWeight: 600, color }}>{roas.toFixed(2)}x</span>
+                </div>
+                <div style={{ height: 20, background: '#f1f5f9', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ height: '100%', width: barPct + '%', background: color, borderRadius: 2 }} />
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
+        </div>
+        {/* Revenue vs Spend Share */}
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>Revenue Share vs Spend Share</h2>
+          <div style={{ fontSize: 12, color: '#64748b', marginBottom: 12 }}>Misalignment between spend allocation and revenue contribution</div>
+          {d.channels.map(c => {
+            const spendPct = Math.round((c.spend / totalSpend) * 100)
+            const revPct = Math.round((c.revenue / totalRev) * 100)
+            const color = verdictColors[c.verdict]
+            return (
+              <div key={c.name} style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>{c.name} <span style={{ fontWeight: 400, color: '#64748b' }}>({spendPct}% of spend, {revPct}% of revenue)</span></div>
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                  <div style={{ width: 50, fontSize: 11, color: '#64748b', textAlign: 'right' }}>Spend</div>
+                  <div style={{ flex: 1, height: 14, background: '#f1f5f9', borderRadius: 2, overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: spendPct + '%', background: '#94a3b8', borderRadius: 2 }} />
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginTop: 2 }}>
+                  <div style={{ width: 50, fontSize: 11, color: '#64748b', textAlign: 'right' }}>Rev</div>
+                  <div style={{ flex: 1, height: 14, background: '#f1f5f9', borderRadius: 2, overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: revPct + '%', background: color, borderRadius: 2 }} />
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
         {/* Budget Reallocation */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>Budget Reallocation Recommendation <span style={{ fontSize: 14, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: '#eff6ff', color: '#2563eb' }}>Projected +31% ROAS</span></h2>
-          {[
-            {title:'Move $500/month from LinkedIn to Google Ads Brand',detail:'LinkedIn is generating $0.50 for every $1 spent. Google Brand returns $9.50 per $1. Reallocating $500 projects an additional 19 conversions/month at $26 CPA instead of 2.5 at $200 CPA.',from:'LinkedIn $2,800 \u2192 $2,300',to:'Google Brand $2,340 \u2192 $2,840'},
-            {title:'Shift $1,000/month from Google Non-Brand to Facebook retargeting',detail:'Non-Brand CPA ($109) is 4x higher than Brand. Facebook\'s audience data suggests retargeting campaigns convert at $45 CPA (vs $78 for prospecting). Create a dedicated retargeting audience from site visitors.',from:'Google Non-Brand $5,670 \u2192 $4,670',to:'Facebook Retargeting $0 \u2192 $1,000'},
-          ].map(r=>(
-            <div key={r.title} style={{ padding: 16, border: '2px solid #2563eb', background: '#eff6ff', borderRadius: 2, marginBottom: 12 }}>
-              <div style={{ fontWeight: 700, color: '#1e40af', fontSize: 14, marginBottom: 8 }}>{r.title}</div>
-              <div style={{ fontSize: 14, color: '#334155' }}>{r.detail}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 10, fontSize: 14, fontWeight: 600 }}>
-                <span style={{ color: '#dc2626' }}>{r.from}</span><span>|</span><span style={{ color: '#16a34a' }}>{r.to}</span>
-              </div>
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>Budget Reallocation</h2>
+          {d.reallocation.map(r => (
+            <div key={r.title} style={{ padding: 14, border: '2px solid #2563eb', background: '#eff6ff', borderRadius: 2, marginBottom: 10 }}>
+              <div style={{ fontWeight: 700, color: '#1e40af', fontSize: 13, marginBottom: 6 }}>{r.title}</div>
+              <div style={{ fontSize: 13, color: '#334155' }}>{r.detail}</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: '#92400e', background: '#fef3c7', display: 'inline-block', padding: '2px 8px', borderRadius: 2, marginTop: 6 }}>{r.projected}</div>
             </div>
           ))}
         </div>
         {/* Key Findings */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a' }}>Key Findings</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
-            <div style={{ textAlign: 'center', padding: 16 }}><div style={{ fontSize: 28, fontWeight: 800, ...bad }}>$2,800</div><div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>LinkedIn spend generating only $1,400 revenue (0.5x ROAS)</div></div>
-            <div style={{ textAlign: 'center', padding: 16 }}><div style={{ fontSize: 28, fontWeight: 800, ...good }}>108x</div><div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>Email ROAS, your most efficient channel by far</div></div>
-            <div style={{ textAlign: 'center', padding: 16 }}><div style={{ fontSize: 28, fontWeight: 800, ...warn }}>40%</div><div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>Of budget on Non-Brand Google generating only 15% of revenue</div></div>
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>Key Findings</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+            {d.findings.map(f => (
+              <div key={f.value} style={{ textAlign: 'center', padding: 12 }}>
+                <div style={{ fontSize: 26, fontWeight: 800, color: colorMap[f.type] }}>{f.value}</div>
+                <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{f.label}</div>
+              </div>
+            ))}
           </div>
         </div>
-        {/* Actions */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#0f172a' }}>Recommended Actions</h2>
-          {[
-            {n:'Action 1',t:'Reallocate $500 from LinkedIn to Google Brand this week',d:'Immediate ROI improvement. Google Brand has proven conversion data and room to scale. LinkedIn\'s 0.5x ROAS makes every dollar there a net loss. Start with $500 and evaluate after 2 weeks.',i:'Projected: +19 conversions/month, +$4,750 revenue'},
-            {n:'Action 2',t:'Launch Facebook retargeting campaign with $1,000 from Non-Brand',d:'Build a custom audience from the 23,990 site visitors (all channels). Retargeting typically converts at 2-3x the rate of prospecting. Use top-performing email subject lines as ad copy, since email is your highest-converting channel.',i:'Projected: 22 additional conversions at ~$45 CPA'},
-            {n:'Action 3',t:'Double email send frequency',d:'Email is your best channel at 108x ROAS and $2.31 CPA. If you\'re sending 2x/month, test 4x/month. Even with a 50% drop in per-email conversion rate, you\'d still be at 54x ROAS. The cost is nearly zero.',i:'Projected: +39 conversions/month at negligible cost'},
-          ].map(a=>(
-            <div key={a.n} style={{ padding: 16, borderLeft: '3px solid #f59e0b', background: '#fffbeb', marginBottom: 12, borderRadius: '0 2px 2px 0' }}>
-              <div style={{ fontWeight: 700, color: '#d97706', fontSize: 14 }}>{a.n}</div>
-              <div style={{ fontWeight: 700, fontSize: 14, marginTop: 2 }}>{a.t}</div>
-              <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>{a.d}</div>
-              <span style={{ display: 'inline-block', fontSize: 14, fontWeight: 600, padding: '2px 8px', background: '#fef3c7', color: '#92400e', marginTop: 6, borderRadius: 2 }}>{a.i}</span>
+        {/* Recommended Actions */}
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: '20px 24px', marginBottom: 12, borderRadius: 2 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#0f172a' }}>Recommended Actions</h2>
+          {d.actions.map((a, i) => (
+            <div key={a.title} style={{ padding: 14, borderLeft: '3px solid #f59e0b', background: '#fffbeb', marginBottom: 10, borderRadius: '0 2px 2px 0' }}>
+              <div style={{ fontWeight: 700, color: '#d97706', fontSize: 12 }}>Action {i + 1}</div>
+              <div style={{ fontWeight: 700, fontSize: 13, marginTop: 2 }}>{a.title}</div>
+              <div style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>{a.detail}</div>
+              <span style={{ display: 'inline-block', fontSize: 12, fontWeight: 600, padding: '2px 8px', background: '#fef3c7', color: '#92400e', marginTop: 6, borderRadius: 2 }}>{a.impact}</span>
             </div>
           ))}
         </div>
-        <div style={{ textAlign: 'center', padding: 24, color: '#94a3b8', fontSize: 14 }}>Generated by Marketing Analyst Skill | 5 channels, 30-day window | Revenue data from CRM attribution</div>
+        <div style={{ textAlign: 'center', padding: 16, color: '#94a3b8', fontSize: 12 }}>Generated by Campaign Analyst Skill | {d.subtitle}</div>
       </div>
     </div>
   )
@@ -1581,13 +1775,20 @@ function AfterContentRepurposer() {
 }
 
 // === DEMO 5: Meeting Intelligence (After) ===
-function AfterMeetingIntelligence() {
+function AfterMeetingIntelligence({ playerType }: { playerType?: PlayerType }) {
+  const meetingTitle: Record<string, string> = {
+    freelancer: 'Client Scope Review: Atlas Digital',
+    employee: 'Project Kickoff: Phoenix (CRM Migration)',
+    agency: 'Client Quarterly Review: Burton Hotels',
+    business: 'Operations Planning Meeting',
+  }
+  const mtTitle = meetingTitle[playerType || ''] || 'Client Review: Thunderbolt Electricals'
   return (
     <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 32 }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         <div style={{ background: '#0f172a', color: 'white', padding: 32, marginBottom: 24, borderRadius: 2 }}>
           <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>Meeting Intelligence Report</h1>
-          <p style={{ color: '#94a3b8', fontSize: 14 }}>Client Review: Thunderbolt Electricals | Feb 14, 2026</p>
+          <p style={{ color: '#94a3b8', fontSize: 14 }}>{mtTitle} | Feb 14, 2026</p>
           <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
             {[{v:'7',l:'Action Items'},{v:'4',l:'Decisions Made'},{v:'3',l:'Questions to Follow Up'},{v:'1',l:'Email Drafted'}].map(m=>(
               <div key={m.l}><div style={{ fontSize: 22, fontWeight: 700, color: '#f59e0b' }}>{m.v}</div><div style={{ color: '#94a3b8', fontSize: 14, marginTop: 2 }}>{m.l}</div></div>
@@ -1654,13 +1855,20 @@ function AfterMeetingIntelligence() {
 }
 
 // === DEMO 7: Email + Calendar (After) ===
-function AfterEmailCalendar() {
+function AfterEmailCalendar({ playerType }: { playerType?: PlayerType }) {
+  const weekTitle: Record<string, string> = {
+    freelancer: 'Freelancer Week Dashboard',
+    employee: 'Work Week Dashboard',
+    agency: 'Agency Week Dashboard',
+    business: 'Business Owner Week Dashboard',
+  }
+  const wTitle = weekTitle[playerType || ''] || 'Your Week Dashboard'
   return (
     <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 32 }}>
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         <div style={{ background: '#0f172a', color: 'white', padding: 32, marginBottom: 24, borderRadius: 2 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>Your Week Dashboard</h1>
-          <p style={{ color: '#94a3b8', fontSize: 14 }}>Gmail + Google Calendar combined view | March 10-16, 2026</p>
+          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>{wTitle}</h1>
+          <p style={{ color: '#94a3b8', fontSize: 14 }}>Email + Calendar combined view | March 10-16, 2026</p>
           <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
             {[{v:'18',l:'Emails Triaged'},{v:'11',l:'Meetings This Week'},{v:'14hrs',l:'Meeting Time'},{v:'2',l:'Conflicts Found'}].map(m=>(
               <div key={m.l}><div style={{ fontSize: 22, fontWeight: 700, color: '#f59e0b' }}>{m.v}</div><div style={{ color: '#94a3b8', fontSize: 14, marginTop: 2 }}>{m.l}</div></div>
@@ -1879,10 +2087,12 @@ function AfterCsvAnalyzer() {
 }
 
 // === Registry ===
-export const demoContent: Record<number, {
+export interface DemoContentEntry {
   before: React.ComponentType
-  after: React.ComponentType
-}> = {
+  after: React.ComponentType<{ playerType?: PlayerType }>
+}
+
+export const demoContent: Record<number, DemoContentEntry> = {
   1: { before: BeforeWebsite, after: AfterWebsite },
   2: { before: BeforeTriage, after: AfterTriage },
   3: { before: BeforeCampaign, after: AfterCampaign },

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "fl-001",
+    "from": { "name": "Steve Hargraves", "email": "steve@aceplumbing.com.au" },
+    "subject": "What happened to our leads last week?",
+    "date": "2026-03-13T14:22:00Z",
+    "snippet": "Fiona, we only got 8 leads last week compared to 19 the week before. The phone barely rang on Thursday and Friday. I need to understand what's going on with the ads. Can we jump on a call tomorrow morning? I've got a team meeting at 11 so before that ideally.",
+    "isRead": false
+  },
+  {
+    "id": "fl-002",
+    "from": { "name": "Xero", "email": "notifications@xero.com" },
+    "subject": "Invoice #2847 is 14 days overdue",
+    "date": "2026-03-13T09:00:00Z",
+    "snippet": "Your invoice #2847 for Ace Plumbing Services ($4,200.00) was due on 27 Feb 2026 and is now 14 days overdue. You can send a reminder or view the invoice details in Xero.",
+    "isRead": true
+  },
+  {
+    "id": "fl-003",
+    "from": { "name": "Darren Novak", "email": "darren@novakelectrical.com.au" },
+    "subject": "Google Ads help - referral from Steve",
+    "date": "2026-03-12T16:45:00Z",
+    "snippet": "Hi Fiona, Steve Hargraves from Ace Plumbing gave me your details. I run an electrical business in the northern suburbs and want to start running Google Ads. Budget would be around $3-5K per month. We mainly do residential rewiring and switchboard upgrades. Are you taking on new clients?",
+    "isRead": false
+  },
+  {
+    "id": "fl-004",
+    "from": { "name": "Jenny Liu", "email": "jenny@liuaccounting.com.au" },
+    "subject": "Quarterly BAS due next week - docs needed",
+    "date": "2026-03-12T10:30:00Z",
+    "snippet": "Just a reminder your Q3 BAS is due on 21 March. I still need your bank statements for February and any outstanding expense receipts. Can you upload them to the shared folder by Wednesday?",
+    "isRead": true
+  },
+  {
+    "id": "fl-005",
+    "from": { "name": "PPC Mastery", "email": "digest@ppcmastery.io" },
+    "subject": "Weekly PPC roundup: Broad match changes, PMax updates",
+    "date": "2026-03-11T07:00:00Z",
+    "snippet": "This week: Google expands broad match to more campaign types, new PMax asset group reporting columns, and why your search term reports might be showing more data than before. Plus: a deep dive on setting up offline conversion tracking for lead gen.",
+    "isRead": true
+  },
+  {
+    "id": "fl-006",
+    "from": { "name": "Ben Whitfield", "email": "ben@greenvalleyroofing.com.au" },
+    "subject": "Re: March report - great results! Quick question",
+    "date": "2026-03-11T13:15:00Z",
+    "snippet": "Fiona, really happy with how things are going. 23 leads in February at $42 each is our best month yet. I was wondering if you also do Meta ads? A mate of mine has been getting good leads from Facebook for his landscaping business. Would love to discuss adding that as a channel.",
+    "isRead": false
+  },
+  {
+    "id": "fl-007",
+    "from": { "name": "Google Ads", "email": "googleads-noreply@google.com" },
+    "subject": "Budget anomaly detected - Ace Plumbing account",
+    "date": "2026-03-10T08:00:00Z",
+    "snippet": "We detected unusual spending patterns in your managed account Ace Plumbing Services (XXX-XXX-4821). Daily spend on 9 March was $312, which is 2.4x higher than the 30-day average of $130. Review campaign performance to ensure this is expected.",
+    "isRead": true
+  },
+  {
+    "id": "fl-008",
+    "from": { "name": "Lisa Dempsey", "email": "lisa@dempseydigital.com.au" },
+    "subject": "Intro - electrician client who needs Google Ads",
+    "date": "2026-03-10T11:40:00Z",
+    "snippet": "Hey Fiona! I've got a client who's an electrician in Geelong and needs someone to manage his Google Ads. He's currently spending about $2K/month but not getting great results. I don't have capacity to take him on. Happy to make an intro if you're interested?",
+    "isRead": true
+  },
+  {
+    "id": "fl-009",
+    "from": { "name": "Optmyzr", "email": "billing@optmyzr.com" },
+    "subject": "Your subscription renews on 28 March",
+    "date": "2026-03-09T15:00:00Z",
+    "snippet": "Your Optmyzr Pro plan will auto-renew on 28 March 2026 at US$249/month. You currently have 7 accounts connected. Review your plan or update payment details in your account settings.",
+    "isRead": true
+  },
+  {
+    "id": "fl-010",
+    "from": { "name": "Google Partners", "email": "partners-noreply@google.com" },
+    "subject": "Certification expiring: Google Ads Search",
+    "date": "2026-03-09T06:30:00Z",
+    "snippet": "Your Google Ads Search certification expires on 15 April 2026. To maintain your Google Partner badge, please complete the updated assessment before the expiry date. The assessment takes approximately 75 minutes. Log in to Skillshop to get started.",
+    "isRead": false
+  }
+]
