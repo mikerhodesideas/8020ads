@@ -561,6 +561,13 @@ const clairObscurSkin: SkinConfig = {
   // Victory image
   victoryImage: '/images/victory/clair-obscur-victory.png',
 
+  // Level preview images
+  levelImages: {
+    1: '/images/maps/clair-obscur-level-1.png',
+    2: '/images/maps/clair-obscur-level-2.png',
+    3: '/images/maps/clair-obscur-level-3.png',
+  },
+
   // Background
   backgroundEffect: null,
 
@@ -664,6 +671,13 @@ const tetrisSkin: SkinConfig = {
 
   // Victory image
   victoryImage: '/images/victory/tetris-victory.png',
+
+  // Level preview images
+  levelImages: {
+    1: '/images/maps/tetris-level-1.png',
+    2: '/images/maps/tetris-level-2.png',
+    3: '/images/maps/tetris-level-3.png',
+  },
 
   // Background
   backgroundEffect: 'grid-lines',
@@ -769,6 +783,13 @@ const zeldaSkin: SkinConfig = {
   // Victory image
   victoryImage: '/images/victory/zelda-victory.png',
 
+  // Level preview images
+  levelImages: {
+    1: '/images/maps/zelda-level-1.png',
+    2: '/images/maps/zelda-level-2.png',
+    3: '/images/maps/zelda-level-3.png',
+  },
+
   // Background
   backgroundEffect: null,
 
@@ -872,6 +893,13 @@ const elderScrollsSkin: SkinConfig = {
 
   // Victory image
   victoryImage: '/images/victory/elder-scrolls-victory.png',
+
+  // Level preview images
+  levelImages: {
+    1: '/images/maps/elder-scrolls-level-1.png',
+    2: '/images/maps/elder-scrolls-level-2.png',
+    3: '/images/maps/elder-scrolls-level-3.png',
+  },
 
   // Background
   backgroundEffect: 'nebula',
