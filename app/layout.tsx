@@ -3,6 +3,7 @@ import { Oxanium, Inter, Cormorant_Garamond, Press_Start_2P, VT323 } from 'next/
 import Navbar from '@/components/navbar'
 import { GameProvider } from '@/components/game-provider'
 import { TransitionProvider } from '@/components/transition-overlay'
+import pkg from '@/package.json'
 import './globals.css'
 
 const oxanium = Oxanium({
@@ -52,6 +53,9 @@ export default function RootLayout({
           <TransitionProvider>
             <Navbar />
             <main>{children}</main>
+            <footer style={{ textAlign: 'center', padding: '12px 0', fontSize: '11px', color: '#bbb', letterSpacing: '0.5px' }}>
+              &copy; Mike Rhodes 2026 &middot; v{pkg.version}
+            </footer>
           </TransitionProvider>
         </GameProvider>
       </body>
