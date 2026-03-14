@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
 import { worlds, type WorldId } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
+import { track } from '@/lib/tracking'
 
 export default function WorldChooser() {
   const router = useRouter()
   const { type, setWorld } = useGame()
 
   const handlePick = (worldId: WorldId) => {
+    track({ eventType: 'world_selected', worldId })
     setWorld(worldId)
     router.push('/play')
   }

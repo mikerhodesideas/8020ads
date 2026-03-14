@@ -13,6 +13,7 @@ import {
 import type { PlayerType, WorldId } from '@/lib/game-data'
 import { getLevel1Demos, getLevel2Demos, getLevel3Demos, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS, LEVEL_1_SKILL_IDS, LEVEL_2_SKILL_IDS, LEVEL_3_SKILL_IDS, DEMO_SKILLS } from '@/lib/game-data'
 import { getSkin, type SkinConfig } from '@/lib/skin-config'
+import { track } from '@/lib/tracking'
 
 interface GameState {
   type: PlayerType | null
@@ -192,6 +193,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState(false)
   const [badgeToastQueue, setBadgeToastQueue] = useState<string[]>([])
   const demoStartTimesRef = useRef<Record<number, number>>({})
+  const trackedLevelsRef = useRef<Set<number>>(new Set())
 
   useEffect(() => {
     setState(loadState())
@@ -235,6 +237,20 @@ export function GameProvider({ children }: { children: ReactNode }) {
     loaded,
   ])
 
+  // Track level completions (fire once per level per session)
+  useEffect(() => {
+    if (!loaded) return
+    for (const lvl of [1, 2, 3]) {
+      if (trackedLevelsRef.current.has(lvl)) continue
+      const ids = lvl === 1 ? ALL_LEVEL_1_IDS : lvl === 2 ? ALL_LEVEL_2_IDS : ALL_LEVEL_3_IDS
+      const done = Array.from(state.completed).filter((id) => ids.has(id)).length
+      if (done >= 3) {
+        trackedLevelsRef.current.add(lvl)
+        track({ eventType: 'level_completed', demoLevel: lvl })
+      }
+    }
+  }, [state.completed.size, loaded])
+
   const setType = useCallback((t: PlayerType) => {
     setState((prev) => ({ ...prev, type: t }))
   }, [])
@@ -250,6 +266,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const markComplete = useCallback((demoId: number) => {
     const startTime = demoStartTimesRef.current[demoId]
     const wasFast = startTime ? Date.now() - startTime < 20000 : false
+    const demoLevel = ALL_LEVEL_2_IDS.has(demoId) ? 2 : ALL_LEVEL_3_IDS.has(demoId) ? 3 : 1
+
+    track({ eventType: 'demo_completed', demoId, demoLevel })
 
     setState((prev) => {
       const newCompleted = new Set(prev.completed).add(demoId)

@@ -9,6 +9,7 @@ import DragFile from './drag-file'
 import GlossaryTip from './glossary-tip'
 import { demoContent } from './demo-content'
 import { cn } from '@/lib/utils'
+import { track } from '@/lib/tracking'
 import { playSound, startProgressTick, stopProgressTick, playStarReveal, startBackgroundMusic, stopBackgroundMusic } from '@/lib/sounds'
 import { useTransition } from '@/components/transition-overlay'
 
@@ -190,6 +191,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   // Phase 2: Run AI
   const handleRunAI = async () => {
     if (skin.sounds.demoStart) playSound(skin.sounds.demoStart)
+    track({ eventType: 'demo_started', demoId, demoLevel: getDemoLevel(demoId), worldId: world })
     startDemoTimer(demoId)
 
     if (skill) {

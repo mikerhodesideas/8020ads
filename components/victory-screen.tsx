@@ -8,6 +8,7 @@ import { useGame, useSkin } from '@/components/game-provider'
 import { BadgeGrid } from '@/components/badge-system'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
+import { track } from '@/lib/tracking'
 
 function useAnimatedCounter(target: number, duration: number = 1200): number {
   const [value, setValue] = useState(0)
@@ -146,13 +147,14 @@ export default function VictoryScreen() {
   // Weekly time projection
   const weeklyTimeSaved = totalTimeSaved * 5
 
-  // Play fanfare on mount
+  // Play fanfare on mount + track victory
   useEffect(() => {
+    track({ eventType: 'victory_reached', avatarType: type })
     if (skin.sounds.victory) {
       const t = setTimeout(() => playSound(skin.sounds.victory!), 400)
       return () => clearTimeout(t)
     }
-  }, [skin.sounds.victory])
+  }, [skin.sounds.victory, type])
 
   const handlePlayAgain = () => {
     router.push('/play')
@@ -464,6 +466,7 @@ export default function VictoryScreen() {
                   href={AVATAR_CTA[type].primaryHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].primaryLabel, avatarType: type } })}
                   className={primaryBtnClass}
                   style={primaryBtnStyle}
                 >
@@ -471,7 +474,7 @@ export default function VictoryScreen() {
                 </a>
               ) : (
                 <button
-                  onClick={() => setLetterOpen(!letterOpen)}
+                  onClick={() => { track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].primaryLabel, avatarType: type } }); setLetterOpen(!letterOpen) }}
                   className={primaryBtnClass}
                   style={primaryBtnStyle}
                 >
@@ -483,6 +486,7 @@ export default function VictoryScreen() {
                   href={AVATAR_CTA[type].secondaryHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].secondaryLabel, avatarType: type } })}
                   className={secondaryBtnClass}
                   style={secondaryBtnStyle}
                 >
@@ -509,6 +513,7 @@ export default function VictoryScreen() {
               href="https://ads2ai.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track({ eventType: 'cta_clicked', metadata: { label: 'Join Ads to AI', avatarType: type } })}
               className={primaryBtnClass}
               style={primaryBtnStyle}
             >
@@ -555,6 +560,7 @@ export default function VictoryScreen() {
                 <a
                   href={skill.path}
                   download
+                  onClick={() => track({ eventType: 'skill_downloaded', skillId: skill.name })}
                   className={cn(
                     'mt-auto inline-flex items-center gap-1.5 px-3 py-1.5 font-heading font-bold text-xs transition-all duration-200 self-start',
                     isLight

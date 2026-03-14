@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
 import { cn } from '@/lib/utils'
+import { track } from '@/lib/tracking'
 import type { PlayerType } from '@/lib/game-data'
 
 const avatars = [
@@ -55,6 +56,7 @@ export default function PathChooser() {
   const { setType } = useGame()
 
   const handleClick = (typeId: PlayerType) => {
+    track({ eventType: 'avatar_selected', avatarType: typeId })
     setType(typeId)
     router.push('/world')
   }
