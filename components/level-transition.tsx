@@ -24,72 +24,72 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    // Trigger fade-in on mount
     const timer = setTimeout(() => setVisible(true), 50)
     return () => clearTimeout(timer)
   }, [])
 
   const nextLevel = fromLevel + 1
+  const levelImage = skin.levelImages?.[nextLevel as 1 | 2 | 3]
 
-  const textColor = isDark ? 'text-white' : 'text-amber-900'
-  const textSecondary = isDark ? 'text-white/80' : 'text-amber-800/80'
-  const textMuted = isDark ? 'text-white/50' : 'text-amber-700/60'
   const accentColor = isDark ? 'text-[var(--world-accent)]' : 'text-amber-700'
   const borderColor = isDark ? 'var(--world-accent-border, rgba(255,255,255,0.2))' : 'rgba(180, 130, 50, 0.3)'
-  const cardBg = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.4)'
+  const cardBg = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.5)'
+  const bandBg = isDark ? 'rgba(10, 10, 20, 0.75)' : 'rgba(40, 20, 0, 0.7)'
 
   return (
     <div
       className={cn(
-        'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500',
+        'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-700',
         visible ? 'opacity-100' : 'opacity-0'
       )}
-      style={{
-        backgroundColor: isDark
-          ? 'rgba(26, 26, 46, 0.92)'
-          : 'rgba(120, 80, 20, 0.7)',
-        backdropFilter: 'blur(12px)',
-      }}
     >
-      <div className="max-w-lg w-full mx-6 flex flex-col items-center gap-6 px-8 py-12">
-        {/* Level preview image (only if the skin has one for the next level) */}
-        {skin.levelImages?.[nextLevel as 1 | 2 | 3] && (
-          <div className="w-48 h-32 sm:w-60 sm:h-40 relative">
-            <Image
-              src={skin.levelImages[nextLevel as 1 | 2 | 3]!}
-              alt={`${skin.levelLabel} ${nextLevel} preview`}
-              fill
-              className="object-contain drop-shadow-xl"
-            />
-          </div>
-        )}
+      {/* Full-bleed background image */}
+      {levelImage ? (
+        <>
+          <Image
+            src={levelImage}
+            alt={`${skin.levelLabel} ${nextLevel}`}
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Slight overall darken so the band reads well */}
+          <div className="absolute inset-0" style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)' }} />
+        </>
+      ) : (
+        /* Fallback when no image */
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: isDark ? 'rgba(26, 26, 46, 0.95)' : 'rgba(120, 80, 20, 0.8)',
+            backdropFilter: 'blur(12px)',
+          }}
+        />
+      )}
 
+      {/* Semi-transparent band across middle with faded edges */}
+      <div
+        className="absolute inset-x-0 flex items-center justify-center"
+        style={{
+          top: '15%',
+          bottom: '15%',
+          background: `linear-gradient(to bottom, transparent, ${bandBg} 12%, ${bandBg} 88%, transparent)`,
+        }}
+      />
+
+      {/* Content over the band */}
+      <div className="relative z-10 max-w-lg w-full mx-6 flex flex-col items-center gap-5 px-8">
         {fromLevel === 1 && (
           <>
-            <h2
-              className={cn(
-                'text-2xl sm:text-3xl font-bold font-heading text-center leading-snug',
-                textColor
-              )}
-            >
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center leading-snug text-white drop-shadow-lg">
               You&apos;ve seen what Cowork can do with just a file and a prompt.
             </h2>
 
-            <p
-              className={cn(
-                'text-lg sm:text-xl font-heading text-center font-bold',
-                accentColor
-              )}
-            >
+            <p className={cn('text-lg sm:text-xl font-heading text-center font-bold drop-shadow-md', accentColor)}>
               {skin.levelLabel} 2 introduces SKILLS.
             </p>
 
-            <div
-              className={cn(
-                'w-full space-y-4 text-sm sm:text-base',
-                textSecondary
-              )}
-            >
+            <div className="w-full space-y-4 text-sm sm:text-base text-white/85">
               <p className="text-center">
                 A skill is a set of instructions you install in Cowork. It turns Cowork from a general assistant into a specialist.
               </p>
@@ -102,16 +102,10 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
                   backgroundColor: cardBg,
                 }}
               >
-                <p className={cn(
-                  'text-xs font-heading font-bold uppercase tracking-widest mb-2',
-                  textMuted
-                )}>
+                <p className="text-xs font-heading font-bold uppercase tracking-widest mb-2 text-white/50">
                   HOW TO INSTALL
                 </p>
-                <p className={cn(
-                  'font-mono text-sm',
-                  isDark ? 'text-white/90' : 'text-amber-900'
-                )}>
+                <p className="font-mono text-sm text-white/90">
                   Customize &gt; Skills &gt; + &gt; Upload a skill
                 </p>
               </div>
@@ -121,21 +115,11 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
 
         {fromLevel === 2 && (
           <>
-            <h2
-              className={cn(
-                'text-2xl sm:text-3xl font-bold font-heading text-center leading-snug',
-                textColor
-              )}
-            >
+            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center leading-snug text-white drop-shadow-lg">
               Skills transform the output. Now let&apos;s connect to the real world.
             </h2>
 
-            <p
-              className={cn(
-                'text-lg sm:text-xl font-heading text-center font-bold',
-                accentColor
-              )}
-            >
+            <p className={cn('text-lg sm:text-xl font-heading text-center font-bold drop-shadow-md', accentColor)}>
               {skin.levelLabel} 3 connects Cowork to your actual tools.
             </p>
 
@@ -152,16 +136,10 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
                 >
                   <span className="text-xl shrink-0">{connector.icon}</span>
                   <div className="min-w-0">
-                    <p className={cn(
-                      'text-sm font-heading font-bold',
-                      isDark ? 'text-white' : 'text-amber-900'
-                    )}>
+                    <p className="text-sm font-heading font-bold text-white">
                       {connector.name}
                     </p>
-                    <p className={cn(
-                      'text-xs',
-                      textMuted
-                    )}>
+                    <p className="text-xs text-white/50">
                       {connector.description}
                     </p>
                   </div>
@@ -169,21 +147,11 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
               ))}
             </div>
 
-            <p
-              className={cn(
-                'text-xs sm:text-sm text-center',
-                textMuted
-              )}
-            >
+            <p className="text-xs sm:text-sm text-center text-white/50">
               Plus {MORE_CONNECTORS.join(', ')}, and more.
             </p>
 
-            <p
-              className={cn(
-                'text-xs sm:text-sm text-center',
-                textSecondary
-              )}
-            >
+            <p className="text-xs sm:text-sm text-center text-white/80">
               Plus a critical lesson on staying safe with AI.
             </p>
           </>
@@ -193,10 +161,7 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
           onClick={onContinue}
           className={cn(
             'mt-4 px-10 py-4 font-heading text-base font-bold transition-all duration-200 cursor-pointer',
-            isDark
-              ? 'text-black hover:opacity-90'
-              : 'text-white hover:opacity-90',
-            'hover:shadow-lg active:scale-[0.97]'
+            'text-black hover:opacity-90 hover:shadow-lg active:scale-[0.97]'
           )}
           style={{
             borderRadius: '2px',
@@ -204,6 +169,7 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
             border: isDark
               ? '2px solid var(--world-accent-border, #C07800)'
               : '2px solid #78350f',
+            color: isDark ? 'black' : 'white',
           }}
         >
           Enter {skin.levelLabel} {nextLevel}
