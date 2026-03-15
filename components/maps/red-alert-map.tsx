@@ -32,7 +32,7 @@ function RedAlertStatsWidget({
     timeSaved >= 1 ? `~${Math.round(timeSaved)}h` : timeSaved > 0 ? `~${Math.round(timeSaved * 60)}m` : '0'
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
+    <div className="z-30 flex flex-col items-end">
       {expanded && (
         <div
           className="mb-2 p-3 border-2 shadow-lg stats-widget-expand"
@@ -399,8 +399,8 @@ export default function RedAlertMap({
           </div>
         )}
 
-        {/* Bottom nav: abort mission */}
-        <div className="fixed bottom-4 left-4 z-20">
+        {/* Bottom nav: abort mission + stats */}
+        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
             className="text-xs transition-colors duration-300 uppercase"
@@ -414,17 +414,15 @@ export default function RedAlertMap({
           >
             Abort Mission
           </button>
+          <RedAlertStatsWidget
+            completedCount={completed.size}
+            availableCount={availableDemoCount}
+            skillCount={skills.size}
+            timeSaved={totalTimeSaved}
+            expanded={statsExpanded}
+            onToggle={() => setStatsExpanded((p: boolean) => !p)}
+          />
         </div>
-
-        {/* Floating stats widget */}
-        <RedAlertStatsWidget
-          completedCount={completed.size}
-          availableCount={availableDemoCount}
-          skillCount={skills.size}
-          timeSaved={totalTimeSaved}
-          expanded={statsExpanded}
-          onToggle={() => setStatsExpanded((p: boolean) => !p)}
-        />
       </div>
 
       {showCelebration && (

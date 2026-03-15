@@ -30,7 +30,7 @@ function MarioStatsWidget({
     timeSaved >= 1 ? `~${Math.round(timeSaved)}h` : timeSaved > 0 ? `~${Math.round(timeSaved * 60)}m` : '0'
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
+    <div className="z-30 flex flex-col items-end">
       {expanded && (
         <div
           className="mb-2 p-3 border-[3px] shadow-lg stats-widget-expand"
@@ -339,25 +339,23 @@ export default function MarioMap({
           </div>
         )}
 
-        {/* Bottom nav: start over */}
-        <div className="fixed bottom-4 left-4 z-20">
+        {/* Bottom nav: start over + stats */}
+        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
             className="text-xs text-white/40 hover:text-white/70 transition-colors font-heading"
           >
             Start over
           </button>
+          <MarioStatsWidget
+            completedCount={completed.size}
+            availableCount={availableDemoCount}
+            skillCount={skills.size}
+            timeSaved={totalTimeSaved}
+            expanded={statsExpanded}
+            onToggle={() => setStatsExpanded((p: boolean) => !p)}
+          />
         </div>
-
-        {/* Floating stats widget */}
-        <MarioStatsWidget
-          completedCount={completed.size}
-          availableCount={availableDemoCount}
-          skillCount={skills.size}
-          timeSaved={totalTimeSaved}
-          expanded={statsExpanded}
-          onToggle={() => setStatsExpanded((p: boolean) => !p)}
-        />
       </div>
 
       {showCelebration && (

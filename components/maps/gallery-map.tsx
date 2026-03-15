@@ -128,7 +128,7 @@ function StatsWidget({
     timeSaved >= 1 ? `~${Math.round(timeSaved)}h` : timeSaved > 0 ? `~${Math.round(timeSaved * 60)}m` : '0'
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30">
+    <div className="z-30 flex flex-col items-end">
       {expanded && (
         <div
           className={cn(
@@ -404,25 +404,24 @@ export default function GalleryMap({
             })}
           </div>
 
-          <div className="mt-12 flex items-center justify-center gap-6">
+          <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
             <button
               onClick={() => router.push('/')}
               className="text-xs text-[var(--color-faint)] hover:text-[var(--color-muted)] transition-colors font-heading"
             >
               Start over
             </button>
+            <StatsWidget
+              isGallery={true}
+              completedCount={completed.size}
+              availableCount={availableDemoCount}
+              skillCount={skills.size}
+              timeSaved={totalTimeSaved}
+              expanded={statsExpanded}
+              onToggle={() => setStatsExpanded((p) => !p)}
+            />
           </div>
         </div>
-
-        <StatsWidget
-          isGallery={true}
-          completedCount={completed.size}
-          availableCount={availableDemoCount}
-          skillCount={skills.size}
-          timeSaved={totalTimeSaved}
-          expanded={statsExpanded}
-          onToggle={() => setStatsExpanded((p) => !p)}
-        />
       </div>
 
       {showCelebration && (
