@@ -18,6 +18,37 @@ const screenshotMap: Record<string, { src: string; size?: 'full' | 'medium' | 's
   'cowork settings menu': { src: '/images/lessons/cowork-settings-menu.png', size: 'small' },
   'cowork active conversation': { src: '/images/lessons/cowork-active-conversation.png' },
   'cowork folder picker': { src: '/images/lessons/cowork-folder-picker.png', size: 'medium' },
+  'cowork asking for permission to delete a file': { src: '/images/lessons/cowork-permission-prompt.png', size: 'medium' },
+  'finding the customize button in cowork': { src: '/images/lessons/cowork-customize-sidebar.png' },
+  'the skills section in customize': { src: '/images/lessons/cowork-skills-section.png' },
+  'the add skill button': { src: '/images/lessons/cowork-upload-skill.png' },
+  'dragging a file into cowork': { src: '/images/lessons/cowork-drag-file.png' },
+  'cowork connectors menu': { src: '/images/lessons/cowork-connectors-menu.png', size: 'medium' },
+  'cowork connectors panel': { src: '/images/lessons/cowork-connectors-panel.png' },
+}
+
+// Downloadable skills - renders as dashed-border cards
+const skillMap: Record<string, { name: string; description: string; path: string }> = {
+  'content repurposer': {
+    name: 'Content Repurposer',
+    description: 'Turn one blog post into platform-specific content for LinkedIn, X, email, and more.',
+    path: '/demo-assets/skills/content-repurposer.zip',
+  },
+  'meeting intelligence': {
+    name: 'Meeting Intelligence',
+    description: 'Extract action items, decisions, and follow-ups from rough meeting notes.',
+    path: '/demo-assets/skills/meeting-intelligence.zip',
+  },
+  'search term analyzer': {
+    name: 'Search Term Analyzer',
+    description: 'Classify search terms by intent, flag waste, and generate negative keyword lists.',
+    path: '/demo-assets/skills/search-term-analyzer.zip',
+  },
+  'csv analyzer': {
+    name: 'CSV Analyzer',
+    description: 'Run real statistical analysis on any CSV with Python-powered charts and insights.',
+    path: '/demo-assets/skills/csv-analyzer.zip',
+  },
 }
 
 const sizeClasses = {
@@ -34,8 +65,39 @@ function findScreenshot(text: string): { src: string; size: 'full' | 'medium' | 
 }
 
 function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithoutRef<'blockquote'>) {
-  // Extract text content from children to check for [SCREENSHOT: ...]
   const text = extractText(children)
+
+  // Check for [SKILL: name]
+  const skillMatch = text.match(/\[SKILL:\s*(.+?)\]/)
+  if (skillMatch) {
+    const key = skillMatch[1].toLowerCase().trim()
+    const skill = skillMap[key]
+    if (skill) {
+      const filename = skill.path.split('/').pop() || 'skill.zip'
+      return (
+        <a
+          href={skill.path}
+          download={filename}
+          className="block my-8 p-5 border-2 border-dashed border-[var(--color-brand-orange)] rounded-[2px] bg-[var(--color-brand-orange-faint)] hover:bg-[var(--color-brand-orange)]/10 transition-colors cursor-pointer no-underline group"
+        >
+          <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-brand-orange)] mb-2 font-heading">Skill</p>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1">
+              <p className="text-base font-bold font-heading text-[var(--color-ink)] mb-1">{skill.name}</p>
+              <p className="text-sm text-[var(--color-muted)] leading-relaxed">{skill.description}</p>
+              <p className="text-xs text-[var(--color-faint)] mt-2">Click to save or drag to your desktop.</p>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--color-brand-orange)] text-white text-xs font-heading font-bold rounded-[2px] group-hover:opacity-90 transition-opacity">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Save
+            </span>
+          </div>
+        </a>
+      )
+    }
+  }
+
+  // Check for [SCREENSHOT: description]
   const match = text.match(/\[SCREENSHOT:\s*(.+?)\]/)
   if (match) {
     const desc = match[1]
@@ -56,6 +118,7 @@ function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithou
       </blockquote>
     )
   }
+
   // Normal blockquote
   return (
     <blockquote className="border-l-3 border-[var(--color-brand-orange)] bg-[var(--color-brand-orange-faint)] px-4 py-3 my-5 rounded-[2px]" {...props}>
@@ -203,6 +266,21 @@ export default function LessonPage() {
         </h1>
       </div>
 
+      {/* CTA for final lesson */}
+      {lessonId === '4-3' && (
+        <div className="mb-10">
+          <a
+            href="https://8020brain.com/ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-bold rounded-[2px] transition-colors"
+          >
+            Join Ads to AI
+            <span>&#8594;</span>
+          </a>
+        </div>
+      )}
+
       {/* Lesson content */}
       <article className="prose-lesson">
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{contentWithoutTitle}</ReactMarkdown>
@@ -233,6 +311,16 @@ export default function LessonPage() {
             Next lesson
             <span>&#8594;</span>
           </Link>
+        ) : lessonId === '4-3' ? (
+          <a
+            href="https://8020brain.com/ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+          >
+            Join Ads to AI
+            <span>&#8594;</span>
+          </a>
         ) : (
           <Link
             href="/course"

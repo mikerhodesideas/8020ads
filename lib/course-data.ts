@@ -293,7 +293,7 @@ If you want a file when Cowork gives you a chat response, just say: "Save that a
 
 Cowork doesn't just create new files. It can also edit existing ones. Say "Fix the typos in meeting-notes.txt" and it'll update the file directly.
 
-Important: Cowork always asks permission before changing an existing file. You'll see what it wants to change and you approve or reject the edit. It never silently overwrites your work.
+The first time Cowork wants to make changes to files in your folder, it'll ask for permission. Once you allow it, that applies to all files in the folder for that session. Destructive actions like deleting files always get a separate permission check, no matter what.
 
 ## Try it in the game
 
@@ -327,17 +327,17 @@ Before you go further, it's worth understanding the boundaries. Knowing what Cow
 
 ## The permission model
 
-This is important: **Cowork always asks before changing your files.**
+The first time Cowork wants to edit or create files in your folder, it'll ask for permission. Once you allow it, that covers all file changes in that folder for the current session.
 
-If you say "rewrite this document," Cowork will show you the proposed changes and wait for your approval. You can accept, reject, or ask for modifications. It never silently overwrites your work.
+But destructive actions are different. If Cowork wants to **delete** a file, it always asks separately, even if you've already allowed edits. You'll see exactly what it wants to delete and you can allow or deny it.
 
-> [SCREENSHOT: Cowork asking for permission before editing a file]
+> [SCREENSHOT: Cowork asking for permission to delete a file]
 
 You can change which folder Cowork is working in at any time. And you can drag files in from anywhere. So you're always in control of what it has access to.
 
 ## Practical takeaway
 
-Cowork is scoped to one folder at a time, plus whatever you drag in. It can't wander into other folders, it can't reach the internet, and it always asks before making changes. That's enough access to be very useful, with enough limits to feel safe.
+Cowork is scoped to one folder at a time, plus whatever you drag in. It can't wander into other folders, it can't reach the internet, and it asks before doing anything destructive like deleting files. That's enough access to be very useful, with enough limits to feel safe.
 
 ## Try it in the game
 
@@ -377,6 +377,8 @@ Here's a concrete example. You give Cowork a blog post and ask it to create soci
 **With the Content Repurposer skill:** You get a LinkedIn post, a Twitter thread, an email newsletter version, and a short video script. All formatted correctly for each platform, all in a single interactive HTML page with copy buttons. Consistent every time.
 
 Same AI. Same input. Dramatically different output. The skill didn't make Cowork smarter. It told Cowork exactly what you needed.
+
+> [SKILL: Content Repurposer]
 
 ## Skills are simple
 
@@ -419,33 +421,25 @@ The game includes these skills you can download and try:
 
 ## Step 2: Open Customize
 
-In Cowork, find the **Customize** button in the left sidebar.
+Click **Customize** in the left sidebar. You'll see three options: Connect your tools, Create new skills, and Browse plugins.
 
 > [SCREENSHOT: Finding the Customize button in Cowork]
 
-## Step 3: Go to Skills
+## Step 3: Go to Skills and upload
 
-In the Customize panel, click **Skills**. You'll see any skills already installed (probably empty if this is your first one).
+Click **Skills** in the left panel, then click the **+** button in the top right. Choose the third option, **Upload a skill**, and select your downloaded zip file. Cowork unpacks it and installs the skill automatically.
 
 > [SCREENSHOT: The Skills section in Customize]
 
-## Step 4: Click the + button
-
-Click the **+** button to add a new skill.
-
-> [SCREENSHOT: The add skill button]
-
-## Step 5: Upload the zip
-
-Select your downloaded zip file. Cowork unpacks it and installs the skill automatically.
-
-> [SCREENSHOT: Skill installed and visible in the list]
-
-That's it. The skill is ready to use.
+That's it. The skill appears in your list and is ready to use.
 
 ## Using the skill
 
-Now drag in a file that matches the skill's purpose and tell Cowork what to do. For example, with the Content Repurposer installed:
+Now drag in a file that matches the skill's purpose and tell Cowork what to do.
+
+> [SCREENSHOT: Dragging a file into Cowork]
+
+For example, with the Content Repurposer installed:
 
 1. Drag in a blog post or article
 2. Type: "Repurpose this content for social media"
@@ -537,11 +531,15 @@ But your work doesn't live entirely in files. It's in your email, your calendar,
 
 A connector links Cowork to an external service. Once connected, Cowork can read from (and sometimes write to) that service, just like it reads files in your folder.
 
+You can access your connected services from the **+** menu below the chat window, under **Connectors**.
+
+> [SCREENSHOT: Cowork connectors menu]
+
 For example:
 
-- **Gmail connector**: Cowork reads your emails, searches your inbox, drafts responses
-- **Google Calendar connector**: Cowork sees your schedule, finds free time, summarises your week
-- **Slack connector**: Cowork reads channels, summarises threads, catches you up
+- **Gmail**: Cowork reads your emails, searches your inbox, drafts responses
+- **Google Calendar**: Cowork sees your schedule, finds free time, summarises your week
+- **Google Drive**: Cowork searches and reads files stored in your Drive
 
 ## Why this changes things
 
@@ -554,6 +552,8 @@ Or: "Triage my inbox, check my calendar for gaps tomorrow, and draft replies to 
 ## You don't need to set these up now
 
 Connectors are an "unlock when you're ready" feature. You install them from **Customize > Connectors** in Cowork, and each one requires you to sign in to the relevant service and grant access.
+
+> [SCREENSHOT: Cowork connectors panel]
 
 The game's Level 3 demos show what this looks like in practice. The first Level 3 demo combines inbox and calendar data to show cross-service intelligence.
 
@@ -609,30 +609,25 @@ Play the Level 3 security demo (Demo 9). It's a quick, practical lesson about st
 
 You've learned the basics. You've seen what Cowork can do with files, and what it can do when you add skills. Let's talk about where this goes.
 
-## What you've covered
-
-- **Module 1**: What Cowork is, how it differs from ChatGPT, installing it
-- **Module 2**: Giving it files, understanding where results go, knowing what it can access
-- **Module 3**: What skills are, how to install them, and what they produce
-- **Module 4**: Connectors, safety, and where to go next
-
-That's a solid foundation. You can install Cowork, point it at your files, add skills that turn it into a specialist, and you understand how connectors extend it to your real tools.
-
 ## The brain system
 
-Imagine Cowork with dozens of skills installed, connected to your email, calendar, and files, running your daily workflow. A morning briefing that triages your inbox, checks your calendar, and tells you what needs attention. Content skills that handle your social media. Data skills that monitor your business metrics. Meeting skills that handle follow-ups automatically.
+Cowork is great for individual tasks. But the brain system is where it gets serious.
 
-That's the brain system. It's not a different product. It's Cowork with a full set of skills, connectors, and context about your business. The same tool you've been learning, taken to its full potential.
+The brain is a separate, more powerful tool built on Claude Code. It's where you or someone technical in your business creates the skills, automations, and workflows that the rest of your team then uses in Cowork. Think of it as the engine room. The brain handles email management, content creation, project tracking, contact management, meeting follow-ups, daily briefings, and more.
+
+The skills you've been downloading in this course? Someone built those in the brain. The connectors, the structured outputs, the templates. All created once in the brain, then packaged as skills that anyone can use in Cowork.
+
+If Cowork is where your team gets work done, the brain is where you build the system that makes that work better.
 
 ## The Ads to AI community
 
-Everything in this course is a starting point. The [Ads to AI community](https://ads2ai.com) is where it goes further:
+Everything in this course is a starting point. The Ads to AI community is where it goes further:
 
+- **A thriving community** of people building with AI, sharing what works, helping each other
+- **The brain system**: a complete AI infrastructure that manages email, content, projects, contacts, and more
 - **50+ ready-made skills** for different industries and tasks
-- **The brain system**: A complete AI infrastructure that manages email, content, projects, contacts, and more
-- **Courses**: From beginner to advanced, including building your own skills and automations
-- **Monthly Q&A calls**: Get your questions answered live
-- **A community**: People building with AI, sharing what works, helping each other
+- **Courses** from beginner to advanced, including building your own skills and automations
+- **Monthly Q&A calls** to get your questions answered live
 
 You've already experienced the demos. You've seen what a few skills can do. The community is where you get the full toolkit and the support to make it work for your specific business.
 
@@ -640,9 +635,7 @@ You've already experienced the demos. You've seen what a few skills can do. The 
 
 1. **Play through any game demos you haven't tried.** Each one teaches you something new and lets you download real skills.
 2. **Install a skill and use it on your own files.** The shift from demo data to your actual work is where it clicks.
-3. **If you want to go deeper**, the Ads to AI community is at [ads2ai.com](https://ads2ai.com). That's where the real transformation happens.
-
-You've got the foundation. The rest is up to you.
+3. **Join the Ads to AI community** to get the brain system, 50+ skills, courses, and a community that's building with AI every day.
 `,
       },
     ],
