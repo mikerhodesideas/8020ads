@@ -86,7 +86,7 @@ function ScreenshotBlockquote({ children, ...props }: React.ComponentPropsWithou
             <div className="flex-1">
               <p className="text-base font-bold font-heading text-[var(--color-ink)] mb-1">{skill.name}</p>
               <p className="text-sm text-[var(--color-muted)] leading-relaxed">{skill.description}</p>
-              <p className="text-xs text-[var(--color-faint)] mt-2">Click to save or drag to your desktop.</p>
+              <p className="text-xs text-[var(--color-faint)] mt-2">Click to download, then drag the file into Cowork.</p>
             </div>
             <span className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--color-brand-orange)] text-white text-xs font-heading font-bold rounded-[2px] group-hover:opacity-90 transition-opacity">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>

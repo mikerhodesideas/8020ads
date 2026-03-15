@@ -120,7 +120,7 @@ export function BadgeTray() {
                     ? 'bg-amber-50 border-amber-400 text-amber-700 badge-earned-glow-gallery'
                     : 'border-[2px] badge-earned-glow-mario'
                   : !isDark
-                    ? 'bg-gray-50 border-gray-200 text-gray-300'
+                    ? 'bg-white/80 border-amber-300/50 text-amber-400/60'
                     : 'border-[2px] border-gray-600 text-gray-500'
               )}
               style={isDark && earned ? {
@@ -166,7 +166,7 @@ export function BadgeGrid() {
                   ? 'bg-amber-50 border-amber-300 text-amber-700'
                   : ''
                 : !isDark
-                  ? 'bg-gray-50 border-gray-200 text-gray-300'
+                  ? 'bg-white/80 border-amber-300/50 text-amber-400/60'
                   : 'border-gray-600 text-gray-500'
             )}
             style={isDark && earned ? {

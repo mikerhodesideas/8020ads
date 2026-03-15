@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useGame, useSkin } from '@/components/game-provider'
-import { DEMO_SKILLS, DEMO_TIME_SAVED } from '@/lib/game-data'
+import { DEMO_SKILLS, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { isMuted, toggleMute, playSound, getVolume, setVolume } from '@/lib/sounds'
 
@@ -122,9 +122,9 @@ export default function Navbar() {
     if (!pathname.startsWith('/play/')) return null
     const demoId = parseInt(pathname.split('/').pop() || '0', 10)
     const label = skin.levelLabel.toUpperCase()
-    if (demoId >= 1 && demoId <= 4) return `${label} 1`
-    if (demoId >= 5 && demoId <= 8) return `${label} 2`
-    if (demoId >= 9 && demoId <= 11) return `${label} 3`
+    if (ALL_LEVEL_1_IDS.has(demoId)) return `${label} 1`
+    if (ALL_LEVEL_2_IDS.has(demoId)) return `${label} 2`
+    if (ALL_LEVEL_3_IDS.has(demoId)) return `${label} 3`
     return null
   }
 

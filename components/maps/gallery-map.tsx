@@ -32,7 +32,8 @@ function DemoNode({
       onClick={onClick}
       className={cn(
         'relative text-left p-5 rounded-[2px] transition-all duration-300 group',
-        'border focus:outline-none node-entrance',
+        'border focus:outline-none',
+        !done && 'node-entrance',
         done
           ? 'bg-emerald-50 border-emerald-300 node-completed-glow'
           : isGallery

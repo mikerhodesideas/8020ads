@@ -101,6 +101,12 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   const [copied, setCopied] = useState(false)
   const [justCompleted, setJustCompleted] = useState(false)
   const [downloadedItems, setDownloadedItems] = useState<Set<string>>(new Set())
+  const [coworkDismissed, setCoworkDismissed] = useState(true) // default true to avoid flash
+
+  // Check localStorage for Cowork card dismissal
+  useEffect(() => {
+    setCoworkDismissed(localStorage.getItem('cowork-card-dismissed') === '1')
+  }, [])
 
 
   const animFrameRef = useRef<number>(0)
@@ -704,7 +710,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             {justCompleted && isDark && (
               <div className="text-center mb-8 stage-clear-drop">
                 <h2 className="text-4xl md:text-5xl font-heading font-bold" style={{ color: 'var(--world-accent)' }}>
-                  {skin.celebrationText(level.id)}
+                  {level.demos.every(d => completed.has(d.id))
+                    ? skin.celebrationText(level.id)
+                    : 'Demo Complete!'}
                 </h2>
               </div>
             )}
@@ -852,9 +860,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                   </h2>
                   <p className="text-sm text-[var(--world-text-secondary)] mb-4 max-w-xl mx-auto">
                     {skill
-                      ? 'Install the skill, drag in the data file, and paste the prompt.'
+                      ? 'Install the skill, download the data file, and paste the prompt.'
                       : demo.dragFile
-                        ? 'Drag the file into Cowork and paste the prompt.'
+                        ? 'Download the file, drag it into Cowork, and paste the prompt.'
                         : 'Copy the prompt, open Cowork, and paste it in.'
                     }
                   </p>
@@ -864,6 +872,55 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                     </p>
                   )}
                   {level && level.id >= 3 && <div className="mb-4" />}
+
+                  {/* Cowork install prompt - shows once, dismissible */}
+                  {!coworkDismissed && (
+                    <div
+                      className="mb-6 p-5 rounded-[2px] text-left"
+                      style={{
+                        background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.03)',
+                        border: isDark ? '1px solid rgba(255,255,255,0.15)' : '1px solid rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <p className="text-sm font-heading font-bold text-[var(--world-text)] mb-1.5">
+                            Got Cowork installed?
+                          </p>
+                          <p className="text-xs text-[var(--world-text-secondary)] mb-3 leading-relaxed">
+                            You&apos;ll need the Claude desktop app with Cowork mode to try these demos with your own data. It&apos;s free and takes about two minutes to set up.
+                          </p>
+                          <div className="flex flex-wrap items-center gap-3">
+                            <a
+                              href="https://claude.ai/download"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-heading font-semibold rounded-[2px] text-white transition-colors"
+                              style={{ background: 'var(--world-accent)' }}
+                            >
+                              Download Cowork &#8599;
+                            </a>
+                            <a
+                              href="/course/1-3"
+                              className="text-xs font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)] underline transition-colors"
+                            >
+                              Step-by-step walkthrough
+                            </a>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            localStorage.setItem('cowork-card-dismissed', '1')
+                            setCoworkDismissed(true)
+                          }}
+                          className="text-xs font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)] transition-colors shrink-0 pt-0.5"
+                          title="I already have Cowork"
+                        >
+                          Already installed &#10005;
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Skill zip download (Level 2) */}
                   {demo.skillZip && (
@@ -951,7 +1008,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                           'text-xs font-bold uppercase tracking-widest font-heading mb-2 text-left',
                           'text-[var(--world-text-muted)]'
                         )}>
-                          2. Drag in the data file
+                          2. Download the data file
                         </p>
                       )}
                       <DragFile file={demo.dragFile} />
@@ -994,25 +1051,27 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
           </div>
         )}
 
-        {/* Bottom navigation */}
-        <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--world-text-muted)]">
-          <button
-            onClick={handleBack}
-            className="text-sm transition-colors font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)]"
-          >
-            &#8592; Back to map
-          </button>
-          <button
-            onClick={handleNext}
-            className={cn(
-              'inline-flex items-center gap-2 px-5 py-2 text-white text-sm font-heading font-semibold rounded-[2px] transition-colors',
-              accentBg, accentHover
-            )}
-          >
-            {nextDemo ? 'Next demo' : 'Level complete!'}
-            <span>&#8594;</span>
-          </button>
-        </div>
+        {/* Bottom navigation - hidden during celebration until demo is marked complete */}
+        {(effectivePhase !== 'celebration' || done) && (
+          <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--world-text-muted)]">
+            <button
+              onClick={handleBack}
+              className="text-sm transition-colors font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)]"
+            >
+              &#8592; Back to map
+            </button>
+            <button
+              onClick={handleNext}
+              className={cn(
+                'inline-flex items-center gap-2 px-5 py-2 text-white text-sm font-heading font-semibold rounded-[2px] transition-colors',
+                accentBg, accentHover
+              )}
+            >
+              {nextDemo ? 'Next demo' : `${skin.levelLabel} complete!`}
+              <span>&#8594;</span>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
