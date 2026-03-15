@@ -291,7 +291,7 @@ export default function VictoryScreen() {
         {/* Heading */}
         <h1
           className={cn(
-            'text-3xl sm:text-4xl font-extrabold font-heading text-center victory-shimmer-text'
+            'text-2xl sm:text-3xl md:text-4xl font-extrabold font-heading text-center victory-shimmer-text'
           )}
           style={{ color: isLight ? 'var(--world-text)' : 'var(--world-text)' }}
         >
@@ -387,7 +387,7 @@ export default function VictoryScreen() {
         {/* Avatar-specific CTA */}
         {type && AVATAR_CTA[type] && (
           <div
-            className={cn(cardClass, 'p-6 victory-stats-entrance')}
+            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 victory-stats-entrance')}
             style={cardStyle}
           >
             <h2
@@ -436,7 +436,7 @@ export default function VictoryScreen() {
                 {letterOpen && (
                   <div
                     className={cn(
-                      'mt-0 px-4 py-4 border-[3px] border-t-0 font-mono text-xs leading-relaxed whitespace-pre-wrap',
+                      'mt-0 px-3 py-3 sm:px-4 sm:py-4 border-[3px] border-t-0 font-mono text-xs leading-relaxed whitespace-pre-wrap max-w-full overflow-x-auto',
                       isLight
                         ? 'bg-white border-[var(--world-data-border)] rounded-[2px]'
                         : 'rounded-[2px]'
@@ -500,7 +500,7 @@ export default function VictoryScreen() {
         {/* Join A2AI CTA (for all avatars) */}
         {type && (!AVATAR_CTA[type]?.primaryHref || AVATAR_CTA[type].primaryHref !== 'https://ads2ai.com') && (
           <div
-            className={cn(cardClass, 'p-6 text-center victory-stats-entrance')}
+            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
             style={cardStyle}
           >
             <p
@@ -586,7 +586,7 @@ export default function VictoryScreen() {
 
         {/* Connector Ecosystem */}
         <div
-          className={cn(cardClass, 'p-6 text-center victory-stats-entrance')}
+          className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
           style={cardStyle}
         >
           <p className={headingClass}>
@@ -623,14 +623,14 @@ export default function VictoryScreen() {
         {/* Time Saved section */}
         {totalTimeSaved > 0 && (
           <div
-            className={cn(cardClass, 'p-6 text-center victory-stats-entrance')}
+            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
             style={cardStyle}
           >
             <p className={headingClass}>
               Time Saved
             </p>
             <p
-              className="text-2xl sm:text-3xl font-extrabold font-heading"
+              className="text-xl sm:text-2xl md:text-3xl font-extrabold font-heading"
               style={{ color: 'var(--world-accent)' }}
             >
               <svg className="inline-block mr-2 -mt-1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--world-accent)' }}>
@@ -693,7 +693,7 @@ export default function VictoryScreen() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span
-                className="text-3xl sm:text-4xl font-extrabold font-heading"
+                className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-heading"
                 style={{ color: 'var(--world-accent)' }}
               >
                 {animatedScore}
@@ -758,7 +758,7 @@ function StatBlock({
   return (
     <div className="text-center">
       <p
-        className="text-2xl sm:text-3xl font-extrabold font-heading"
+        className="text-xl sm:text-2xl md:text-3xl font-extrabold font-heading"
         style={{ color: 'var(--world-accent)' }}
       >
         {value}

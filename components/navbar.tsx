@@ -159,7 +159,7 @@ export default function Navbar() {
               {/* Character sprite in navbar */}
               {world && worldSprites[world] && (
                 <div
-                  className="w-7 h-7 overflow-hidden flex-shrink-0"
+                  className="w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0"
                   style={{
                     borderRadius: '50%',
                     border: '2px solid var(--world-accent)',
@@ -199,7 +199,7 @@ export default function Navbar() {
               {skillCount > 0 && (
                 <button
                   onClick={() => setPanelOpen(true)}
-                  className="flex items-center gap-1.5 text-xs font-heading font-bold transition-all"
+                  className="min-h-[44px] flex items-center gap-1.5 text-xs font-heading font-bold transition-all"
                   style={{ color: 'var(--world-accent)' }}
                 >
                   <span className="text-sm">{'\u2605'}</span>
@@ -209,7 +209,7 @@ export default function Navbar() {
 
               {/* Time saved counter (arcade only) */}
               {actualTimeSaved > 0 && (
-                <div className="flex items-center gap-1.5 text-xs font-heading font-bold" style={{ color: 'var(--world-accent)' }}>
+                <div className="hidden sm:flex items-center gap-1.5 text-xs font-heading font-bold" style={{ color: 'var(--world-accent)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
@@ -222,7 +222,7 @@ export default function Navbar() {
               <div className="relative flex items-center gap-1">
                 <button
                   onClick={handleSoundToggle}
-                  className="text-white/60 hover:text-white transition-colors"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center text-white/60 hover:text-white transition-colors"
                   title={soundMuted ? 'Unmute sounds' : 'Mute sounds'}
                 >
                   {soundMuted ? (
@@ -314,7 +314,7 @@ export default function Navbar() {
               {/* Character sprite in navbar */}
               {world && worldSprites[world] && (
                 <div
-                  className="hidden sm:block w-7 h-7 overflow-hidden flex-shrink-0"
+                  className="hidden sm:block w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0"
                   style={{
                     borderRadius: '50%',
                     border: '2px solid var(--world-accent)',
@@ -350,7 +350,7 @@ export default function Navbar() {
               {world && skillCount > 0 && (
                 <button
                   onClick={() => setPanelOpen(true)}
-                  className="relative flex items-center gap-1.5 px-2 py-1 rounded-[2px] border transition-all text-xs font-heading font-semibold border-amber-300 text-amber-700 hover:bg-amber-50"
+                  className="relative flex items-center gap-1.5 px-2 py-1 min-h-[44px] rounded-[2px] border transition-all text-xs font-heading font-semibold border-amber-300 text-amber-700 hover:bg-amber-50"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="3" y="3" width="18" height="18" rx="1" />
@@ -364,7 +364,7 @@ export default function Navbar() {
               <div className="relative flex items-center gap-1">
                 <button
                   onClick={handleSoundToggle}
-                  className="text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
                   title={soundMuted ? 'Unmute sounds' : 'Mute sounds'}
                 >
                   {soundMuted ? (
@@ -446,7 +446,7 @@ export default function Navbar() {
         >
           <div
             className={cn(
-              'absolute top-0 right-0 h-full w-72 sm:w-80 shadow-xl border-l skill-panel-slide',
+              'absolute top-0 right-0 h-full w-full sm:w-80 shadow-xl border-l skill-panel-slide',
               skin.skinClass,
               isDark
                 ? 'border-[#333]'
@@ -470,7 +470,7 @@ export default function Navbar() {
               <button
                 onClick={() => setPanelOpen(false)}
                 className={cn(
-                  'transition-colors text-lg leading-none',
+                  'min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors text-lg leading-none',
                   'text-[var(--world-text-muted)] hover:text-[var(--world-text)]'
                 )}
               >
@@ -479,7 +479,7 @@ export default function Navbar() {
             </div>
 
             {/* Skill list */}
-            <div className="p-4 space-y-3">
+            <div className="p-4 space-y-3 max-h-[85vh] overflow-y-auto">
               {uniqueSkills.length === 0 ? (
                 <p className="text-xs font-heading text-[var(--world-text-muted)]">
                   {skin.noSkillsText}

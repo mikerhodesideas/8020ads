@@ -35,6 +35,7 @@ interface GameContextType extends GameState {
   setType: (t: PlayerType) => void
   setWorld: (w: WorldId) => void
   markComplete: (demoId: number) => void
+  toggleComplete: (demoId: number) => void
   resetGame: () => void
   isLevelComplete: (levelId: number) => boolean
   // V2-B additions
@@ -75,6 +76,7 @@ const GameContext = createContext<GameContextType>({
   setType: () => {},
   setWorld: () => {},
   markComplete: () => {},
+  toggleComplete: () => {},
   resetGame: () => {},
   isLevelComplete: () => false,
   installSkill: () => {},
@@ -287,6 +289,18 @@ export function GameProvider({ children }: { children: ReactNode }) {
     delete demoStartTimesRef.current[demoId]
   }, [])
 
+  const toggleComplete = useCallback((demoId: number) => {
+    setState((prev) => {
+      const newCompleted = new Set(prev.completed)
+      if (newCompleted.has(demoId)) {
+        newCompleted.delete(demoId)
+      } else {
+        newCompleted.add(demoId)
+      }
+      return { ...prev, completed: newCompleted }
+    })
+  }, [])
+
   const resetGame = useCallback(() => {
     const fresh: GameState = {
       type: null,
@@ -426,6 +440,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setType,
         setWorld,
         markComplete,
+        toggleComplete,
         resetGame,
         isLevelComplete,
         installSkill,

@@ -41,8 +41,7 @@ export default function WorldChooser() {
 
       {/* World grid - fills available space but cards capped in height */}
       <div className="flex-1 min-h-0 px-3 sm:px-4 pb-2 overflow-y-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-w-6xl mx-auto"
-          style={{ gridTemplateRows: 'repeat(2, minmax(0, 280px))' }}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-w-6xl mx-auto auto-rows-[minmax(0,200px)] sm:auto-rows-[minmax(0,220px)] md:auto-rows-[minmax(0,280px)]"
         >
           {gameWorlds.map((w) => (
             <button
@@ -54,7 +53,7 @@ export default function WorldChooser() {
                 'rounded-[2px] transition-all duration-500 ease-out',
                 'hover:border-white/30 hover:z-10 hover:shadow-2xl hover:shadow-white/5',
                 'cursor-pointer block',
-                'max-h-[280px]',
+                'max-h-[200px] sm:max-h-[240px] md:max-h-[280px]',
                 'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
               )}
             >
@@ -112,7 +111,7 @@ export default function WorldChooser() {
           )}
           <button
             onClick={() => router.push('/')}
-            className="text-[10px] text-white/20 hover:text-white/50 transition-colors font-heading ml-auto"
+            className="text-[10px] sm:text-xs text-white/20 hover:text-white/50 transition-colors font-heading ml-auto"
           >
             &#8592; Change avatar
           </button>

@@ -4,6 +4,7 @@ import Navbar from '@/components/navbar'
 import { GameProvider } from '@/components/game-provider'
 import { TransitionProvider } from '@/components/transition-overlay'
 import pkg from '@/package.json'
+import DevTools from '@/components/dev-tools'
 import './globals.css'
 
 const oxanium = Oxanium({
@@ -56,6 +57,7 @@ export default function RootLayout({
             <footer style={{ textAlign: 'center', padding: '12px 0', fontSize: '11px', color: '#bbb', letterSpacing: '0.5px' }}>
               &copy; Mike Rhodes 2026 &middot; v{pkg.version}
             </footer>
+            <DevTools />
           </TransitionProvider>
         </GameProvider>
       </body>

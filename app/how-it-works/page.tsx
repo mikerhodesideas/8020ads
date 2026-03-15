@@ -175,7 +175,7 @@ export default function HowItWorksPage() {
               They are building fragile prompts, keeping the results to themselves,
               and hoping no one asks how they got so fast.
             </p>
-            <p className="text-sm text-[var(--color-muted)] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--color-muted)] leading-relaxed">
               The other 60% are watching and waiting. Neither group has a system.
               Leadership says &ldquo;use AI&rdquo; but gives no structure.
               Individuals experiment but nothing scales. The gap between
@@ -191,7 +191,7 @@ export default function HowItWorksPage() {
               backgroundColor: 'var(--color-brand-orange-faint)',
             }}
           >
-            <p className="text-sm text-[var(--color-ink)] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--color-ink)] leading-relaxed">
               <strong className="font-heading">SST closes that gap.</strong>{' '}
               It gives each layer of your organisation a specific role, a specific tool,
               and a clear connection to the others. Nobody is left guessing
@@ -235,7 +235,7 @@ export default function HowItWorksPage() {
 
                   {/* Badge */}
                   <span
-                    className="inline-block self-start text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-[2px] mb-2 font-heading"
+                    className="inline-block self-start text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-[2px] mb-2 font-heading"
                     style={{
                       color: role.color,
                       backgroundColor: `${role.color}12`,
@@ -252,7 +252,7 @@ export default function HowItWorksPage() {
                   {/* Bullets */}
                   <ul className="space-y-2 mt-auto">
                     {role.bullets.map((b) => (
-                      <li key={b} className="text-sm text-[var(--color-ink)] flex gap-2.5">
+                      <li key={b} className="text-xs sm:text-sm text-[var(--color-ink)] flex gap-2.5">
                         <span
                           className="w-1.5 h-1.5 mt-[7px] flex-shrink-0"
                           style={{ backgroundColor: role.color }}
@@ -288,7 +288,7 @@ export default function HowItWorksPage() {
           <div className="relative">
             {/* Vertical connecting line */}
             <div
-              className="absolute left-[19px] sm:left-[23px] top-6 bottom-6 w-px"
+              className="absolute left-5 sm:left-6 top-6 bottom-6 w-px"
               style={{ backgroundColor: 'var(--color-border)' }}
             />
 
@@ -308,10 +308,10 @@ export default function HowItWorksPage() {
                     className="flex-1 bg-white border border-[var(--color-border)] rounded-[2px] p-4 sm:p-5"
                     style={{ borderLeft: `3px solid ${step.color}` }}
                   >
-                    <p className="text-sm font-semibold text-[var(--color-ink)] font-heading mb-1">
+                    <p className="text-xs sm:text-sm font-semibold text-[var(--color-ink)] font-heading mb-1">
                       {step.title}
                     </p>
-                    <p className="text-sm text-[var(--color-muted)] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[var(--color-muted)] leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
@@ -367,7 +367,7 @@ export default function HowItWorksPage() {
                 ? 'What you just experienced'
                 : 'What the demo shows you'}
             </h2>
-            <p className="text-sm text-[var(--color-ink)] leading-relaxed mb-4">
+            <p className="text-xs sm:text-sm text-[var(--color-ink)] leading-relaxed mb-4">
               {hasPlayed
                 ? 'Every demo you ran was the trekker experience. You dragged in data, ran a skill, and got results. No coding. No prompt engineering. That is what daily AI use looks like when scouts have done their job.'
                 : 'The demo puts you in the shoes of a trekker. You drag in real data, run pre-built skills, and see results instantly. This is what daily AI use looks like when a scout has done their job first.'}
@@ -439,10 +439,10 @@ export default function HowItWorksPage() {
                   borderColor: 'rgba(255,255,255,0.1)',
                 }}
               >
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1 font-heading">
+                <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-1 font-heading">
                   {col.phase}
                 </p>
-                <p className="text-sm font-semibold text-white mb-3 font-heading">
+                <p className="text-xs sm:text-sm font-semibold text-white mb-3 font-heading">
                   {col.title}
                 </p>
                 <ul className="space-y-2">

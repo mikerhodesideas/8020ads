@@ -152,7 +152,7 @@ export function BadgeGrid() {
   const isDark = skin.isDark
 
   return (
-    <div className="grid grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
       {BADGE_DEFS.map((def) => {
         const earned = !!badges[def.id]
         return (

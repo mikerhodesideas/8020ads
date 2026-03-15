@@ -57,7 +57,7 @@ export default function DragFile({ file }: DragFileProps) {
           {downloaded ? '\u2713' : '\uD83D\uDCC4'}
         </span>
         <span
-          className="text-base font-medium truncate font-heading"
+          className="text-sm sm:text-base font-medium truncate font-heading"
           style={{
             color: downloaded
               ? (skin.isDark ? '#6ee7b7' : '#059669')
@@ -67,7 +67,7 @@ export default function DragFile({ file }: DragFileProps) {
           {downloaded ? `${file.name} - Downloaded` : file.name}
         </span>
         <span
-          className="ml-auto text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px] text-white"
+          className="ml-auto text-xs sm:text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px] text-white"
           style={{
             background: downloaded
               ? (skin.isDark ? '#059669' : '#10b981')

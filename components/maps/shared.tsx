@@ -78,7 +78,7 @@ export function LevelCelebration({
           >
             {skin.celebrationText(levelNumber)}
           </h2>
-          <p className="text-white/80 text-sm font-heading drop-shadow-md">
+          <p className="text-white/80 text-xs sm:text-sm font-heading drop-shadow-md">
             {skin.levelCompleteSubtext}
           </p>
         </div>

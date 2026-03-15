@@ -366,7 +366,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             <div className="flex items-center gap-3 mb-3">
               <span
                 className={cn(
-                  'inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold font-heading',
+                  'inline-flex items-center justify-center w-8 h-8 sm:w-7 sm:h-7 rounded-full text-xs font-bold font-heading',
                   accentBg, 'text-white'
                 )}
               >
@@ -395,7 +395,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
           <div className="mb-4 flex items-center gap-3">
             <span
               className={cn(
-                'inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold font-heading',
+                'inline-flex items-center justify-center w-6 h-6 sm:w-5 sm:h-5 rounded-full text-[10px] font-bold font-heading',
                 accentBg, 'text-white'
               )}
             >
@@ -543,7 +543,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 disabled={hasChoices && !choiceMade}
                 className={cn(
                   'inline-flex items-center gap-3 font-heading font-bold rounded-[2px] text-white transition-all duration-300 cta-pulse',
-                  isDark ? 'px-14 py-5 text-lg' : cn('px-10 py-4 text-base', accentBg, accentHover),
+                  isDark ? 'px-6 sm:px-10 md:px-14 py-3 sm:py-4 md:py-5 text-lg' : cn('px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-base', accentBg, accentHover),
                   hasChoices && !choiceMade
                     ? 'opacity-40 cursor-not-allowed'
                     : 'hover:shadow-lg active:scale-[0.97]'
@@ -611,9 +611,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                       </span>
                     </div>
                     <div className={cn(
-                      'border rounded-[2px] overflow-hidden',
+                      'border rounded-[2px] overflow-hidden max-h-[60vh] sm:max-h-[70vh] md:max-h-[700px] overflow-y-hidden',
                       'border-[var(--world-data-border)]'
-                    )} style={{ maxHeight: 700, overflowY: 'hidden' }}>
+                    )}>
                       {(() => { const B = demoContent[demo.id].before; return <B /> })()}
                     </div>
                   </div>
@@ -651,7 +651,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 Setup Required
               </p>
               <div
-                className="p-8 rounded-[2px] border-2 mb-8"
+                className="p-4 sm:p-6 md:p-8 rounded-[2px] border-2 mb-8"
                 style={{
                   background: 'var(--world-card-bg)',
                   borderColor: 'var(--world-accent)',
@@ -684,7 +684,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 <button
                   onClick={handleSetupContinue}
                   className={cn(
-                    'inline-flex items-center gap-3 px-10 py-4 text-base font-heading font-bold rounded-[2px] text-white transition-all duration-300',
+                    'inline-flex items-center gap-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-base font-heading font-bold rounded-[2px] text-white transition-all duration-300',
                     accentBg, accentHover,
                     'hover:shadow-lg active:scale-[0.97]'
                   )}
@@ -721,7 +721,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             {effectiveWowStat && (
               <div className="quest-phase-in mx-auto max-w-5xl mb-6">
                 <div
-                  className="flex items-center justify-between gap-4 px-6 py-4 rounded-[2px]"
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 rounded-[2px]"
                   style={{
                     background: 'var(--world-card-bg)',
                     borderLeft: '4px solid var(--world-accent)',
@@ -760,9 +760,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             {demoContent[demo.id] && (
               <div className="quest-phase-in mx-auto max-w-5xl mb-4">
                 <div className={cn(
-                  'border-2 rounded-[2px] overflow-hidden',
+                  'border-2 rounded-[2px] overflow-hidden max-h-[60vh] sm:max-h-[70vh] md:max-h-[700px] overflow-y-hidden',
                   'border-[var(--world-accent)]'
-                )} style={{ maxHeight: 700, overflowY: 'hidden' }}>
+                )}>
                   {(() => { const A = demoContent[demo.id].after; return <A playerType={type as PlayerType} /> })()}
                 </div>
               </div>
@@ -815,7 +815,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                           className="flex items-start gap-3 text-sm text-[var(--world-text-secondary)]"
                         >
                           <span
-                            className="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold font-heading shrink-0 mt-0.5 text-white"
+                            className="inline-flex items-center justify-center w-6 h-6 sm:w-5 sm:h-5 rounded-full text-[10px] font-bold font-heading shrink-0 mt-0.5 text-white"
                             style={{ background: 'var(--world-accent)' }}
                           >
                             {i + 1}
@@ -846,7 +846,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 )}
                 {/* Big CTA section */}
                 <div
-                  className="p-8 sm:p-10 rounded-[2px] text-center"
+                  className="p-4 sm:p-6 md:p-8 lg:p-10 rounded-[2px] text-center"
                   style={{
                     background: 'var(--world-selection-bg)',
                     border: '2px solid var(--world-accent)',
@@ -1022,7 +1022,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                         onClick={handleMarkComplete}
                         disabled={done}
                         className={cn(
-                          'relative inline-flex items-center gap-3 px-12 py-5 text-lg font-heading font-bold rounded-[2px] transition-all duration-300',
+                          'relative inline-flex items-center gap-3 px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 text-lg font-heading font-bold rounded-[2px] transition-all duration-300',
                           done
                             ? isDark
                               ? 'border-2 border-emerald-500 text-emerald-400 cursor-default'
@@ -1181,9 +1181,9 @@ function SkillUnlockCard({
         shrinking && (!isDark ? 'skill-card-shrink-gallery' : 'skill-card-shrink-arcade')
       )}
     >
-      <div className={!isDark ? 'w-96' : 'w-80'}>
+      <div className={!isDark ? 'w-[calc(100vw-2rem)] sm:w-80 md:w-96' : 'w-[calc(100vw-2rem)] sm:w-80'}>
         <div
-          className="border-[3px] p-8 rounded-[2px] shadow-2xl"
+          className="border-[3px] p-4 sm:p-6 md:p-8 rounded-[2px] shadow-2xl"
           style={{
             background: isDark ? 'rgba(20, 30, 50, 0.95)' : '#faf6ef',
             backdropFilter: isDark ? 'blur(8px)' : undefined,

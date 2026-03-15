@@ -178,7 +178,7 @@ export default function PathChooser() {
             Choose your style
           </span>
         </div>
-        <div className="grid grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4">
           {worldSprites.map((sprite) => (
             <div
               key={sprite.id}
@@ -197,7 +197,7 @@ export default function PathChooser() {
       </div>
 
       {/* Keyboard hints */}
-      <p className="mt-8 text-[10px] text-[var(--color-faint)] tracking-wide font-heading relative z-10">
+      <p className="mt-8 text-[10px] text-[var(--color-faint)] tracking-wide font-heading relative z-10 hidden sm:block">
         Press{' '}
         {avatars.map((a, i) => (
           <span key={a.key}>
