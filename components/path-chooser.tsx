@@ -73,58 +73,26 @@ export default function PathChooser() {
         }}
       />
 
-      {/* HUD bar */}
-      <div className="w-full max-w-5xl mb-6 sm:mb-8 flex items-center justify-between gap-4 relative z-10">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-[var(--color-faint)]">Level</span>
-            <div className="flex gap-1">
-              {[1, 2, 3].map((lvl) => (
-                <div
-                  key={lvl}
-                  className="w-5 h-5 flex items-center justify-center text-[9px] font-heading font-bold border border-[var(--color-border)] text-[var(--color-faint)] bg-white"
-                >
-                  {lvl}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-[var(--color-faint)]">XP</span>
-            <div className="w-24 h-2 bg-[var(--color-border)] overflow-hidden">
-              <div className="h-full w-0 bg-[var(--color-brand-orange)] transition-all duration-1000" />
-            </div>
-            <span className="text-[10px] font-mono text-[var(--color-faint)]">0/9</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-[var(--color-faint)]">Skills</span>
-          <div className="flex gap-0.5">
-            {[...Array(9)].map((_, i) => (
-              <div key={i} className="w-2 h-2 border border-[var(--color-border)] bg-white" />
-            ))}
-          </div>
-          <span className="text-[10px] font-mono text-[var(--color-faint)]">0/9</span>
-        </div>
-      </div>
-
       {/* Hero */}
-      <div className="text-center mb-6 sm:mb-8 relative z-10">
-        <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-brand-orange)] mb-3 font-heading">
-          8020skill
-        </p>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] mb-4 font-heading text-[var(--color-ink)]">
+      <div className="text-center mb-6 sm:mb-8 relative z-10 mt-4 sm:mt-8">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] mb-6 font-heading text-[var(--color-ink)]">
           From tutorial mode
           <br />
           <span className="text-[var(--color-brand-orange)]">
             to boss level
           </span>
         </h1>
-        <p className="text-sm sm:text-base text-[var(--color-muted)] max-w-lg mx-auto leading-relaxed">
-          You've been playing on hard mode. Pick your avatar, choose your world,
-          <br className="hidden sm:block" />
-          and watch AI solve real business problems live.
-        </p>
+        <div className="max-w-2xl mx-auto space-y-2 text-sm sm:text-base text-[var(--color-muted)] leading-relaxed">
+          <p>
+            <span className="font-heading font-bold text-[var(--color-ink)]">Level 1</span> sets the scene. Drag a file, paste a prompt, see what Cowork can do out of the box. It&apos;s deliberately basic.
+          </p>
+          <p>
+            <span className="font-heading font-bold text-[var(--color-brand-orange)]">Level 2</span> is where it clicks. Install a skill and watch the same kind of task produce completely different output.
+          </p>
+          <p>
+            <span className="font-heading font-bold text-[var(--color-ink)]">Level 3</span> connects Cowork to the real world. Gmail, calendar, design plugins, and how to stay safe.
+          </p>
+        </div>
       </div>
 
       {/* Step 1 + Avatar cards */}
@@ -207,7 +175,7 @@ export default function PathChooser() {
             Step 2
           </span>
           <span className="text-sm sm:text-base font-heading font-bold text-[var(--color-faint)]">
-            Choose your game
+            Choose your style
           </span>
         </div>
         <div className="grid grid-cols-6 gap-3 sm:gap-4">
