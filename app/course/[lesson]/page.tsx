@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { modules } from '@/lib/course-data'
 import { useGame } from '@/components/game-provider'
+import { track } from '@/lib/tracking'
 
 // Maps screenshot descriptions from [SCREENSHOT: ...] placeholders to image files
 // size: 'full' (default), 'medium' (60% centered), 'small' (40% centered)
@@ -274,6 +275,7 @@ export default function LessonPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-bold rounded-[2px] transition-colors"
+            onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'top' } })}
           >
             Join Ads to AI
             <span>&#8594;</span>
@@ -317,6 +319,7 @@ export default function LessonPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+            onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'bottom' } })}
           >
             Join Ads to AI
             <span>&#8594;</span>
