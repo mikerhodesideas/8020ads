@@ -1194,12 +1194,12 @@ const BG_MUSIC_CONFIG: Record<string, { tracks: string[]; volume: number }> = {
   },
   'zelda': {
     tracks: [
-      '/sounds/zelda/bg-field.mp3',
-      '/sounds/zelda/bg-forest.mp3',
+      '/sounds/zelda/bg-forest.mp3',    // Lost Woods (demos 1-3)
       '/sounds/zelda/bg-village.mp3',
+      '/sounds/zelda/bg-field.mp3',
+      '/sounds/zelda/bg-quest.mp3',      // Death Mountain (demos 4-6)
       '/sounds/zelda/bg-temple.mp3',
-      '/sounds/zelda/bg-quest.mp3',
-      '/sounds/zelda/bg-twilight.mp3',
+      '/sounds/zelda/bg-twilight.mp3',   // Hyrule Castle (demos 7-9)
     ],
     volume: 0.16,  // 15-18% - adventurous/pastoral
   },

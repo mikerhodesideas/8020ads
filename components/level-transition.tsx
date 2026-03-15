@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { SkinConfig } from '@/lib/skin-config'
 
@@ -102,11 +103,17 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
                   backgroundColor: cardBg,
                 }}
               >
-                <p className="text-xs font-heading font-bold uppercase tracking-widest mb-2 text-white/50">
-                  HOW TO INSTALL
+                <p className="text-sm text-white/90 mb-1">
+                  Each demo gives you a skill to download. To install it, open the <strong>Customize</strong> sidebar in Cowork, go to <strong>Skills</strong>, tap the <strong>+</strong> button, and upload the zip file.
                 </p>
-                <p className="font-mono text-sm text-white/90">
-                  Customize &gt; Skills &gt; + &gt; Upload a skill
+                <p className="text-xs text-white/50">
+                  Takes about 30 seconds.{' '}
+                  <Link
+                    href="/course/3-2"
+                    className="underline text-white/70 hover:text-white/90 transition-colors"
+                  >
+                    Need a walkthrough?
+                  </Link>
                 </p>
               </div>
             </div>

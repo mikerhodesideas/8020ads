@@ -82,15 +82,15 @@ export default function PathChooser() {
             to boss level
           </span>
         </h1>
-        <div className="max-w-2xl mx-auto space-y-2 text-sm sm:text-base text-[var(--color-muted)] leading-relaxed">
+        <div className="max-w-2xl mx-auto space-y-2 text-sm sm:text-base text-[var(--color-muted)] leading-relaxed text-left">
           <p>
-            <span className="font-heading font-bold text-[var(--color-ink)]">Level 1</span> sets the scene. Drag a file, paste a prompt, see what Cowork can do out of the box. It&apos;s deliberately basic.
+            <span className="font-heading font-bold text-[var(--color-ink)]">Level 1</span> sets the scene. Drag a file, paste a prompt. Deliberately basic.
           </p>
           <p>
-            <span className="font-heading font-bold text-[var(--color-brand-orange)]">Level 2</span> is where it clicks. Install a skill and watch the same kind of task produce completely different output.
+            <span className="font-heading font-bold text-[var(--color-brand-orange)]">Level 2</span> is where it clicks. Install a skill and the output transforms.
           </p>
           <p>
-            <span className="font-heading font-bold text-[var(--color-ink)]">Level 3</span> connects Cowork to the real world. Gmail, calendar, design plugins, and how to stay safe.
+            <span className="font-heading font-bold text-[var(--color-ink)]">Level 3</span> connects to the real world. Gmail, calendar, plugins, and safety.
           </p>
         </div>
       </div>

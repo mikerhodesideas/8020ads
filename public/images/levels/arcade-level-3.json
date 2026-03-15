@@ -1,9 +1,9 @@
 {
   "name": "arcade-level-3",
-  "prompt": "Epic mountain castle at the peak of a rainbow path, grand fortress with candy-colored turrets and shining star on top, floating islands surrounding it, fireworks in the sky, dramatic but cheerful final destination feeling. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and whimsical, no text, no people, no words, no letters",
-  "seed": 1684456636,
-  "url": "https://v3b.fal.media/files/b/0a91b271/KUf9hnxTPVp0fUR22WpBV_abf289023dc0429e9126c996cdce3c43.png",
+  "prompt": "An epic dark castle fortress pixel art scene in the style of classic Super Mario Bros. Bowser's castle exterior with dark stone walls and battlements, skull decorations on the walls, rivers of bright orange-red lava flowing below, heavy iron chains hanging from towers, dark purple-black night sky with ominous red glow, rotating fire bars, drawbridge and fortress gates, lava bubbles erupting upward, dramatic and intimidating final level fortress feeling. 16-bit pixel art style, retro video game aesthetic, vibrant saturated colors, clean pixel edges, classic Super Mario Bros visual language, no text, no words, no letters, no numbers, no characters, no people, no Mario",
+  "seed": 2093218024,
+  "url": "https://v3b.fal.media/files/b/0a92516c/HW4-PA1z93Gy1lufchp6Y_44cfaddfd0674bcc81db3d2bc9112a00.png",
   "size": "landscape_16_9",
-  "timestamp": "2026-03-11T16:07:02.780960",
+  "timestamp": "2026-03-16T09:10:07.266259",
   "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
 }

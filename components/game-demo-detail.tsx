@@ -161,7 +161,16 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   }
 
   const demoIndex = level.demos.findIndex((d) => d.id === demoId)
-  const nextDemo = level.demos[demoIndex + 1]
+  // Find the next uncompleted demo in this level, wrapping around.
+  // If all demos are complete, nextDemo is null (level complete).
+  const nextDemo = (() => {
+    const demos = level.demos
+    for (let i = 1; i < demos.length; i++) {
+      const candidate = demos[(demoIndex + i) % demos.length]
+      if (!completed.has(candidate.id)) return candidate
+    }
+    return null
+  })()
   const isDark = skin.isDark
   const done = completed.has(demo.id)
   const skill = demo.skillId ? DEMO_SKILLS[demo.id] : null
@@ -1000,7 +1009,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
               accentBg, accentHover
             )}
           >
-            {nextDemo ? 'Next demo' : 'Back to map'}
+            {nextDemo ? 'Next demo' : 'Level complete!'}
             <span>&#8594;</span>
           </button>
         </div>

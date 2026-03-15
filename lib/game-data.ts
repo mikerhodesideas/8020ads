@@ -118,7 +118,7 @@ export const worlds: World[] = [
   {
     id: 'zelda',
     name: 'Legend of Zelda',
-    tagline: 'Treasure chests, dungeons, and a hero\'s quest for knowledge',
+    tagline: 'From the Lost Woods to Hyrule Castle, a hero\'s quest for knowledge',
     image: '/images/worlds/zelda.png',
   },
   {

@@ -1,9 +1,9 @@
 {
   "name": "arcade-victory",
-  "prompt": "A giant golden star bursting with colorful fireworks and confetti, rainbow light rays shooting outward, smaller stars and coins spinning around it, power-up mushrooms and treasure chests below, ultimate celebration scene. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and cheerful, no text, no people, no words, no letters",
-  "seed": 1672331506,
-  "url": "https://v3b.fal.media/files/b/0a91b27f/-yRahKJKrLDYoHXD5vY0g_0f73837b5576454b90a871229aa8b69b.png",
+  "prompt": "A triumphant pixel art celebration scene in the style of classic Super Mario Bros. A massive golden Super Star power-up radiating bright light rays in the center, hundreds of gold coins bursting outward like fireworks, colorful pixel fireworks exploding against a deep blue night sky, red and green mushroom power-ups arranged at the bottom, golden question mark blocks, a flagpole with a flag on the right side, rainbow pixel confetti filling the air, ultimate victory celebration moment. 16-bit pixel art style, retro video game aesthetic, vibrant saturated colors, clean pixel edges, classic Super Mario Bros visual language, no text, no words, no letters, no numbers, no characters, no people, no Mario",
+  "seed": 1914793976,
+  "url": "https://v3b.fal.media/files/b/0a92516f/NtuLOzGssQZavR4E4EGje_01f25ff9d9064e52b663f7a645ff2078.png",
   "size": "square",
-  "timestamp": "2026-03-11T16:09:22.103243",
+  "timestamp": "2026-03-16T09:10:41.908555",
   "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
 }

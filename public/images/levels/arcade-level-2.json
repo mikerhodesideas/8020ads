@@ -1,9 +1,9 @@
 {
   "name": "arcade-level-2",
-  "prompt": "Mid-level adventure terrain with colorful rope bridges crossing between floating islands, crystal caves with glowing gems, bouncy platforms and spinning gears, waterfalls flowing between levels, increased complexity and moving parts. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and whimsical, no text, no people, no words, no letters",
-  "seed": 614036528,
-  "url": "https://v3b.fal.media/files/b/0a91b26f/_I4udG8a3HOPsUvuFTi0U_2c70dad55340468e8d5e3ed574bbb70a.png",
+  "prompt": "A dark underground cave pixel art scene in the style of classic Super Mario Bros. Dark blue-black background with brick ceiling overhead, glowing golden question mark blocks hanging from the ceiling, green warp pipes rising from the stone floor, pools of orange-red lava with pixel glow effects, scattered gold coins floating in rows, glowing bioluminescent mushrooms casting soft green light, stalactites hanging down, darker brick platforms, mysterious and atmospheric underground world. 16-bit pixel art style, retro video game aesthetic, vibrant saturated colors, clean pixel edges, classic Super Mario Bros visual language, no text, no words, no letters, no numbers, no characters, no people, no Mario",
+  "seed": 1193978082,
+  "url": "https://v3b.fal.media/files/b/0a925168/jaRobVP-GKIbSQuU8EuWx_11aaa264436e45d1ba482e70949a98ef.png",
   "size": "landscape_16_9",
-  "timestamp": "2026-03-11T16:06:38.588161",
+  "timestamp": "2026-03-16T09:09:25.540228",
   "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
 }

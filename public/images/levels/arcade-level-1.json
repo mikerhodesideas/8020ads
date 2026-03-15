@@ -1,9 +1,9 @@
 {
   "name": "arcade-level-1",
-  "prompt": "A bright cheerful meadow with a small starting village, cute mushroom houses, a rainbow arching across a blue sky, colorful flowers and butterflies, a winding path leading to adventure, green rolling hills in the background. 3D cartoon style, bright vivid colors, rounded shapes, Nintendo-inspired, playful and cheerful, no text, no people, no words, no letters",
-  "seed": 1233296409,
-  "url": "https://v3b.fal.media/files/b/0a91b26b/ue-BAx8xdEEtswS-OgWoa_c8b0e6b92ccc47a78afb6f1998fc71a2.png",
+  "prompt": "A bright sunny pixel art overworld landscape in the style of classic Super Mario Bros. Rolling green hills with pixel grass, a clear blue sky with puffy white pixel clouds, scattered red and white spotted mushrooms growing on the ground, golden question mark blocks floating in the air, classic green warp pipes emerging from the ground, small yellow coins glinting in the sunlight, brown brick blocks stacked in platforms, small bushes and flowers, a cheerful starting area feeling. 16-bit pixel art style, retro video game aesthetic, vibrant saturated colors, clean pixel edges, classic Super Mario Bros visual language, no text, no words, no letters, no numbers, no characters, no people, no Mario",
+  "seed": 1235612989,
+  "url": "https://v3b.fal.media/files/b/0a925165/Pc-EfNR3ia74aCLV3hiFm_dfbaaa534971470c9b81befb62655299.png",
   "size": "landscape_16_9",
-  "timestamp": "2026-03-11T16:05:56.645973",
+  "timestamp": "2026-03-16T09:08:59.435983",
   "model": "fal-ai/bytedance/seedream/v4.5/text-to-image"
 }

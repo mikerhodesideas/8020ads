@@ -51,7 +51,7 @@ function ZeldaStatsWidget({
               className="text-[10px] tracking-[0.15em] uppercase"
               style={{ color: 'var(--zelda-parchment)', fontFamily: 'var(--font-oxanium), sans-serif' }}
             >
-              Dungeon Log
+              Quest Log
             </span>
           </div>
           <div className="space-y-2.5 text-xs" style={{ fontFamily: 'var(--font-oxanium), sans-serif' }}>
@@ -124,7 +124,7 @@ export default function ZeldaMap({
   const currentDemoId = activeDemos.find(d => !completed.has(d.id))?.id ?? -1
 
   // Chapter names for this theme
-  const chapterNames = ['Dungeon 1', 'Dungeon 2', 'Dungeon 3']
+  const chapterNames = ['Lost Woods', 'Death Mountain', 'Hyrule Castle']
 
   const handleDemoClick = (demoId: number) => {
     if (skin.sounds.selection) playSound(skin.sounds.selection)
@@ -227,7 +227,7 @@ export default function ZeldaMap({
                 textShadow: '0 1px 4px rgba(16, 40, 16, 0.7)',
               }}
             >
-              {activeLevel?.name || 'Dungeon 1'}
+              {activeLevel?.name || 'Lost Woods'}
             </p>
           </div>
 
