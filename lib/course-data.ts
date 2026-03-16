@@ -387,17 +387,15 @@ Keep it short. These instructions load with every session, so don't write a nove
 
 Here's a template you can copy and adapt:
 
-\`\`\`
-I run [business name], a [what you do] in [location].
-My customers are [who you serve].
-
-Write in a [tone] voice. Use [Australian/British/American] English.
-
-Rules:
-- [Your most important rule]
-- [Another rule]
-- [One more if needed]
-\`\`\`
+> I run [business name], a [what you do] in [location].
+> My customers are [who you serve].
+>
+> Tone: [describe the register]. Use [Australian/British/American] English.
+>
+> Rules:
+> - [Your most important rule]
+> - [Another rule]
+> - [One more if needed]
 
 You can always add more later. Start simple.
 
