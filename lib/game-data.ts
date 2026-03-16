@@ -23,6 +23,7 @@ export interface AvatarOverride {
   afterReaction?: string
   wowStat?: string
   afterStages?: string[]
+  dayIntro?: string
 }
 
 export interface Demo {
@@ -52,6 +53,9 @@ export interface Demo {
   wowTime?: string
   beforeStages?: string[]
   afterStages?: string[]
+  dayIntro?: string
+  transitionOut?: string
+  delightNote?: string
   avatarOverrides?: Partial<Record<PlayerType, AvatarOverride>>
   choices?: {
     label: string
@@ -147,10 +151,13 @@ const demoWebsiteRedesign: Demo = {
   demoType: 'website',
   title: 'My website is embarrassing',
   subtitle: "Every day it stays live, you're losing deals you'll never know about",
+  dayIntro: "Monday evening. The fires are out. Now you finally have a moment to deal with that thing that's been bugging you for months.",
+  transitionOut: "Monday's done. You handled in hours what used to take all week. Tomorrow, you'll discover what happens when Cowork gets specialized skills...",
+  delightNote: "Includes a subtle hover animation and a mobile preview toggle the user didn't ask for.",
   missionBrief: "ALERT: Thunderbolt Electricals' website looks like it escaped from 1999. The business is bleeding leads every hour it stays live. Your mission: drag the file into Cowork and redesign it in under a minute.",
-  beforeReaction: "Three columns, comic sans, and a visitor counter from 2003. This is going to need more than a fresh coat of paint.",
+  beforeReaction: "Three columns, broken images, and a layout that screams 2003. This is going to need more than a fresh coat of paint.",
   afterReaction: "From 1999 to 2026 in 47 seconds. One file, one prompt, one minute.",
-  pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Old stock photos. Comic Sans. A visitor counter from 2003. Every day it stays live, you\'re losing deals you\'ll never know about.',
+  pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Broken layout. Stock photos from 2015. A "click here for specials" button that goes nowhere. Every day it stays live, you\'re losing deals you\'ll never know about.',
   fix: 'Drag the HTML file into Cowork, paste a prompt, and get a professional redesign in under a minute. No coding. No designer. No three-week timeline.',
   tryThis: 'I\'ve dragged in a website HTML file for a local electrician called Thunderbolt Electricals. It\'s terrible - looks like it\'s from 1999.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons ("Get a Free Quote", "Call Now")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop so I can open it in a browser.',
   dataType: 'html-preview',
@@ -186,24 +193,28 @@ const demoWebsiteRedesign: Demo = {
   ],
   avatarOverrides: {
     freelancer: {
+      dayIntro: "Monday evening. The urgent stuff is done. Now you've finally got a moment for that client site you've been dreading.",
       subtitle: "Your client's website looks like it escaped from 1999",
-      pain: "A client just sent you their website and asked you to 'tidy it up a bit.' You opened it. Comic Sans. A visitor counter from 2003. Stock photos older than their business. You charge $200/hr to manage their Google Ads, but every click you send lands on THIS. You're paying to send traffic to a site that scares people away.",
+      pain: "A client just sent you their website and asked you to 'tidy it up a bit.' You opened it. Broken layout. Stock photos older than their business. A contact form that doesn't work. You charge $200/hr to manage their Google Ads, but every click you send lands on THIS. You're paying to send traffic to a site that scares people away.",
       missionBrief: "ALERT: A client just sent you their website to 'tidy up.' One look tells you this needs more than a tidy. Thunderbolt Electricals hasn't been touched since 2003. Your mission: drag the file into Cowork and redesign it in under a minute.",
       tryThis: "I've dragged in a client's website HTML file. It's for a local electrician called Thunderbolt Electricals, and it's terrible.\n\nI need to show my client what a modern redesign looks like so they approve the project. Please create a new HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons (\"Get a Free Quote\", \"Call Now\")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n\nSave it to my Desktop so I can present it to the client.",
     },
     employee: {
+      dayIntro: "Monday evening. Standup's done, Slack's quiet. You've got 45 minutes before you log off. Time to tackle the landing page your CMO called out.",
       subtitle: "Your team's product landing page looks like this. Prospects see it before they book a demo.",
       pain: "Your CMO pulled up the product landing page in the all-hands and asked why it looks like a student project. Prospects see this page before they book a demo. Your team's ad spend sends thousands of visitors here every month, and the conversion rate is 0.6%. It's been on the backlog for 9 months and nobody's touched it.",
       missionBrief: "ALERT: Your CMO asked you to fix the landing page. It's... something. Thunderbolt Electricals is the example they gave you. Your mission: drag the file into Cowork and redesign it in under a minute.",
       tryThis: "I've dragged in our team's product landing page HTML. My manager wants it updated and it's... bad.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons (\"Get a Free Quote\", \"Call Now\")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop so I can show my manager before end of day.",
     },
     agency: {
+      dayIntro: "Monday evening. Client fires are out. You know what you should do with this quiet hour? Fix your own agency site. The one you've been ignoring for two years.",
       subtitle: "You tell clients to invest in their digital presence. Then they visit YOUR agency website.",
       pain: "You pitch clients on the importance of digital presence. You charge them thousands a month to manage it. Then a prospect Googles your agency and finds THIS. Bad stock photos, awards from 2018 & 3 blog posts total. Three. You've been meaning to fix it for two years. Every pitch you lose to a competitor with a better site is a pitch you lost to your own neglect.",
       missionBrief: "ALERT: You tell clients to invest in their digital presence. Then a prospect visits your agency website and it looks like this. Thunderbolt Electricals is the example. Your mission: drag the file into Cowork and redesign it in under a minute.",
       tryThis: "I've dragged in a website HTML file. This is what our own agency site looks like right now. We tell clients to invest in their digital presence and then they visit THIS.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons (\"Get a Free Quote\", \"Call Now\")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop. If we can do this in under a minute, imagine what we can offer clients.",
     },
     business: {
+      dayIntro: "Monday evening. The shop's closed, the emails are done. You finally have a quiet moment to deal with that website a customer called 'dodgy.'",
       subtitle: "Your Coastal Kitchen Co website hasn't been touched since the last tradesperson did it as a favour.",
       pain: "A customer told you they almost didn't call because your website 'looked dodgy.' Your mate built it five years ago as a favour. Old stock photos of products that aren't yours, and a 'click here for specials' button that goes nowhere. Your competitors' sites look professional. Yours looks abandoned.",
       missionBrief: "ALERT: Customers Google your business before they call. Right now they're seeing Thunderbolt Electricals' website, which is what YOUR site looks like to them. Your mission: drag the file into Cowork and redesign it in under a minute.",
@@ -218,6 +229,9 @@ const demoEmailTriage: Demo = {
   demoType: 'email',
   title: '50 emails by 9am Monday',
   subtitle: "There's a client escalation buried in there. Somewhere.",
+  dayIntro: "It's Monday morning. Your inbox exploded overnight.",
+  transitionOut: "Your inbox is under control. But there's a client meeting at 2pm and you still haven't looked at the numbers...",
+  delightNote: "Quick wins section: '3 emails can be archived without reading. 2 need a one-line reply. That leaves 4 that actually need your brain.' Plus one email flagged as 'actually good news.'",
   missionBrief: "INCOMING: Monday morning, inbox overflowing. Somewhere in that pile, a client escalation is going nuclear. Your mission: triage everything before the 10am call.",
   beforeReaction: "Emails sorted by... time received. That's not a triage, that's a to-do list with anxiety.",
   afterReaction: "Urgent items surfaced, responses drafted, priority dashboard built. Monday morning, sorted.",
@@ -261,6 +275,7 @@ const demoEmailTriage: Demo = {
   ],
   avatarOverrides: {
     freelancer: {
+      dayIntro: "It's Monday morning. You're billing by the hour and every minute in your inbox is a minute you can't invoice.",
       subtitle: "There's a scope creep email buried in there. And an overdue invoice.",
       pain: "It's 8:47am Monday. You've got client requests, an overdue invoice from Xero, a new project inquiry, and your accountant reminding you about tax that needs filing. You're scrolling, scanning, guessing which fire to put out first.",
       missionBrief: "INCOMING: Monday morning, inbox overflowing. A client wants extra pages, an invoice is 14 days overdue, and someone new wants a quote. Your mission: triage everything before you lose the morning.",
@@ -288,6 +303,7 @@ const demoEmailTriage: Demo = {
       afterReaction: "Scope creep flagged, overdue invoice surfaced, new lead prioritized. Monday morning, handled.",
     },
     employee: {
+      dayIntro: "It's Monday morning. Your manager's already online and you haven't even opened your laptop.",
       subtitle: "Your manager's 1:1 agenda is in there somewhere. And an HR deadline.",
       pain: "It's 8:47am Monday. Your manager sent a 1:1 agenda, Product needs analytics help, HR says benefits enrollment closes Friday, and Jira has a sprint review reminder. You're scrolling through 15 emails trying to figure out what your manager actually needs before the 10am standup.",
       missionBrief: "INCOMING: Monday morning, inbox overflowing. Your manager's 1:1 prep is in there, HR has a deadline, and Product wants something. Your mission: triage everything before standup.",
@@ -315,6 +331,7 @@ const demoEmailTriage: Demo = {
       afterReaction: "Manager prep surfaced, HR deadline flagged, cross-team request queued. Ready for standup.",
     },
     agency: {
+      dayIntro: "It's Monday morning. Clients emailed over the weekend. That's never good news.",
       subtitle: "A client escalation is going nuclear. Somewhere in that pile.",
       pain: "It's 8:47am Monday. A big client is complaining about a campaign drop, your media team lead wants to discuss hiring, there's a new business inquiry you haven't responded to, and Xero says the P&L is ready. You're scanning 15 emails wondering which client is about to fire you.",
       missionBrief: "INCOMING: Monday morning, inbox overflowing. A client's campaigns dropped, your team needs a hiring decision, and a new prospect wants a pitch. Your mission: triage everything before the 10am client call.",
@@ -342,6 +359,7 @@ const demoEmailTriage: Demo = {
       afterReaction: "Client escalation surfaced first, new biz flagged, team decisions queued. Monday morning, under control.",
     },
     business: {
+      dayIntro: "It's Monday morning. You started this business to build things, not to spend the first hour reading email.",
       subtitle: "A customer complaint and a supplier price hike. Before coffee.",
       pain: "It's 8:47am Monday. A customer complained about a late order, your biggest supplier just announced an 8% price increase, an employee wants two weeks off, and your bank sent a transaction alert. You're wearing every hat and the inbox keeps growing.",
       missionBrief: "INCOMING: Monday morning, inbox overflowing. A customer is unhappy, a supplier hiked prices, and there's a leave request to deal with. Your mission: triage everything before the day runs away from you.",
@@ -377,6 +395,9 @@ const demoCampaignDashboard: Demo = {
   demoType: 'data',
   title: '12 weeks of campaign data, zero insights',
   subtitle: "Your client wants a presentation by Friday. You've got a CSV and a headache.",
+  dayIntro: "Monday afternoon. Your client meeting is in 2 hours and you still haven't made sense of the numbers.",
+  transitionOut: "The meeting went well. You actually had answers. Now, with the day's fires out, you finally have headspace for that thing that's been nagging you...",
+  delightNote: "Surfaces one non-obvious correlation the user didn't ask for. Plus a 'biggest hidden win' callout buried in the data.",
   missionBrief: "WARNING: 12 weeks of campaign data across Google, Facebook, and Instagram. Your client wants charts, insights, and recommendations by Friday. Your mission: turn this CSV into a dashboard that makes you look like a data scientist.",
   beforeReaction: "A spreadsheet with 200 rows. Your client expects charts and insights. Good luck with that pivot table.",
   afterReaction: "Interactive dashboard with Chart.js charts, sortable tables, and AI-generated insights. Friday's meeting just went from stressful to strategic.",
@@ -415,6 +436,7 @@ const demoCampaignDashboard: Demo = {
   ],
   avatarOverrides: {
     freelancer: {
+      dayIntro: "Monday afternoon. Your client just called to confirm the Friday meeting. You said 'yep, all on track.' It's not.",
       subtitle: "Your client wants a presentation by Friday. You've got a CSV and a headache.",
       pain: "You just exported 12 weeks of campaign data for Ace Plumbing. Five campaigns, weekly breakdowns, over 200 rows in a spreadsheet. Google Ads brand, non-brand, remarketing, Meta, and LSA. Your client wants a presentation with charts and recommendations by Friday. You've been staring at the pivot table for 20 minutes. You can see brand is working and Meta looks weak, but you can't prove it with a chart your client will actually believe.",
       missionBrief: "WARNING: 12 weeks of campaign data for your plumbing client across Google Ads, Meta, and Local Services. They want charts, insights, and recommendations by Friday. Your mission: turn this CSV into a dashboard that makes you look like a data scientist.",
@@ -435,6 +457,7 @@ const demoCampaignDashboard: Demo = {
       },
     },
     employee: {
+      dayIntro: "Monday afternoon. Your VP just pinged you: 'Can you pull together the campaign numbers before Thursday?' It's 200 rows of chaos.",
       subtitle: "Your manager wants a performance review by next week. You've got a CSV and 200 rows.",
       pain: "Your manager just asked for a performance review of all campaigns before next week's budget meeting. You've got 12 weeks of data across five channels: Google Ads Brand, Generic, Competitor, LinkedIn, and Meta. Over 200 rows in a spreadsheet. LinkedIn is eating 30% of the budget with the worst cost per lead, but you need charts and hard numbers to make the case for reallocation. Not a hunch.",
       missionBrief: "WARNING: 12 weeks of SaaS campaign data across Google Ads, LinkedIn, and Meta. Your VP wants a performance deck by Thursday. Your mission: turn this CSV into a dashboard that tells the story the numbers are hiding.",
@@ -454,6 +477,7 @@ const demoCampaignDashboard: Demo = {
       },
     },
     agency: {
+      dayIntro: "Monday afternoon. Monthly reports are due tomorrow. Four clients. Zero charts. You told them you'd have 'data-driven insights.' Time to deliver.",
       subtitle: "Four clients, one spreadsheet, zero insights. Monthly reports due tomorrow.",
       pain: "Monthly reports are due tomorrow for four clients. You've got 12 weeks of campaign data for each: dental, HVAC, legal, and e-commerce. That's 200+ rows across different channels, metrics, and timeframes. Each client expects personalised charts, trend analysis, and recommendations. You've got one evening and a spreadsheet that makes your eyes glaze over.",
       missionBrief: "WARNING: 12 weeks of multi-client campaign data. Dental, HVAC, Legal, and E-commerce. Monthly reports due tomorrow. Your mission: turn this CSV into a dashboard that covers all four clients in one view.",
@@ -473,6 +497,7 @@ const demoCampaignDashboard: Demo = {
       },
     },
     business: {
+      dayIntro: "Monday afternoon. Your accountant just asked where the marketing money is going. Good question. You have no idea.",
       subtitle: "Five marketing channels, no idea which ones are actually working.",
       pain: "You've been running Google Ads, Meta, Instagram, email campaigns, and a referral program for Coastal Kitchen Co. You just exported 12 weeks of data because your accountant asked where the marketing money is going. Over 200 rows of numbers. You know email 'feels' like it works. You suspect Instagram is a waste. But 'feels' and 'suspects' won't cut it when you're deciding where to spend next quarter's budget.",
       missionBrief: "WARNING: 12 weeks of your own marketing data across five channels. You're spending money on all of them but you only have gut feel about what's working. Your mission: turn this CSV into a dashboard that tells you where to double down.",
@@ -502,7 +527,7 @@ function applyOverrides(demo: Demo, type: PlayerType): Demo {
 
 // Level 1: same demos for all avatars
 export function getLevel1Demos(type: PlayerType): Demo[] {
-  return [demoWebsiteRedesign, demoEmailTriage, demoCampaignDashboard].map(d => applyOverrides(d, type))
+  return [demoEmailTriage, demoCampaignDashboard, demoWebsiteRedesign].map(d => applyOverrides(d, type))
 }
 
 // ============================================================
