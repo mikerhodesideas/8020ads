@@ -90,28 +90,31 @@ export default function WorldChooser() {
         </div>
       </div>
 
-      {/* Classic - minimal footer bar */}
-      <div className="flex-shrink-0 px-3 sm:px-4 pb-3 max-w-6xl mx-auto w-full">
-        <div className="flex items-center justify-between">
-          {classicWorld && (
-            <button
-              onClick={() => handlePick(classicWorld.id)}
-              className="group flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors"
-            >
-              <span className="text-xs font-heading">
-                {classicWorld.name}
-              </span>
-              <span className="text-[10px] text-white/20 group-hover:text-white/40 transition-colors hidden sm:inline">
-                {classicWorld.tagline}
-              </span>
-              <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                &#8594;
-              </span>
-            </button>
-          )}
+      {/* Classic - prominent card for non-gamers */}
+      <div className="flex-shrink-0 px-3 sm:px-4 pb-3 max-w-6xl mx-auto w-full space-y-2">
+        {classicWorld && (
+          <button
+            onClick={() => handlePick(classicWorld.id)}
+            className={cn(
+              'w-full py-3 px-5 rounded-[2px]',
+              'border border-white/15 hover:border-white/30',
+              'bg-white/5 hover:bg-white/10',
+              'transition-all duration-300',
+              'flex items-center justify-center gap-3',
+              'cursor-pointer',
+              'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
+            )}
+          >
+            <span className="text-sm sm:text-base text-white/60 group-hover:text-white/80 font-heading">
+              Not into the gaming vibe? Get the demos without it.
+            </span>
+            <span className="text-white/40 text-sm">&#8594;</span>
+          </button>
+        )}
+        <div className="flex justify-end">
           <button
             onClick={() => router.push('/')}
-            className="text-[10px] sm:text-xs text-white/20 hover:text-white/50 transition-colors font-heading ml-auto"
+            className="text-[10px] sm:text-xs text-white/20 hover:text-white/50 transition-colors font-heading"
           >
             &#8592; Change avatar
           </button>
