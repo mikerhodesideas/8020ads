@@ -26,6 +26,7 @@ const screenshotMap: Record<string, { src: string; size?: 'full' | 'medium' | 's
   'dragging a file into cowork': { src: '/images/lessons/cowork-drag-file.png' },
   'cowork connectors menu': { src: '/images/lessons/cowork-connectors-menu.png', size: 'medium' },
   'cowork connectors panel': { src: '/images/lessons/cowork-connectors-panel.png' },
+  'cowork global instructions in settings': { src: '/images/lessons/cowork-global-instructions.jpg' },
 }
 
 // Downloadable skills - renders as dashed-border cards

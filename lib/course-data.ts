@@ -344,6 +344,72 @@ Cowork is scoped to one folder at a time, plus whatever you drag in. It can't wa
 Head to the game and play through the Level 1 demos. You'll see how Cowork works with different file types: a website file, an inbox export, and a CSV spreadsheet. Each one shows a different way of giving Cowork something to work with and getting a useful result back.
 `,
       },
+      {
+        id: "2-4",
+        title: "Giving Cowork Context",
+        content: \`# Giving Cowork Context
+
+You've learned how to give Cowork files and folders. But every time you start a new session, Cowork starts fresh. It doesn't remember that you prefer Australian English, or that your business is called "Bright Digital", or that you never want the word "synergy" in anything it writes.
+
+Global Instructions fix that.
+
+## What are Global Instructions?
+
+Global Instructions are a block of text that loads into every Cowork session automatically. Think of it as a permanent briefing note. You write it once, and Claude reads it at the start of every conversation from that point on.
+
+Without Global Instructions, you'd need to remind Cowork of the same things every session. With them, it already knows.
+
+## Where to find them
+
+Click your profile name or icon in the bottom left corner of Cowork to open **Settings**. Select **Cowork** in the left sidebar.
+
+> [SCREENSHOT: Cowork global instructions in settings]
+
+You'll see **Global instructions** at the top with an **Edit** button. Click Edit, type your instructions, and save. That's the entire setup.
+
+## What to put in them
+
+Keep it short. These instructions load with every session, so don't write a novel. Aim for a few clear lines covering:
+
+**Who you are and what your business does.** One or two sentences. This stops Claude from making wrong assumptions.
+
+*"I run a digital marketing agency in Melbourne called Bright Digital. My clients are e-commerce brands in fashion and homewares."*
+
+**How you want Claude to write.** Your preferred tone, spelling conventions, anything about voice.
+
+*"Write in a professional but friendly tone. Use Australian English. Keep things concise."*
+
+**Rules that always apply.** Things Claude should always do or never do.
+
+*"Always check for existing files before creating new ones. Never use the words leverage, synergy, or utilise."*
+
+## A simple starting point
+
+Here's a template you can copy and adapt:
+
+\`\`\`
+I run [business name], a [what you do] in [location].
+My customers are [who you serve].
+
+Write in a [tone] voice. Use [Australian/British/American] English.
+
+Rules:
+- [Your most important rule]
+- [Another rule]
+- [One more if needed]
+\`\`\`
+
+You can always add more later. Start simple.
+
+## What Global Instructions don't do
+
+Global Instructions tell Claude about your preferences and rules. They don't give Claude access to anything new. Files, folders, and connectors are separate. Think of Global Instructions as "who I am and how I work" and everything else as "what I'm working on right now."
+
+## Try it
+
+Open Settings, go to Cowork, and write three lines of Global Instructions. Your business name, your preferred tone, and one rule. Then start a new session and notice how Claude's responses already feel more tailored.
+\`,
+      },
     ],
   },
   {
