@@ -28,13 +28,13 @@ export default function WorldChooser() {
   const classicWorld = worlds.find((w) => w.id === 'gallery')
 
   return (
-    <div className="fixed inset-0 top-[3.5rem] flex flex-col bg-[#1e1e24]">
+    <div className="fixed inset-0 top-[3.5rem] flex flex-col bg-[#EDEAE4]">
       {/* Compact header */}
       <div className="text-center py-4 sm:py-5 flex-shrink-0">
-        <h1 className="text-lg sm:text-xl font-bold font-heading text-white/90 tracking-wide">
+        <h1 className="text-lg sm:text-xl font-bold font-heading text-[var(--color-ink)] tracking-wide">
           Choose your world
         </h1>
-        <p className="text-xs text-white/40 mt-0.5">
+        <p className="text-xs text-[var(--color-faint)] mt-0.5">
           Same quests. Different vibe.
         </p>
       </div>
@@ -49,9 +49,9 @@ export default function WorldChooser() {
               onClick={() => handlePick(w.id)}
               className={cn(
                 'group relative overflow-hidden',
-                'border border-white/10',
+                'border border-[var(--color-border)]',
                 'rounded-[2px] transition-all duration-500 ease-out',
-                'hover:border-white/30 hover:z-10 hover:shadow-2xl hover:shadow-white/5',
+                'hover:border-[var(--color-muted)] hover:z-10 hover:shadow-xl hover:shadow-black/10',
                 'cursor-pointer block',
                 'max-h-[200px] sm:max-h-[240px] md:max-h-[280px]',
                 'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
@@ -61,27 +61,23 @@ export default function WorldChooser() {
                 src={w.image}
                 alt={w.name}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 sizes="(max-width: 640px) 50vw, 33vw"
                 priority
               />
 
-              {/* Darken overlay - lightens on hover */}
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500" />
+              {/* Subtle overlay - lightens on hover */}
+              <div className="absolute inset-0 bg-black/15 group-hover:bg-black/5 transition-all duration-500" />
 
               {/* Bottom gradient for text */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-
-              {/* Shimmer on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-[-100%] group-hover:translate-x-[100%]"
-                style={{ transition: 'opacity 0.7s, transform 1.2s' }} />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
               {/* Content pinned to bottom */}
               <div className="absolute inset-x-0 bottom-0 px-4 pb-4 sm:px-5 sm:pb-5">
                 <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold font-heading text-white leading-tight drop-shadow-lg">
                   {w.name}
                 </h2>
-                <p className="text-[10px] sm:text-xs text-white/70 leading-relaxed mt-1 drop-shadow hidden sm:block">
+                <p className="text-[10px] sm:text-xs text-white/80 leading-relaxed mt-1 drop-shadow hidden sm:block">
                   {w.tagline}
                 </p>
               </div>
@@ -97,24 +93,24 @@ export default function WorldChooser() {
             onClick={() => handlePick(classicWorld.id)}
             className={cn(
               'w-full py-3 px-5 rounded-[2px]',
-              'border border-white/15 hover:border-white/30',
-              'bg-white/5 hover:bg-white/10',
+              'border border-[var(--color-border)] hover:border-[var(--color-muted)]',
+              'bg-white hover:bg-[var(--color-cream)]',
               'transition-all duration-300',
               'flex items-center justify-center gap-3',
               'cursor-pointer',
               'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
             )}
           >
-            <span className="text-sm sm:text-base text-white/60 group-hover:text-white/80 font-heading">
+            <span className="text-sm sm:text-base text-[var(--color-muted)] group-hover:text-[var(--color-ink)] font-heading">
               Not into the gaming vibe? Get the demos without it.
             </span>
-            <span className="text-white/40 text-sm">&#8594;</span>
+            <span className="text-[var(--color-faint)] text-sm">&#8594;</span>
           </button>
         )}
         <div className="flex justify-end">
           <button
             onClick={() => router.push('/')}
-            className="text-[10px] sm:text-xs text-white/20 hover:text-white/50 transition-colors font-heading"
+            className="text-[10px] sm:text-xs text-[var(--color-faint)] hover:text-[var(--color-muted)] transition-colors font-heading"
           >
             &#8592; Change avatar
           </button>
