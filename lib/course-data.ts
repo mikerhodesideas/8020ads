@@ -347,7 +347,7 @@ Head to the game and play through the Level 1 demos. You'll see how Cowork works
       {
         id: "2-4",
         title: "Giving Cowork Context",
-        content: \`# Giving Cowork Context
+        content: `# Giving Cowork Context
 
 You've learned how to give Cowork files and folders. But every time you start a new session, Cowork starts fresh. It doesn't remember that you prefer Australian English, or that your business is called "Bright Digital", or that you never want the word "synergy" in anything it writes.
 
@@ -408,7 +408,7 @@ Global Instructions tell Claude about your preferences and rules. They don't giv
 ## Try it
 
 Open Settings, go to Cowork, and write three lines of Global Instructions. Your business name, your preferred tone, and one rule. Then start a new session and notice how Claude's responses already feel more tailored.
-\`,
+`,
       },
     ],
   },
