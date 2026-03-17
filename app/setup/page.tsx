@@ -253,10 +253,10 @@ export default function SetupPage() {
                   Straight to the demos
                 </div>
                 <p style={{ fontSize: 14, color: '#555', lineHeight: 1.6, marginBottom: 8, flex: 1 }}>
-                  Clean, minimal interface. See the before and after, then try it yourself. No distractions.
+                  Clean, minimal interface. Watch AI handle real business tasks in seconds, compare the before and after, then try it yourself with your own files. No distractions, no game mechanics. Just the proof.
                 </p>
                 <p style={{ fontSize: 13, color: '#888', lineHeight: 1.5, marginBottom: 20 }}>
-                  Three demos. About 5 minutes total.
+                  6 demos across 3 levels. About 10 minutes total.
                 </p>
                 <span style={{
                   display: 'inline-flex',
@@ -295,13 +295,13 @@ export default function SetupPage() {
                   e.currentTarget.style.borderColor = '#f59e0b'
                 }}
               >
-                {/* Mario background image */}
+                {/* Game banner image */}
                 <div style={{
                   width: '100%',
-                  height: 120,
-                  backgroundImage: 'url(/images/worlds/arcade.png)',
+                  height: 180,
+                  backgroundImage: 'url(/images/game-banner.png)',
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center top',
+                  backgroundPosition: 'center 30%',
                   position: 'relative',
                 }}>
                   <div style={{
@@ -309,7 +309,7 @@ export default function SetupPage() {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    height: 40,
+                    height: 48,
                     background: 'linear-gradient(transparent, #1a1a2e)',
                   }} />
                 </div>
@@ -326,10 +326,10 @@ export default function SetupPage() {
                     Play the game version
                   </div>
                   <p style={{ fontSize: 14, color: '#cbd5e1', lineHeight: 1.6, marginBottom: 8, flex: 1 }}>
-                    Same demos, but wrapped in levels, badges, and unlockable worlds. Earn coins. Unlock new themes. Business tools have never been this fun.
+                    Same demos, but wrapped in a Super Mario-style game. Complete levels, unlock badges, and choose from 6 different themed worlds including Zelda, Tetris, and Red Alert. Business tools have never been this fun.
                   </p>
                   <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.5, marginBottom: 20 }}>
-                    9 demos across 3 levels. Choose your world.
+                    6 demos across 3 levels. Choose your world.
                   </p>
                   <span style={{
                     display: 'inline-flex',
