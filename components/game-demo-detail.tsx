@@ -557,11 +557,11 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 {skin.id === 'arcade' ? (
                   <>
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-[2px] text-white font-bold text-lg" style={{ background: 'var(--world-accent-border)' }}>?</span>
-                    {skin.runButtonLabel}
+                    {getDemoLevel(demoId) === 1 ? 'Start Now' : skin.runButtonLabel}
                   </>
                 ) : (
                   <>
-                    {skin.runButtonLabel}
+                    {getDemoLevel(demoId) === 1 ? 'Start Now' : skin.runButtonLabel}
                     <span className="text-xl leading-none">&#9654;</span>
                   </>
                 )}
