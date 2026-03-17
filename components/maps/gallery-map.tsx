@@ -216,6 +216,9 @@ export default function GalleryMap({
 
   const levels = getLevels(type as PlayerType)
   const availableDemoCount = levels.filter(l => !l.comingSoon).reduce((sum, l) => sum + l.demos.length, 0)
+  // Count only demos that belong to the current role (not stale IDs from other roles)
+  const currentDemoIds = levels.filter(l => !l.comingSoon).flatMap(l => l.demos.map(d => d.id))
+  const roleCompletedCount = currentDemoIds.filter(id => completed.has(id)).length
 
   return (
     <div
@@ -448,7 +451,7 @@ export default function GalleryMap({
             </button>
             <StatsWidget
               isGallery={true}
-              completedCount={Math.min(completed.size, availableDemoCount)}
+              completedCount={roleCompletedCount}
               availableCount={availableDemoCount}
               skillCount={skills.size}
               timeSaved={totalTimeSaved}

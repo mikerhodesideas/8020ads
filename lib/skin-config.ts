@@ -150,7 +150,7 @@ const gallerySkin: SkinConfig = {
   beforeReactionFallback: 'AI produced a result.',
   beforeReactionLine2Fallback: 'But is this actually impressive?',
   afterReactionFallback: "Now THAT'S what AI can do with the right skills.",
-  levelCompleteSubtext: 'All demos finished. Well done.',
+  levelCompleteSubtext: 'All levels finished. Well done.',
   skillUnlockIcon: '\u{1F3A8}',
 
   // Visual

@@ -15,7 +15,7 @@ export interface BadgeDef {
 
 export const BADGE_DEFS: BadgeDef[] = [
   { id: 'first-skill', name: 'First Skill', description: 'Complete your first demo' },
-  { id: 'skill-collector', name: 'Skill Collector', description: 'Unlock all 3 Level 1 skills' },
+  { id: 'skill-collector', name: 'Skill Collector', description: 'Install your first skill' },
   { id: 'speed-demon', name: 'Speed Demon', description: 'Complete a demo in under 20 seconds' },
   { id: 'explorer', name: 'Explorer', description: 'Play in both Gallery and Arcade worlds' },
   { id: 'level-up', name: 'Level Up', description: 'Complete all demos in a level' },

@@ -162,9 +162,8 @@ function evaluateBadges(state: GameState): string[] {
   // First Skill: complete first demo
   if (state.completed.size >= 1) shouldHave.push('first-skill')
 
-  // Skill Collector: all 3 Level 1 skills
-  const l1Skills = Array.from(state.skills).filter((s) => LEVEL_1_SKILL_IDS.has(s))
-  if (l1Skills.length >= 3) shouldHave.push('skill-collector')
+  // Skill Collector: install first skill
+  if (state.skills.size >= 1) shouldHave.push('skill-collector')
 
   // Speed Demon: completed a demo in under 20 seconds
   if (state.hasSpeedComplete) shouldHave.push('speed-demon')

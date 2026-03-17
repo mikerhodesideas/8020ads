@@ -252,9 +252,18 @@ export default function SetupPage() {
                 }}>
                   Straight to the demos
                 </div>
-                <p style={{ fontSize: 14, color: '#555', lineHeight: 1.6, marginBottom: 8, flex: 1 }}>
+                <p style={{ fontSize: 14, color: '#555', lineHeight: 1.6, marginBottom: 12, flex: 1 }}>
                   Clean, minimal interface. Watch AI handle real business tasks in seconds, compare the before and after, then try it yourself with your own files. No distractions, no game mechanics. Just the proof.
                 </p>
+                <div style={{ marginBottom: 16, border: '1px solid #E8E4DF', overflow: 'hidden' }}>
+                  <Image
+                    src="/images/skills-preview.jpg"
+                    alt="Skills demo preview"
+                    width={520}
+                    height={140}
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
+                </div>
                 <p style={{ fontSize: 13, color: '#888', lineHeight: 1.5, marginBottom: 20 }}>
                   6 demos across 3 levels. About 10 minutes total.
                 </p>

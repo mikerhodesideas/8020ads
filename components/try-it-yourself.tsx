@@ -57,7 +57,7 @@ function WalkthroughModal({ onClose, isDark }: { onClose: () => void; isDark: bo
             { step: 'Open Skills', detail: 'Click "Skills" in the Customize panel.' },
             { step: 'Click the + button', detail: 'This opens the file picker. Select the .zip file you downloaded.' },
             { step: 'Upload and confirm', detail: 'Cowork will install the skill. You\'ll see it appear in your skills list.' },
-            { step: 'Drag in your data file', detail: 'Go back to the chat, drag the data file into the conversation, and paste the prompt.' },
+            { step: 'Drag in your data file', detail: 'Go back to the chat, drag the data file into the conversation, and copy and paste the prompt.' },
           ].map((item, i) => (
             <li key={i} className="flex gap-3">
               <span
@@ -285,48 +285,43 @@ export default function TryItYourself({
           <div>
             <StepLabel
               number={getStepNumber('prompt')}
-              text="Paste the prompt"
+              text="Copy and paste the prompt"
               isDark={isDark}
               completed={promptCopied}
             />
             <div
               onClick={handleCopyPrompt}
-              className="p-4 sm:p-5 rounded-[2px] text-left cursor-pointer transition-all duration-300 active:scale-[0.99] hover:opacity-90"
+              className="flex items-center gap-4 px-5 py-4 border-2 rounded-[2px] transition-all text-left cursor-pointer active:scale-[0.99]"
               style={{
-                borderLeft: `3px solid ${promptCopied ? '#059669' : (isDark ? 'var(--world-accent)' : '#8b5e3c')}`,
-                backgroundColor: promptCopied
+                borderColor: promptCopied
+                  ? (isDark ? 'rgba(16,185,129,0.6)' : '#10b981')
+                  : (isDark ? 'var(--world-download-border, var(--world-accent))' : '#D64C00'),
+                borderStyle: promptCopied ? 'solid' : 'dashed',
+                background: promptCopied
                   ? (isDark ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.05)')
-                  : (isDark ? 'var(--world-prompt-bg)' : '#fff'),
+                  : (isDark ? 'rgba(214,76,0,0.06)' : 'rgba(214,76,0,0.04)'),
               }}
-              title="Click to copy"
+              title="Click to copy prompt"
             >
-              <div className="flex items-center justify-between mb-2">
-                <p
-                  className="text-xs font-bold uppercase tracking-widest font-heading"
-                  style={{ color: promptCopied ? '#059669' : (isDark ? 'var(--world-accent)' : '#8b5e3c') }}
-                >
-                  Prompt
-                </p>
-                <span
-                  className="text-xs flex items-center gap-1 px-2 py-1 rounded-[2px]"
-                  style={{ color: promptCopied ? '#059669' : (isDark ? 'var(--world-accent)' : '#8b5e3c') }}
-                >
-                  {promptCopied ? (
-                    <>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                      <span className="font-heading font-semibold">{copied ? 'Copied!' : 'Click to copy again'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="1" /><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" /></svg>
-                      <span className="font-heading font-semibold">Click to copy</span>
-                    </>
-                  )}
-                </span>
-              </div>
-              <p className="text-sm leading-relaxed" style={{ color: isDark ? 'var(--world-text)' : '#3a3028' }}>
+              <p
+                className="text-sm leading-relaxed flex-1"
+                style={{ color: promptCopied
+                  ? (isDark ? '#6ee7b7' : '#059669')
+                  : (isDark ? 'var(--world-text, #e0e0e0)' : '#3a2820')
+                }}
+              >
                 {demo.tryThis}
               </p>
+              <span
+                className="ml-auto text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px] text-white"
+                style={{
+                  background: promptCopied
+                    ? (isDark ? '#059669' : '#10b981')
+                    : (isDark ? 'var(--world-download-badge-bg, var(--world-accent))' : '#D64C00'),
+                }}
+              >
+                {promptCopied ? '\u2713 Copied' : '\u{1F4CB} Copy'}
+              </span>
             </div>
           </div>
         </div>

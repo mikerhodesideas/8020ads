@@ -36,6 +36,7 @@ export default function LevelMap() {
   const [transitionLevel, setTransitionLevel] = useState(0)
 
   // Detect when a level just completed (show celebration once per session)
+  // Level 1: skip celebration, go straight to transition screen
   useEffect(() => {
     if (typeof window === 'undefined') return
     for (const lvl of [1, 2, 3]) {
@@ -44,9 +45,16 @@ export default function LevelMap() {
         !sessionStorage.getItem(`level${lvl}-celebrated`)
       ) {
         const timer = setTimeout(() => {
-          setCelebrationLevel(lvl)
-          setShowCelebration(true)
           sessionStorage.setItem(`level${lvl}-celebrated`, 'true')
+          if (lvl < 3) {
+            // Skip celebration overlay, go straight to transition screen
+            setTransitionLevel(lvl)
+            setShowTransition(true)
+          } else {
+            // Level 3: show the final celebration
+            setCelebrationLevel(lvl)
+            setShowCelebration(true)
+          }
         }, 600)
         return () => clearTimeout(timer)
       }
@@ -73,10 +81,6 @@ export default function LevelMap() {
         celebrationLevel={celebrationLevel}
         onDismissCelebration={() => {
           setShowCelebration(false)
-          if (celebrationLevel < 3) {
-            setShowTransition(true)
-            setTransitionLevel(celebrationLevel)
-          }
         }}
         statsExpanded={statsExpanded}
         setStatsExpanded={setStatsExpanded}
