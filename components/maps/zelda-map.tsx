@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
-import { BadgeTray, BadgeToast } from '@/components/badge-system'
-import { getLevels, type PlayerType } from '@/lib/game-data'
+import { BadgeTray, BadgeToast, WorldUnlockToast } from '@/components/badge-system'
+import { getLevels, getDemoUrl, type PlayerType } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
 import { useTransition } from '@/components/transition-overlay'
@@ -129,7 +129,7 @@ export default function ZeldaMap({
   const handleDemoClick = (demoId: number) => {
     if (skin.sounds.selection) playSound(skin.sounds.selection)
     playSound('zelda-chest-open')
-    navigateWithTransition(`/play/${demoId}`)
+    navigateWithTransition(getDemoUrl(demoId))
   }
 
   // Which background level image to use
@@ -138,6 +138,7 @@ export default function ZeldaMap({
   return (
     <div className="page-enter skin-zelda" style={{ minHeight: 'calc(100vh - 3.5rem)' }}>
       <BadgeToast />
+      <WorldUnlockToast />
 
       {/* Full-screen background image */}
       <div
@@ -401,7 +402,7 @@ export default function ZeldaMap({
             Start over
           </button>
           <ZeldaStatsWidget
-            completedCount={completed.size}
+            completedCount={Math.min(completed.size, availableDemoCount)}
             availableCount={availableDemoCount}
             skillCount={skills.size}
             timeSaved={totalTimeSaved}

@@ -105,7 +105,7 @@ const BOSS_LETTER = `Hi [Boss Name],
 I've been exploring a tool called Cowork (Claude Desktop's agentic mode) that could save our team significant time on repetitive tasks.
 
 In a 15-minute demo, I saw it:
-- Redesign a website from a single HTML file (47 seconds)
+- Redesign a website from a single HTML file (under a minute)
 - Triage an entire inbox with priority sorting and draft replies (8 seconds)
 - Build an interactive campaign dashboard with charts from a CSV (15 seconds)
 - Extract action items from meeting notes into a trackable dashboard (10 seconds)
@@ -277,7 +277,7 @@ export default function VictoryScreen() {
         </>
       )}
 
-      <div className={cn('max-w-lg w-full flex flex-col items-center gap-8 relative z-10', isDark && 'pb-12')}>
+      <div className={cn('w-full flex flex-col items-center gap-8 relative z-10', isDark && 'pb-12')} style={{ maxWidth: 900 }}>
         {/* Victory image */}
         <div className="w-40 h-40 sm:w-52 sm:h-52 relative victory-image-entrance">
           <Image
@@ -310,7 +310,7 @@ export default function VictoryScreen() {
           />
           <StatBlock
             label={skin.victoryDemosLabel}
-            value={`${completed.size}/9`}
+            value={`${Math.min(completed.size, 9)}/9`}
             isLight={isLight}
           />
           <StatBlock

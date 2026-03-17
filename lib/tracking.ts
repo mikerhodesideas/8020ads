@@ -1,6 +1,6 @@
 const TRACKING_URL = 'https://api.ads2ai.com/api/track'
 
-function getSessionId(): string {
+export function getSessionId(): string {
   if (typeof window === 'undefined') return ''
   let id = localStorage.getItem('8020skill-session-id')
   if (!id) {
@@ -21,6 +21,8 @@ interface TrackingData {
 }
 
 export function track(data: TrackingData): void {
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') return
+
   const sessionId = getSessionId()
   if (!sessionId) return
 

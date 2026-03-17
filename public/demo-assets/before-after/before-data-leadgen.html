@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Analysis - Marketing Data</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fff;
+            color: #333;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0;
+            line-height: 1.7;
+        }
+        .response-box {
+            background: #f7f7f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px 28px;
+        }
+        .ai-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-icon {
+            width: 18px;
+            height: 18px;
+            background: #10a37f;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0 0 16px;
+        }
+        p {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 12px;
+        }
+        ul {
+            margin: 0 0 16px;
+            padding-left: 20px;
+        }
+        li {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .summary-heading {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin: 20px 0 8px;
+        }
+        .recommendation {
+            background: #f0f9ff;
+            border-left: 3px solid #3b82f6;
+            padding: 12px 16px;
+            margin: 16px 0;
+            font-size: 14px;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="response-box">
+        <div class="ai-label">
+            <span class="ai-icon">AI</span>
+            AI Analysis Result
+        </div>
+
+        <h3>Marketing Performance Summary</h3>
+
+        <p>I've analyzed your three spreadsheets. Here's a summary of the key findings:</p>
+
+        <div class="summary-heading">Overall Performance</div>
+        <ul>
+            <li>Total marketing spend across all channels: $487,200 over 12 months</li>
+            <li>Total revenue attributed to marketing: $2,143,800</li>
+            <li>Overall ROAS: 4.4x</li>
+            <li>Total leads generated: 2,847</li>
+            <li>Conversion rate (lead to close): 18.3%</li>
+        </ul>
+
+        <div class="summary-heading">Channel Breakdown</div>
+        <ul>
+            <li><strong>Google Ads:</strong> $156,000 spend, 892 leads, ROAS 3.8x</li>
+            <li><strong>Meta:</strong> $108,000 spend, 634 leads, ROAS 4.1x</li>
+            <li><strong>Email:</strong> $42,000 spend, 521 leads, ROAS 8.2x</li>
+            <li><strong>Events:</strong> $72,000 spend, 312 leads, ROAS 5.7x</li>
+            <li><strong>Content:</strong> $61,200 spend, 298 leads, ROAS 3.2x</li>
+            <li><strong>Referral:</strong> $48,000 spend, 190 leads, ROAS 6.1x</li>
+        </ul>
+
+        <div class="summary-heading">Key Trends</div>
+        <ul>
+            <li>Revenue increased 12% quarter-over-quarter in Q3</li>
+            <li>Email had the highest ROI of all channels</li>
+            <li>Google Ads generated the most leads but at higher cost</li>
+            <li>Q4 showed slight decline in overall performance</li>
+        </ul>
+
+        <div class="recommendation">
+            <strong>Recommendation:</strong> Consider increasing budget allocation to Email and Events channels, which show the highest return on investment. Reduce Google Ads spend where cost per lead exceeds target thresholds.
+        </div>
+
+        <p style="color: #999; font-size: 12px; margin-top: 20px;">Analysis based on 3 uploaded files: marketing-spend.csv, lead-pipeline.csv, closed-deals.csv</p>
+    </div>
+</body>
+</html>

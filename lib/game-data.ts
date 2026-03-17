@@ -156,7 +156,7 @@ const demoWebsiteRedesign: Demo = {
   delightNote: "Includes a subtle hover animation and a mobile preview toggle the user didn't ask for.",
   missionBrief: "ALERT: Thunderbolt Electricals' website looks like it escaped from 1999. The business is bleeding leads every hour it stays live. Your mission: drag the file into Cowork and redesign it in under a minute.",
   beforeReaction: "Three columns, broken images, and a layout that screams 2003. This is going to need more than a fresh coat of paint.",
-  afterReaction: "From 1999 to 2026 in 47 seconds. One file, one prompt, one minute.",
+  afterReaction: "From 1999 to 2026 in under a minute. One file, one prompt, done.",
   pain: 'You know that moment when a prospect says "I checked out your website" and your stomach drops? Broken layout. Stock photos from 2015. A "click here for specials" button that goes nowhere. Every day it stays live, you\'re losing deals you\'ll never know about.',
   fix: 'Drag the HTML file into Cowork, paste a prompt, and get a professional redesign in under a minute. No coding. No designer. No three-week timeline.',
   tryThis: 'I\'ve dragged in a website HTML file for a local electrician called Thunderbolt Electricals. It\'s terrible - looks like it\'s from 1999.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons ("Get a Free Quote", "Call Now")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop so I can open it in a browser.',
@@ -178,8 +178,8 @@ const demoWebsiteRedesign: Demo = {
   },
   beforeFile: '/demo-assets/before-after/before-website.html',
   afterFile: '/demo-assets/before-after/after-website.html',
-  wowStat: 'Complete redesign in 47 seconds',
-  wowTime: '47 seconds',
+  wowStat: 'Complete redesign in under a minute',
+  wowTime: '< 1 min',
   beforeStages: [
     'Opening file in browser...',
     'Copying text into ChatGPT...',
@@ -209,7 +209,7 @@ const demoWebsiteRedesign: Demo = {
     agency: {
       dayIntro: "Monday evening. Client fires are out. You know what you should do with this quiet hour? Fix your own agency site. The one you've been ignoring for two years.",
       subtitle: "You tell clients to invest in their digital presence. Then they visit YOUR agency website.",
-      pain: "You pitch clients on the importance of digital presence. You charge them thousands a month to manage it. Then a prospect Googles your agency and finds THIS. Bad stock photos, awards from 2018 & 3 blog posts total. Three. You've been meaning to fix it for two years. Every pitch you lose to a competitor with a better site is a pitch you lost to your own neglect.",
+      pain: "You pitch clients on the importance of digital presence. You charge them thousands a month to manage it. Then a prospect Googles your agency and finds THIS. Bad stock photos, awards from 2018 & 3 blog posts total. Three. You've been meaning to fix it for two years. Every pitch you lose to a competitor with a better site is a pitch that shouldn't have been close.",
       missionBrief: "ALERT: You tell clients to invest in their digital presence. Then a prospect visits your agency website and it looks like this. Thunderbolt Electricals is the example. Your mission: drag the file into Cowork and redesign it in under a minute.",
       tryThis: "I've dragged in a website HTML file. This is what our own agency site looks like right now. We tell clients to invest in their digital presence and then they visit THIS.\n\nPlease create a completely new, modern HTML file called thunderbolt-redesigned.html that:\n- Has a professional, clean design with a proper hero section\n- Includes clear call-to-action buttons (\"Get a Free Quote\", \"Call Now\")\n- Has sections for: services, about, testimonials (make up 3 realistic ones), contact\n- Uses a modern color scheme appropriate for an electrical services business\n- Is fully responsive\n- Looks like it was designed by a professional agency\n\nSave it to my Desktop. If we can do this in under a minute, imagine what we can offer clients.",
     },
@@ -399,7 +399,7 @@ const demoCampaignDashboard: Demo = {
   transitionOut: "The meeting went well. You actually had answers. Now, with the day's fires out, you finally have headspace for that thing that's been nagging you...",
   delightNote: "Surfaces one non-obvious correlation the user didn't ask for. Plus a 'biggest hidden win' callout buried in the data.",
   missionBrief: "WARNING: 12 weeks of campaign data across Google, Facebook, and Instagram. Your client wants charts, insights, and recommendations by Friday. Your mission: turn this CSV into a dashboard that makes you look like a data scientist.",
-  beforeReaction: "A spreadsheet with 200 rows. Your client expects charts and insights. Good luck with that pivot table.",
+  beforeReaction: "A spreadsheet with 200 rows. Your client expects charts and insights. A pivot table isn't going to cut it.",
   afterReaction: "Interactive dashboard with Chart.js charts, sortable tables, and AI-generated insights. Friday's meeting just went from stressful to strategic.",
   pain: "You've got 12 weeks of campaign data in a CSV. Google, Facebook, Instagram. Your client wants a presentation with charts and insights by Friday. You've been staring at the spreadsheet for 20 minutes and all you've got is a headache and a half-finished pivot table.",
   fix: "Drag the CSV into Cowork and get an interactive dashboard with charts, sortable tables, filtering, and written insights. One file, ready to present.",
@@ -438,7 +438,7 @@ const demoCampaignDashboard: Demo = {
     freelancer: {
       dayIntro: "Monday afternoon. Your client just called to confirm the Friday meeting. You said 'yep, all on track.' It's not.",
       subtitle: "Your client wants a presentation by Friday. You've got a CSV and a headache.",
-      pain: "You just exported 12 weeks of campaign data for Ace Plumbing. Five campaigns, weekly breakdowns, over 200 rows in a spreadsheet. Google Ads brand, non-brand, remarketing, Meta, and LSA. Your client wants a presentation with charts and recommendations by Friday. You've been staring at the pivot table for 20 minutes. You can see brand is working and Meta looks weak, but you can't prove it with a chart your client will actually believe.",
+      pain: "You just exported 12 weeks of campaign data for Ace Plumbing. Five campaigns, weekly breakdowns, over 200 rows in a spreadsheet. Google Ads brand, non-brand, remarketing, Meta, and LSA. Your client wants a presentation with charts and recommendations by Friday. You've been staring at the pivot table for 20 minutes. You can see brand is working and Meta looks weak, but you need charts and hard numbers to make the case. Not a hunch.",
       missionBrief: "WARNING: 12 weeks of campaign data for your plumbing client across Google Ads, Meta, and Local Services. They want charts, insights, and recommendations by Friday. Your mission: turn this CSV into a dashboard that makes you look like a data scientist.",
       tryThis: "I've dragged in 12 weeks of cross-channel advertising data for a local plumbing client (Google Ads Brand, Local Services, Emergency, Meta, LSA). I need to present this to the client on Friday.\n\nCreate an interactive HTML dashboard saved to my Desktop called campaign-dashboard.html that includes:\n\n1. An OVERVIEW tab with total spend, revenue, and ROAS for the full period, a line chart showing weekly revenue trend, and top 3 and bottom 3 campaigns by ROAS\n\n2. A CHANNEL BREAKDOWN tab with performance comparison table across channels, bar chart comparing ROAS by channel, and spend allocation pie chart\n\n3. A CAMPAIGN DETAIL tab with sortable table of all campaigns with all metrics, highlighted anomalies, and filter dropdown to view by channel\n\n4. An INSIGHTS section with 3-5 key findings written as if briefing a client, specific recommendations with data backing them up, and any concerning trends flagged\n\nUse Chart.js for charts (load from CDN). Make it look like a professional analytics dashboard. Single self-contained HTML file.",
       dataLabel: 'Ace Plumbing Campaign Data (12 weeks)',
@@ -525,6 +525,17 @@ function applyOverrides(demo: Demo, type: PlayerType): Demo {
   return { ...demo, ...overrides }
 }
 
+// Level 1 demos use /proof/ URLs instead of /play/
+const proofUrls: Record<number, string> = {
+  1: '/proof/website',
+  2: '/proof/inbox',
+  3: '/proof/data',
+}
+
+export function getDemoUrl(demoId: number): string {
+  return proofUrls[demoId] || `/play/${demoId}`
+}
+
 // Level 1: same demos for all avatars
 export function getLevel1Demos(type: PlayerType): Demo[] {
   return [demoEmailTriage, demoCampaignDashboard, demoWebsiteRedesign].map(d => applyOverrides(d, type))
@@ -543,7 +554,7 @@ const demoContentRepurposer: Demo = {
   title: 'One blog post, zero social content',
   subtitle: "You wrote something great last week. Nobody saw it.",
   missionBrief: "You published a blog post last week. It's good. But it's sitting on your website with 47 views. Your mission: install the Content Repurposer skill and turn one post into content for every platform.",
-  beforeReaction: "A 1,500 word blog post sitting on a website nobody visits. This content deserves better.",
+  beforeReaction: "A 1,500 word blog post sitting on a website with 47 views. This content deserves a bigger audience.",
   afterReaction: "One blog post became a LinkedIn post, an X thread, an email newsletter, and a summary card. All with copy buttons. All in 12 seconds.",
   pain: "You spent hours writing a blog post. It's useful. But turning it into a LinkedIn post, an X thread, and an email newsletter? That's another 3 hours you don't have. So it sits on your website with 47 views and gathering dust.",
   fix: "The Content Repurposer skill reads your post, extracts the key insights, and creates platform-specific versions. You get an interactive hub where you can preview and copy each version with one click.",
@@ -598,7 +609,7 @@ const demoContentRepurposer: Demo = {
     employee: {
       pain: "You wrote a case study about how your onboarding email changes cut churn by 22%. Real data, clear methodology. It's been sitting in Notion for three weeks. Your CMO keeps saying 'we should share this externally' but nobody has time to reformat it for LinkedIn, the company blog, and the internal newsletter.",
       subtitle: "You wrote a case study about reducing churn. It's buried in Notion.",
-      missionBrief: "You wrote a case study about how your onboarding email changes cut churn by 22%. It's sitting in Notion where nobody reads it. Your mission: install the Content Repurposer skill and turn it into content your CMO can share.",
+      missionBrief: "You wrote a case study about how your onboarding email changes cut churn by 22%. It's sitting in Notion waiting to be shared. Your mission: install the Content Repurposer skill and turn it into content your CMO can distribute.",
       tryThis: "I've installed the content-repurposer skill. Please use it to repurpose the case study I've dragged in.\n\nIt's about how we reduced churn by improving our onboarding emails. Follow the skill instructions to run the extraction and generate all platform versions plus the interactive HTML hub.",
       dataText: [
         'How We Reduced Churn 22% With Better Onboarding Emails',
@@ -617,7 +628,7 @@ const demoContentRepurposer: Demo = {
     },
     agency: {
       pain: "You wrote a killer post about why you stopped charging hourly. Real numbers on how value-based pricing grew your agency 40%. It could land you three new clients if the right people saw it. But it's sitting on your blog with 47 views. Nobody on your team has 3 hours to turn one post into LinkedIn content, email campaigns, and social posts.",
-      subtitle: "Your agency blog has great content. Nobody reads it.",
+      subtitle: "Your agency blog has great content. It deserves a bigger audience.",
       missionBrief: "You wrote about why you stopped charging hourly. It's the kind of post that could land you 3 new clients if the right people saw it. Your mission: install the Content Repurposer skill and get it everywhere.",
       tryThis: "I've installed the content-repurposer skill. Please use it to repurpose the blog post I've dragged in.\n\nIt's about why our agency switched from hourly to value-based pricing. Follow the skill instructions to run the extraction and generate all platform versions plus the interactive HTML hub.",
       dataText: [
@@ -666,7 +677,7 @@ const demoMeetingIntelligence: Demo = {
   missionBrief: "You had a client call with 12 action items, 4 decisions, and a follow-up due by Friday. It's all in your notes somewhere. Your mission: install the Meeting Intelligence skill and turn those notes into a system.",
   beforeReaction: "Rough notes with action items buried between pleasantries and tangents. Classic.",
   afterReaction: "Actions extracted with owners. Decisions logged. Follow-up email drafted. Dashboard with checkboxes so nothing slips.",
-  pain: "Your last client call produced a great discussion, 12 action items, and 4 important decisions. You wrote rough notes during the call. It's been 3 days and you haven't turned them into anything actionable. Some items are urgent. You're not sure which ones.",
+  pain: "Your last client call produced a great discussion, 12 action items, and 4 important decisions. You wrote rough notes during the call. It's been 3 days and the notes are still rough. Some items are urgent. Hard to tell which ones from a wall of scribbles.",
   fix: "The Meeting Intelligence skill extracts action items with owners, decisions, questions, and commitments. You get an interactive dashboard with filters, status toggles, and a ready-to-send follow-up email.",
   tryThis: "I've installed the meeting-intelligence skill. Please use it to process the meeting notes I've dragged in.\n\nFollow the skill instructions to extract actions, decisions, and questions, then build the interactive dashboard.",
   dataType: 'text',
@@ -738,7 +749,7 @@ const demoMeetingIntelligence: Demo = {
     },
     employee: {
       subtitle: "Great kickoff meeting. Twenty action items. Nobody knows who owns what.",
-      pain: "Your Project Phoenix kickoff had sprint planning, role assignments, blockers, and timeline commitments. Sarah wants daily standups, James is worried about data mapping, and Raj volunteered for something. You wrote rough notes. Good luck finding who owns what.",
+      pain: "Your Project Phoenix kickoff had sprint planning, role assignments, blockers, and timeline commitments. Sarah wants daily standups, James is worried about data mapping, and Raj volunteered for something. You wrote rough notes. The action items are in there, buried between small talk and tangents.",
       missionBrief: "Team project kickoff with 20 action items, role assignments, and a go-live deadline. It's all in your notes somewhere. Your mission: install the Meeting Intelligence skill and turn those notes into a system.",
       tryThis: "I've installed the meeting-intelligence skill. Please use it to process the meeting notes I've dragged in.\n\nThese are from a team project kickoff meeting. Follow the skill instructions to extract actions, decisions, and questions, then build the interactive dashboard.",
       dataText: [
@@ -790,7 +801,7 @@ const demoMeetingIntelligence: Demo = {
     },
     business: {
       subtitle: "Great ops meeting. Hiring decision, budget, and a broken machine. All in rough notes.",
-      pain: "Your operations meeting covered hiring a new customer service rep, Q2 marketing budget, a product launch, NPS drop, equipment maintenance, and a trade show request. You took rough notes. It's been 3 days and you can't remember if you approved the CNC repair.",
+      pain: "Your operations meeting covered hiring a new customer service rep, Q2 marketing budget, a product launch, NPS drop, equipment maintenance, and a trade show request. You took rough notes. It's been 3 days and the CNC repair approval is buried somewhere in two pages of scribbles.",
       missionBrief: "Operations planning with hiring decisions, budget allocation, and equipment maintenance to approve. It's all in your notes somewhere. Your mission: install the Meeting Intelligence skill and turn those notes into a system.",
       tryThis: "I've installed the meeting-intelligence skill. Please use it to process the meeting notes I've dragged in.\n\nThese are from a business operations planning meeting. Follow the skill instructions to extract actions, decisions, and questions, then build the interactive dashboard.",
       dataText: [
@@ -822,7 +833,7 @@ const demoSearchTermAnalyzer: Demo = {
   icon: '\u{1F525}',
   demoType: 'search',
   title: '2,000 search terms sitting untouched',
-  subtitle: "The wasted spend is in there somewhere. You just can't find it.",
+  subtitle: "The wasted spend is in there somewhere. Finding it takes hours.",
   missionBrief: "WARNING: 2,000 search terms in a spreadsheet, untouched for a week. Wasted spend is hiding in there. Your mission: install the Search Term Analyzer skill and find the money pit.",
   beforeReaction: "247 search terms, no classification, and $2,340 in wasted spend hiding in plain sight.",
   afterReaction: "Every term classified, waste flagged, winners highlighted. Interactive tabs, dropdown filters, and CSV exports ready to paste into Google Ads.",
@@ -1094,9 +1105,9 @@ const demoDesignPlugin: Demo = {
   title: 'Remember that terrible website?',
   subtitle: "Time to critique it properly. With a plugin that knows design.",
   missionBrief: "Remember Thunderbolt's website from Level 1? You redesigned it with a prompt. Now critique the ORIGINAL using Anthropic's Design plugin. It has 12 specialized design skills. Your mission: get a professional, scored evaluation.",
-  beforeReaction: "You rebuilt this site in Level 1 with a prompt. But did you actually know WHAT was wrong with it? Or did you just ask for 'modern'?",
-  afterReaction: "Scored evaluation across layout, typography, color, accessibility, and mobile. Now you know exactly what was wrong, not just that it looked bad.",
-  pain: "In Level 1, you told Cowork to 'make it look professional.' It did. But you couldn't explain WHY the original was bad beyond 'it looks old.' If a client asked you to evaluate their site's design, could you give them a structured, scored critique?",
+  beforeReaction: "You rebuilt this site in Level 1 with a prompt. The redesign looked great. But what specifically was wrong with the original? Time to find out.",
+  afterReaction: "Scored evaluation across layout, typography, color, accessibility, and mobile. Specific issues identified and quantified, not just 'it looks bad.'",
+  pain: "In Level 1, you told Cowork to 'make it look professional.' It did. But the critique was vague: 'it looks old.' If a client asked you to evaluate a site's design, they'd want specifics. Scores, dimensions, concrete issues. That takes design expertise most of us don't have.",
   fix: "The Design plugin from Anthropic gives Cowork 12 specialized design skills. The design-critique skill evaluates websites across specific dimensions with scores. Not 'this looks bad' but 'your visual hierarchy scores 2/10 because...'",
   tryThis: "I've dragged in an HTML file for a local electrician's website (the same one from Level 1). Please use the design-critique skill from the Design plugin to evaluate this website's design.\n\nGive me a scored evaluation covering layout, typography, color, accessibility, and mobile responsiveness. Present the results as a clear scorecard with specific issues and recommendations for each category.",
   dataType: 'html-preview',
@@ -1118,7 +1129,7 @@ const demoDesignPlugin: Demo = {
   beforeStages: [
     'Looking at the website...',
     '"It looks old, I guess?"...',
-    'Not sure what specifically is wrong...',
+    'Trying to articulate specific issues...',
   ],
   afterStages: [
     'Loading Design plugin...',
@@ -1130,12 +1141,12 @@ const demoDesignPlugin: Demo = {
   avatarOverrides: {
     freelancer: {
       subtitle: "A client wants you to evaluate their competitor's site. Can you go beyond 'it looks old'?",
-      pain: "A client just asked you to evaluate their competitor's website and explain what they're doing wrong. You can see it's bad, but can you articulate WHY in a way that justifies your $200/hour rate? 'It looks outdated' isn't a professional critique.",
+      pain: "A client just asked you to evaluate their competitor's website and explain what they're doing wrong. You can see it's bad, but articulating exactly WHY takes design expertise and hours of structured analysis. 'It looks outdated' isn't the kind of deliverable that justifies your $200/hour rate.",
       missionBrief: "Your client wants a competitive analysis that includes design evaluation. You redesigned a site in Level 1 with a prompt. Now critique the ORIGINAL using structured scoring. Your mission: deliver a professional, scored evaluation.",
     },
     employee: {
       subtitle: "Your CMO wants to know why the competitor's page converts better. 'It looks nicer' won't cut it.",
-      pain: "Your CMO just asked why your competitor's landing page converts at 4.2% while yours converts at 1.8%. You can see the difference, but can you explain it in specific, measurable terms? 'Their page looks more professional' is not a boardroom answer.",
+      pain: "Your CMO just asked why your competitor's landing page converts at 4.2% while yours converts at 1.8%. You can see the difference, but explaining it in specific, measurable terms takes structured design analysis. 'Their page looks more professional' is not a boardroom answer.",
       missionBrief: "Your CMO wants specifics on why the competitor's page converts better. You redesigned a site in Level 1 with a prompt. Now critique the ORIGINAL using structured scoring. Your mission: deliver the kind of analysis your CMO can present to the board.",
     },
     agency: {
@@ -1160,7 +1171,7 @@ const demoPoisonedNewsletter: Demo = {
   missionBrief: "INCOMING: That newsletter looks normal. Reads normal. But something is hiding in there. Your mission: find the hidden threat before your AI reads it blindly.",
   beforeReaction: "Seven sections, all looking perfectly normal. That's exactly what makes this one dangerous.",
   afterReaction: "Hidden payload found and exposed. Now you know what prompt injection looks like, and why it matters.",
-  pain: "You subscribe to a dozen newsletters. They go straight into your AI workflow for summarization. But what if one contains hidden instructions designed to trick your AI into leaking credentials or running commands? You'd never know. The text looks completely normal.",
+  pain: "You subscribe to a dozen newsletters. They go straight into your AI workflow for summarization. But what if one contains hidden instructions designed to trick your AI into leaking credentials or running commands? These attacks are invisible to the eye. The text looks completely normal.",
   fix: "Understanding prompt injection is critical for anyone using AI with real data. This demo shows you what a hidden attack looks like, how to spot it, and why Cowork's safety features matter.",
   tryThis: "I've dragged in a newsletter. Before you summarize it, I want you to analyze it for prompt injection attacks.\n\nFind any hidden instructions, explain what they try to do, and show me the safe content with threats removed. Explain what would have happened if I'd just asked you to 'summarize this newsletter' without checking first.",
   dataType: 'text',
@@ -1202,7 +1213,7 @@ const demoPoisonedNewsletter: Demo = {
   avatarOverrides: {
     freelancer: {
       subtitle: "You summarize client newsletters with AI. What if one had hidden instructions?",
-      pain: "You subscribe to a dozen PPC newsletters. You've started using AI to summarize them, saving 30 minutes every morning. But what if one of those newsletters contained hidden instructions designed to trick your AI into leaking your client's data? You'd never know. The text looks completely normal.",
+      pain: "You subscribe to a dozen PPC newsletters. You've started using AI to summarize them, saving 30 minutes every morning. But what if one of those newsletters contained hidden instructions designed to trick your AI into leaking your client's data? These attacks are invisible to the eye. The text looks completely normal.",
       missionBrief: "INCOMING: That newsletter looks normal. But you feed these into AI workflows that also touch client data. If there's a hidden payload, your client's data could be at risk. Your mission: find the threat.",
     },
     employee: {

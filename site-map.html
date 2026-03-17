@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8020skill Site Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #faf8f5; color: #2a2018; padding: 32px; line-height: 1.5; }
+  h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; color: #1a1008; }
+  .subtitle { font-size: 13px; color: #8b7b6a; margin-bottom: 32px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; padding: 16px; background: #fff; border: 1px solid #e8e0d4; border-radius: 2px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6b5b4a; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  .tree { position: relative; }
+
+  .node {
+    position: relative;
+    background: #fff;
+    border: 2px solid #d4cfc7;
+    border-radius: 2px;
+    padding: 14px 18px;
+    margin-bottom: 0;
+    max-width: 420px;
+  }
+  .node-url { font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: #8b5e3c; font-weight: 600; margin-bottom: 4px; }
+  .node-name { font-size: 15px; font-weight: 700; color: #1a1008; margin-bottom: 4px; }
+  .node-desc { font-size: 12px; color: #6b5b4a; margin-bottom: 8px; }
+  .node-actions { display: flex; flex-direction: column; gap: 4px; }
+  .action { font-size: 11px; display: flex; align-items: baseline; gap: 6px; }
+  .action-trigger { color: #8b5e3c; font-weight: 600; white-space: nowrap; }
+  .action-arrow { color: #c4a882; }
+  .action-target { color: #3a3028; }
+
+  .node.entry { border-color: #8b5e3c; border-width: 3px; }
+  .node.gated { border-color: #d97706; border-style: dashed; }
+  .node.info { border-color: #94a3b8; }
+  .node.game { border-color: #2563eb; }
+  .node.proof { border-color: #059669; }
+  .node.course-node { border-color: #7c3aed; }
+
+  .gate-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+  .gate-badge.open { background: #ecfdf5; color: #059669; }
+  .gate-badge.locked { background: #fef3c7; color: #d97706; }
+
+  .condition {
+    font-size: 11px;
+    color: #d97706;
+    font-style: italic;
+    margin-bottom: 6px;
+    padding: 4px 8px;
+    background: #fefce8;
+    border-left: 2px solid #d97706;
+  }
+
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8b5e3c;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8e0d4;
+  }
+
+  .flow-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .flow-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .flow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c4a882;
+    font-size: 18px;
+    padding: 0 4px;
+    align-self: center;
+  }
+
+  .state-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .state-table th { text-align: left; font-size: 11px; font-weight: 700; color: #8b5e3c; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 10px; border-bottom: 2px solid #e8e0d4; }
+  .state-table td { font-size: 12px; padding: 6px 10px; border-bottom: 1px solid #f0ebe4; color: #3a3028; }
+  .state-table tr:hover td { background: #faf6f1; }
+  .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; }
+
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .demo-card {
+    background: #fff;
+    border: 1px solid #e8e0d4;
+    border-radius: 2px;
+    padding: 10px 14px;
+  }
+  .demo-id { font-size: 11px; font-weight: 700; color: #8b5e3c; }
+  .demo-title { font-size: 13px; font-weight: 600; color: #1a1008; margin-bottom: 2px; }
+  .demo-meta { font-size: 11px; color: #8b7b6a; }
+
+  .avatar-split { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+  .avatar-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .avatar-tag.agency { background: #dbeafe; color: #2563eb; }
+  .avatar-tag.employee { background: #ccfbf1; color: #0d9488; }
+  .avatar-tag.freelancer { background: #ede9fe; color: #7c3aed; }
+  .avatar-tag.business { background: #dcfce7; color: #1b8c3a; }
+
+  .world-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-top: 8px; }
+  .world-card {
+    padding: 8px 12px;
+    border: 1px solid #e8e0d4;
+    border-radius: 2px;
+    background: #fff;
+    font-size: 12px;
+  }
+  .world-card .name { font-weight: 700; color: #1a1008; }
+  .world-card .unlock { font-size: 10px; color: #8b7b6a; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<h1>8020skill Site Navigation</h1>
+<p class="subtitle">Complete URL tree with gating, state, and user choices</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background: #8b5e3c;"></div> Entry point</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #059669;"></div> Proof pages (no login required)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #2563eb;"></div> Game pages (require avatar + world)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #7c3aed;"></div> Course pages</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #94a3b8;"></div> Info pages (always accessible)</div>
+  <div class="legend-item"><div class="legend-dot" style="border: 2px dashed #d97706; width: 8px; height: 8px;"></div> Gated (requires state)</div>
+</div>
+
+<!-- PRIMARY FLOW -->
+<div class="section">
+  <div class="section-title">Primary User Flow</div>
+
+  <div class="flow-group">
+    <div class="flow-row">
+      <div class="node entry">
+        <div class="node-url">/</div>
+        <div class="gate-badge open">No gate</div>
+        <div class="node-name">Home (Proof Landing)</div>
+        <div class="node-desc">Shows 3 proof-of-concept cards: Inbox, Website, Data. Each demonstrates Cowork vs ChatGPT.</div>
+        <div class="condition">If all 3 proofs completed: auto-redirect to /setup</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">Click proof card</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/proof/inbox, /proof/website, or /proof/data</span></div>
+          <div class="action"><span class="action-trigger">"Already have Cowork?"</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/setup (skips proofs)</span></div>
+        </div>
+      </div>
+
+      <div class="flow-connector">&rarr;</div>
+
+      <div class="node proof">
+        <div class="node-url">/proof/[type]</div>
+        <div class="gate-badge open">No gate</div>
+        <div class="node-name">Proof Page</div>
+        <div class="node-desc">Before/after comparison showing ChatGPT vs Cowork results. Three types: inbox, website, data.</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">Complete proof + pick avatar</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/setup</span></div>
+          <div class="action"><span class="action-trigger">Links to other proofs</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/proof/[other]</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="node entry" style="border-color: #059669;">
+        <div class="node-url">/setup</div>
+        <div class="gate-badge open">No gate</div>
+        <div class="node-name">Setup (Avatar + Path)</div>
+        <div class="node-desc">Two-step setup: choose avatar type, then choose standard (gallery) or game path.</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">Step 1: Pick avatar</span> <span class="action-arrow">&rarr;</span> <span class="action-target">Agency / Employee / Freelancer / Business</span></div>
+          <div class="action"><span class="action-trigger">Step 2a: "Keep it professional"</span> <span class="action-arrow">&rarr;</span> <span class="action-target">setWorld('gallery') &rarr; /play</span></div>
+          <div class="action"><span class="action-trigger">Step 2b: "Unlock the game"</span> <span class="action-arrow">&rarr;</span> <span class="action-target">setWorld('arcade') &rarr; /play</span></div>
+        </div>
+      </div>
+
+      <div class="flow-connector">&rarr;</div>
+
+      <div class="node game">
+        <div class="node-url">/play</div>
+        <div class="gate-badge locked">Requires: avatar + world</div>
+        <div class="node-name">Level Map</div>
+        <div class="node-desc">Grid of all 9 demos across 3 levels, styled per selected world. Shows completion state per demo.</div>
+        <div class="condition">If avatar or world not set: redirect to /</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">Click any demo</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/play/[id]</span></div>
+          <div class="action"><span class="action-trigger">All 9 demos complete</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/victory (auto)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="node game">
+        <div class="node-url">/play/[id]</div>
+        <div class="gate-badge locked">Requires: avatar + world</div>
+        <div class="node-name">Demo Detail</div>
+        <div class="node-desc">Full interactive demo. Briefing, data preview, AI execution, result display, try-it-yourself section.</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">Back to map</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/play</span></div>
+          <div class="action"><span class="action-trigger">Next demo (after complete)</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/play/[next-id]</span></div>
+          <div class="action"><span class="action-trigger">Level complete (all in level done)</span> <span class="action-arrow">&rarr;</span> <span class="action-target">celebration &rarr; /play</span></div>
+        </div>
+      </div>
+
+      <div class="flow-connector">&rarr;</div>
+
+      <div class="node game gated">
+        <div class="node-url">/victory</div>
+        <div class="gate-badge locked">Requires: avatar + world + all 9 demos done</div>
+        <div class="node-name">Victory Screen</div>
+        <div class="node-desc">Summary of time saved, stars earned, badges, bonus skills. Avatar-specific CTA.</div>
+        <div class="condition">If not all complete: redirect to /play</div>
+        <div class="node-actions">
+          <div class="action"><span class="action-trigger">CTA buttons</span> <span class="action-arrow">&rarr;</span> <span class="action-target">External (ads2ai.com, book call, etc.)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORLD CHOOSER -->
+<div class="section">
+  <div class="section-title">World Chooser</div>
+  <div class="flow-row">
+    <div class="node game gated">
+      <div class="node-url">/world</div>
+      <div class="gate-badge locked">Requires: avatar set</div>
+      <div class="node-name">World Chooser</div>
+      <div class="node-desc">Select game world/skin. Worlds unlock as levels are completed. Choosing a world routes to /play.</div>
+      <div class="condition">If avatar not set: redirect to /</div>
+      <div class="node-actions">
+        <div class="action"><span class="action-trigger">Click unlocked world</span> <span class="action-arrow">&rarr;</span> <span class="action-target">setWorld(id) &rarr; /play</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-grid">
+    <div class="world-card"><div class="name">arcade (Super Mario)</div><div class="unlock">Always unlocked</div></div>
+    <div class="world-card"><div class="name">gallery (Classic)</div><div class="unlock">Always available</div></div>
+    <div class="world-card"><div class="name">zelda (Legend of Zelda)</div><div class="unlock">Level 1 complete</div></div>
+    <div class="world-card"><div class="name">red-alert (Red Alert)</div><div class="unlock">Level 2 complete</div></div>
+    <div class="world-card"><div class="name">clair-obscur</div><div class="unlock">Level 3 complete</div></div>
+    <div class="world-card"><div class="name">tetris</div><div class="unlock">Level 3 complete</div></div>
+    <div class="world-card"><div class="name">elder-scrolls</div><div class="unlock">Level 3 complete</div></div>
+  </div>
+</div>
+
+<!-- COURSE -->
+<div class="section">
+  <div class="section-title">Course Pages</div>
+  <div class="flow-row" style="gap: 16px;">
+    <div class="node course-node">
+      <div class="node-url">/course</div>
+      <div class="gate-badge open">No gate</div>
+      <div class="node-name">Course Index</div>
+      <div class="node-desc">4 modules of Cowork lessons. Modules 1-2 always open. Modules 3-4 locked until Level 1 complete.</div>
+      <div class="node-actions">
+        <div class="action"><span class="action-trigger">Click lesson</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/course/[lesson-id]</span></div>
+      </div>
+    </div>
+
+    <div class="node course-node gated">
+      <div class="node-url">/course/[lesson]</div>
+      <div class="gate-badge locked">Modules 3-4: requires Level 1 complete</div>
+      <div class="node-name">Lesson Page</div>
+      <div class="node-desc">Markdown-rendered lesson content with images. Keyboard nav: arrows for prev/next, Esc for index.</div>
+      <div class="condition">Module 3+ locked: shows lock screen with "Play the game" button &rarr; /play</div>
+      <div class="node-actions">
+        <div class="action"><span class="action-trigger">Prev/Next arrows</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/course/[adjacent-lesson]</span></div>
+        <div class="action"><span class="action-trigger">Escape</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/course</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO PAGES -->
+<div class="section">
+  <div class="section-title">Info Pages (Always Accessible)</div>
+  <div class="flow-row" style="gap: 16px;">
+    <div class="node info">
+      <div class="node-url">/how-it-works</div>
+      <div class="gate-badge open">No gate</div>
+      <div class="node-name">How It Works</div>
+      <div class="node-desc">SST framework explanation. Context-aware: adapts copy based on whether user has played demos.</div>
+      <div class="node-actions">
+        <div class="action"><span class="action-trigger">"Play the demo"</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/</span></div>
+      </div>
+    </div>
+
+    <div class="node info">
+      <div class="node-url">/cowork</div>
+      <div class="gate-badge open">No gate</div>
+      <div class="node-name">Cowork Info</div>
+      <div class="node-desc">What Cowork is, how to get it, 3-step process cards.</div>
+      <div class="node-actions">
+        <div class="action"><span class="action-trigger">"Start Demo"</span> <span class="action-arrow">&rarr;</span> <span class="action-target">/</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEMO BREAKDOWN -->
+<div class="section">
+  <div class="section-title">Demo Breakdown by Level</div>
+
+  <h3 style="font-size: 13px; font-weight: 700; color: #059669; margin-bottom: 10px;">Level 1: "This Is Cowork" (no skills)</h3>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-id">Demo 1</div>
+      <div class="demo-title">My website is embarrassing</div>
+      <div class="demo-meta">Type: website. Drag: crappy-website HTML</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 2</div>
+      <div class="demo-title">50 emails by 9am Monday</div>
+      <div class="demo-meta">Type: email. Drag: inbox JSON (per avatar)</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 3</div>
+      <div class="demo-title">12 weeks of campaign data</div>
+      <div class="demo-meta">Type: data. Drag: campaign CSV (per avatar)</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 700; color: #2563eb; margin: 20px 0 10px;">Level 2: "Skills Change Everything" (downloadable skills)</h3>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-id">Demo 4</div>
+      <div class="demo-title">One blog post, zero social content</div>
+      <div class="demo-meta">Skill: content-repurposer. Drag: blog post MD</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 5</div>
+      <div class="demo-title">Meeting notes nobody acts on</div>
+      <div class="demo-meta">Skill: meeting-intelligence. Drag: meeting notes MD</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 6</div>
+      <div class="demo-title">2,000 search terms untouched</div>
+      <div class="demo-meta">Skill: search-term-analyzer. Drag: search terms CSV</div>
+      <div class="avatar-split">
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag employee">Employee</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 10</div>
+      <div class="demo-title">Same data, real math</div>
+      <div class="demo-meta">Skill: csv-analyzer. Drag: campaign CSV</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+  </div>
+  <p style="font-size: 11px; color: #d97706; margin-top: 8px; font-style: italic;">Avatar split: Freelancer/Employee see demos 4, 5, 6. Agency/Business see demos 4, 5, 10.</p>
+
+  <h3 style="font-size: 13px; font-weight: 700; color: #dc2626; margin: 20px 0 10px;">Level 3: "The Real World" (connectors, plugins, safety)</h3>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-id">Demo 7</div>
+      <div class="demo-title">Inbox + calendar don't talk</div>
+      <div class="demo-meta">Type: email. Drag: week-data JSON (per avatar)</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">Agency</span>
+        <span class="avatar-tag employee">Employee</span>
+        <span class="avatar-tag freelancer">Freelancer</span>
+        <span class="avatar-tag business">Business</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 8</div>
+      <div class="demo-title">Remember that terrible website?</div>
+      <div class="demo-meta">Type: design. Callback to Demo 1. Universal.</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">All</span>
+      </div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-id">Demo 9</div>
+      <div class="demo-title">Hidden payload in newsletter</div>
+      <div class="demo-meta">Type: security. Prompt injection lesson. Universal.</div>
+      <div class="avatar-split">
+        <span class="avatar-tag agency">All</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME STATE -->
+<div class="section">
+  <div class="section-title">Game State (localStorage)</div>
+  <table class="state-table">
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>Type</th>
+        <th>Set By</th>
+        <th>Used By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono">type</td>
+        <td>PlayerType | null</td>
+        <td>/setup (avatar selection)</td>
+        <td>Gates /play, /play/[id], /world, /victory. Determines demo content.</td>
+      </tr>
+      <tr>
+        <td class="mono">world</td>
+        <td>WorldId | null</td>
+        <td>/setup (path choice) or /world</td>
+        <td>Gates /play, /play/[id], /victory. Determines visual skin.</td>
+      </tr>
+      <tr>
+        <td class="mono">completed</td>
+        <td>Set&lt;number&gt;</td>
+        <td>/play/[id] (markComplete)</td>
+        <td>Level map states, level unlocking, world unlocking, victory gate.</td>
+      </tr>
+      <tr>
+        <td class="mono">skills</td>
+        <td>Set&lt;string&gt;</td>
+        <td>Auto on demo complete (L2)</td>
+        <td>Skill inventory panel in navbar.</td>
+      </tr>
+      <tr>
+        <td class="mono">unlockedWorlds</td>
+        <td>Set&lt;string&gt;</td>
+        <td>Auto on level complete</td>
+        <td>/world page gating. L1 done = zelda. L2 = red-alert. L3 = all.</td>
+      </tr>
+      <tr>
+        <td class="mono">completed-proofs</td>
+        <td>Set&lt;string&gt;</td>
+        <td>/ (proof landing), /proof/[type]</td>
+        <td>Home page auto-redirect. 3 proofs: inbox, website, data.</td>
+      </tr>
+      <tr>
+        <td class="mono">badges</td>
+        <td>Record&lt;string, number&gt;</td>
+        <td>Auto-earned on conditions</td>
+        <td>Victory screen. 8 badges: first-skill, skill-collector, speed-demon, explorer, level-up, full-clear, transformer, replay-master.</td>
+      </tr>
+      <tr>
+        <td class="mono">choiceScores</td>
+        <td>Record&lt;number, number&gt;</td>
+        <td>/play/[id] (player choices)</td>
+        <td>Star ratings (1-3 per demo). Victory screen total.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- GATING SUMMARY -->
+<div class="section">
+  <div class="section-title">Gating Summary</div>
+  <table class="state-table">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Gate</th>
+        <th>Fallback</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mono">/</td><td>None</td><td>Auto-redirect to /setup if all proofs done</td></tr>
+      <tr><td class="mono">/proof/[type]</td><td>None</td><td>404 if invalid type</td></tr>
+      <tr><td class="mono">/setup</td><td>None</td><td>Always accessible</td></tr>
+      <tr><td class="mono">/world</td><td>avatar set</td><td>Redirect to /</td></tr>
+      <tr><td class="mono">/play</td><td>avatar + world set</td><td>Redirect to /</td></tr>
+      <tr><td class="mono">/play/[id]</td><td>avatar + world set</td><td>Redirect to /</td></tr>
+      <tr><td class="mono">/victory</td><td>avatar + world + all 9 demos</td><td>Redirect to /play</td></tr>
+      <tr><td class="mono">/course</td><td>None</td><td>Always accessible</td></tr>
+      <tr><td class="mono">/course/[lesson]</td><td>Modules 3-4: Level 1 complete</td><td>Lock screen with "Play the game" &rarr; /play</td></tr>
+      <tr><td class="mono">/how-it-works</td><td>None</td><td>Always accessible</td></tr>
+      <tr><td class="mono">/cowork</td><td>None</td><td>Always accessible</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

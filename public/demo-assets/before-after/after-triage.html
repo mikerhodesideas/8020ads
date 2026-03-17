@@ -1,326 +1,900 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Inbox Triage Report</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
-        .report { max-width: 900px; margin: 0 auto; }
-        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
-        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-        .report-header p { color: #94a3b8; font-size: 14px; }
-        .header-stats { display: flex; gap: 32px; margin-top: 20px; }
-        .header-stat .val { font-size: 28px; font-weight: 700; }
-        .header-stat .lbl { font-size: 12px; color: #94a3b8; margin-top: 2px; }
-        .val-red { color: #ef4444; }
-        .val-amber { color: #f59e0b; }
-        .val-green { color: #22c55e; }
-        .val-gray { color: #64748b; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbox Triage - Craft</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400&family=Nunito+Sans:wght@300;400;500;600;700&display=swap');
 
-        /* Priority bar */
-        .priority-bar { display: flex; height: 6px; margin: 20px 0 4px; border-radius: 2px; overflow: hidden; }
-        .pb-red { background: #ef4444; }
-        .pb-amber { background: #f59e0b; }
-        .pb-green { background: #22c55e; }
-        .pb-gray { background: #cbd5e1; }
-        .priority-legend { display: flex; gap: 16px; font-size: 11px; color: #64748b; }
+  :root {
+    --display: 'Fraunces', Georgia, serif;
+    --ui: 'Nunito Sans', system-ui, sans-serif;
+    --paper: #F9F6F0;
+    --linen: #F0EBE1;
+    --warm-white: #FFFDF8;
+    --ink: #2C2418;
+    --brown: #6B5B4A;
+    --muted: #9C8E7E;
+    --red: #BF3B30;
+    --orange: #C97B2A;
+    --sage: #5B8A5A;
+    --stone: #A5A09A;
+  }
 
-        /* Cards */
-        .card { background: white; border: 1px solid #e2e8f0; margin-bottom: 12px; border-radius: 2px; overflow: hidden; }
-        .card-urgent { border-left: 4px solid #ef4444; }
-        .card-important { border-left: 4px solid #f59e0b; }
-        .card-normal { border-left: 4px solid #22c55e; }
-        .card-low { border-left: 4px solid #cbd5e1; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .card-body { padding: 16px 20px; }
-        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-        .card-from { font-weight: 700; font-size: 14px; }
-        .card-time { font-size: 12px; color: #94a3b8; }
-        .card-subject { font-size: 14px; color: #334155; margin-bottom: 8px; }
-        .card-summary { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 10px; }
-        .card-action { display: flex; gap: 8px; align-items: center; }
-        .action-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 2px; }
-        .tag-reply { background: #eff6ff; color: #2563eb; }
-        .tag-review { background: #fef3c7; color: #92400e; }
-        .tag-act { background: #fef2f2; color: #dc2626; }
-        .tag-file { background: #f0fdf4; color: #16a34a; }
-        .tag-skip { background: #f1f5f9; color: #64748b; }
-        .tag-schedule { background: #faf5ff; color: #7c3aed; }
-        .time-est { font-size: 11px; color: #94a3b8; margin-left: auto; }
+  body {
+    font-family: var(--ui);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4C9B8' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
 
-        .priority-label { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
-        .pl-urgent { background: #fef2f2; color: #dc2626; }
-        .pl-important { background: #fffbeb; color: #d97706; }
-        .pl-normal { background: #f0fdf4; color: #16a34a; }
-        .pl-low { background: #f1f5f9; color: #94a3b8; }
+  .page {
+    max-width: 820px;
+    margin: 0 0 0 auto;
+    padding: 20px 20px 80px 30px;
+  }
 
-        .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; padding: 12px 0 8px; }
+  /* ---- HEADER ---- */
+  .header {
+    margin-bottom: 44px;
+  }
 
-        .bottom-summary { background: #0f172a; color: white; padding: 24px; margin-top: 24px; border-radius: 2px; }
-        .bottom-summary h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-        .plan-steps { list-style: none; }
-        .plan-steps li { padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .plan-steps li:last-child { border-bottom: none; }
-        .step-num { background: #f59e0b; color: #0f172a; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; border-radius: 2px; flex-shrink: 0; }
-        .step-time { color: #94a3b8; font-size: 12px; margin-left: auto; }
-    </style>
+  .header-date {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: var(--display);
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 10px;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
+  .header-desc {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.6;
+  }
+
+  /* ---- OVERVIEW CARDS ---- */
+  .overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .ov-card {
+    background: var(--warm-white);
+    padding: 22px 20px;
+    border: 1px solid var(--linen);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ov-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+
+  .ov-card.ov-urgent::before { background: var(--red); }
+  .ov-card.ov-important::before { background: var(--orange); }
+  .ov-card.ov-rest::before { background: var(--sage); }
+
+  .ov-num {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .ov-urgent .ov-num { color: var(--red); }
+  .ov-important .ov-num { color: var(--orange); }
+  .ov-rest .ov-num { color: var(--sage); }
+
+  .ov-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .ov-detail {
+    font-size: 11px;
+    color: var(--stone);
+  }
+
+  /* ---- SUMMARY BAR ---- */
+  .summary-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 16px 24px;
+    margin-bottom: 40px;
+  }
+
+  .sb-total {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .sb-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--linen);
+    display: flex;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .sb-seg { height: 100%; }
+  .sb-red { background: var(--red); }
+  .sb-orange { background: var(--orange); }
+  .sb-sage { background: var(--sage); }
+  .sb-stone { background: var(--stone); }
+
+  .sb-time {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brown);
+    white-space: nowrap;
+  }
+
+  /* ---- FILTERS ---- */
+  .filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 36px;
+  }
+
+  .fbtn {
+    font-family: var(--ui);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border: 1.5px solid var(--linen);
+    background: transparent;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .fbtn:hover {
+    border-color: var(--brown);
+  }
+
+  .fbtn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ---- PRIORITY GROUPS ---- */
+  .pgroup { margin-bottom: 36px; }
+
+  .pgroup-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .pgroup-marker {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .pgroup-marker.red { background: var(--red); }
+  .pgroup-marker.orange { background: var(--orange); }
+  .pgroup-marker.sage { background: var(--sage); }
+  .pgroup-marker.stone { background: var(--stone); }
+
+  .pgroup-title {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .pgroup-line {
+    flex: 1;
+    height: 1px;
+    background: var(--linen);
+  }
+
+  .pgroup-hint {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ---- EMAIL CARDS ---- */
+  .ecard {
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    opacity: 0;
+    animation: slideIn 0.4s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ecard:nth-child(2) { animation-delay: 0.04s; }
+  .ecard:nth-child(3) { animation-delay: 0.08s; }
+  .ecard:nth-child(4) { animation-delay: 0.12s; }
+
+  .ecard:hover {
+    border-color: var(--brown);
+    box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
+  }
+
+  .ecard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .ecard.eu::before { background: var(--red); }
+  .ecard.ei::before { background: var(--orange); }
+  .ecard.en::before { background: var(--sage); }
+  .ecard.el::before { background: var(--stone); }
+
+  .ecard-inner {
+    padding: 18px 22px 18px 26px;
+  }
+
+  .ecard-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .ecard-sender {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .ecard-flag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid;
+  }
+
+  .flag-risk { color: var(--red); border-color: rgba(191,59,48,0.3); background: rgba(191,59,48,0.05); }
+  .flag-rev { color: var(--sage); border-color: rgba(91,138,90,0.3); background: rgba(91,138,90,0.05); }
+  .flag-opp { color: var(--orange); border-color: rgba(201,123,42,0.3); background: rgba(201,123,42,0.05); }
+
+  .ecard-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ecard-est {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brown);
+    background: var(--linen);
+    padding: 3px 10px;
+  }
+
+  .ecard-time {
+    font-size: 11px;
+    color: var(--stone);
+  }
+
+  .ecard-subj {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brown);
+    margin-bottom: 6px;
+  }
+
+  .ecard-summary {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--brown);
+    margin-bottom: 12px;
+  }
+
+  .ecard-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .etag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 14px;
+    background: var(--linen);
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+
+  .etag:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Expand */
+  .ecard-expand {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .ecard.open .ecard-expand {
+    max-height: 300px;
+  }
+
+  .ecard-expand-inner {
+    padding: 0 22px 18px 26px;
+    border-top: 1px dashed var(--linen);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+
+  .exp-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 8px;
+  }
+
+  .exp-body {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--brown);
+    font-style: italic;
+    padding-left: 16px;
+    border-left: 2px solid var(--linen);
+  }
+
+  .hidden { display: none !important; }
+
+  /* ---- ACTION PLAN ---- */
+  .action-plan {
+    margin-top: 48px;
+    padding-top: 40px;
+    border-top: 2px solid var(--linen);
+  }
+
+  .action-plan h2 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .action-plan-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--brown);
+    margin-bottom: 28px;
+  }
+
+  .ap-steps {
+    list-style: none;
+  }
+
+  .ap-step {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .ap-step:last-child { border-bottom: none; }
+
+  .ap-num {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .ap-num.red { color: var(--red); }
+  .ap-num.orange { color: var(--orange); }
+  .ap-num.sage { color: var(--sage); }
+  .ap-num.stone { color: var(--stone); }
+
+  .ap-text {
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+    line-height: 1.5;
+    color: var(--brown);
+  }
+
+  .ap-text strong {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .ap-dur {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ---- TIME VIZ ---- */
+  .time-viz {
+    margin-top: 40px;
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 32px;
+  }
+
+  .time-viz h3 {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .tv-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .tv-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    width: 110px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .tv-track {
+    flex: 1;
+    height: 24px;
+    background: var(--linen);
+    overflow: hidden;
+  }
+
+  .tv-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .tv-fill.manual {
+    background: var(--stone);
+    color: #fff;
+    width: 0;
+    animation: grow 1s ease 0.3s forwards;
+  }
+
+  .tv-fill.fast {
+    background: var(--red);
+    color: #fff;
+    width: 0;
+    animation: growTiny 0.6s ease 0.6s forwards;
+  }
+
+  @keyframes grow { to { width: 100%; } }
+  @keyframes growTiny { to { width: 4%; min-width: 42px; } }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    padding-top: 24px;
+    border-top: 2px solid var(--linen);
+  }
+
+  .footer-line {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .footer-line span {
+    color: var(--red);
+  }
+
+  .footer-note {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+</style>
 </head>
 <body>
-<div class="report">
+<div class="page">
 
-    <div class="report-header">
-        <h1>Monday Morning Inbox Triage</h1>
-        <p>12 emails analyzed and prioritized | Recommended processing order below</p>
-        <div class="header-stats">
-            <div class="header-stat">
-                <div class="val val-red">2</div>
-                <div class="lbl">Urgent</div>
-            </div>
-            <div class="header-stat">
-                <div class="val val-amber">3</div>
-                <div class="lbl">Important</div>
-            </div>
-            <div class="header-stat">
-                <div class="val val-green">3</div>
-                <div class="lbl">Normal</div>
-            </div>
-            <div class="header-stat">
-                <div class="val val-gray">4</div>
-                <div class="lbl">Low / Auto</div>
-            </div>
-        </div>
-        <div class="priority-bar">
-            <div class="pb-red" style="width:17%"></div>
-            <div class="pb-amber" style="width:25%"></div>
-            <div class="pb-green" style="width:25%"></div>
-            <div class="pb-gray" style="width:33%"></div>
-        </div>
-        <div class="priority-legend">
-            <span>&#9632; Urgent (act now)</span>
-            <span>&#9632; Important (today)</span>
-            <span>&#9632; Normal (this week)</span>
-            <span>&#9632; Low (batch/skip)</span>
-        </div>
+  <header class="header">
+    <div class="header-date">Monday, March 5, 2026</div>
+    <h1>Morning Inbox Triage</h1>
+    <p class="header-desc">10 emails read, analyzed, and action-planned. Here's what needs your attention, in order of what matters most.</p>
+  </header>
+
+  <div class="overview">
+    <div class="ov-card ov-urgent">
+      <div class="ov-num">2</div>
+      <div class="ov-label">Urgent</div>
+      <div class="ov-detail">Handle immediately</div>
+    </div>
+    <div class="ov-card ov-important">
+      <div class="ov-num">3</div>
+      <div class="ov-label">Important</div>
+      <div class="ov-detail">Handle today</div>
+    </div>
+    <div class="ov-card ov-rest">
+      <div class="ov-num">5</div>
+      <div class="ov-label">Normal + Low</div>
+      <div class="ov-detail">This week or skip</div>
+    </div>
+  </div>
+
+  <div class="summary-bar">
+    <span class="sb-total">10 emails</span>
+    <div class="sb-bar-wrap">
+      <div class="sb-seg sb-red" style="width:20%"></div>
+      <div class="sb-seg sb-orange" style="width:30%"></div>
+      <div class="sb-seg sb-sage" style="width:20%"></div>
+      <div class="sb-seg sb-stone" style="width:30%"></div>
+    </div>
+    <span class="sb-time">~52 min to process</span>
+  </div>
+
+  <div class="filters">
+    <button class="fbtn active" onclick="doFilter('all',this)">All</button>
+    <button class="fbtn" onclick="doFilter('urgent',this)">Urgent</button>
+    <button class="fbtn" onclick="doFilter('important',this)">Important</button>
+    <button class="fbtn" onclick="doFilter('normal',this)">Normal</button>
+    <button class="fbtn" onclick="doFilter('low',this)">Low</button>
+  </div>
+
+  <!-- URGENT -->
+  <div class="pgroup" data-section="urgent">
+    <div class="pgroup-head">
+      <div class="pgroup-marker red"></div>
+      <div class="pgroup-title">Urgent</div>
+      <div class="pgroup-line"></div>
+      <div class="pgroup-hint">Handle immediately</div>
     </div>
 
-    <!-- URGENT -->
-    <div class="section-label" style="color:#ef4444;">Urgent - Handle First</div>
-
-    <div class="card card-urgent">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Tom Bradley</span><span class="priority-label pl-urgent">URGENT</span></div>
-                <div class="card-time">Today 6:58am</div>
-            </div>
-            <div class="card-subject"><strong>Urgent: Website is down</strong></div>
-            <div class="card-summary">Production website outage reported. Tom flagged client-facing pages returning 503 errors since ~6:30am. This is revenue-impacting and customer-visible. Needs immediate investigation.</div>
-            <div class="card-action">
-                <span class="action-tag tag-act">Investigate now</span>
-                <span class="action-tag tag-reply">Reply to Tom</span>
-                <span class="time-est">~15 min to acknowledge + escalate</span>
-            </div>
+    <div class="ecard eu" data-priority="urgent" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Bruce Patterson</span>
+          <span class="ecard-flag flag-risk">Revenue at risk</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~10 min</span>
+            <span class="ecard-time">7:42 AM</span>
+          </div>
         </div>
-    </div>
-
-    <div class="card card-urgent">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Mike Johnson (Acme Corp)</span><span class="priority-label pl-urgent">URGENT</span></div>
-                <div class="card-time">Today 8:15am</div>
-            </div>
-            <div class="card-subject"><strong>RE: Contract Renewal Discussion</strong></div>
-            <div class="card-summary">Client contract renewal thread. Acme Corp is a top-tier client ($54k ARR). Mike is asking for updated pricing before their board meeting this Wednesday. Missing this deadline risks losing the renewal.</div>
-            <div class="card-action">
-                <span class="action-tag tag-reply">Reply with pricing</span>
-                <span class="action-tag tag-review">Review contract terms</span>
-                <span class="time-est">~20 min to draft proposal</span>
-            </div>
+        <div class="ecard-subj">URGENT - Google Ads account suspended??</div>
+        <div class="ecard-summary">Client's Google Ads account is suspended during their busiest season. All ads offline. Check account status, identify suspension reason, call Bruce back immediately.</div>
+        <div class="ecard-tags">
+          <span class="etag">Check account NOW</span>
+          <span class="etag">Call Bruce</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Hey, just logged in and it says our account has been suspended. Can't see any ads running. This is our busiest season for callouts - we need this fixed TODAY. Can you call me ASAP? Bruce</div>
+      </div></div>
     </div>
 
-    <!-- IMPORTANT -->
-    <div class="section-label" style="color:#d97706;">Important - Handle Today</div>
-
-    <div class="card card-important">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Sarah Chen</span><span class="priority-label pl-important">IMPORTANT</span></div>
-                <div class="card-time">Today 8:42am</div>
-            </div>
-            <div class="card-subject"><strong>Q1 Budget Review Meeting - Need Your Input</strong></div>
-            <div class="card-summary">Sarah needs your department's Q1 budget figures for a review meeting tomorrow at 2pm. She's compiling the deck and needs numbers by end of day. Internal but time-sensitive.</div>
-            <div class="card-action">
-                <span class="action-tag tag-reply">Reply with figures</span>
-                <span class="time-est">~30 min to pull data + reply</span>
-            </div>
+    <div class="ecard eu" data-priority="urgent" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Stripe</span>
+          <span class="ecard-flag flag-risk">Payment risk</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~5 min</span>
+            <span class="ecard-time">6:30 AM</span>
+          </div>
         </div>
-    </div>
-
-    <div class="card card-important">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">David Park</span><span class="priority-label pl-important">IMPORTANT</span></div>
-                <div class="card-time">Sun 11:20pm</div>
-            </div>
-            <div class="card-subject"><strong>Proposal Draft - Ready for Review</strong></div>
-            <div class="card-summary">David completed the proposal for the Henderson account. Needs your review and sign-off before sending to the client. He mentioned they're expecting it by Wednesday. Review today to stay ahead.</div>
-            <div class="card-action">
-                <span class="action-tag tag-review">Review document</span>
-                <span class="action-tag tag-reply">Send feedback</span>
-                <span class="time-est">~25 min to review + annotate</span>
-            </div>
+        <div class="ecard-subj">Important: Action required on your account</div>
+        <div class="ecard-summary">Stripe needs business verification within 7 days or payments get restricted. This is your payment processor. Complete verification today.</div>
+        <div class="ecard-tags">
+          <span class="etag">Verify account</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">We need you to verify your business information to continue processing payments. Failure to complete this within 7 days may result in your account being restricted. Please log in to your Stripe dashboard to complete verification.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- IMPORTANT -->
+  <div class="pgroup" data-section="important">
+    <div class="pgroup-head">
+      <div class="pgroup-marker orange"></div>
+      <div class="pgroup-title">Important</div>
+      <div class="pgroup-line"></div>
+      <div class="pgroup-hint">Handle today</div>
     </div>
 
-    <div class="card card-important">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Karen Wells (Pinnacle Inc)</span><span class="priority-label pl-important">IMPORTANT</span></div>
-                <div class="card-time">Sat 3:15pm</div>
-            </div>
-            <div class="card-subject"><strong>Partnership Opportunity - Let's Chat</strong></div>
-            <div class="card-summary">Inbound partnership enquiry from Pinnacle Inc (mid-market SaaS, ~200 employees). Karen is VP of Marketing. Potential channel partnership. Worth a 15-minute call to explore fit.</div>
-            <div class="card-action">
-                <span class="action-tag tag-reply">Reply + suggest time</span>
-                <span class="action-tag tag-schedule">Book call</span>
-                <span class="time-est">~5 min to reply</span>
-            </div>
+    <div class="ecard ei" data-priority="important" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Helen Byrne</span>
+          <span class="ecard-flag flag-rev">New revenue</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~10 min</span>
+            <span class="ecard-time">9:15 AM</span>
+          </div>
         </div>
-    </div>
-
-    <!-- NORMAL -->
-    <div class="section-label" style="color:#22c55e;">Normal - This Week</div>
-
-    <div class="card card-normal">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Jira</span><span class="priority-label pl-normal">NORMAL</span></div>
-                <div class="card-time">Sun 4:30pm</div>
-            </div>
-            <div class="card-subject"><strong>[PROJ-234] Bug assigned to you</strong></div>
-            <div class="card-summary">Medium-priority bug in the dashboard reporting module. User-reported: export CSV generates incorrect date headers. Not blocking but affects reporting accuracy.</div>
-            <div class="card-action">
-                <span class="action-tag tag-review">Triage in Jira</span>
-                <span class="time-est">~5 min to triage</span>
-            </div>
+        <div class="ecard-subj">Re: Google Ads proposal - decision made</div>
+        <div class="ecard-summary">New client confirmed. Helen's team approved the $3,000/month proposal and wants a kick-off call this week. Reply quickly while enthusiasm is high.</div>
+        <div class="ecard-tags">
+          <span class="etag">Reply + propose times</span>
+          <span class="etag">Book kick-off call</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Hi, thanks for the proposal. We've had a chance to review it with our management team. We'd like to go ahead! Can we set up a kick-off call this week? Our budget is confirmed at $3,000/month. Excited to get started - Helen</div>
+      </div></div>
     </div>
 
-    <div class="card card-normal">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Calendly</span><span class="priority-label pl-normal">NORMAL</span></div>
-                <div class="card-time">Sat 11:00am</div>
-            </div>
-            <div class="card-subject"><strong>New booking: Strategy Call with Lisa Tran</strong></div>
-            <div class="card-summary">Strategy call booked for Thursday 10am. Lisa Tran, Operations Manager at GreenLeaf Co. Prep needed: review their current setup and recent support tickets before the call.</div>
-            <div class="card-action">
-                <span class="action-tag tag-schedule">Add prep block Wed PM</span>
-                <span class="action-tag tag-file">File for Thursday</span>
-                <span class="time-est">~2 min to note</span>
-            </div>
+    <div class="ecard ei" data-priority="important" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Sarah Chen</span>
+          <span class="ecard-flag flag-opp">Client concern</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~15 min</span>
+            <span class="ecard-time">8:30 AM</span>
+          </div>
         </div>
-    </div>
-
-    <div class="card card-normal">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">Stripe</span><span class="priority-label pl-normal">NORMAL</span></div>
-                <div class="card-time">Fri 6:30pm</div>
-            </div>
-            <div class="card-subject"><strong>Payment received: $4,500.00</strong></div>
-            <div class="card-summary">Payment from Henderson Group for February retainer. Confirms they're paid up. No action needed unless you want to send a thank-you or check it posted to accounting.</div>
-            <div class="card-action">
-                <span class="action-tag tag-file">File to accounting</span>
-                <span class="time-est">~1 min</span>
-            </div>
+        <div class="ecard-subj">Numbers looking weird this week</div>
+        <div class="ecard-summary">Client worried about low conversions. Could be tracking or real performance decline. Check account data before replying so you explain what's actually happening.</div>
+        <div class="ecard-tags">
+          <span class="etag">Check account data</span>
+          <span class="etag">Reply with explanation</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Hi, I was looking at our Google Ads dashboard and the conversion numbers look really low this week compared to last week. Like really low. Is something wrong or is it a tracking issue? I'm a bit worried. Thanks Sarah</div>
+      </div></div>
     </div>
 
-    <!-- LOW -->
-    <div class="section-label" style="color:#94a3b8;">Low Priority - Batch or Skip</div>
-
-    <div class="card card-low">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">AWS</span><span class="priority-label pl-low">LOW</span></div>
-                <div class="card-time">Today 7:12am</div>
-            </div>
-            <div class="card-subject">Your January Invoice is Ready</div>
-            <div class="card-summary">Monthly AWS bill. Forward to accounting for processing. No anomalies expected unless infrastructure costs spiked.</div>
-            <div class="card-action">
-                <span class="action-tag tag-file">Forward to accounting</span>
-                <span class="time-est">~1 min</span>
-            </div>
+    <div class="ecard ei" data-priority="important" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Raj Patel</span>
+          <span class="ecard-flag flag-rev">Consultation opp</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~5 min</span>
+            <span class="ecard-time">10:00 AM</span>
+          </div>
         </div>
-    </div>
-
-    <div class="card card-low">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">HR Department</span><span class="priority-label pl-low">LOW</span></div>
-                <div class="card-time">Today 6:45am</div>
-            </div>
-            <div class="card-subject">Reminder: Submit Your Timesheet</div>
-            <div class="card-summary">Weekly timesheet reminder. Due by Friday. Add to your Friday afternoon routine. Takes 5 minutes.</div>
-            <div class="card-action">
-                <span class="action-tag tag-schedule">Schedule for Friday</span>
-                <span class="action-tag tag-skip">Archive</span>
-                <span class="time-est">~0 min now</span>
-            </div>
+        <div class="ecard-subj">Following up on our coffee chat</div>
+        <div class="ecard-summary">Warm lead from January. Raj runs a digital agency and wants to discuss the brain system for his team. Offering to pay for consultation. Reply today.</div>
+        <div class="ecard-tags">
+          <span class="etag">Reply + suggest time</span>
+          <span class="etag">Book call</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Hey Mike, just circling back. We spoke in January about the brain system for my team. I've been thinking about it and I'd like to have a proper conversation. Would you be up for a call this week? Happy to pay for a consultation session if that's how you work. - Raj</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- NORMAL -->
+  <div class="pgroup" data-section="normal">
+    <div class="pgroup-head">
+      <div class="pgroup-marker sage"></div>
+      <div class="pgroup-title">Normal</div>
+      <div class="pgroup-line"></div>
+      <div class="pgroup-hint">This week</div>
     </div>
 
-    <div class="card card-low">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">LinkedIn</span><span class="priority-label pl-low">LOW</span></div>
-                <div class="card-time">Today 7:30am</div>
-            </div>
-            <div class="card-subject">You have 3 new connection requests</div>
-            <div class="card-summary">Automated notification. Batch-process LinkedIn during a low-energy slot. Not time-sensitive.</div>
-            <div class="card-action">
-                <span class="action-tag tag-skip">Batch later</span>
-                <span class="time-est">~0 min now</span>
-            </div>
+    <div class="ecard en" data-priority="normal" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">James Thornton</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~2 min</span>
+            <span class="ecard-time">7:00 AM</span>
+          </div>
         </div>
-    </div>
-
-    <div class="card card-low">
-        <div class="card-body">
-            <div class="card-top">
-                <div><span class="card-from">MarketingBrew Newsletter</span><span class="priority-label pl-low">LOW</span></div>
-                <div class="card-time">Sun 10:00pm</div>
-            </div>
-            <div class="card-subject">This week in marketing</div>
-            <div class="card-summary">Industry newsletter. Read during a break or commute. No action required.</div>
-            <div class="card-action">
-                <span class="action-tag tag-skip">Read later</span>
-                <span class="time-est">~0 min now</span>
-            </div>
+        <div class="ecard-subj">Went with another agency</div>
+        <div class="ecard-summary">Lost deal. James chose a local agency. Send a brief, gracious reply. Keep the door open. Log as closed-lost.</div>
+        <div class="ecard-tags">
+          <span class="etag">Send gracious reply</span>
+          <span class="etag">Log in CRM</span>
         </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Hi Mike, just wanted to let you know we decided to go with another agency in the end. No reflection on your proposal - just went with someone local we know. Cheers, James</div>
+      </div></div>
     </div>
 
-    <!-- Recommended plan -->
-    <div class="bottom-summary">
-        <h3>Recommended Processing Order</h3>
-        <p style="color:#94a3b8;font-size:13px;margin-bottom:16px;">Estimated total time: 1 hour 44 minutes. Start with urgent, batch the rest.</p>
-        <ol class="plan-steps">
-            <li><span class="step-num">1</span> Reply to Tom Bradley re: website outage (acknowledge + investigate) <span class="step-time">15 min</span></li>
-            <li><span class="step-num">2</span> Reply to Mike Johnson with contract renewal pricing <span class="step-time">20 min</span></li>
-            <li><span class="step-num">3</span> Reply to Sarah Chen with Q1 budget figures <span class="step-time">30 min</span></li>
-            <li><span class="step-num">4</span> Review David Park's proposal draft <span class="step-time">25 min</span></li>
-            <li><span class="step-num">5</span> Reply to Karen Wells, suggest partnership call <span class="step-time">5 min</span></li>
-            <li><span class="step-num">6</span> Quick batch: triage Jira bug, note Calendly call, file Stripe + AWS <span class="step-time">9 min</span></li>
-            <li><span class="step-num">7</span> Archive: LinkedIn, Newsletter, HR reminder (handle later) <span class="step-time">0 min</span></li>
-        </ol>
+    <div class="ecard en" data-priority="normal" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Shopify</span>
+          <div class="ecard-right">
+            <span class="ecard-est">~1 min</span>
+            <span class="ecard-time">6:00 AM</span>
+          </div>
+        </div>
+        <div class="ecard-subj">Your March invoice is ready</div>
+        <div class="ecard-summary">Monthly Shopify invoice, $79 AUD. File for records.</div>
+        <div class="ecard-tags">
+          <span class="etag">File for records</span>
+        </div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Your Shopify invoice for March 2026 is ready. Total: $79.00 AUD. View invoice in your admin.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- LOW -->
+  <div class="pgroup" data-section="low">
+    <div class="pgroup-head">
+      <div class="pgroup-marker stone"></div>
+      <div class="pgroup-title">Low Priority</div>
+      <div class="pgroup-line"></div>
+      <div class="pgroup-hint">Batch or skip</div>
     </div>
 
-    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
-        Generated by Inbox Commander Skill | 12 emails triaged in 8 seconds
+    <div class="ecard el" data-priority="low" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">Search Engine Land</span>
+          <div class="ecard-right"><span class="ecard-time">5:30 AM</span></div>
+        </div>
+        <div class="ecard-subj">Google's March algorithm update: what you need to know</div>
+        <div class="ecard-summary">Industry newsletter. Mentions PMax reporting changes worth noting. Skim during a break.</div>
+        <div class="ecard-tags"><span class="etag">Read later</span></div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">This week in search: Google's latest core update is rolling out. Early signals suggest sites with thin AI content are seeing ranking drops. Plus: new PMax reporting features, Smart Bidding changes, and more.</div>
+      </div></div>
     </div>
+
+    <div class="ecard el" data-priority="low" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">GoDaddy</span>
+          <div class="ecard-right"><span class="ecard-time">4:00 AM</span></div>
+        </div>
+        <div class="ecard-subj">Flash sale - domains from $0.99!</div>
+        <div class="ecard-summary">Promotional email. Archive.</div>
+        <div class="ecard-tags"><span class="etag">Archive</span></div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">Don't miss our biggest domain sale of the year. .com domains from $0.99 for the first year. Sale ends midnight tonight!</div>
+      </div></div>
+    </div>
+
+    <div class="ecard el" data-priority="low" onclick="tog(this)">
+      <div class="ecard-inner">
+        <div class="ecard-top">
+          <span class="ecard-sender">LinkedIn</span>
+          <div class="ecard-right"><span class="ecard-time">9:00 AM</span></div>
+        </div>
+        <div class="ecard-subj">You have 14 new notifications</div>
+        <div class="ecard-summary">Automated notification. Check during a low-energy slot or skip.</div>
+        <div class="ecard-tags"><span class="etag">Batch later</span></div>
+      </div>
+      <div class="ecard-expand"><div class="ecard-expand-inner">
+        <div class="exp-label">Original email</div>
+        <div class="exp-body">You have 14 new notifications on LinkedIn. See what's new in your network.</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ACTION PLAN -->
+  <div class="action-plan">
+    <h2>Your Processing Order</h2>
+    <p class="action-plan-sub">Work through these in sequence. Total estimated time: 52 minutes.</p>
+
+    <ol class="ap-steps">
+      <li class="ap-step"><span class="ap-num red">1</span><span class="ap-text"><strong>Bruce Patterson</strong> &mdash; Check suspended Google Ads account, call him back. Active revenue loss.</span><span class="ap-dur">10 min</span></li>
+      <li class="ap-step"><span class="ap-num red">2</span><span class="ap-text"><strong>Stripe</strong> &mdash; Complete business verification before account gets restricted.</span><span class="ap-dur">5 min</span></li>
+      <li class="ap-step"><span class="ap-num orange">3</span><span class="ap-text"><strong>Helen Byrne</strong> &mdash; Reply to new client ($3k/mo). Book kick-off call.</span><span class="ap-dur">10 min</span></li>
+      <li class="ap-step"><span class="ap-num orange">4</span><span class="ap-text"><strong>Sarah Chen</strong> &mdash; Check conversion data, reply with explanation.</span><span class="ap-dur">15 min</span></li>
+      <li class="ap-step"><span class="ap-num orange">5</span><span class="ap-text"><strong>Raj Patel</strong> &mdash; Warm lead. Reply and suggest call time.</span><span class="ap-dur">5 min</span></li>
+      <li class="ap-step"><span class="ap-num sage">6</span><span class="ap-text"><strong>Quick batch</strong> &mdash; Reply to James, file Shopify invoice.</span><span class="ap-dur">3 min</span></li>
+      <li class="ap-step"><span class="ap-num stone">7</span><span class="ap-text"><strong>Skip</strong> &mdash; LinkedIn, GoDaddy, Search Engine Land.</span><span class="ap-dur">0 min</span></li>
+    </ol>
+  </div>
+
+  <div class="time-viz">
+    <h3>Time Saved</h3>
+    <div class="tv-row">
+      <span class="tv-label">Reading manually</span>
+      <div class="tv-track"><div class="tv-fill manual">~20 minutes</div></div>
+    </div>
+    <div class="tv-row">
+      <span class="tv-label">AI triage</span>
+      <div class="tv-track"><div class="tv-fill fast">8s</div></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-line">10 emails triaged in <span>8 seconds</span></div>
+    <div class="footer-note">Inbox Commander Skill</div>
+  </footer>
 
 </div>
+
+<script>
+function doFilter(p, btn) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ecard').forEach(e => e.classList.toggle('hidden', p !== 'all' && e.dataset.priority !== p));
+  document.querySelectorAll('.pgroup').forEach(s => s.classList.toggle('hidden', p !== 'all' && s.dataset.section !== p));
+}
+function tog(el) { el.classList.toggle('open'); }
+</script>
 </body>
 </html>

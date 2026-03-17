@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Marketing Intelligence Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; }
+        .dash { max-width: 920px; margin: 0 auto; padding: 24px; }
+        .dash-header { background: #0f172a; color: white; padding: 28px 32px; margin-bottom: 20px; }
+        .dash-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+        .dash-header p { color: #94a3b8; font-size: 13px; }
+        .dash-header .subtitle { display: flex; gap: 24px; margin-top: 14px; }
+        .dash-header .stat { text-align: center; }
+        .dash-header .stat .val { font-size: 26px; font-weight: 700; }
+        .dash-header .stat .lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        .val-green { color: #22c55e; }
+        .val-amber { color: #f59e0b; }
+        .val-red { color: #ef4444; }
+
+        .tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
+        .tab { padding: 10px 20px; font-size: 13px; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+        .tab:hover { color: #1a1a2e; }
+        .tab.active { color: #D64C00; border-bottom-color: #D64C00; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .card { background: white; border: 1px solid #e2e8f0; padding: 20px; }
+        .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 8px; }
+        .card .big { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+        .card .change { font-size: 12px; margin-top: 4px; }
+        .card .change.up { color: #22c55e; }
+        .card .change.down { color: #ef4444; }
+
+        .chart-card { background: white; border: 1px solid #e2e8f0; padding: 20px; margin-bottom: 16px; }
+        .chart-card h3 { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; }
+        .chart-wrap { height: 220px; position: relative; }
+
+        .channel-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .channel-row:last-child { border-bottom: none; }
+        .channel-name { width: 100px; font-size: 13px; font-weight: 600; color: #1a1a2e; }
+        .channel-bar-wrap { flex: 1; height: 8px; background: #f1f5f9; position: relative; }
+        .channel-bar { height: 100%; transition: width 0.5s; }
+        .channel-stats { display: flex; gap: 20px; min-width: 200px; }
+        .channel-stats span { font-size: 12px; color: #64748b; }
+        .channel-stats .val { font-weight: 600; color: #1a1a2e; }
+
+        .traffic-light { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+        .tl-green { background: #22c55e; }
+        .tl-amber { background: #f59e0b; }
+        .tl-red { background: #ef4444; }
+
+        .insight-card { background: #fffbeb; border: 1px solid #fde68a; padding: 16px 20px; margin-bottom: 12px; }
+        .insight-card .insight-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #D64C00; margin-bottom: 6px; }
+        .insight-card p { font-size: 14px; color: #1a1a2e; line-height: 1.5; }
+        .insight-card .evidence { font-size: 12px; color: #64748b; margin-top: 6px; font-style: italic; }
+
+        .insight-highlight { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border: none; padding: 24px; margin-bottom: 12px; }
+        .insight-highlight .insight-label { color: #f59e0b; }
+        .insight-highlight p { color: #e2e8f0; }
+        .insight-highlight .evidence { color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="dash">
+        <div class="dash-header">
+            <h1>Marketing Intelligence Report</h1>
+            <p>Cross-file analysis of marketing-spend.csv, lead-pipeline.csv, closed-deals.csv</p>
+            <div class="subtitle">
+                <div class="stat"><div class="val val-green">$487K</div><div class="lbl">Total Spend</div></div>
+                <div class="stat"><div class="val val-green">$2.14M</div><div class="lbl">Revenue</div></div>
+                <div class="stat"><div class="val val-green">4.4x</div><div class="lbl">ROAS</div></div>
+                <div class="stat"><div class="val val-amber">2,847</div><div class="lbl">Leads</div></div>
+                <div class="stat"><div class="val val-green">18.3%</div><div class="lbl">Close Rate</div></div>
+                <div class="stat"><div class="val val-green">$4,112</div><div class="lbl">Avg Deal</div></div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)">Overview</div>
+            <div class="tab" onclick="switchTab(1)">Channel Deep-Dive</div>
+            <div class="tab" onclick="switchTab(2)">Hidden Connections</div>
+        </div>
+
+        <!-- Tab 1: Overview -->
+        <div class="tab-content active" id="tab-0">
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Best Channel (ROAS)</h3>
+                    <div class="big">Email</div>
+                    <div class="change up">8.2x return on spend</div>
+                </div>
+                <div class="card">
+                    <h3>Fastest Growing</h3>
+                    <div class="big">Events</div>
+                    <div class="change up">+41% QoQ lead growth</div>
+                </div>
+                <div class="card">
+                    <h3>Needs Attention</h3>
+                    <div class="big">Google Ads</div>
+                    <div class="change down">Diminishing returns above $14K/mo</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Monthly Revenue vs Spend</h3>
+                <div class="chart-wrap"><canvas id="overviewChart"></canvas></div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Channel Health</h3>
+                <div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-amber"></span>Google</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:65%;background:#f59e0b"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">3.8x</span></span><span>Leads <span class="val">892</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Meta</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:70%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">4.1x</span></span><span>Leads <span class="val">634</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Email</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:95%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">8.2x</span></span><span>Leads <span class="val">521</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Events</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:80%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">5.7x</span></span><span>Leads <span class="val">312</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-amber"></span>Content</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:55%;background:#f59e0b"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">3.2x</span></span><span>Leads <span class="val">298</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Referral</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:75%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">6.1x</span></span><span>Leads <span class="val">190</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Channel Deep-Dive -->
+        <div class="tab-content" id="tab-1">
+            <div class="chart-card">
+                <h3>Spend vs Revenue by Channel</h3>
+                <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
+            </div>
+
+            <div class="grid-2">
+                <div class="chart-card">
+                    <h3>Lead Source Distribution</h3>
+                    <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Cost Per Lead by Channel</h3>
+                    <div class="chart-wrap"><canvas id="cplChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Google Ads: Diminishing Returns Detected</h3>
+                <p style="font-size:13px;color:#64748b;margin-bottom:16px;">Spend above $14,000/month shows declining marginal returns. Months where Google Ads exceeded this threshold produced 23% fewer leads per dollar.</p>
+                <div class="chart-wrap"><canvas id="diminishingChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Hidden Connections -->
+        <div class="tab-content" id="tab-2">
+            <div class="insight-highlight">
+                <div class="insight-label">Cross-File Insight #1</div>
+                <p>Email spend dropped 40% in November, but email-sourced revenue held steady for 2 months before declining in January. This suggests a 60-day lag between email investment and revenue impact.</p>
+                <div class="evidence">Source: marketing-spend.csv (Nov spend: $2,100 vs avg $3,500) cross-referenced with closed-deals.csv (email-attributed revenue Nov-Jan)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #2</div>
+                <p>Customers acquired through Events have 2.3x higher lifetime value than paid acquisition channels. Event leads close at $9,420 average deal size vs $4,112 overall average.</p>
+                <div class="evidence">Source: closed-deals.csv (deal values filtered by source) cross-referenced with lead-pipeline.csv (source attribution)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #3</div>
+                <p>Your highest-ROI month wasn't your highest-spend month. September (ROAS 5.8x) followed your August conference sponsorship. The conference created a pipeline that converted at 2x the normal rate.</p>
+                <div class="evidence">Source: marketing-spend.csv (Aug events: $12,000) cross-referenced with lead-pipeline.csv (Sep conversion rate: 34% vs avg 18.3%)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #4</div>
+                <p>Google Ads shows diminishing returns above $14K/month. Months where spend exceeded this threshold produced 23% fewer leads per dollar, while the excess budget would have generated 3.1x more leads if allocated to Email + Events.</p>
+                <div class="evidence">Source: marketing-spend.csv (Google monthly spend) cross-referenced with lead-pipeline.csv (Google monthly leads) - correlation analysis</div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Revenue Impact Timeline: Email Spend Cut</h3>
+                <p style="font-size:13px;color:#64748b;margin-bottom:16px;">The November email budget cut didn't show revenue impact until January, revealing a hidden 60-day lag.</p>
+                <div class="chart-wrap"><canvas id="lagChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(idx) {
+            document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+            document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+        }
+
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        // Overview Chart
+        new Chart(document.getElementById('overviewChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Revenue', data: [156,162,171,178,185,192,201,218,234,221,208,198], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.1)', fill: true, tension: 0.3, pointRadius: 3 },
+                    { label: 'Spend', data: [38,39,40,41,42,41,43,48,44,42,36,38], borderColor: '#94a3b8', backgroundColor: 'rgba(148,163,184,0.1)', fill: true, tension: 0.3, pointRadius: 3 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v + 'K' } } },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } }
+            }
+        });
+
+        // Scatter Chart
+        new Chart(document.getElementById('scatterChart'), {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    { label: 'Google', data: [{ x: 156, y: 593, r: 12 }], backgroundColor: 'rgba(245,158,11,0.7)' },
+                    { label: 'Meta', data: [{ x: 108, y: 443, r: 10 }], backgroundColor: 'rgba(59,130,246,0.7)' },
+                    { label: 'Email', data: [{ x: 42, y: 345, r: 14 }], backgroundColor: 'rgba(34,197,94,0.7)' },
+                    { label: 'Events', data: [{ x: 72, y: 410, r: 11 }], backgroundColor: 'rgba(168,85,247,0.7)' },
+                    { label: 'Content', data: [{ x: 61, y: 196, r: 8 }], backgroundColor: 'rgba(148,163,184,0.7)' },
+                    { label: 'Referral', data: [{ x: 48, y: 293, r: 9 }], backgroundColor: 'rgba(236,72,153,0.7)' },
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Annual Spend ($K)' }, beginAtZero: true },
+                    y: { title: { display: true, text: 'Revenue ($K)' }, beginAtZero: true }
+                },
+                plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+
+        // Pie Chart
+        new Chart(document.getElementById('pieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Google','Meta','Email','Events','Content','Referral'],
+                datasets: [{ data: [892,634,521,312,298,190], backgroundColor: ['#f59e0b','#3b82f6','#22c55e','#a855f7','#94a3b8','#ec4899'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 } } } } }
+        });
+
+        // CPL Chart
+        new Chart(document.getElementById('cplChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Google','Meta','Email','Events','Content','Referral'],
+                datasets: [{ label: 'Cost Per Lead', data: [175,170,81,231,205,253], backgroundColor: ['#f59e0b','#3b82f6','#22c55e','#a855f7','#94a3b8','#ec4899'] }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v } } },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Diminishing Returns Chart
+        new Chart(document.getElementById('diminishingChart'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Google Ads Monthly',
+                    data: [
+                        {x:11.2,y:78},{x:12.1,y:82},{x:12.8,y:81},{x:13.2,y:79},{x:13.5,y:76},
+                        {x:13.8,y:74},{x:14.2,y:72},{x:15.1,y:68},{x:16.0,y:64},{x:14.8,y:70},
+                        {x:12.4,y:80},{x:13.0,y:77}
+                    ],
+                    backgroundColor: 'rgba(245,158,11,0.7)', pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Monthly Spend ($K)' } },
+                    y: { title: { display: true, text: 'Leads Generated' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    annotation: { annotations: { line1: { type: 'line', xMin: 14, xMax: 14, borderColor: '#ef4444', borderWidth: 2, borderDash: [5,5] } } }
+                }
+            }
+        });
+
+        // Lag Chart
+        new Chart(document.getElementById('lagChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Email Spend', data: [3.5,3.5,3.6,3.4,3.5,3.5,3.6,3.5,3.5,3.4,2.1,2.2], borderColor: '#94a3b8', backgroundColor: 'rgba(148,163,184,0.1)', fill: true, tension: 0.3, pointRadius: 4, yAxisID: 'y' },
+                    { label: 'Email Revenue', data: [28,29,30,28,31,30,29,31,30,29,28,27], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.1)', fill: true, tension: 0.3, pointRadius: 4, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    y: { position: 'left', title: { display: true, text: 'Spend ($K)' }, beginAtZero: true },
+                    y1: { position: 'right', title: { display: true, text: 'Revenue ($K)' }, grid: { drawOnChartArea: false } }
+                },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } }
+            }
+        });
+    </script>
+</body>
+</html>

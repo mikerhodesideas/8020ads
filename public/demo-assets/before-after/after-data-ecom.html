@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>E-commerce Intelligence Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; }
+        .dash { max-width: 920px; margin: 0 auto; padding: 24px; }
+        .dash-header { background: #0f172a; color: white; padding: 28px 32px; margin-bottom: 20px; }
+        .dash-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+        .dash-header p { color: #94a3b8; font-size: 13px; }
+        .dash-header .subtitle { display: flex; gap: 24px; margin-top: 14px; }
+        .dash-header .stat { text-align: center; }
+        .dash-header .stat .val { font-size: 26px; font-weight: 700; }
+        .dash-header .stat .lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        .val-green { color: #22c55e; }
+        .val-amber { color: #f59e0b; }
+        .val-red { color: #ef4444; }
+
+        .tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
+        .tab { padding: 10px 20px; font-size: 13px; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+        .tab:hover { color: #1a1a2e; }
+        .tab.active { color: #D64C00; border-bottom-color: #D64C00; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .card { background: white; border: 1px solid #e2e8f0; padding: 20px; }
+        .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 8px; }
+        .card .big { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+        .card .change { font-size: 12px; margin-top: 4px; }
+        .card .change.up { color: #22c55e; }
+        .card .change.down { color: #ef4444; }
+
+        .chart-card { background: white; border: 1px solid #e2e8f0; padding: 20px; margin-bottom: 16px; }
+        .chart-card h3 { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 16px; }
+        .chart-wrap { height: 220px; position: relative; }
+
+        .channel-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .channel-row:last-child { border-bottom: none; }
+        .channel-name { width: 110px; font-size: 13px; font-weight: 600; color: #1a1a2e; }
+        .channel-bar-wrap { flex: 1; height: 8px; background: #f1f5f9; }
+        .channel-bar { height: 100%; }
+        .channel-stats { display: flex; gap: 20px; min-width: 200px; }
+        .channel-stats span { font-size: 12px; color: #64748b; }
+        .channel-stats .val { font-weight: 600; color: #1a1a2e; }
+
+        .traffic-light { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+        .tl-green { background: #22c55e; }
+        .tl-amber { background: #f59e0b; }
+        .tl-red { background: #ef4444; }
+
+        .insight-card { background: #fffbeb; border: 1px solid #fde68a; padding: 16px 20px; margin-bottom: 12px; }
+        .insight-card .insight-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #D64C00; margin-bottom: 6px; }
+        .insight-card p { font-size: 14px; color: #1a1a2e; line-height: 1.5; }
+        .insight-card .evidence { font-size: 12px; color: #64748b; margin-top: 6px; font-style: italic; }
+
+        .insight-highlight { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border: none; padding: 24px; margin-bottom: 12px; }
+        .insight-highlight .insight-label { color: #f59e0b; }
+        .insight-highlight p { color: #e2e8f0; }
+        .insight-highlight .evidence { color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="dash">
+        <div class="dash-header">
+            <h1>E-commerce Intelligence Report</h1>
+            <p>Cross-file analysis of marketing-spend.csv, sales-by-product.csv, customer-purchases.csv</p>
+            <div class="subtitle">
+                <div class="stat"><div class="val val-green">$395K</div><div class="lbl">Total Spend</div></div>
+                <div class="stat"><div class="val val-green">$1.88M</div><div class="lbl">Revenue</div></div>
+                <div class="stat"><div class="val val-green">4.75x</div><div class="lbl">ROAS</div></div>
+                <div class="stat"><div class="val val-amber">14,231</div><div class="lbl">Orders</div></div>
+                <div class="stat"><div class="val val-green">$132</div><div class="lbl">AOV</div></div>
+                <div class="stat"><div class="val val-green">2.4</div><div class="lbl">Avg Orders/Customer</div></div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)">Overview</div>
+            <div class="tab" onclick="switchTab(1)">Product Performance</div>
+            <div class="tab" onclick="switchTab(2)">Hidden Connections</div>
+        </div>
+
+        <!-- Tab 1: Overview -->
+        <div class="tab-content active" id="tab-0">
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Best Channel (ROAS)</h3>
+                    <div class="big">Email</div>
+                    <div class="change up">9.1x return on spend</div>
+                </div>
+                <div class="card">
+                    <h3>Top Product Category</h3>
+                    <div class="big">Electronics</div>
+                    <div class="change up">$612K revenue, 38% of total</div>
+                </div>
+                <div class="card">
+                    <h3>Highest Repeat Rate</h3>
+                    <div class="big">Organic</div>
+                    <div class="change up">3.1 orders per customer avg</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Monthly Revenue by Channel</h3>
+                <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Channel Health</h3>
+                <div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Google Shop</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:72%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">4.2x</span></span><span>Orders <span class="val">4,892</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Meta</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:78%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">4.8x</span></span><span>Orders <span class="val">3,241</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Email</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:95%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">9.1x</span></span><span>Orders <span class="val">2,987</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-green"></span>Organic</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:82%;background:#22c55e"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">5.3x</span></span><span>Orders <span class="val">1,823</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-red"></span>Social</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:42%;background:#ef4444"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">2.9x</span></span><span>Orders <span class="val">876</span></span></div>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name"><span class="traffic-light tl-amber"></span>Referral</span>
+                        <div class="channel-bar-wrap"><div class="channel-bar" style="width:55%;background:#f59e0b"></div></div>
+                        <div class="channel-stats"><span>ROAS <span class="val">3.4x</span></span><span>Orders <span class="val">412</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Product Performance -->
+        <div class="tab-content" id="tab-1">
+            <div class="chart-card">
+                <h3>Revenue by Product Category (Monthly)</h3>
+                <div class="chart-wrap"><canvas id="productChart"></canvas></div>
+            </div>
+
+            <div class="grid-2">
+                <div class="chart-card">
+                    <h3>Orders by Channel</h3>
+                    <div class="chart-wrap"><canvas id="ordersPie"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Customer Acquisition Cost</h3>
+                    <div class="chart-wrap"><canvas id="cacChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Repeat Purchase Rate by Acquisition Channel</h3>
+                <p style="font-size:13px;color:#64748b;margin-bottom:16px;">Customers from organic and email channels show significantly higher repeat purchase behavior.</p>
+                <div class="chart-wrap"><canvas id="repeatChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Hidden Connections -->
+        <div class="tab-content" id="tab-2">
+            <div class="insight-highlight">
+                <div class="insight-label">Cross-File Insight #1</div>
+                <p>Customers acquired through email have a 67% repeat purchase rate vs 31% for paid channels. Despite lower initial volume, email customers generate $847 in lifetime value vs $312 from Meta ads.</p>
+                <div class="evidence">Source: customer-purchases.csv (repeat rates by source) cross-referenced with marketing-spend.csv (acquisition cost per channel)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #2</div>
+                <p>Electronics buyers from Google Shopping who also purchased Accessories within 14 days had a 4.2x higher 90-day LTV. This cross-sell pattern occurs in 23% of Electronics purchases but isn't being actively promoted.</p>
+                <div class="evidence">Source: customer-purchases.csv (purchase sequences) cross-referenced with sales-by-product.csv (category pairs)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #3</div>
+                <p>Your November revenue spike (+34%) wasn't driven by new customers. 61% of November orders were repeat purchases from customers acquired July-September. Your Q3 acquisition investment is what funded Q4 revenue.</p>
+                <div class="evidence">Source: customer-purchases.csv (Nov orders by first-purchase date) cross-referenced with marketing-spend.csv (Q3 spend levels)</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-label">Cross-File Insight #4</div>
+                <p>Social media has the lowest direct ROAS (2.9x), but social-acquired customers who receive email follow-ups within 7 days have a 52% higher AOV on their second purchase. Social works as a top-of-funnel channel when paired with email nurture.</p>
+                <div class="evidence">Source: customer-purchases.csv (AOV by source + email engagement) cross-referenced with sales-by-product.csv (order values by channel)</div>
+            </div>
+
+            <div class="chart-card">
+                <h3>Customer Lifetime Value by Acquisition Source</h3>
+                <p style="font-size:13px;color:#64748b;margin-bottom:16px;">Email and organic customers generate 2-3x more lifetime revenue despite lower initial order values.</p>
+                <div class="chart-wrap"><canvas id="ltvChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(idx) {
+            document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+            document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+        }
+
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        // Revenue Chart
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Google Shop', data: [42,44,46,48,50,49,52,54,56,53,71,58], backgroundColor: '#f59e0b' },
+                    { label: 'Meta', data: [32,34,36,38,39,38,41,42,44,40,54,42], backgroundColor: '#3b82f6' },
+                    { label: 'Email', data: [24,26,27,28,29,28,30,31,32,30,38,34], backgroundColor: '#22c55e' },
+                    { label: 'Organic', data: [16,17,18,19,20,19,21,22,23,21,28,22], backgroundColor: '#a855f7' },
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: v => '$' + v + 'K' } } },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+
+        // Products Chart
+        new Chart(document.getElementById('productChart'), {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    { label: 'Electronics', data: [48,50,52,54,56,55,58,60,64,58,78,62], borderColor: '#3b82f6', tension: 0.3, pointRadius: 3 },
+                    { label: 'Accessories', data: [22,24,25,26,27,26,28,29,31,28,38,30], borderColor: '#22c55e', tension: 0.3, pointRadius: 3 },
+                    { label: 'Home & Garden', data: [18,19,20,21,22,21,23,24,25,23,31,24], borderColor: '#f59e0b', tension: 0.3, pointRadius: 3 },
+                    { label: 'Sports', data: [12,13,14,15,16,15,17,18,19,17,23,18], borderColor: '#ec4899', tension: 0.3, pointRadius: 3 },
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { ticks: { callback: v => '$' + v + 'K' } } },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+
+        // Orders Pie
+        new Chart(document.getElementById('ordersPie'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Google Shop','Meta','Email','Organic','Social','Referral'],
+                datasets: [{ data: [4892,3241,2987,1823,876,412], backgroundColor: ['#f59e0b','#3b82f6','#22c55e','#a855f7','#94a3b8','#ec4899'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 } } } } }
+        });
+
+        // CAC Chart
+        new Chart(document.getElementById('cacChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Google','Meta','Email','Organic','Social','Referral'],
+                datasets: [{ label: 'CAC', data: [27,30,12,26,49,97], backgroundColor: ['#f59e0b','#3b82f6','#22c55e','#a855f7','#94a3b8','#ec4899'] }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v } } },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Repeat Purchase Chart
+        new Chart(document.getElementById('repeatChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Email','Organic','Google Shop','Referral','Meta','Social'],
+                datasets: [
+                    { label: 'Repeat Rate %', data: [67,58,38,42,31,24], backgroundColor: '#D64C00' },
+                    { label: 'Avg Orders', data: [3.4,3.1,2.1,2.3,1.8,1.5], backgroundColor: '#f59e0b' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+
+        // LTV Chart
+        new Chart(document.getElementById('ltvChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Email','Organic','Events','Google Shop','Meta','Social'],
+                datasets: [
+                    { label: 'First Purchase AOV', data: [98,112,145,132,118,94], backgroundColor: '#94a3b8' },
+                    { label: 'Lifetime Value', data: [847,692,612,412,312,218], backgroundColor: '#D64C00' }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v } } },
+                plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+    </script>
+</body>
+</html>

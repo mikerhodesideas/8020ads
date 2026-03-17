@@ -1,0 +1,193 @@
+Month,Category,Channel,Units,Revenue
+Jan-2025,Electronics,Organic,181,36959
+Jan-2025,Electronics,Paid,308,59410
+Jan-2025,Electronics,Email,119,21966
+Jan-2025,Electronics,Social,92,16653
+Jan-2025,Accessories,Organic,231,9462
+Jan-2025,Accessories,Paid,409,15777
+Jan-2025,Accessories,Email,154,6334
+Jan-2025,Accessories,Social,115,5124
+Jan-2025,Home & Garden,Organic,157,11226
+Jan-2025,Home & Garden,Paid,214,16733
+Jan-2025,Home & Garden,Email,80,5859
+Jan-2025,Home & Garden,Social,74,5913
+Jan-2025,Sports,Organic,128,11578
+Jan-2025,Sports,Paid,214,19065
+Jan-2025,Sports,Email,70,6075
+Jan-2025,Sports,Social,49,4643
+Feb-2025,Electronics,Organic,177,30654
+Feb-2025,Electronics,Paid,316,58366
+Feb-2025,Electronics,Email,128,25094
+Feb-2025,Electronics,Social,80,15717
+Feb-2025,Accessories,Organic,235,9383
+Feb-2025,Accessories,Paid,364,14345
+Feb-2025,Accessories,Email,140,6287
+Feb-2025,Accessories,Social,124,5370
+Feb-2025,Home & Garden,Organic,157,12842
+Feb-2025,Home & Garden,Paid,220,17086
+Feb-2025,Home & Garden,Email,71,5951
+Feb-2025,Home & Garden,Social,63,4905
+Feb-2025,Sports,Organic,128,12202
+Feb-2025,Sports,Paid,208,18808
+Feb-2025,Sports,Email,74,6333
+Feb-2025,Sports,Social,60,5680
+Mar-2025,Electronics,Organic,182,35680
+Mar-2025,Electronics,Paid,349,68774
+Mar-2025,Electronics,Email,107,18317
+Mar-2025,Electronics,Social,90,16673
+Mar-2025,Accessories,Organic,233,10672
+Mar-2025,Accessories,Paid,390,17437
+Mar-2025,Accessories,Email,135,5811
+Mar-2025,Accessories,Social,117,5053
+Mar-2025,Home & Garden,Organic,148,10671
+Mar-2025,Home & Garden,Paid,209,15466
+Mar-2025,Home & Garden,Email,78,6070
+Mar-2025,Home & Garden,Social,70,5392
+Mar-2025,Sports,Organic,114,9909
+Mar-2025,Sports,Paid,175,16750
+Mar-2025,Sports,Email,74,7043
+Mar-2025,Sports,Social,66,6830
+Apr-2025,Electronics,Organic,168,34375
+Apr-2025,Electronics,Paid,324,66659
+Apr-2025,Electronics,Email,94,17815
+Apr-2025,Electronics,Social,69,12856
+Apr-2025,Accessories,Organic,256,11520
+Apr-2025,Accessories,Paid,405,16314
+Apr-2025,Accessories,Email,135,5283
+Apr-2025,Accessories,Social,103,4225
+Apr-2025,Home & Garden,Organic,159,12189
+Apr-2025,Home & Garden,Paid,205,16386
+Apr-2025,Home & Garden,Email,77,6060
+Apr-2025,Home & Garden,Social,74,5630
+Apr-2025,Sports,Organic,144,13820
+Apr-2025,Sports,Paid,198,16947
+Apr-2025,Sports,Email,69,7083
+Apr-2025,Sports,Social,63,5428
+May-2025,Electronics,Organic,171,34166
+May-2025,Electronics,Paid,309,55383
+May-2025,Electronics,Email,105,19853
+May-2025,Electronics,Social,86,16696
+May-2025,Accessories,Organic,230,8939
+May-2025,Accessories,Paid,400,16259
+May-2025,Accessories,Email,155,6624
+May-2025,Accessories,Social,113,4506
+May-2025,Home & Garden,Organic,149,11653
+May-2025,Home & Garden,Paid,212,15995
+May-2025,Home & Garden,Email,93,7690
+May-2025,Home & Garden,Social,69,5610
+May-2025,Sports,Organic,149,15399
+May-2025,Sports,Paid,204,20870
+May-2025,Sports,Email,62,5717
+May-2025,Sports,Social,45,4006
+Jun-2025,Electronics,Organic,176,33115
+Jun-2025,Electronics,Paid,349,63985
+Jun-2025,Electronics,Email,102,18578
+Jun-2025,Electronics,Social,87,17016
+Jun-2025,Accessories,Organic,258,9817
+Jun-2025,Accessories,Paid,373,15848
+Jun-2025,Accessories,Email,142,5702
+Jun-2025,Accessories,Social,128,4912
+Jun-2025,Home & Garden,Organic,169,13696
+Jun-2025,Home & Garden,Paid,215,17919
+Jun-2025,Home & Garden,Email,77,6489
+Jun-2025,Home & Garden,Social,67,5572
+Jun-2025,Sports,Organic,146,14778
+Jun-2025,Sports,Paid,186,19297
+Jun-2025,Sports,Email,79,8204
+Jun-2025,Sports,Social,62,6213
+Jul-2025,Electronics,Organic,191,34612
+Jul-2025,Electronics,Paid,341,60901
+Jul-2025,Electronics,Email,121,23684
+Jul-2025,Electronics,Social,94,18944
+Jul-2025,Accessories,Organic,223,8439
+Jul-2025,Accessories,Paid,370,14975
+Jul-2025,Accessories,Email,155,6136
+Jul-2025,Accessories,Social,111,4753
+Jul-2025,Home & Garden,Organic,159,13028
+Jul-2025,Home & Garden,Paid,201,16038
+Jul-2025,Home & Garden,Email,85,6364
+Jul-2025,Home & Garden,Social,79,6540
+Jul-2025,Sports,Organic,132,12161
+Jul-2025,Sports,Paid,196,19167
+Jul-2025,Sports,Email,75,7793
+Jul-2025,Sports,Social,41,3776
+Aug-2025,Electronics,Organic,192,33433
+Aug-2025,Electronics,Paid,329,65117
+Aug-2025,Electronics,Email,103,17770
+Aug-2025,Electronics,Social,90,17543
+Aug-2025,Accessories,Organic,240,9896
+Aug-2025,Accessories,Paid,405,16748
+Aug-2025,Accessories,Email,132,5879
+Aug-2025,Accessories,Social,124,5608
+Aug-2025,Home & Garden,Organic,132,11312
+Aug-2025,Home & Garden,Paid,223,16409
+Aug-2025,Home & Garden,Email,90,6434
+Aug-2025,Home & Garden,Social,61,4779
+Aug-2025,Sports,Organic,121,10974
+Aug-2025,Sports,Paid,183,18181
+Aug-2025,Sports,Email,75,7646
+Aug-2025,Sports,Social,47,4722
+Sep-2025,Electronics,Organic,181,31076
+Sep-2025,Electronics,Paid,323,56975
+Sep-2025,Electronics,Email,102,18079
+Sep-2025,Electronics,Social,83,15881
+Sep-2025,Accessories,Organic,266,10275
+Sep-2025,Accessories,Paid,375,14687
+Sep-2025,Accessories,Email,125,5472
+Sep-2025,Accessories,Social,121,5151
+Sep-2025,Home & Garden,Organic,169,13299
+Sep-2025,Home & Garden,Paid,184,15552
+Sep-2025,Home & Garden,Email,86,6519
+Sep-2025,Home & Garden,Social,76,6370
+Sep-2025,Sports,Organic,142,14031
+Sep-2025,Sports,Paid,192,19724
+Sep-2025,Sports,Email,75,6442
+Sep-2025,Sports,Social,48,4289
+Oct-2025,Electronics,Organic,170,31120
+Oct-2025,Electronics,Paid,307,55987
+Oct-2025,Electronics,Email,115,22107
+Oct-2025,Electronics,Social,82,16095
+Oct-2025,Accessories,Organic,242,10075
+Oct-2025,Accessories,Paid,397,18288
+Oct-2025,Accessories,Email,140,6152
+Oct-2025,Accessories,Social,118,4717
+Oct-2025,Home & Garden,Organic,133,10402
+Oct-2025,Home & Garden,Paid,211,16055
+Oct-2025,Home & Garden,Email,89,6666
+Oct-2025,Home & Garden,Social,73,5887
+Oct-2025,Sports,Organic,136,12643
+Oct-2025,Sports,Paid,200,18109
+Oct-2025,Sports,Email,77,7933
+Oct-2025,Sports,Social,50,5086
+Nov-2025,Electronics,Organic,237,40406
+Nov-2025,Electronics,Paid,434,81281
+Nov-2025,Electronics,Email,154,30041
+Nov-2025,Electronics,Social,121,22307
+Nov-2025,Accessories,Organic,341,14363
+Nov-2025,Accessories,Paid,507,19458
+Nov-2025,Accessories,Email,190,7614
+Nov-2025,Accessories,Social,171,7741
+Nov-2025,Home & Garden,Organic,201,16438
+Nov-2025,Home & Garden,Paid,289,22972
+Nov-2025,Home & Garden,Email,131,9462
+Nov-2025,Home & Garden,Social,81,6575
+Nov-2025,Sports,Organic,154,14703
+Nov-2025,Sports,Paid,262,22496
+Nov-2025,Sports,Email,89,8637
+Nov-2025,Sports,Social,62,6456
+Dec-2025,Electronics,Organic,211,43501
+Dec-2025,Electronics,Paid,374,74464
+Dec-2025,Electronics,Email,127,22077
+Dec-2025,Electronics,Social,78,14138
+Dec-2025,Accessories,Organic,282,11425
+Dec-2025,Accessories,Paid,418,17849
+Dec-2025,Accessories,Email,151,6737
+Dec-2025,Accessories,Social,117,5004
+Dec-2025,Home & Garden,Organic,184,13291
+Dec-2025,Home & Garden,Paid,240,19809
+Dec-2025,Home & Garden,Email,96,7070
+Dec-2025,Home & Garden,Social,76,6363
+Dec-2025,Sports,Organic,155,13789
+Dec-2025,Sports,Paid,224,21192
+Dec-2025,Sports,Email,72,6389
+Dec-2025,Sports,Social,71,7118

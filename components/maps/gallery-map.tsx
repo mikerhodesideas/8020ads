@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useGame } from '@/components/game-provider'
-import { BadgeTray, BadgeToast } from '@/components/badge-system'
-import { getLevels, type PlayerType, type DemoType } from '@/lib/game-data'
+import { BadgeTray, BadgeToast, WorldUnlockToast } from '@/components/badge-system'
+import { getLevels, getDemoUrl, type PlayerType, type DemoType } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import type { SkinConfig } from '@/lib/skin-config'
 import { LevelCelebration } from './shared'
@@ -35,41 +35,25 @@ function DemoNode({
         'border focus:outline-none',
         !done && 'node-entrance',
         done
-          ? 'bg-emerald-50 border-emerald-300 node-completed-glow'
-          : isGallery
-            ? 'bg-white border-amber-200/80 hover:border-amber-400 hover:shadow-lg hover:-translate-y-1 hover:shadow-amber-200/40'
-            : 'bg-white border-blue-200/80 hover:border-blue-400 hover:shadow-lg hover:-translate-y-1 hover:shadow-blue-200/40',
+          ? 'bg-[#f0fdf4] border-l-[3px] border-l-[#22c55e] border-t border-r border-b border-t-gray-100 border-r-gray-100 border-b-gray-100'
+          : 'bg-white border-[var(--color-border)] hover:border-[var(--color-brand-orange)] hover:shadow-lg hover:-translate-y-1',
         'cursor-pointer'
       )}
       style={{
         animationDelay: `${index * 150}ms`,
       }}
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2.5">
-          {iconImage ? (
-            <Image src={iconImage} alt="" width={28} height={28} className="object-contain" />
-          ) : (
-            <span className="text-2xl leading-none">{demo.icon}</span>
+      <div className="flex items-center justify-between mb-3 h-7">
+        <span
+          className={cn(
+            'inline-flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold font-heading',
+            done
+              ? 'bg-emerald-100 text-emerald-700'
+              : 'bg-[var(--color-brand-orange-faint)] text-[var(--color-brand-orange)]'
           )}
-          <span
-            className={cn(
-              'inline-flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold font-heading',
-              done
-                ? 'bg-emerald-500 text-white'
-                : isGallery
-                  ? 'bg-amber-100 text-amber-700'
-                  : 'bg-blue-100 text-blue-700'
-            )}
-          >
-            {done ? '\u2713' : index + 1}
-          </span>
-        </div>
-        {done && (
-          <span className="text-emerald-500 text-lg demo-complete-pulse">
-            &#10003;
-          </span>
-        )}
+        >
+          {done ? '\u2713' : index + 1}
+        </span>
       </div>
 
       <h3
@@ -178,8 +162,8 @@ function StatsWidget({
 function GalleryDecor() {
   return (
     <>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-300/15 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-200/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gray-200/15 rounded-full blur-3xl" />
       <svg
         className="absolute inset-0 w-full h-full opacity-[0.04]"
         viewBox="0 0 1000 1000"
@@ -241,37 +225,31 @@ export default function GalleryMap({
       )}
     >
       <BadgeToast />
+      <WorldUnlockToast />
 
       <div
-        className="flex-1 relative overflow-hidden bg-gradient-to-b from-[#f8f0e3] via-[#faf6ef] to-[#f5ece0]"
+        className="flex-1 relative overflow-hidden bg-[#FAFAF8]"
       >
-        <GalleryDecor />
+        {/* GalleryDecor removed - clean flat background */}
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="relative z-10 mx-auto px-4 sm:px-6 py-10 sm:py-14" style={{ maxWidth: 1200 }}>
           <div className="text-center mb-6 sm:mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-3 font-heading text-amber-700">
-              The Journey
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-3 font-heading text-[var(--color-brand-orange)]">
+              Your Demos
             </p>
-            <h1 className="text-3xl sm:text-4xl font-extrabold leading-[1.1] mb-2 font-heading text-amber-950">
-              3 Levels. 3 Demos.
+            <h1 className="text-3xl sm:text-4xl font-extrabold leading-[1.1] mb-2 font-heading text-[var(--color-ink)]">
+              3 Levels. 9 Demos.
             </h1>
-            <p className="text-sm text-[var(--color-muted)] max-w-md mx-auto">
-              Complete each level to unlock the next. Start with Level 1.
+            <p className="text-sm text-[var(--color-muted)]">
+              {isLevelComplete(1)
+                ? 'Level 1 complete. Level 2 introduces skills.'
+                : 'Complete each level to unlock the next. Start with Level 1.'}
             </p>
           </div>
 
-          <BadgeTray />
+          {/* BadgeTray removed - badges are out of place in new flow */}
 
-          {allAvailableComplete && (
-            <div className="text-center mb-8">
-              <button
-                onClick={() => router.push('/victory')}
-                className="px-6 py-3 font-heading font-bold text-sm rounded-[2px] transition-all duration-300 node-completed-glow bg-amber-700 text-white hover:bg-amber-800"
-              >
-                View Results
-              </button>
-            </div>
-          )}
+          {/* Top "View Results" button removed - CTA is at the bottom now */}
 
           <div className="space-y-8 sm:space-y-12">
             {levels.map((level, levelIndex) => {
@@ -286,7 +264,7 @@ export default function GalleryMap({
                     <div
                       className={cn(
                         'absolute left-1/2 -translate-x-1/2 w-[2px] -bottom-8 sm:-bottom-12 h-8 sm:h-12',
-                        isLocked ? 'bg-amber-200/50' : 'bg-amber-400/60'
+                        isLocked ? 'bg-gray-200' : 'bg-[var(--color-border)]'
                       )}
                     />
                   )}
@@ -299,33 +277,31 @@ export default function GalleryMap({
                   >
                     <div
                       className={cn(
-                        'flex items-center justify-between px-5 sm:px-6 py-4 border-b border-amber-200/60',
+                        'flex items-center justify-between px-5 sm:px-6 py-3 border-b',
                         isLocked
-                          ? 'bg-amber-100/40'
-                          : 'bg-gradient-to-r from-amber-100/80 to-amber-50/40'
+                          ? 'bg-gray-50 border-gray-200'
+                          : 'bg-white border-[var(--color-border)]'
                       )}
                     >
-                      <div>
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={cn(
-                              'inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold font-heading',
-                              isLocked
-                                ? 'bg-amber-200/50 text-amber-400'
-                                : 'bg-amber-600 text-white'
-                            )}
-                          >
-                            {isLocked ? '\u{1F512}' : level.id}
-                          </span>
-                          <div>
-                            <h2 className="text-lg sm:text-xl font-bold font-heading text-amber-950">
-                              {level.name}
-                            </h2>
-                            <p className="text-xs text-[var(--color-muted)]">
-                              {level.subtitle}
-                            </p>
-                          </div>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={cn(
+                            'inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold font-heading',
+                            isLocked
+                              ? 'bg-gray-200 text-gray-400'
+                              : 'bg-[var(--color-brand-orange)] text-white'
+                          )}
+                        >
+                          {isLocked ? '\u{1F512}' : level.id}
+                        </span>
+                        <h2 className="text-base sm:text-lg font-bold font-heading text-[var(--color-ink)]">
+                          {levelIndex === 0 && levelDoneCount === level.demos.length
+                            ? 'Level 1 Complete'
+                            : level.name}
+                        </h2>
+                        <span className="text-xs text-[var(--color-muted)] hidden sm:inline">
+                          {level.subtitle}
+                        </span>
                       </div>
                       {!isLocked && level.demos.length > 0 && (
                         <div className="text-right flex flex-col items-end gap-1.5">
@@ -334,7 +310,7 @@ export default function GalleryMap({
                               'text-sm font-bold font-heading',
                               levelDoneCount === level.demos.length
                                 ? 'text-emerald-600'
-                                : 'text-amber-700'
+                                : 'text-[var(--color-brand-orange)]'
                             )}
                           >
                             {levelDoneCount}/{level.demos.length}
@@ -345,7 +321,7 @@ export default function GalleryMap({
                                 'h-full transition-all duration-700 ease-out',
                                 levelDoneCount === level.demos.length
                                   ? 'bg-emerald-500'
-                                  : 'bg-amber-500'
+                                  : 'bg-[var(--color-brand-orange)]'
                               )}
                               style={{
                                 width: `${(levelDoneCount / level.demos.length) * 100}%`,
@@ -357,29 +333,16 @@ export default function GalleryMap({
                     </div>
 
                     {isLocked ? (
-                      <div className="px-5 sm:px-6 py-10 text-center relative overflow-hidden bg-gradient-to-r from-amber-50/20 via-amber-100/30 to-amber-50/20">
-                        <div className="flex justify-center gap-6 mb-4">
-                          {[0, 1, 2].map((i) => (
-                            <div
-                              key={i}
-                              className="w-20 h-14 rounded-[2px] border-2 border-dashed border-amber-200/60 bg-amber-100/20"
-                            >
-                              <div className="flex items-center justify-center h-full">
-                                <span className="text-xl opacity-30">?</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        <p className="text-sm font-heading font-semibold text-amber-500">
+                      <div className="px-5 sm:px-6 py-8 text-center bg-gray-50">
+                        <p className="text-sm font-heading font-semibold text-gray-400">
                           {skin.lockedNodeText(levelIndex)}
                         </p>
                       </div>
                     ) : (
-                      <div className="p-4 sm:p-6 bg-white/60">
+                      <div className="p-4 sm:p-6 bg-white">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {level.demos.map((demo, demoIndex) => {
                             const done = completed.has(demo.id)
-                            const iconImage = skin.demoIcons?.[demo.demoType]
                             return (
                               <DemoNode
                                 key={demo.id}
@@ -389,9 +352,8 @@ export default function GalleryMap({
                                 isGallery={true}
                                 stars={choiceScores[demo.id] || 0}
                                 onClick={() =>
-                                  router.push(`/play/${demo.id}`)
+                                  router.push(getDemoUrl(demo.id))
                                 }
-                                iconImage={iconImage}
                               />
                             )
                           })}
@@ -404,6 +366,79 @@ export default function GalleryMap({
             })}
           </div>
 
+          {allAvailableComplete && (
+            <div
+              style={{
+                marginTop: 48,
+                padding: '40px 48px',
+                background: '#0f172a',
+                border: '2px solid #D64C00',
+                borderRadius: 2,
+                textAlign: 'center',
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+                  fontSize: 28,
+                  fontWeight: 800,
+                  color: '#fff',
+                  marginBottom: 12,
+                  lineHeight: 1.2,
+                }}
+              >
+                You just saw what one person can do with AI.
+              </h2>
+              <p
+                style={{
+                  fontSize: 16,
+                  color: '#94a3b8',
+                  marginBottom: 32,
+                  lineHeight: 1.6,
+                }}
+              >
+                Imagine your whole team running skills like these every day. Ads to AI gives you the skills, the training, and a community of people building with AI.
+              </p>
+              <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => router.push('/victory')}
+                  style={{
+                    padding: '14px 32px',
+                    fontSize: 16,
+                    fontWeight: 700,
+                    background: '#D64C00',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                    fontFamily: '-apple-system, system-ui, sans-serif',
+                  }}
+                >
+                  See Your Full Results
+                </button>
+                <a
+                  href="https://ads2ai.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: '14px 32px',
+                    fontSize: 16,
+                    fontWeight: 700,
+                    background: 'transparent',
+                    color: '#fff',
+                    border: '2px solid #475569',
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    fontFamily: '-apple-system, system-ui, sans-serif',
+                  }}
+                >
+                  Learn About Ads to AI
+                </a>
+              </div>
+            </div>
+          )}
+
           <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
             <button
               onClick={() => router.push('/')}
@@ -413,7 +448,7 @@ export default function GalleryMap({
             </button>
             <StatsWidget
               isGallery={true}
-              completedCount={completed.size}
+              completedCount={Math.min(completed.size, availableDemoCount)}
               availableCount={availableDemoCount}
               skillCount={skills.size}
               timeSaved={totalTimeSaved}

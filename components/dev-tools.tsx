@@ -1,20 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useGame, useSkin } from './game-provider'
-import { LevelTransition } from './level-transition'
+import { getCompletedProofs, markProofCompleted } from '@/lib/proof-completion'
 import type { PlayerType, WorldId } from '@/lib/game-data'
 
-const WORLDS: { id: WorldId; label: string }[] = [
-  { id: 'gallery', label: 'Classic' },
-  { id: 'arcade', label: 'Mario' },
-  { id: 'red-alert', label: 'Red Alert' },
-  { id: 'clair-obscur', label: 'Clair Obs' },
-  { id: 'tetris', label: 'Tetris' },
-  { id: 'zelda', label: 'Zelda' },
-  { id: 'elder-scrolls', label: 'Elder S' },
-]
+// const WORLDS: { id: WorldId; label: string }[] = [
+//   { id: 'gallery', label: 'Classic' },
+//   { id: 'arcade', label: 'Mario' },
+//   { id: 'red-alert', label: 'Red Alert' },
+//   { id: 'clair-obscur', label: 'Clair Obs' },
+//   { id: 'tetris', label: 'Tetris' },
+//   { id: 'zelda', label: 'Zelda' },
+//   { id: 'elder-scrolls', label: 'Elder S' },
+// ]
 
 const AVATARS: { id: PlayerType; label: string }[] = [
   { id: 'agency', label: 'Agency' },
@@ -36,22 +36,30 @@ const DEMOS = [
   { id: 9, level: 3, label: 'Security' },
 ]
 
+const PROOFS = [
+  { id: 'inbox', label: 'Inbox' },
+  { id: 'website', label: 'Website' },
+  { id: 'data', label: 'Data' },
+]
+
 const PAGES = [
   { path: '/', label: 'Home' },
-  { path: '/world', label: 'Worlds' },
-  { path: '/play', label: 'Map' },
-  { path: '/victory', label: 'Victory' },
-  { path: '/how-it-works', label: 'How' },
+  { path: '/setup', label: 'Setup' },
   { path: '/course', label: 'Course' },
+  { path: '/how-it-works', label: 'How' },
 ]
 
 export default function DevTools() {
   const [open, setOpen] = useState(false)
-  const [showTransition, setShowTransition] = useState<number | null>(null)
+  const [proofCompleted, setProofCompleted] = useState<Set<string>>(new Set())
   const { type, world, completed, setType, setWorld, toggleComplete, resetGame, markComplete, isLevelComplete } = useGame()
   const skin = useSkin()
   const router = useRouter()
   const pathname = usePathname()
+
+  useEffect(() => {
+    setProofCompleted(getCompletedProofs())
+  }, [open])
 
   if (process.env.NODE_ENV !== 'development') return null
 
@@ -74,8 +82,32 @@ export default function DevTools() {
     })
   }
 
+  function toggleProof(proofId: string) {
+    const current = getCompletedProofs()
+    if (current.has(proofId)) {
+      current.delete(proofId)
+      localStorage.setItem('8020skill-completed-proofs', JSON.stringify([...current]))
+    } else {
+      markProofCompleted(proofId)
+    }
+    setProofCompleted(getCompletedProofs())
+  }
+
+  // function completeLevel(level: number) {
+  //   levelDemos[level].forEach(id => {
+  //     if (!completed.has(id)) markComplete(id)
+  //   })
+  // }
+
+  // function uncompleteLevel(level: number) {
+  //   levelDemos[level].forEach(id => {
+  //     if (completed.has(id)) toggleComplete(id)
+  //   })
+  // }
+
   return (
     <>
+      {/* Level transition overlay - commented out
       {showTransition !== null && (
         <LevelTransition
           fromLevel={showTransition}
@@ -83,6 +115,7 @@ export default function DevTools() {
           skin={skin}
         />
       )}
+      */}
 
       <div style={{
         position: 'fixed',
@@ -128,7 +161,7 @@ export default function DevTools() {
 
             {/* Status bar */}
             <div style={{ marginBottom: 8, color: '#888', fontSize: 10, lineHeight: 1.4 }}>
-              {type || '-'} / {world || '-'} / {completed.size}/10 done / {pathname}
+              {type || '-'} / {completed.size} done / {pathname}
             </div>
 
             {/* Pages */}
@@ -140,7 +173,7 @@ export default function DevTools() {
               </Row>
             </Section>
 
-            {/* Avatar + World on same row */}
+            {/* Avatar */}
             <Section title="Avatar">
               <Row>
                 {AVATARS.map(a => (
@@ -149,55 +182,71 @@ export default function DevTools() {
               </Row>
             </Section>
 
-            <Section title="World">
+            {/* Proof demos (Level 1 proof pages) */}
+            <Section title="Proof Demos">
               <Row>
-                {WORLDS.map(w => (
-                  <Btn key={w.id} label={w.label} active={world === w.id} onClick={() => setWorld(w.id)} />
+                {PROOFS.map(p => (
+                  <Btn key={p.id} label={p.label} done={proofCompleted.has(p.id)} onClick={() => toggleProof(p.id)} />
                 ))}
               </Row>
             </Section>
 
-            {/* Level Transitions */}
-            <Section title="Level Transitions">
-              <Row>
-                <Btn label="L1 -> L2" onClick={() => setShowTransition(1)} />
-                <Btn label="L2 -> L3" onClick={() => setShowTransition(2)} />
-              </Row>
-            </Section>
-
-            {/* Demos with toggle */}
-            <Section title="Demos (click name=go, check=toggle done)">
+            {/* Game demos */}
+            <Section title="Game Demos (click to toggle)">
               {allLevelIds.map(level => (
                 <div key={level} style={{ marginBottom: 6 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                     <span style={{ fontSize: 10, color: '#888' }}>
-                      Level {level} {isLevelComplete(level) ? '(complete)' : ''}
+                      Level {level} {isLevelComplete(level) ? '(done)' : ''}
                     </span>
                     <Btn label="All on" onClick={() => completeLevel(level)} small />
                     <Btn label="All off" onClick={() => uncompleteLevel(level)} small />
                   </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                  <Row>
                     {DEMOS.filter(d => d.level === level).map(d => (
-                      <DemoBtn
-                        key={d.id}
-                        id={d.id}
-                        label={d.label}
-                        done={completed.has(d.id)}
-                        active={pathname === `/play/${d.id}`}
-                        onNavigate={() => router.push(`/play/${d.id}`)}
-                        onToggle={() => toggleComplete(d.id)}
-                      />
+                      <Btn key={d.id} label={`${d.id}:${d.label}`} done={completed.has(d.id)} active={pathname === `/play/${d.id}`} onClick={() => toggleComplete(d.id)} />
                     ))}
-                  </div>
+                  </Row>
                 </div>
               ))}
+            </Section>
+
+            {/* Celebrations */}
+            <Section title="Celebrations (sessionStorage)">
+              <Row>
+                {[1, 2, 3].map(lvl => {
+                  const key = `level${lvl}-celebrated`
+                  const isCelebrated = typeof window !== 'undefined' && !!sessionStorage.getItem(key)
+                  return (
+                    <Btn
+                      key={key}
+                      label={`L${lvl} ${isCelebrated ? '(seen)' : '(fresh)'}`}
+                      done={isCelebrated}
+                      onClick={() => {
+                        if (isCelebrated) {
+                          sessionStorage.removeItem(key)
+                        } else {
+                          sessionStorage.setItem(key, 'true')
+                        }
+                        setOpen(o => !o) // force re-render
+                        setTimeout(() => setOpen(true), 10)
+                      }}
+                    />
+                  )
+                })}
+                <Btn label="Clear all" onClick={() => {
+                  sessionStorage.removeItem('level1-celebrated')
+                  sessionStorage.removeItem('level2-celebrated')
+                  sessionStorage.removeItem('level3-celebrated')
+                  setOpen(o => !o)
+                  setTimeout(() => setOpen(true), 10)
+                }} danger small />
+              </Row>
             </Section>
 
             {/* Quick Actions */}
             <Section title="Actions">
               <Row>
-                <Btn label="Complete All" onClick={() => DEMOS.forEach(d => { if (!completed.has(d.id)) markComplete(d.id) })} />
-                <Btn label="Clear All" onClick={() => DEMOS.forEach(d => { if (completed.has(d.id)) toggleComplete(d.id) })} />
                 <Btn label="Reset Game" onClick={() => { resetGame(); router.push('/'); }} danger />
               </Row>
             </Section>
@@ -248,45 +297,46 @@ function Btn({ label, active, done, danger, small, onClick }: {
   )
 }
 
-function DemoBtn({ id, label, done, active, onNavigate, onToggle }: {
-  id: number
-  label: string
-  done: boolean
-  active: boolean
-  onNavigate: () => void
-  onToggle: () => void
-}) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 0, border: `1px solid ${active ? '#e94560' : '#444'}`, borderRadius: 2 }}>
-      <button
-        onClick={onToggle}
-        title={done ? 'Mark incomplete' : 'Mark complete'}
-        style={{
-          padding: '2px 4px',
-          fontSize: 10,
-          background: done ? '#1e3a2e' : 'transparent',
-          color: done ? '#4ade80' : '#666',
-          border: 'none',
-          borderRight: `1px solid ${active ? '#e94560' : '#333'}`,
-          cursor: 'pointer',
-        }}
-      >
-        {done ? '\u2713' : '\u2717'}
-      </button>
-      <button
-        onClick={onNavigate}
-        style={{
-          padding: '2px 5px',
-          fontSize: 10,
-          background: active ? '#e94560' : 'transparent',
-          color: active ? '#fff' : done ? '#4ade80' : '#ccc',
-          border: 'none',
-          cursor: 'pointer',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {id}:{label}
-      </button>
-    </div>
-  )
-}
+// DemoBtn - commented out, keeping for reference
+// function DemoBtn({ id, label, done, active, onNavigate, onToggle }: {
+//   id: number
+//   label: string
+//   done: boolean
+//   active: boolean
+//   onNavigate: () => void
+//   onToggle: () => void
+// }) {
+//   return (
+//     <div style={{ display: 'flex', alignItems: 'center', gap: 0, border: `1px solid ${active ? '#e94560' : '#444'}`, borderRadius: 2 }}>
+//       <button
+//         onClick={onToggle}
+//         title={done ? 'Mark incomplete' : 'Mark complete'}
+//         style={{
+//           padding: '2px 4px',
+//           fontSize: 10,
+//           background: done ? '#1e3a2e' : 'transparent',
+//           color: done ? '#4ade80' : '#666',
+//           border: 'none',
+//           borderRight: `1px solid ${active ? '#e94560' : '#333'}`,
+//           cursor: 'pointer',
+//         }}
+//       >
+//         {done ? '\u2713' : '\u2717'}
+//       </button>
+//       <button
+//         onClick={onNavigate}
+//         style={{
+//           padding: '2px 5px',
+//           fontSize: 10,
+//           background: active ? '#e94560' : 'transparent',
+//           color: active ? '#fff' : done ? '#4ade80' : '#ccc',
+//           border: 'none',
+//           cursor: 'pointer',
+//           whiteSpace: 'nowrap',
+//         }}
+//       >
+//         {id}:{label}
+//       </button>
+//     </div>
+//   )
+// }

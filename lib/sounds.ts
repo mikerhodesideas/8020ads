@@ -1052,7 +1052,7 @@ export function startProgressTick(soundName: SoundRef): void {
   const tick = () => {
     if (muted) { stopProgressTick(); return }
     tickCount++
-    try { sounds[soundName]() } catch {}
+    try { (sounds as Record<string, () => void>)[soundName]() } catch {}
     const tempo = Math.max(120, baseTempo - tickCount * 8)
     tickTimer = setTimeout(tick, tempo)
   }

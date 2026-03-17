@@ -21,62 +21,54 @@ export default function WipeComparison({
 }: WipeComparisonProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [sliderPos, setSliderPos] = useState(initialPosition)
-  const isDragging = useRef(false)
+  const [dragging, setDragging] = useState(false)
 
-  const handleMove = useCallback((clientX: number) => {
-    if (!isDragging.current || !containerRef.current) return
+  const getPos = useCallback((clientX: number) => {
+    if (!containerRef.current) return null
     const rect = containerRef.current.getBoundingClientRect()
-    const x = clientX - rect.left
-    const pct = Math.max(2, Math.min(98, (x / rect.width) * 100))
-    setSliderPos(pct)
+    return Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100))
   }, [])
 
-  const handleMouseDown = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
-    isDragging.current = true
-    document.body.style.cursor = 'col-resize'
-    document.body.style.userSelect = 'none'
-    if (e && containerRef.current) {
-      const clientX = 'touches' in e ? e.touches[0]?.clientX : (e as React.MouseEvent).clientX
-      if (clientX !== undefined) {
-        const rect = containerRef.current.getBoundingClientRect()
-        const x = clientX - rect.left
-        const pct = Math.max(2, Math.min(98, (x / rect.width) * 100))
-        setSliderPos(pct)
-      }
-    }
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    e.preventDefault()
+    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    setDragging(true)
+    const pos = getPos(e.clientX)
+    if (pos !== null) setSliderPos(pos)
+  }, [getPos])
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragging) return
+    const pos = getPos(e.clientX)
+    if (pos !== null) setSliderPos(pos)
+  }, [dragging, getPos])
+
+  const handlePointerUp = useCallback(() => {
+    setDragging(false)
   }, [])
 
-  const handleMouseUp = useCallback(() => {
-    isDragging.current = false
-    document.body.style.cursor = ''
-    document.body.style.userSelect = ''
-  }, [])
-
+  // Set cursor on body during drag
   useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => handleMove(e.clientX)
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) handleMove(e.touches[0].clientX)
+    if (dragging) {
+      document.body.style.cursor = 'col-resize'
+      document.body.style.userSelect = 'none'
+    } else {
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
     }
-    const onEnd = () => handleMouseUp()
-
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onEnd)
-    window.addEventListener('touchmove', onTouchMove, { passive: true })
-    window.addEventListener('touchend', onEnd)
-
     return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseup', onEnd)
-      window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('touchend', onEnd)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
     }
-  }, [handleMove, handleMouseUp])
+  }, [dragging])
 
   return (
     <div
       ref={containerRef}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleMouseDown}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       style={{
         position: 'relative',
         width: '100%',
@@ -84,8 +76,21 @@ export default function WipeComparison({
         overflow: 'hidden',
         border: '2px solid #333',
         cursor: 'col-resize',
+        touchAction: 'none',
       }}
     >
+      {/* Drag shield: blocks iframes from stealing pointer events during drag */}
+      {dragging && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 15,
+            cursor: 'col-resize',
+          }}
+        />
+      )}
+
       {/* AFTER layer (full width, sits behind) */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}>
         {afterContent}
@@ -108,40 +113,6 @@ export default function WipeComparison({
         </div>
       </div>
 
-      {/* Labels */}
-      <div style={{
-        position: 'absolute',
-        top: 16,
-        left: 16,
-        background: 'rgba(0,0,0,0.7)',
-        color: '#fff',
-        padding: '6px 14px',
-        fontSize: 13,
-        fontWeight: 700,
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase' as const,
-        zIndex: 10,
-        pointerEvents: 'none' as const,
-      }}>
-        {beforeLabel}
-      </div>
-      <div style={{
-        position: 'absolute',
-        top: 16,
-        right: 16,
-        background: 'var(--world-accent, rgba(245,158,11,0.9))',
-        color: '#0f172a',
-        padding: '6px 14px',
-        fontSize: 13,
-        fontWeight: 700,
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase' as const,
-        zIndex: 10,
-        pointerEvents: 'none' as const,
-      }}>
-        {afterLabel}
-      </div>
-
       {/* Slider line (visible) */}
       <div
         style={{
@@ -160,8 +131,6 @@ export default function WipeComparison({
 
       {/* Slider grab zone (wide invisible hit area, covers full height) */}
       <div
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleMouseDown}
         style={{
           position: 'absolute',
           top: 0,

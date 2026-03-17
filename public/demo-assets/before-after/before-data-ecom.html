@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Analysis - E-commerce Data</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fff;
+            color: #333;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .response-box {
+            background: #f7f7f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px 28px;
+        }
+        .ai-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-icon {
+            width: 18px;
+            height: 18px;
+            background: #10a37f;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0 0 16px;
+        }
+        p {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 12px;
+        }
+        ul {
+            margin: 0 0 16px;
+            padding-left: 20px;
+        }
+        li {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .summary-heading {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin: 20px 0 8px;
+        }
+        .recommendation {
+            background: #f0f9ff;
+            border-left: 3px solid #3b82f6;
+            padding: 12px 16px;
+            margin: 16px 0;
+            font-size: 14px;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="response-box">
+        <div class="ai-label">
+            <span class="ai-icon">AI</span>
+            AI Analysis Result
+        </div>
+
+        <h3>E-commerce Performance Summary</h3>
+
+        <p>I've analyzed your three spreadsheets. Here's a summary of the key findings:</p>
+
+        <div class="summary-heading">Overall Performance</div>
+        <ul>
+            <li>Total marketing spend: $394,800 over 12 months</li>
+            <li>Total revenue: $1,876,400</li>
+            <li>Overall ROAS: 4.75x</li>
+            <li>Total orders: 14,231</li>
+            <li>Average order value: $131.82</li>
+        </ul>
+
+        <div class="summary-heading">Channel Breakdown</div>
+        <ul>
+            <li><strong>Google Shopping:</strong> $132,000 spend, 4,892 orders, ROAS 4.2x</li>
+            <li><strong>Meta:</strong> $96,000 spend, 3,241 orders, ROAS 4.8x</li>
+            <li><strong>Email:</strong> $36,000 spend, 2,987 orders, ROAS 9.1x</li>
+            <li><strong>Organic:</strong> $48,000 spend (SEO), 1,823 orders, ROAS 5.3x</li>
+            <li><strong>Social:</strong> $42,800 spend, 876 orders, ROAS 2.9x</li>
+            <li><strong>Referral:</strong> $40,000 spend, 412 orders, ROAS 3.4x</li>
+        </ul>
+
+        <div class="summary-heading">Key Trends</div>
+        <ul>
+            <li>Revenue peaked in November (holiday season), up 34% from October</li>
+            <li>Email marketing had the highest ROI across all channels</li>
+            <li>Google Shopping drove the most orders by volume</li>
+            <li>Social media had the lowest ROAS but contributed to brand awareness</li>
+        </ul>
+
+        <div class="recommendation">
+            <strong>Recommendation:</strong> Increase email marketing frequency and segmentation. Consider reducing social media spend or reallocating to Google Shopping and Meta, which show stronger direct returns.
+        </div>
+
+        <p style="color: #999; font-size: 12px; margin-top: 20px;">Analysis based on 3 uploaded files: marketing-spend.csv, sales-by-product.csv, customer-purchases.csv</p>
+    </div>
+</body>
+</html>

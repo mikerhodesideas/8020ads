@@ -1,0 +1,73 @@
+Month,Source,MQL,SQL,Opportunity,Won,Avg_Deal_Value
+Jan-2025,Google Ads,67,39,21,11,2732
+Jan-2025,Meta,47,28,15,6,2450
+Jan-2025,Email,34,20,11,7,3536
+Jan-2025,Events,26,14,7,6,9105
+Jan-2025,Content,31,17,9,5,3046
+Jan-2025,Referral,17,9,5,5,4652
+Feb-2025,Google Ads,70,41,21,11,3018
+Feb-2025,Meta,53,29,16,7,2442
+Feb-2025,Email,29,16,8,6,3452
+Feb-2025,Events,24,13,6,5,8731
+Feb-2025,Content,26,16,9,3,2866
+Feb-2025,Referral,17,10,5,4,4483
+Mar-2025,Google Ads,71,42,22,10,3089
+Mar-2025,Meta,52,29,15,7,2573
+Mar-2025,Email,40,22,12,8,3679
+Mar-2025,Events,32,18,9,7,10445
+Mar-2025,Content,28,15,8,4,3086
+Mar-2025,Referral,23,13,6,6,4322
+Apr-2025,Google Ads,70,39,19,10,2563
+Apr-2025,Meta,52,31,17,6,2263
+Apr-2025,Email,32,19,9,7,3759
+Apr-2025,Events,29,17,8,6,8897
+Apr-2025,Content,26,15,8,4,3197
+Apr-2025,Referral,25,14,7,7,4554
+May-2025,Google Ads,68,38,21,11,3115
+May-2025,Meta,57,33,18,8,2169
+May-2025,Email,38,21,11,7,3154
+May-2025,Events,28,15,7,7,9476
+May-2025,Content,33,19,11,5,2882
+May-2025,Referral,22,13,7,6,4191
+Jun-2025,Google Ads,75,46,23,11,2547
+Jun-2025,Meta,57,30,16,7,2486
+Jun-2025,Email,32,17,8,7,3334
+Jun-2025,Events,30,16,9,7,10531
+Jun-2025,Content,31,18,10,5,2750
+Jun-2025,Referral,20,11,6,6,4566
+Jul-2025,Google Ads,70,39,21,11,2742
+Jul-2025,Meta,54,29,16,7,2249
+Jul-2025,Email,38,23,12,8,3607
+Jul-2025,Events,27,15,8,6,9017
+Jul-2025,Content,33,18,9,5,2737
+Jul-2025,Referral,20,11,5,5,4926
+Aug-2025,Google Ads,68,37,18,9,2470
+Aug-2025,Meta,53,29,16,7,2653
+Aug-2025,Email,33,19,9,7,3546
+Aug-2025,Events,25,13,6,6,8572
+Aug-2025,Content,32,18,9,5,2779
+Aug-2025,Referral,20,11,5,5,4915
+Sep-2025,Google Ads,45,26,15,15,2889
+Sep-2025,Meta,52,32,18,18,2139
+Sep-2025,Email,37,20,11,11,3531
+Sep-2025,Events,80,46,25,25,8552
+Sep-2025,Content,40,23,13,13,3297
+Sep-2025,Referral,27,16,8,8,4068
+Oct-2025,Google Ads,68,38,22,11,2925
+Oct-2025,Meta,54,30,17,7,2635
+Oct-2025,Email,33,19,9,6,3629
+Oct-2025,Events,32,19,10,7,9762
+Oct-2025,Content,31,19,9,5,2726
+Oct-2025,Referral,24,14,7,6,4622
+Nov-2025,Google Ads,65,35,20,9,2967
+Nov-2025,Meta,53,32,17,6,2552
+Nov-2025,Email,33,20,10,8,3622
+Nov-2025,Events,28,15,8,6,8613
+Nov-2025,Content,25,14,7,3,3001
+Nov-2025,Referral,19,10,5,5,4796
+Dec-2025,Google Ads,72,42,22,10,2759
+Dec-2025,Meta,51,30,15,6,2368
+Dec-2025,Email,33,19,10,8,3113
+Dec-2025,Events,26,16,8,6,8968
+Dec-2025,Content,26,14,7,4,3256
+Dec-2025,Referral,20,11,5,5,4594

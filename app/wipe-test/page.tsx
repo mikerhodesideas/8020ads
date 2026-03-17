@@ -69,7 +69,7 @@ export default function WipeTest() {
             Drag to compare
           </h1>
           <p style={{ fontSize: 16, color: '#94a3b8' }}>
-            The left side shows the original. The right shows what AI built in 47 seconds.
+            The left side shows the original. The right shows what AI built in under a minute.
           </p>
         </div>
 

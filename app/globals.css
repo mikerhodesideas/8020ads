@@ -599,12 +599,13 @@ h1, h2, h3, h4, h5, h6 {
   --world-prompt-bg: rgba(255, 255, 255, 0.8);
 
   /* Skill card vars */
-  --world-skill-card-bg: #faf6ef;
-  --world-skill-card-border: #f59e0b;
-  --world-skill-download-border: #f59e0b;
-  --world-skill-download-hover-bg: rgba(245, 158, 11, 0.05);
-  --world-skill-download-bg: transparent;
+  --world-skill-card-bg: #fdf5eb;
+  --world-skill-card-border: #B8860B;
+  --world-skill-download-border: #C4922A;
+  --world-skill-download-hover-bg: rgba(184, 134, 11, 0.08);
+  --world-skill-download-bg: rgba(184, 134, 11, 0.04);
   --world-skill-subtext: var(--color-faint);
+  --world-skill-card-glow: transparent;
 
   /* Confetti */
   --world-confetti-1: #B8860B;
@@ -672,12 +673,13 @@ h1, h2, h3, h4, h5, h6 {
   --world-prompt-bg: rgba(0, 0, 0, 0.3);
 
   /* Skill card vars */
-  --world-skill-card-bg: var(--mario-dark);
+  --world-skill-card-bg: #1a0f08;
   --world-skill-card-border: var(--mario-pipe);
   --world-skill-download-border: var(--mario-coin);
-  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
-  --world-skill-download-bg: rgba(255, 215, 0, 0.06);
+  --world-skill-download-hover-bg: rgba(255, 215, 0, 0.08);
+  --world-skill-download-bg: rgba(255, 215, 0, 0.05);
   --world-skill-subtext: rgba(255, 255, 255, 0.4);
+  --world-skill-card-glow: rgba(255, 215, 0, 0.5);
 
   /* Confetti */
   --world-confetti-1: #FFD700;
@@ -1125,12 +1127,13 @@ h1, h2, h3, h4, h5, h6 {
   --world-prompt-bg: rgba(0, 0, 0, 0.3);
 
   /* Skill card vars */
-  --world-skill-card-bg: #0A1208;
-  --world-skill-card-border: #33FF33;
-  --world-skill-download-border: #33FF33;
-  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
-  --world-skill-download-bg: rgba(51, 255, 51, 0.06);
+  --world-skill-card-bg: #120808;
+  --world-skill-card-border: #CC2222;
+  --world-skill-download-border: #DD3333;
+  --world-skill-download-hover-bg: rgba(204, 34, 34, 0.1);
+  --world-skill-download-bg: rgba(204, 34, 34, 0.06);
   --world-skill-subtext: rgba(51, 255, 51, 0.5);
+  --world-skill-card-glow: rgba(51, 255, 51, 0.5);
 
   /* Confetti */
   --world-confetti-1: #33FF33;
@@ -1319,11 +1322,11 @@ nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
   --world-prompt-bg: rgba(253, 251, 247, 0.8);
 
   /* Skill card vars */
-  --world-skill-card-bg: #FDFBF7;
-  --world-skill-card-border: #C5A55A;
-  --world-skill-download-border: #C5A55A;
-  --world-skill-download-hover-bg: rgba(197, 165, 90, 0.08);
-  --world-skill-download-bg: transparent;
+  --world-skill-card-bg: #FAF4E8;
+  --world-skill-card-border: #B8944A;
+  --world-skill-download-border: #C9A455;
+  --world-skill-download-hover-bg: rgba(185, 148, 74, 0.1);
+  --world-skill-download-bg: rgba(185, 148, 74, 0.04);
   --world-skill-subtext: rgba(74, 85, 104, 0.6);
 
   /* Confetti */
@@ -1464,12 +1467,13 @@ nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
   --world-prompt-bg: rgba(0, 0, 0, 0.3);
 
   /* Skill card vars */
-  --world-skill-card-bg: #060610;
+  --world-skill-card-bg: #060818;
   --world-skill-card-border: #00F0F0;
-  --world-skill-download-border: #00F0F0;
-  --world-skill-download-hover-bg: rgba(255, 255, 255, 0.05);
+  --world-skill-download-border: #00D4D4;
+  --world-skill-download-hover-bg: rgba(0, 240, 240, 0.1);
   --world-skill-download-bg: rgba(0, 240, 240, 0.06);
   --world-skill-subtext: rgba(0, 240, 240, 0.5);
+  --world-skill-card-glow: rgba(0, 240, 240, 0.5);
 
   /* Confetti */
   --world-confetti-1: #00F0F0;
@@ -1618,11 +1622,11 @@ nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
   --world-prompt-bg: rgba(26, 58, 26, 0.15);
 
   /* Skill card vars */
-  --world-skill-card-bg: rgba(240, 232, 208, 0.95);
-  --world-skill-card-border: #5C7A2E;
-  --world-skill-download-border: #5C7A2E;
-  --world-skill-download-hover-bg: rgba(45, 107, 34, 0.08);
-  --world-skill-download-bg: transparent;
+  --world-skill-card-bg: rgba(244, 235, 210, 0.97);
+  --world-skill-card-border: #DAA520;
+  --world-skill-download-border: #6B8C2E;
+  --world-skill-download-hover-bg: rgba(218, 165, 32, 0.1);
+  --world-skill-download-bg: rgba(218, 165, 32, 0.05);
   --world-skill-subtext: #6B7A5A;
 
   /* Confetti */
@@ -1779,12 +1783,13 @@ nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
   --world-prompt-bg: rgba(0, 0, 0, 0.3);
 
   /* Skill card vars */
-  --world-skill-card-bg: #0A0A14;
-  --world-skill-card-border: rgba(201, 168, 76, 0.6);
-  --world-skill-download-border: rgba(201, 168, 76, 0.4);
-  --world-skill-download-hover-bg: rgba(201, 168, 76, 0.06);
-  --world-skill-download-bg: rgba(201, 168, 76, 0.03);
+  --world-skill-card-bg: #0C0C1E;
+  --world-skill-card-border: #D4AF37;
+  --world-skill-download-border: #C9A84C;
+  --world-skill-download-hover-bg: rgba(212, 175, 55, 0.12);
+  --world-skill-download-bg: rgba(212, 175, 55, 0.06);
   --world-skill-subtext: rgba(201, 168, 76, 0.5);
+  --world-skill-card-glow: rgba(212, 175, 55, 0.5);
 
   /* Confetti */
   --world-confetti-1: #C9A84C;

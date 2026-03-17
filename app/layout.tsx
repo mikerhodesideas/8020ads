@@ -38,8 +38,14 @@ const vt323 = VT323({
 })
 
 export const metadata: Metadata = {
-  title: '8020skill - The AI Game',
-  description: 'See AI solve real business problems live. Pick your world. Level up.',
+  title: '8020skill - ChatGPT gives you text. This gives you finished work.',
+  description: 'Pick a task. See what comes back. Then try it yourself.',
+  openGraph: {
+    title: '8020skill - ChatGPT gives you text. This gives you finished work.',
+    description: 'Pick a task. See what comes back. Then try it yourself.',
+    type: 'website',
+    url: 'https://8020skill.com',
+  },
 }
 
 export default function RootLayout({

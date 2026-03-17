@@ -1692,85 +1692,258 @@ function BeforePlaceholder() {
 
 // === DEMO 4: Content Repurposer (After) ===
 function AfterContentRepurposer() {
+  const [activeTab, setActiveTab] = React.useState(0)
+  const [copied, setCopied] = React.useState(-1)
+
+  const dsp = "'Fraunces', Georgia, serif"
+  const ui = "'Nunito Sans', system-ui, sans-serif"
+  const paper = '#F9F6F0'
+  const linen = '#F0EBE1'
+  const warmWhite = '#FFFDF8'
+  const ink = '#2C2418'
+  const brown = '#6B5B4A'
+  const muted = '#9C8E7E'
+  const orange = '#C97B2A'
+  const sage = '#5B8A5A'
+  const red = '#BF3B30'
+
+  const handleCopy = (idx: number) => {
+    setCopied(idx)
+    setTimeout(() => setCopied(-1), 2000)
+  }
+
+  const tabs = ['LinkedIn', 'X Thread', 'Email', 'Summary Card']
+  const badges = [
+    { text: 'Ready to post', bg: 'rgba(91,138,90,0.1)', color: sage },
+    { text: '6 tweets', bg: 'rgba(201,123,42,0.1)', color: orange },
+    { text: 'HTML ready', bg: 'rgba(201,123,42,0.1)', color: orange },
+    { text: 'For slides', bg: 'rgba(123,107,165,0.1)', color: '#7B6BA5' },
+  ]
+
   return (
-    <div style={{ fontFamily: ff, background: '#f8f9fa', color: '#1a1a2e', padding: 32 }}>
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <div style={{ background: '#0f172a', color: 'white', padding: 32, marginBottom: 24, borderRadius: 2 }}>
-          <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 4 }}>Content Repurposer Hub</h1>
-          <p style={{ color: '#94a3b8', fontSize: 14 }}>1 blog post repurposed into 4 platform-specific versions</p>
-          <div style={{ display: 'flex', gap: 32, marginTop: 20 }}>
-            {[{v:'1,247',l:'Words Analyzed'},{v:'4',l:'Platforms'},{v:'5',l:'Key Insights Extracted'},{v:'12s',l:'Processing Time'}].map(m=>(
-              <div key={m.l}><div style={{ fontSize: 22, fontWeight: 700, color: '#f59e0b' }}>{m.v}</div><div style={{ color: '#94a3b8', fontSize: 14, marginTop: 2 }}>{m.l}</div></div>
+    <>
+      <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+      <div style={{ fontFamily: ui, background: paper, color: ink, padding: '24px 24px 48px', backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4C9B8' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}>
+        <div style={{ maxWidth: 940, margin: '0 0 0 auto' }}>
+
+          {/* Header */}
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: 'uppercase', color: muted, marginBottom: 12 }}>Content Repurposer Skill</div>
+            <h1 style={{ fontFamily: dsp, fontSize: 36, fontWeight: 900, lineHeight: 1.15, color: ink, marginBottom: 8 }}>One Post, Four Platforms</h1>
+            <p style={{ fontSize: 15, fontWeight: 300, color: brown, lineHeight: 1.6 }}>Your blog post analyzed, key insights extracted, and platform-specific versions created. Each one tuned for how people actually read on that platform.</p>
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 28 }}>
+            {[
+              { num: '1,247', label: 'Words Analyzed', color: ink },
+              { num: '5', label: 'Key Insights', color: orange },
+              { num: '4', label: 'Platforms', color: sage },
+              { num: '12s', label: 'Processing Time', color: red },
+            ].map(s => (
+              <div key={s.label} style={{ background: warmWhite, border: `1px solid ${linen}`, padding: '18px 20px', borderTop: `3px solid ${s.color}` }}>
+                <div style={{ fontFamily: dsp, fontSize: 28, fontWeight: 900, color: s.color, lineHeight: 1 }}>{s.num}</div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: muted, marginTop: 4 }}>{s.label}</div>
+              </div>
             ))}
           </div>
-        </div>
-        {/* LinkedIn Version */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>LinkedIn Post <span style={{ fontSize: 14, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: '#eff6ff', color: '#2563eb' }}>Ready to post</span></h2>
-            <span style={{ fontSize: 14, fontWeight: 600, padding: '6px 14px', borderRadius: 2, background: '#0f172a', color: 'white', cursor: 'pointer' }}>Copy</span>
-          </div>
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: 20, borderRadius: 2, fontSize: 14, lineHeight: 1.7, color: '#334155' }}>
-            <p style={{ fontWeight: 700, marginBottom: 12 }}>We cut our Google Ads waste by 34%. Without touching bids.</p>
-            <p style={{ marginBottom: 12 }}>Last quarter I noticed something most account managers miss.</p>
-            <p style={{ marginBottom: 12 }}>Our search terms report had 2,100 terms. Only 340 were relevant.</p>
-            <p style={{ marginBottom: 12 }}>The rest? Bleeding budget at $0.80 per click.</p>
-            <p style={{ marginBottom: 12 }}>Here are the 3 steps that changed everything:</p>
-            <p style={{ marginBottom: 4 }}>1. Exported ALL search terms (not just top 50)</p>
-            <p style={{ marginBottom: 4 }}>2. Classified by intent using ngram analysis</p>
-            <p style={{ marginBottom: 12 }}>3. Built negative keyword lists by category</p>
-            <p style={{ marginBottom: 12 }}>Result: 34% less waste. Same conversions. Better CPA.</p>
-            <p style={{ color: '#0a66c2' }}>#GoogleAds #PPC #SearchTerms</p>
-          </div>
-        </div>
-        {/* X Thread */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>X Thread <span style={{ fontSize: 14, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: '#f0fdf4', color: '#16a34a' }}>6 tweets</span></h2>
-            <span style={{ fontSize: 14, fontWeight: 600, padding: '6px 14px', borderRadius: 2, background: '#0f172a', color: 'white', cursor: 'pointer' }}>Copy</span>
-          </div>
-          {['1/ We cut Google Ads waste by 34% without touching bids. Here\'s the exact process (takes 20 minutes):',
-            '2/ Most accounts have 80% irrelevant search terms. Ours had 2,100 terms. Only 340 were actually relevant. The rest were burning $0.80 per click.',
-            '3/ Step 1: Export ALL search terms for the last 90 days. Not just the top 50 that Google shows you. The full export. This is where the waste hides.',
-            '4/ Step 2: Run ngram analysis. Group terms by intent patterns. "emergency plumber near me" = high intent. "plumber salary" = zero intent.',
-            '5/ Step 3: Build negative keyword lists by category. Geographic exclusions, DIY searches, salary/career terms, competitor brands.',
-            '6/ Result: 34% less wasted spend. Same conversion volume. CPA dropped from $27 to $18. The data was always there. We just weren\'t looking at it right.'
-          ].map((tweet, i) => (
-            <div key={i} style={{ padding: '12px 16px', borderLeft: '3px solid #e2e8f0', marginBottom: 8, borderRadius: '0 2px 2px 0', background: '#fafbfc', fontSize: 14, color: '#334155', lineHeight: 1.5 }}>{tweet}</div>
-          ))}
-        </div>
-        {/* Email Newsletter */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, marginBottom: 16, borderRadius: 2 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>Email Newsletter <span style={{ fontSize: 14, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: '#fffbeb', color: '#d97706' }}>HTML ready</span></h2>
-            <span style={{ fontSize: 14, fontWeight: 600, padding: '6px 14px', borderRadius: 2, background: '#0f172a', color: 'white', cursor: 'pointer' }}>Copy</span>
-          </div>
-          <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', padding: 20, borderRadius: 2, fontSize: 14, lineHeight: 1.7, color: '#334155' }}>
-            <p style={{ fontWeight: 700, fontSize: 16, marginBottom: 8 }}>Subject: We cut ad waste by 34% (here&apos;s how)</p>
-            <p style={{ color: '#94a3b8', marginBottom: 16 }}>Preview: The search terms trick most managers miss</p>
-            <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: 16 }}>
-              <p style={{ marginBottom: 12 }}>Quick one today.</p>
-              <p style={{ marginBottom: 12 }}>Last quarter we found that 84% of our search terms were irrelevant. That&apos;s not a typo. 1,760 out of 2,100 terms had zero business value.</p>
-              <p style={{ marginBottom: 12 }}>The fix took 20 minutes and saved 34% of ad spend.</p>
-              <p style={{ marginBottom: 12 }}>Full breakdown in the blog post: [LINK]</p>
+
+          {/* Source Analysis */}
+          <div style={{ background: warmWhite, border: `1px solid ${linen}`, padding: '18px 22px', marginBottom: 28, display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+            <div style={{ width: 3, minHeight: 60, background: orange, flexShrink: 0 }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: muted, marginBottom: 6 }}>Source Post</div>
+              <div style={{ fontFamily: dsp, fontSize: 18, fontWeight: 700, color: ink }}>How We Cut Our Google Ads Waste by 34%</div>
             </div>
           </div>
-        </div>
-        {/* Summary Card */}
-        <div style={{ background: 'white', border: '1px solid #e2e8f0', padding: 24, borderRadius: 2 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>Summary Card <span style={{ fontSize: 14, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: '#faf5ff', color: '#7c3aed' }}>For slides/social</span></h2>
-          <div style={{ background: '#0f172a', color: 'white', padding: 32, borderRadius: 2 }}>
-            <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 16, lineHeight: 1.2 }}>Cut Google Ads Waste by <span style={{ color: '#f59e0b' }}>34%</span></div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
-              <div style={{ textAlign: 'center' }}><div style={{ fontSize: 24, fontWeight: 800, color: '#f59e0b' }}>2,100</div><div style={{ fontSize: 14, color: '#94a3b8' }}>Terms Analyzed</div></div>
-              <div style={{ textAlign: 'center' }}><div style={{ fontSize: 24, fontWeight: 800, color: '#ef4444' }}>1,760</div><div style={{ fontSize: 14, color: '#94a3b8' }}>Irrelevant</div></div>
-              <div style={{ textAlign: 'center' }}><div style={{ fontSize: 24, fontWeight: 800, color: '#22c55e' }}>34%</div><div style={{ fontSize: 14, color: '#94a3b8' }}>Waste Cut</div></div>
+
+          {/* Tabs */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginBottom: 0 }}>
+            {tabs.map((tab, i) => (
+              <button key={tab} onClick={() => setActiveTab(i)} style={{
+                fontFamily: ui, fontSize: 15, fontWeight: 700, padding: '14px 0',
+                background: activeTab === i ? warmWhite : 'transparent', border: `1px solid ${linen}`,
+                borderBottom: activeTab === i ? `3px solid ${orange}` : `1px solid ${linen}`,
+                color: activeTab === i ? orange : brown, cursor: 'pointer',
+                letterSpacing: 0.3, transition: 'all 0.15s',
+              }}>{tab}</button>
+            ))}
+          </div>
+
+          {/* Tab content wrapper */}
+          <div style={{ background: warmWhite, border: `1px solid ${linen}`, borderTop: 'none', padding: 24 }}>
+            {/* Header for each tab */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontFamily: dsp, fontSize: 18, fontWeight: 700, color: ink }}>{tabs[activeTab]}</span>
+                <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', background: badges[activeTab].bg, color: badges[activeTab].color }}>{badges[activeTab].text}</span>
+              </div>
+              <button onClick={() => handleCopy(activeTab)} style={{
+                fontFamily: ui, fontSize: 12, fontWeight: 700, padding: '6px 16px',
+                background: copied === activeTab ? sage : ink, color: paper,
+                border: 'none', cursor: 'pointer', transition: 'background 0.2s',
+              }}>{copied === activeTab ? 'Copied!' : 'Copy'}</button>
+            </div>
+
+            {/* LinkedIn */}
+            {activeTab === 0 && (
+              <div style={{ background: '#fff', border: `1px solid ${linen}`, overflow: 'hidden' }}>
+                <div style={{ display: 'flex', gap: 12, padding: '16px 20px 12px', alignItems: 'flex-start' }}>
+                  <div style={{ width: 48, height: 48, background: ink, display: 'flex', alignItems: 'center', justifyContent: 'center', color: paper, fontWeight: 700, fontSize: 18, flexShrink: 0 }}>MR</div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: ink }}>Mike Rhodes</div>
+                    <div style={{ fontSize: 12, color: muted, marginTop: 1 }}>Founder @ ads2ai.com</div>
+                    <div style={{ fontSize: 11, color: '#A5A09A', marginTop: 2 }}>Just now</div>
+                  </div>
+                </div>
+                <div style={{ padding: '0 20px 16px', fontSize: 14, lineHeight: 1.65, color: '#191919' }}>
+                  <p style={{ fontWeight: 700, fontSize: 15, marginBottom: 14 }}>We cut our Google Ads waste by 34%. Without touching bids.</p>
+                  <p style={{ marginBottom: 12 }}>Last quarter I noticed something most account managers miss.</p>
+                  <p style={{ marginBottom: 12 }}>Our search terms report had 2,100 terms. Only 340 were relevant.</p>
+                  <p style={{ marginBottom: 12 }}>The rest? Bleeding budget at $0.80 per click.</p>
+                  <p style={{ marginBottom: 12 }}>Here are the 3 steps that changed everything:</p>
+                  <p style={{ marginBottom: 4 }}>1. Exported ALL search terms (not just top 50)</p>
+                  <p style={{ marginBottom: 4 }}>2. Classified by intent using ngram analysis</p>
+                  <p style={{ marginBottom: 12 }}>3. Built negative keyword lists by category</p>
+                  <p style={{ marginBottom: 12 }}>Result: 34% less waste. Same conversions. Better CPA.</p>
+                  <p style={{ color: '#0a66c2', fontSize: 13 }}>#GoogleAds #PPC #SearchTerms</p>
+                </div>
+                <div style={{ padding: '8px 20px', borderTop: `1px solid ${linen}`, display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: muted }}>
+                  <span style={{ display: 'inline-flex', gap: -2 }}>
+                    <span style={{ width: 18, height: 18, background: '#0a66c2', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, borderRadius: '50%' }}>+</span>
+                    <span style={{ width: 18, height: 18, background: '#44712e', color: '#fff', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, borderRadius: '50%', marginLeft: -4 }}>&#9733;</span>
+                  </span>
+                  <span>247 reactions</span>
+                  <span style={{ marginLeft: 'auto' }}>38 comments</span>
+                </div>
+              </div>
+            )}
+
+            {/* X Thread */}
+            {activeTab === 1 && (
+              <div>
+                {[
+                  '1/ We cut Google Ads waste by 34% without touching bids. Here\'s the exact process (takes 20 minutes):',
+                  '2/ Most accounts have 80% irrelevant search terms. Ours had 2,100 terms. Only 340 were actually relevant. The rest were burning $0.80 per click.',
+                  '3/ Step 1: Export ALL search terms for the last 90 days. Not just the top 50 that Google shows you. The full export. This is where the waste hides.',
+                  '4/ Step 2: Run ngram analysis. Group terms by intent patterns. "emergency plumber near me" = high intent. "plumber salary" = zero intent.',
+                  '5/ Step 3: Build negative keyword lists by category. Geographic exclusions, DIY searches, salary/career terms, competitor brands.',
+                  '6/ Result: 34% less wasted spend. Same conversion volume. CPA dropped from $27 to $18. The data was always there. We just weren\'t looking at it right.',
+                ].map((tweet, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 14, marginBottom: i < 5 ? 0 : 0, padding: '14px 0', borderBottom: i < 5 ? `1px solid ${linen}` : 'none' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                      <div style={{ width: 36, height: 36, background: ink, display: 'flex', alignItems: 'center', justifyContent: 'center', color: paper, fontWeight: 700, fontSize: 12, borderRadius: '50%' }}>MR</div>
+                      {i < 5 && <div style={{ width: 2, flex: 1, background: linen, marginTop: 6 }} />}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
+                        <span style={{ fontWeight: 700, fontSize: 13, color: ink }}>Mike Rhodes</span>
+                        <span style={{ fontSize: 13, color: muted }}>@mikerhodes</span>
+                      </div>
+                      <p style={{ fontSize: 14, lineHeight: 1.55, color: brown }}>{tweet}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Email Newsletter */}
+            {activeTab === 2 && (
+              <div style={{ background: '#fff', border: `1px solid ${linen}`, overflow: 'hidden' }}>
+                <div style={{ background: linen, padding: '12px 20px', borderBottom: `1px solid ${linen}` }}>
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: muted, width: 50 }}>From:</span>
+                    <span style={{ fontSize: 12, color: ink }}>Mike Rhodes &lt;mike@ads2ai.com&gt;</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: muted, width: 50 }}>Subject:</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: ink }}>We cut ad waste by 34% (here&apos;s how)</span>
+                  </div>
+                </div>
+                <div style={{ padding: '8px 20px', borderBottom: `1px solid ${linen}`, fontSize: 11, color: muted }}>
+                  Preview: The search terms trick most managers miss
+                </div>
+                <div style={{ padding: 24, fontSize: 14, lineHeight: 1.75, color: brown }}>
+                  <p style={{ marginBottom: 14 }}>Quick one today.</p>
+                  <p style={{ marginBottom: 14 }}>Last quarter we found that 84% of our search terms were irrelevant. That&apos;s not a typo. 1,760 out of 2,100 terms had zero business value.</p>
+                  <p style={{ marginBottom: 14 }}>The fix took 20 minutes and saved 34% of ad spend.</p>
+                  <p style={{ marginBottom: 14 }}>Here&apos;s the short version:</p>
+                  <ol style={{ paddingLeft: 20, marginBottom: 14 }}>
+                    <li style={{ marginBottom: 6 }}>Export ALL search terms (not just the top 50)</li>
+                    <li style={{ marginBottom: 6 }}>Classify by intent using ngram analysis</li>
+                    <li>Build negative keyword lists by category</li>
+                  </ol>
+                  <p style={{ marginBottom: 14 }}>Full breakdown with screenshots in the blog post.</p>
+                  <div style={{ display: 'inline-block', padding: '10px 24px', background: orange, color: '#fff', fontWeight: 700, fontSize: 13, marginBottom: 14 }}>Read the Full Post</div>
+                  <p style={{ fontSize: 12, color: muted, marginTop: 14 }}>You&apos;re receiving this because you subscribed at ads2ai.com</p>
+                </div>
+              </div>
+            )}
+
+            {/* Summary Card */}
+            {activeTab === 3 && (
+              <div style={{ background: ink, padding: 32 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: muted, marginBottom: 16 }}>Case Study</div>
+                <div style={{ fontFamily: dsp, fontSize: 32, fontWeight: 900, color: paper, lineHeight: 1.15, marginBottom: 24 }}>Cut Google Ads Waste by <span style={{ color: orange }}>34%</span></div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 24 }}>
+                  <div style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.06)' }}>
+                    <div style={{ fontFamily: dsp, fontSize: 28, fontWeight: 900, color: orange }}>2,100</div>
+                    <div style={{ fontSize: 12, color: muted, marginTop: 4 }}>Terms Analyzed</div>
+                  </div>
+                  <div style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.06)' }}>
+                    <div style={{ fontFamily: dsp, fontSize: 28, fontWeight: 900, color: red }}>1,760</div>
+                    <div style={{ fontSize: 12, color: muted, marginTop: 4 }}>Irrelevant</div>
+                  </div>
+                  <div style={{ textAlign: 'center', padding: 16, background: 'rgba(255,255,255,0.06)' }}>
+                    <div style={{ fontFamily: dsp, fontSize: 28, fontWeight: 900, color: sage }}>34%</div>
+                    <div style={{ fontSize: 12, color: muted, marginTop: 4 }}>Waste Eliminated</div>
+                  </div>
+                </div>
+                <div style={{ fontSize: 14, color: '#A5A09A', lineHeight: 1.6 }}>3 steps. 20 minutes. Same conversions, better CPA.</div>
+              </div>
+            )}
+          </div>
+
+          {/* Key Insights */}
+          <div style={{ marginTop: 28, borderTop: `2px solid ${linen}`, paddingTop: 28 }}>
+            <div style={{ fontFamily: dsp, fontSize: 20, fontWeight: 700, color: ink, marginBottom: 6 }}>Skill Notes</div>
+            <p style={{ fontSize: 13, fontWeight: 300, color: brown, marginBottom: 16 }}>What the Content Repurposer detected and how it adapted each version.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              {[
+                { icon: '1', text: 'Hook uses a client objection (pattern interrupt). Outperforms "I just learned..." openers by 3x on LinkedIn.' },
+                { icon: '2', text: 'Specific numbers (34%, 2,100 terms, $0.80/click) build credibility. Generic claims get scrolled past.' },
+                { icon: '3', text: 'X thread splits methodology into one-concept-per-tweet. Numbered for easy retweet of individual steps.' },
+                { icon: '4', text: 'Email version is 60% shorter than blog. Readers scan, so the CTA comes early with a "read more" link.' },
+              ].map(note => (
+                <div key={note.icon} style={{ display: 'flex', gap: 12, padding: '14px 16px', background: warmWhite, border: `1px solid ${linen}` }}>
+                  <div style={{ width: 24, height: 24, background: `rgba(201,123,42,0.1)`, color: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{note.icon}</div>
+                  <div style={{ fontSize: 13, color: brown, lineHeight: 1.55 }}>{note.text}</div>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Time comparison */}
+          <div style={{ marginTop: 28, background: warmWhite, border: `1px solid ${linen}`, padding: 28 }}>
+            <div style={{ fontFamily: dsp, fontSize: 16, fontWeight: 700, textAlign: 'center', marginBottom: 16, color: ink }}>Time Saved</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: muted, width: 100, textAlign: 'right', flexShrink: 0 }}>Manual rewrite</span>
+              <div style={{ flex: 1, height: 24, background: linen, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: '100%', background: '#A5A09A', display: 'flex', alignItems: 'center', paddingLeft: 12, fontSize: 12, fontWeight: 700, color: '#fff' }}>~3 hours</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: muted, width: 100, textAlign: 'right', flexShrink: 0 }}>Content skill</span>
+              <div style={{ flex: 1, height: 24, background: linen, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: '4%', minWidth: 44, background: red, display: 'flex', alignItems: 'center', paddingLeft: 10, fontSize: 12, fontWeight: 700, color: '#fff' }}>12s</div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center', padding: '24px 0 0', fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: '#A5A09A' }}>Content Repurposer Skill</div>
         </div>
-        <div style={{ textAlign: 'center', padding: 24, color: '#94a3b8', fontSize: 14 }}>Generated by Content Repurposer Skill | 1 blog post to 4 platforms in 12 seconds</div>
       </div>
-    </div>
+    </>
   )
 }
 

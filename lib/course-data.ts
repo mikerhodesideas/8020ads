@@ -117,7 +117,7 @@ Time to get Cowork on your computer. This takes about two minutes.
 
 ## Step 1: Download the app
 
-Go to [claude.ai/download](https://claude.ai/download) and download Cowork for your operating system (Mac or Windows).
+Go to [claude.com/download](https://claude.com/download) and download Cowork for your operating system (Mac or Windows).
 
 > [SCREENSHOT: The Cowork download page showing Mac and Windows options]
 

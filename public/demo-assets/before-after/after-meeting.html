@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting Intelligence Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; color: #1a1a2e; padding: 32px; }
+        .report { max-width: 1000px; margin: 0 auto; }
+        .report-header { background: #0f172a; color: white; padding: 32px; margin-bottom: 24px; border-radius: 2px; }
+        .report-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .report-header p { color: #94a3b8; font-size: 14px; }
+        .meta-row { display: flex; gap: 32px; margin-top: 20px; }
+        .meta-item .val { font-size: 24px; font-weight: 700; color: #f59e0b; }
+        .meta-item .lbl { color: #94a3b8; margin-top: 2px; font-size: 13px; }
+
+        .card { background: white; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 16px; border-radius: 2px; }
+        .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .badge-red { background: #fef2f2; color: #dc2626; }
+        .badge-green { background: #f0fdf4; color: #16a34a; }
+        .badge-amber { background: #fffbeb; color: #d97706; }
+        .badge-blue { background: #eff6ff; color: #2563eb; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8fafc; text-align: left; padding: 10px 12px; font-weight: 600; color: #64748b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
+        tr:hover { background: #fafbfc; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .good { color: #16a34a; font-weight: 600; }
+        .bad { color: #dc2626; font-weight: 600; }
+        .warn { color: #d97706; font-weight: 600; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+        .summary-stat { text-align: center; padding: 16px; }
+        .summary-stat .big { font-size: 28px; font-weight: 800; }
+        .summary-stat .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        /* Decisions */
+        .decision { padding: 14px 16px; border-left: 3px solid #2563eb; background: #f8fafc; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .decision-label { font-size: 11px; font-weight: 600; color: #2563eb; text-transform: uppercase; letter-spacing: 0.5px; }
+        .decision-text { font-weight: 600; font-size: 14px; margin-top: 3px; color: #0f172a; }
+        .decision-context { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        /* Timeline */
+        .timeline-item { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .timeline-item:last-child { border-bottom: none; }
+        .timeline-date { min-width: 90px; font-size: 13px; font-weight: 600; color: #0f172a; }
+        .timeline-detail { font-size: 13px; color: #334155; flex: 1; }
+        .timeline-owner { font-size: 12px; font-weight: 600; color: #64748b; }
+
+        /* Risk items */
+        .risk { padding: 14px 16px; border-left: 3px solid #dc2626; background: #fef2f2; margin-bottom: 10px; border-radius: 0 2px 2px 0; }
+        .risk-title { font-weight: 700; font-size: 14px; color: #991b1b; }
+        .risk-detail { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .risk-mitigation { font-size: 12px; color: #334155; margin-top: 6px; padding: 8px 12px; background: white; border-radius: 2px; }
+        .risk-mitigation strong { color: #0f172a; }
+
+        /* Discussion points */
+        .topic { padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; margin-bottom: 10px; border-radius: 2px; }
+        .topic-title { font-weight: 700; font-size: 14px; color: #0f172a; margin-bottom: 6px; }
+        .topic-summary { font-size: 13px; color: #334155; line-height: 1.6; }
+        .topic-outcome { font-size: 12px; font-weight: 600; color: #2563eb; margin-top: 8px; }
+
+        /* Priority badges */
+        .priority-high { background: #fef2f2; color: #dc2626; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .priority-med { background: #fffbeb; color: #d97706; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .priority-low { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+
+        /* Status badges */
+        .status-pending { background: #fffbeb; color: #d97706; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .status-done { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .status-overdue { background: #fef2f2; color: #dc2626; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; }
+        .status-blocked { background: #fef2f2; color: #dc2626; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 2px; border: 1px solid #fecaca; }
+    </style>
+</head>
+<body>
+<div class="report">
+
+    <div class="report-header">
+        <h1>Meeting Intelligence Report</h1>
+        <p>Q2 Planning Session | Apex Digital | 12 March 2026</p>
+        <div class="meta-row">
+            <div class="meta-item">
+                <div class="val">5</div>
+                <div class="lbl">Decisions Made</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">9</div>
+                <div class="lbl">Action Items</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">3</div>
+                <div class="lbl">Risks Flagged</div>
+            </div>
+            <div class="meta-item">
+                <div class="val">72 min</div>
+                <div class="lbl">Duration</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendees -->
+    <div class="card">
+        <h2>Attendees</h2>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px;">
+            <div><strong>Sarah Mitchell</strong> <span style="color:#64748b;">(MD, Chair)</span></div>
+            <div><strong>James Thornton</strong> <span style="color:#64748b;">(Head of Client Services)</span></div>
+            <div><strong>Priya Kapoor</strong> <span style="color:#64748b;">(Operations Manager)</span></div>
+            <div><strong>Tom Brennan</strong> <span style="color:#64748b;">(Senior Strategist)</span></div>
+            <div><strong>Lucy Chen</strong> <span style="color:#64748b;">(Finance)</span></div>
+        </div>
+        <div style="font-size:12px;color:#dc2626;margin-top:10px;font-weight:600;">Absent: Marcus Webb (Creative Director) - on leave, briefed separately</div>
+    </div>
+
+    <!-- Decisions Made -->
+    <div class="card">
+        <h2>Decisions Made <span class="badge badge-blue">5 decisions</span></h2>
+
+        <div class="decision">
+            <div class="decision-label">Decision 1</div>
+            <div class="decision-text">Adopt Monday.com as the agency project management tool</div>
+            <div class="decision-context">Replaces the current Asana setup. Trial showed 30% faster task handoffs between teams. Migration starts 1 April, full cutover by 15 April.</div>
+        </div>
+
+        <div class="decision">
+            <div class="decision-label">Decision 2</div>
+            <div class="decision-text">Cap new client onboarding at 3 per month through Q2</div>
+            <div class="decision-context">Team is at 92% capacity. Taking on more than 3 risks quality on existing accounts. Revisit cap at the June review once the new hire starts.</div>
+        </div>
+
+        <div class="decision">
+            <div class="decision-label">Decision 3</div>
+            <div class="decision-text">Promote Tom Brennan to Account Director effective 1 April</div>
+            <div class="decision-context">Tom will take over the Northfield and Greenleaf accounts from James, freeing James to focus on new business and the Burton Hotels expansion.</div>
+        </div>
+
+        <div class="decision">
+            <div class="decision-label">Decision 4</div>
+            <div class="decision-text">Invest $4,200/month in paid social for lead generation</div>
+            <div class="decision-context">Budget sourced from the underspend on the old PR retainer. Target: 15 qualified leads per month. Tom owns the campaign setup. First month is a test.</div>
+        </div>
+
+        <div class="decision">
+            <div class="decision-label">Decision 5</div>
+            <div class="decision-text">Restructure client reporting to bi-weekly cadence</div>
+            <div class="decision-context">Monthly reports aren't catching performance issues fast enough. Bi-weekly reports for top-10 accounts starting April. Template to be standardized by Priya.</div>
+        </div>
+    </div>
+
+    <!-- Action Items -->
+    <div class="card">
+        <h2>Action Items <span class="badge badge-amber">9 items assigned</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th>Action Item</th>
+                    <th>Deadline</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Priya Kapoor</strong></td>
+                    <td>Build Monday.com workspace and migrate active projects from Asana</td>
+                    <td>28 Mar</td>
+                    <td><span class="priority-high">High</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Priya Kapoor</strong></td>
+                    <td>Create standardized bi-weekly reporting template</td>
+                    <td>21 Mar</td>
+                    <td><span class="priority-high">High</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>James Thornton</strong></td>
+                    <td>Brief Northfield and Greenleaf on account transition to Tom</td>
+                    <td>19 Mar</td>
+                    <td><span class="priority-high">High</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Tom Brennan</strong></td>
+                    <td>Set up lead gen campaign on Meta and LinkedIn</td>
+                    <td>1 Apr</td>
+                    <td><span class="priority-med">Medium</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Tom Brennan</strong></td>
+                    <td>Shadow James on Northfield and Greenleaf accounts for 2 weeks</td>
+                    <td>31 Mar</td>
+                    <td><span class="priority-med">Medium</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Lucy Chen</strong></td>
+                    <td>Finalize Q1 P&L and circulate to leadership team</td>
+                    <td>18 Mar</td>
+                    <td><span class="priority-high">High</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Lucy Chen</strong></td>
+                    <td>Process Monday.com annual license payment ($8,400)</td>
+                    <td>25 Mar</td>
+                    <td><span class="priority-med">Medium</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Sarah Mitchell</strong></td>
+                    <td>Call Marcus to brief on Monday.com decision and Tom's promotion</td>
+                    <td>14 Mar</td>
+                    <td><span class="priority-med">Medium</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Sarah Mitchell</strong></td>
+                    <td>Review and sign off on new client onboarding SLA document</td>
+                    <td>21 Mar</td>
+                    <td><span class="priority-low">Low</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Follow-up Schedule -->
+    <div class="card">
+        <h2>Follow-up Schedule <span class="badge badge-green">Next 3 weeks</span></h2>
+
+        <div class="timeline-item">
+            <div class="timeline-date">14 Mar (Fri)</div>
+            <div class="timeline-detail">Sarah calls Marcus re: Monday.com and promotion decisions</div>
+            <div class="timeline-owner">Sarah Mitchell</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">18 Mar (Tue)</div>
+            <div class="timeline-detail">Q1 P&L circulated to leadership</div>
+            <div class="timeline-owner">Lucy Chen</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">19 Mar (Wed)</div>
+            <div class="timeline-detail">Client transition calls: Northfield and Greenleaf briefed on new AD</div>
+            <div class="timeline-owner">James Thornton</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">21 Mar (Fri)</div>
+            <div class="timeline-detail">Bi-weekly reporting template ready for review</div>
+            <div class="timeline-owner">Priya Kapoor</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">25 Mar (Tue)</div>
+            <div class="timeline-detail">Monday.com license payment processed</div>
+            <div class="timeline-owner">Lucy Chen</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">28 Mar (Fri)</div>
+            <div class="timeline-detail">Monday.com workspace built, all active projects migrated from Asana</div>
+            <div class="timeline-owner">Priya Kapoor</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">31 Mar (Mon)</div>
+            <div class="timeline-detail">Tom's shadow period on Northfield/Greenleaf complete</div>
+            <div class="timeline-owner">Tom Brennan</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-date">1 Apr (Tue)</div>
+            <div class="timeline-detail">Lead gen campaigns live on Meta + LinkedIn. Tom's promotion effective.</div>
+            <div class="timeline-owner">Tom Brennan</div>
+        </div>
+    </div>
+
+    <!-- Key Discussion Points -->
+    <div class="card">
+        <h2>Key Discussion Points</h2>
+
+        <div class="topic">
+            <div class="topic-title">Client Onboarding Bottleneck</div>
+            <div class="topic-summary">James raised that onboarding timelines have stretched from 2 weeks to 4 weeks due to capacity constraints. The team loses momentum and client confidence during the gap. Priya identified the briefing document stage as the main bottleneck, taking 5 days on average when it should take 2.</div>
+            <div class="topic-outcome">Outcome: Cap at 3/month + Priya to create a briefing template to cut turnaround to 2 days</div>
+        </div>
+
+        <div class="topic">
+            <div class="topic-title">Project Management Tool Migration</div>
+            <div class="topic-summary">The 2-week Monday.com trial showed measurably faster handoffs between strategy and creative teams. The team voted unanimously to switch from Asana. Lucy flagged the annual license cost ($8,400) but confirmed it fits within the ops budget. Key concern: ensuring no active projects fall through the cracks during migration.</div>
+            <div class="topic-outcome">Outcome: Approved. Priya owns migration. Dual-run Asana + Monday.com for 2 weeks as safety net.</div>
+        </div>
+
+        <div class="topic">
+            <div class="topic-title">Team Capacity and Hiring</div>
+            <div class="topic-summary">Current team is at 92% utilization, which is above the 85% target. Tom's promotion frees James for new business development but doesn't add net capacity. Sarah confirmed budget for a junior strategist hire in May, dependent on Q1 P&L results. The team agreed to hold off until the numbers are confirmed.</div>
+            <div class="topic-outcome">Outcome: Junior strategist hire approved in principle, pending Q1 financials. James to write the job spec by end of March.</div>
+        </div>
+
+        <div class="topic">
+            <div class="topic-title">Lead Generation Investment</div>
+            <div class="topic-summary">The agency has relied entirely on referrals and inbound. Sarah wants a predictable pipeline. Tom proposed $4,200/month on Meta and LinkedIn targeting mid-market e-commerce brands. Lucy confirmed the budget can come from the cancelled PR retainer ($5,000/month), so net saving of $800/month.</div>
+            <div class="topic-outcome">Outcome: Approved as a 3-month test. Tom to report on cost-per-lead and lead quality monthly.</div>
+        </div>
+    </div>
+
+    <!-- Risks and Blockers -->
+    <div class="card">
+        <h2>Risks and Blockers <span class="badge badge-red">3 flagged</span></h2>
+
+        <div class="risk">
+            <div class="risk-title">Asana to Monday.com migration could disrupt active client projects</div>
+            <div class="risk-detail">14 active projects across 8 clients need to be migrated without losing task history, deadlines, or file attachments. Any missed tasks during transition could impact client deliverables.</div>
+            <div class="risk-mitigation"><strong>Mitigation:</strong> Dual-run both platforms for 2 weeks. Priya to create a migration checklist and verify each project post-migration. No Asana shutdown until all project leads confirm.</div>
+        </div>
+
+        <div class="risk">
+            <div class="risk-title">Northfield account at risk during account director transition</div>
+            <div class="risk-detail">Northfield's CMO (David Park) has a strong personal relationship with James. The transition to Tom needs careful handling to avoid the client feeling deprioritized. Northfield represents 18% of agency revenue.</div>
+            <div class="risk-mitigation"><strong>Mitigation:</strong> James to make the introduction call personally. Tom shadows for full 2 weeks before solo contact. James stays as escalation point for 60 days.</div>
+        </div>
+
+        <div class="risk">
+            <div class="risk-title">Q1 P&L may not support the planned junior hire</div>
+            <div class="risk-detail">Lucy flagged that two late client payments (Greenleaf and Horizon) could push Q1 into a tighter margin than expected. If P&L shows less than 15% net margin, the May hire may need to be pushed to July.</div>
+            <div class="risk-mitigation"><strong>Mitigation:</strong> Lucy to chase outstanding invoices this week. Sarah to review P&L on 18 March and make the call. If delayed, redistribute Tom's former workload across the team as interim measure.</div>
+        </div>
+    </div>
+
+    <!-- Summary stats -->
+    <div class="card">
+        <h2>Meeting Health</h2>
+        <div class="grid-4">
+            <div class="summary-stat">
+                <div class="big" style="color:#2563eb;">5</div>
+                <div class="desc">Clear decisions with owners and dates</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big good">100%</div>
+                <div class="desc">Action items have deadlines assigned</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big warn">3</div>
+                <div class="desc">Risks identified with mitigations</div>
+            </div>
+            <div class="summary-stat">
+                <div class="big" style="color:#0f172a;">14 Mar</div>
+                <div class="desc">First follow-up due (Sarah / Marcus call)</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">
+        Generated by Meeting Intelligence Skill | 72-minute transcript processed in 8 seconds
+    </div>
+
+</div>
+</body>
+</html>

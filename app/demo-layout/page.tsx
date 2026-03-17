@@ -84,7 +84,7 @@ const levels = [
     id: 2,
     quests: [
       { id: 5, icon: '\u{1F4C7}', title: 'CRM contacts going cold', pain: "Deals are dying quietly in your spreadsheet", skill: 'CRM Strategist' },
-      { id: 6, icon: '\u{1F4CA}', title: 'Marketing spend across 4 channels', pain: "You can't tell which channel actually works", skill: 'Channel Optimizer' },
+      { id: 6, icon: '\u{1F4CA}', title: 'Marketing spend across 4 channels', pain: "The data is there but the analysis takes hours", skill: 'Channel Optimizer' },
       { id: 8, icon: '\u{270D}\u{FE0F}', title: 'Meeting notes collecting dust', pain: "Great insights from the call. Zero posts written.", skill: 'Content Writer' },
     ],
   },

@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
-import { BadgeTray, BadgeToast } from '@/components/badge-system'
-import { getLevels, type PlayerType } from '@/lib/game-data'
+import { BadgeTray, BadgeToast, WorldUnlockToast } from '@/components/badge-system'
+import { getLevels, getDemoUrl, type PlayerType } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
 import { useTransition } from '@/components/transition-overlay'
@@ -126,7 +126,7 @@ export default function RedAlertMap({
   const handleDemoClick = (demoId: number) => {
     if (skin.sounds.selection) playSound(skin.sounds.selection)
     playSound('ra-radar-ping')
-    navigateWithTransition(`/play/${demoId}`)
+    navigateWithTransition(getDemoUrl(demoId))
   }
 
   // Which background level image to use
@@ -135,6 +135,7 @@ export default function RedAlertMap({
   return (
     <div className="page-enter skin-red-alert" style={{ minHeight: 'calc(100vh - 3.5rem)' }}>
       <BadgeToast />
+      <WorldUnlockToast />
 
       {/* Full-screen background image */}
       <div
@@ -415,7 +416,7 @@ export default function RedAlertMap({
             Abort Mission
           </button>
           <RedAlertStatsWidget
-            completedCount={completed.size}
+            completedCount={Math.min(completed.size, availableDemoCount)}
             availableCount={availableDemoCount}
             skillCount={skills.size}
             timeSaved={totalTimeSaved}

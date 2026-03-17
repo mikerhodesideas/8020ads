@@ -27,7 +27,7 @@ const MAP_REGISTRY: Record<string, React.ComponentType<{
 
 export default function LevelMap() {
   const router = useRouter()
-  const { type, world, isLevelComplete, completed } = useGame()
+  const { type, world, isLevelComplete, completed, setType, setWorld, unlockedWorlds } = useGame()
   const skin = useSkin()
   const [showCelebration, setShowCelebration] = useState(false)
   const [statsExpanded, setStatsExpanded] = useState(false)
@@ -86,6 +86,17 @@ export default function LevelMap() {
           fromLevel={transitionLevel}
           onContinue={() => setShowTransition(false)}
           skin={skin}
+          currentRole={type || undefined}
+          onSwitchRole={(role) => {
+            setType(role)
+            setShowTransition(false)
+          }}
+          currentWorld={world || undefined}
+          unlockedWorlds={unlockedWorlds}
+          onSwitchWorld={(w) => {
+            setWorld(w)
+            setShowTransition(false)
+          }}
         />
       )}
       {completed.size === 0 && (

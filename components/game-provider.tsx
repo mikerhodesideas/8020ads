@@ -29,6 +29,7 @@ interface GameState {
   promptChoices: Record<number, string>
   choiceScores: Record<number, number> // demo ID -> stars 1-3
   openedGlossary: Set<string> // glossary term IDs opened by the player
+  unlockedWorlds: Set<string> // world IDs the player has unlocked
 }
 
 interface GameContextType extends GameState {
@@ -47,8 +48,11 @@ interface GameContextType extends GameState {
   setPromptChoice: (demoId: number, strategyId: string) => void
   setChoiceScore: (demoId: number, stars: number) => void
   openGlossaryTerm: (termId: string) => void
+  markProofComplete: () => void
   badgeToastQueue: string[]
   dismissBadgeToast: () => void
+  worldUnlockToastQueue: string[] // world IDs just unlocked, for toast notifications
+  dismissWorldUnlockToast: () => void
   allAvailableComplete: boolean
   totalTimeSaved: number
   totalStars: number
@@ -69,6 +73,7 @@ const defaultState: GameState = {
   promptChoices: {},
   choiceScores: {},
   openedGlossary: new Set(),
+  unlockedWorlds: new Set(['arcade']),
 }
 
 const GameContext = createContext<GameContextType>({
@@ -87,8 +92,11 @@ const GameContext = createContext<GameContextType>({
   setPromptChoice: () => {},
   setChoiceScore: () => {},
   openGlossaryTerm: () => {},
+  markProofComplete: () => {},
   badgeToastQueue: [],
   dismissBadgeToast: () => {},
+  worldUnlockToastQueue: [],
+  dismissWorldUnlockToast: () => {},
   allAvailableComplete: false,
   totalTimeSaved: 0,
   totalStars: 0,
@@ -101,7 +109,7 @@ function loadState(): GameState {
   if (typeof window === 'undefined') return { ...defaultState }
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set() }
+    if (!raw) return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), unlockedWorlds: new Set(['arcade']) }
     const parsed = JSON.parse(raw)
     return {
       type: parsed.type || null,
@@ -117,9 +125,10 @@ function loadState(): GameState {
       promptChoices: parsed.promptChoices || {},
       choiceScores: parsed.choiceScores || {},
       openedGlossary: new Set(parsed.openedGlossary || []),
+      unlockedWorlds: new Set(parsed.unlockedWorlds || ['arcade']),
     }
   } catch {
-    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), openedGlossary: new Set() }
+    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), openedGlossary: new Set(), unlockedWorlds: new Set(['arcade']) }
   }
 }
 
@@ -141,6 +150,7 @@ function saveState(state: GameState) {
       promptChoices: state.promptChoices,
       choiceScores: state.choiceScores,
       openedGlossary: Array.from(state.openedGlossary),
+      unlockedWorlds: Array.from(state.unlockedWorlds),
     })
   )
 }
@@ -191,9 +201,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     replays: new Set(),
     beforeAfterViews: new Set(),
     openedGlossary: new Set(),
+    unlockedWorlds: new Set(['arcade']),
   })
   const [loaded, setLoaded] = useState(false)
   const [badgeToastQueue, setBadgeToastQueue] = useState<string[]>([])
+  const [worldUnlockToastQueue, setWorldUnlockToastQueue] = useState<string[]>([])
   const demoStartTimesRef = useRef<Record<number, number>>({})
   const trackedLevelsRef = useRef<Set<number>>(new Set())
 
@@ -251,6 +263,33 @@ export function GameProvider({ children }: { children: ReactNode }) {
         track({ eventType: 'level_completed', demoLevel: lvl })
       }
     }
+  }, [state.completed.size, loaded])
+
+  // World unlock evaluation: unlock worlds based on level completion
+  // Level 1 complete -> zelda, Level 2 -> red-alert, Level 3 -> remaining worlds
+  const ALL_WORLD_IDS = ['arcade', 'zelda', 'red-alert', 'clair-obscur', 'tetris', 'elder-scrolls', 'gallery']
+  useEffect(() => {
+    if (!loaded) return
+
+    const l1Done = Array.from(state.completed).filter((id) => ALL_LEVEL_1_IDS.has(id)).length >= 3
+    const l2Done = Array.from(state.completed).filter((id) => ALL_LEVEL_2_IDS.has(id)).length >= 3
+    const l3Done = Array.from(state.completed).filter((id) => ALL_LEVEL_3_IDS.has(id)).length >= 3
+
+    const shouldUnlock = new Set(['arcade'])
+    if (l1Done) shouldUnlock.add('zelda')
+    if (l2Done) shouldUnlock.add('red-alert')
+    if (l3Done) ALL_WORLD_IDS.forEach((w) => shouldUnlock.add(w))
+
+    // Find newly unlocked worlds
+    const newlyUnlocked = Array.from(shouldUnlock).filter((w) => !state.unlockedWorlds.has(w))
+    if (newlyUnlocked.length > 0) {
+      setWorldUnlockToastQueue((prev) => [...prev, ...newlyUnlocked])
+      setState((prev) => ({
+        ...prev,
+        unlockedWorlds: new Set([...Array.from(prev.unlockedWorlds), ...newlyUnlocked]),
+      }))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.completed.size, loaded])
 
   const setType = useCallback((t: PlayerType) => {
@@ -316,11 +355,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
       promptChoices: {},
       choiceScores: {},
       openedGlossary: new Set(),
+      unlockedWorlds: new Set(['arcade']),
     }
     setState(fresh)
     setBadgeToastQueue([])
+    setWorldUnlockToastQueue([])
     demoStartTimesRef.current = {}
-    if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY)
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem('8020skill-completed-proofs')
+    }
   }, [])
 
   const isLevelComplete = useCallback(
@@ -395,15 +439,39 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  // Mark Level 1 demos as complete (for users who came through proof pages)
+  const markProofComplete = useCallback(() => {
+    setState((prev) => {
+      const newCompleted = new Set(prev.completed)
+      // Level 1 demo IDs: 1, 2, 3
+      newCompleted.add(1)
+      newCompleted.add(2)
+      newCompleted.add(3)
+      const newBeforeAfterViews = new Set(prev.beforeAfterViews)
+      newBeforeAfterViews.add(1)
+      newBeforeAfterViews.add(2)
+      newBeforeAfterViews.add(3)
+      return {
+        ...prev,
+        completed: newCompleted,
+        beforeAfterViews: newBeforeAfterViews,
+      }
+    })
+  }, [])
+
   const dismissBadgeToast = useCallback(() => {
     setBadgeToastQueue((prev) => prev.slice(1))
+  }, [])
+
+  const dismissWorldUnlockToast = useCallback(() => {
+    setWorldUnlockToastQueue((prev) => prev.slice(1))
   }, [])
 
   const allAvailableComplete = useMemo(() => {
     if (!state.type) return false
     const l1Demos = getLevel1Demos(state.type)
     const l2Demos = getLevel2Demos(state.type)
-    const l3Demos = getLevel3Demos()
+    const l3Demos = getLevel3Demos(state.type!)
     const allDemos = [...l1Demos, ...l2Demos, ...l3Demos]
     return allDemos.every((d) => state.completed.has(d.id))
   }, [state.type, state.completed])
@@ -427,7 +495,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (!state.type) return 0
     const l1Demos = getLevel1Demos(state.type)
     const l2Demos = getLevel2Demos(state.type)
-    const l3Demos = getLevel3Demos()
+    const l3Demos = getLevel3Demos(state.type!)
     return (l1Demos.length + l2Demos.length + l3Demos.length) * 3
   }, [state.type])
 
@@ -451,8 +519,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setPromptChoice,
         setChoiceScore,
         openGlossaryTerm,
+        markProofComplete,
         badgeToastQueue,
         dismissBadgeToast,
+        worldUnlockToastQueue,
+        dismissWorldUnlockToast,
         allAvailableComplete,
         totalTimeSaved,
         totalStars,

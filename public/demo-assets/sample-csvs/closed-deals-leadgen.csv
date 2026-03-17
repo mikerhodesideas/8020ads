@@ -1,0 +1,535 @@
+Close_Date,Company,Source,Deal_Value,Industry,Days_to_Close
+2025-01-01,ClearView Medical,Google Ads,3140,Healthcare,30
+2025-01-01,DataPulse Systems,Google Ads,2309,Technology,48
+2025-01-01,PineGrove Retail,Email,3902,Retail,46
+2025-01-01,Golden Gate Goods,Referral,2407,Retail,24
+2025-01-02,ForgePoint Mfg,Google Ads,3356,Manufacturing,33
+2025-01-02,IronEdge Co,Meta,3284,Manufacturing,57
+2025-01-04,Apex Consulting,Events,10801,Professional Services,48
+2025-01-05,Silverlake Goods,Events,12198,Retail,25
+2025-01-07,PrismView Solutions,Meta,2710,Technology,60
+2025-01-09,Pinnacle Advisory,Meta,1910,Professional Services,64
+2025-01-09,TerraNode Labs,Referral,3601,Technology,23
+2025-01-11,DataPulse Systems,Email,3118,Technology,36
+2025-01-11,Atlas Manufacturing,Content,3879,Manufacturing,41
+2025-01-12,MindBridge Tech,Google Ads,2184,Technology,46
+2025-01-12,AcuCare Solutions,Events,9852,Healthcare,14
+2025-01-12,Bridgepoint Consulting,Content,2728,Professional Services,60
+2025-01-12,Evergreen Partners,Content,4741,Professional Services,35
+2025-01-13,GridScale Computing,Google Ads,1875,Technology,35
+2025-01-14,Frontier Consulting,Google Ads,2598,Professional Services,56
+2025-01-14,HyperLoop Digital,Email,3147,Technology,35
+2025-01-14,CarePath Solutions,Events,14841,Healthcare,31
+2025-01-15,Pixel Forge Studios,Events,10541,Technology,47
+2025-01-16,Luminary Tech,Google Ads,3292,Technology,56
+2025-01-16,Keystone Advisory,Events,11166,Professional Services,47
+2025-01-17,OrchardView Trading,Google Ads,2208,Retail,41
+2025-01-17,RedBarn Trading,Meta,3290,Retail,39
+2025-01-17,Elevation Strategy,Email,4075,Professional Services,33
+2025-01-17,NeuralPath Inc,Content,3189,Technology,68
+2025-01-18,ByteCraft Systems,Email,2070,Technology,35
+2025-01-20,Mosaic Partners,Referral,4199,Professional Services,21
+2025-01-20,NovaCare Health,Referral,6083,Healthcare,30
+2025-01-22,RedBarn Trading,Google Ads,1715,Retail,37
+2025-01-22,Blackwood Associates,Google Ads,3569,Professional Services,40
+2025-01-22,Bridgepoint Consulting,Google Ads,3495,Professional Services,44
+2025-01-22,Agile Horizon,Meta,1893,Technology,61
+2025-01-22,FusionPoint Tech,Email,3582,Technology,56
+2025-01-23,Granite Advisory,Referral,5295,Professional Services,29
+2025-01-24,Harbor Strategy Group,Meta,2148,Professional Services,53
+2025-01-27,BioStar Health,Content,4078,Healthcare,53
+2025-01-28,GraniTech Industries,Email,3203,Manufacturing,48
+2025-02-01,Landmark Consulting,Google Ads,3068,Professional Services,24
+2025-02-03,RedBarn Trading,Meta,2126,Retail,45
+2025-02-03,Bolt & Beam Co,Referral,4068,Manufacturing,22
+2025-02-04,Blackwood Associates,Meta,2383,Professional Services,70
+2025-02-04,Paradigm Consulting,Email,3412,Professional Services,41
+2025-02-06,NeuralPath Inc,Meta,2579,Technology,71
+2025-02-06,JunctionPoint Mfg,Email,3644,Manufacturing,35
+2025-02-06,Vanguard Advisors,Events,9595,Professional Services,65
+2025-02-06,InnoStack Inc,Events,9081,Technology,31
+2025-02-06,NeuralPath Inc,Content,3453,Technology,66
+2025-02-07,Blackwood Associates,Content,3388,Professional Services,71
+2025-02-08,Keystone Advisory,Google Ads,3016,Professional Services,57
+2025-02-09,Ironworks Industrial,Meta,2089,Manufacturing,27
+2025-02-09,RapidStack Tech,Email,2812,Technology,40
+2025-02-09,TimberLine Retail,Events,7929,Retail,44
+2025-02-10,MetalWorks Manufacturing,Google Ads,2550,Manufacturing,41
+2025-02-10,Ironworks Industrial,Meta,1937,Manufacturing,61
+2025-02-10,IronEdge Co,Email,2332,Manufacturing,38
+2025-02-10,Harbor Strategy Group,Referral,4350,Professional Services,28
+2025-02-12,CarePath Solutions,Google Ads,3167,Healthcare,59
+2025-02-13,NexaTech Solutions,Google Ads,3058,Technology,68
+2025-02-14,Landmark Consulting,Google Ads,3521,Professional Services,32
+2025-02-14,DocuHealth Systems,Meta,2608,Healthcare,36
+2025-02-16,Silverlake Goods,Email,4166,Retail,32
+2025-02-16,Vertex Software,Referral,5504,Technology,11
+2025-02-17,RapidStack Tech,Content,3884,Technology,48
+2025-02-18,NexaTech Solutions,Google Ads,2871,Technology,47
+2025-02-20,GraniTech Industries,Meta,2399,Manufacturing,31
+2025-02-22,DataPulse Systems,Google Ads,3092,Technology,51
+2025-02-23,DataPulse Systems,Google Ads,2316,Technology,63
+2025-02-23,Atlas Manufacturing,Events,5392,Manufacturing,24
+2025-02-24,Elevation Strategy,Events,12256,Professional Services,46
+2025-02-25,Vertex Software,Google Ads,2621,Technology,64
+2025-02-25,Luminary Tech,Email,5191,Technology,16
+2025-02-25,OptimalHealth Tech,Referral,4380,Healthcare,24
+2025-02-27,PeakFlow Digital,Google Ads,2492,Technology,48
+2025-03-01,Insight Partners LLC,Google Ads,2726,Professional Services,64
+2025-03-01,OptimalHealth Tech,Email,2849,Healthcare,37
+2025-03-01,JetStream Analytics,Referral,4127,Technology,21
+2025-03-02,Landmark Consulting,Email,1659,Professional Services,67
+2025-03-03,Mosaic Partners,Google Ads,2924,Professional Services,26
+2025-03-03,TrueNorth Digital,Events,7429,Technology,56
+2025-03-04,ClearView Medical,Google Ads,3056,Healthcare,44
+2025-03-04,VitaLink Health,Events,12253,Healthcare,37
+2025-03-04,Frontier Consulting,Referral,2822,Professional Services,12
+2025-03-05,Pixel Forge Studios,Google Ads,2971,Technology,52
+2025-03-05,Golden Gate Goods,Events,10813,Retail,34
+2025-03-07,GraniTech Industries,Meta,2501,Manufacturing,43
+2025-03-07,TimberLine Retail,Email,5081,Retail,51
+2025-03-07,MindBridge Tech,Events,13308,Technology,61
+2025-03-07,LaunchPad Systems,Referral,5795,Technology,39
+2025-03-08,AppSphere Global,Google Ads,2022,Technology,35
+2025-03-09,MedCore Systems,Google Ads,3134,Healthcare,44
+2025-03-09,CloudBridge Inc,Meta,3179,Technology,31
+2025-03-09,ByteCraft Systems,Email,3480,Technology,20
+2025-03-09,Mosaic Partners,Referral,4147,Professional Services,21
+2025-03-10,Pixel Forge Studios,Google Ads,2204,Technology,56
+2025-03-10,Denali Strategy,Email,3104,Professional Services,47
+2025-03-10,KineCare Medical,Content,3136,Healthcare,33
+2025-03-10,GridScale Computing,Referral,6260,Technology,29
+2025-03-11,TrueNorth Digital,Meta,2717,Technology,37
+2025-03-12,OptimalHealth Tech,Events,12789,Healthcare,53
+2025-03-15,Harbor Strategy Group,Google Ads,2143,Professional Services,81
+2025-03-16,EliteHealth Tech,Events,9637,Healthcare,41
+2025-03-18,Keystone Advisory,Content,2586,Professional Services,79
+2025-03-19,Pixel Forge Studios,Content,3101,Technology,31
+2025-03-22,OrchardView Trading,Events,7214,Retail,33
+2025-03-22,FreshPath Market,Content,2702,Retail,75
+2025-03-23,DataPulse Systems,Meta,2735,Technology,27
+2025-03-24,Agile Horizon,Google Ads,3009,Technology,38
+2025-03-25,TrueNorth Digital,Meta,2398,Technology,69
+2025-03-25,DocuHealth Systems,Email,2619,Healthcare,8
+2025-03-26,DataPulse Systems,Google Ads,3619,Technology,25
+2025-03-26,DocuHealth Systems,Email,2493,Healthcare,29
+2025-03-27,Atlas Manufacturing,Meta,3339,Manufacturing,53
+2025-03-27,Maple & Stone,Email,5067,Retail,45
+2025-03-28,Eclipse Industrial,Meta,1838,Manufacturing,33
+2025-03-28,Ironworks Industrial,Referral,4401,Manufacturing,21
+2025-04-01,Northstar Advisory,Events,8465,Professional Services,52
+2025-04-02,BrightLeaf Retail,Google Ads,2612,Retail,74
+2025-04-02,EliteHealth Tech,Content,3005,Healthcare,30
+2025-04-03,PineGrove Retail,Email,4610,Retail,48
+2025-04-03,HyperLoop Digital,Email,3625,Technology,43
+2025-04-04,Frontier Consulting,Meta,3157,Professional Services,43
+2025-04-06,PrecisionCraft Mfg,Events,7518,Manufacturing,37
+2025-04-07,Compass Advisory,Events,11438,Professional Services,52
+2025-04-07,Blackwood Associates,Referral,5404,Professional Services,21
+2025-04-08,Compass Advisory,Google Ads,2106,Professional Services,41
+2025-04-09,ForgePoint Mfg,Content,2525,Manufacturing,58
+2025-04-11,ByteCraft Systems,Meta,2032,Technology,100
+2025-04-12,Evergreen Partners,Referral,4109,Professional Services,28
+2025-04-13,CarePath Solutions,Google Ads,2676,Healthcare,81
+2025-04-13,TimberLine Retail,Google Ads,3645,Retail,55
+2025-04-13,MedCore Systems,Meta,1646,Healthcare,36
+2025-04-13,PrecisionCraft Mfg,Meta,1912,Manufacturing,72
+2025-04-13,OptimalHealth Tech,Referral,5297,Healthcare,20
+2025-04-14,PineGrove Retail,Referral,2567,Retail,19
+2025-04-16,NexaTech Solutions,Google Ads,1644,Technology,47
+2025-04-17,UrbanRoot Market,Google Ads,3113,Retail,53
+2025-04-17,Vanguard Advisors,Referral,5528,Professional Services,38
+2025-04-18,Archer Associates,Email,3945,Professional Services,44
+2025-04-18,HealthBridge Solutions,Events,4443,Healthcare,7
+2025-04-18,TerraNode Labs,Referral,3703,Technology,37
+2025-04-19,JourneyHealth,Google Ads,2367,Healthcare,66
+2025-04-19,TimberLine Retail,Meta,3188,Retail,46
+2025-04-20,Quantum Logic Corp,Google Ads,3101,Technology,55
+2025-04-20,Jade Mountain Trading,Email,3325,Retail,52
+2025-04-20,NorthPoint Market,Events,8465,Retail,35
+2025-04-21,UpLink Solutions,Email,1815,Technology,39
+2025-04-22,FusionPoint Tech,Meta,1717,Technology,41
+2025-04-23,MindBridge Tech,Google Ads,3060,Technology,54
+2025-04-23,Landmark Consulting,Google Ads,2976,Professional Services,51
+2025-04-24,LaunchPad Systems,Content,3986,Technology,51
+2025-04-26,LuxeHome Retail,Email,4060,Retail,41
+2025-04-26,Summit Partners LP,Content,2943,Professional Services,45
+2025-04-27,Oakwood Strategy,Events,11669,Professional Services,42
+2025-04-28,Mosaic Partners,Email,3594,Professional Services,54
+2025-04-28,OrchardView Trading,Referral,3550,Retail,21
+2025-05-01,LaunchPad Systems,Meta,2517,Technology,69
+2025-05-01,KitchenCraft Co,Referral,5752,Retail,33
+2025-05-02,Landmark Consulting,Email,4746,Professional Services,37
+2025-05-02,IronEdge Co,Email,3823,Manufacturing,23
+2025-05-04,Sterling Advisory Group,Referral,4217,Professional Services,29
+2025-05-05,Meridian Partners,Events,9742,Professional Services,55
+2025-05-05,Landmark Consulting,Content,3401,Professional Services,78
+2025-05-06,HealthBridge Solutions,Google Ads,2747,Healthcare,43
+2025-05-06,Archer Associates,Google Ads,3076,Professional Services,68
+2025-05-06,CarePath Solutions,Google Ads,2003,Healthcare,44
+2025-05-06,NorthPoint Market,Meta,3062,Retail,39
+2025-05-06,CoreForge Industries,Referral,5714,Manufacturing,27
+2025-05-06,CloudBridge Inc,Referral,3840,Technology,24
+2025-05-07,PrismView Solutions,Meta,1375,Technology,53
+2025-05-07,OmniCore Solutions,Events,11452,Technology,14
+2025-05-07,OmniCore Solutions,Content,1400,Technology,43
+2025-05-08,Catalyst Group,Google Ads,2234,Professional Services,55
+2025-05-08,BioStar Health,Email,3971,Healthcare,50
+2025-05-10,NovaCare Health,Google Ads,2179,Healthcare,65
+2025-05-10,Compass Advisory,Email,1835,Professional Services,35
+2025-05-10,CodeWave Technologies,Email,4374,Technology,39
+2025-05-12,CodeWave Technologies,Google Ads,3322,Technology,38
+2025-05-13,BioStar Health,Meta,2681,Healthcare,30
+2025-05-14,HardLine Manufacturing,Events,7937,Manufacturing,31
+2025-05-15,Eclipse Industrial,Meta,1587,Manufacturing,77
+2025-05-16,Atlas Manufacturing,Google Ads,3332,Manufacturing,55
+2025-05-16,Blackwood Associates,Meta,2744,Professional Services,44
+2025-05-16,DataLens Corp,Email,3148,Technology,66
+2025-05-18,PrismView Solutions,Google Ads,3163,Technology,61
+2025-05-18,CarePath Solutions,Referral,5079,Healthcare,33
+2025-05-19,Sterling Advisory Group,Meta,2045,Professional Services,38
+2025-05-19,PineGrove Retail,Events,8502,Retail,44
+2025-05-19,BrightLeaf Retail,Events,8338,Retail,44
+2025-05-20,Urban Harvest Co,Google Ads,3654,Retail,43
+2025-05-21,Catalyst Group,Content,2876,Professional Services,58
+2025-05-21,Ember & Oak,Referral,3667,Retail,39
+2025-05-24,Paradigm Consulting,Google Ads,2310,Professional Services,80
+2025-05-24,Vertex Software,Email,2689,Technology,41
+2025-05-24,OrchardView Trading,Content,2894,Retail,63
+2025-05-27,TimberLine Retail,Events,9024,Retail,38
+2025-05-27,Bridgepoint Consulting,Content,2418,Professional Services,53
+2025-05-28,NexaTech Solutions,Google Ads,2952,Technology,38
+2025-05-28,SynApps Digital,Meta,2956,Technology,59
+2025-05-28,LuxeHome Retail,Events,7510,Retail,48
+2025-06-01,LuxeHome Retail,Meta,3079,Retail,45
+2025-06-03,FreshPath Market,Meta,2389,Retail,77
+2025-06-03,FreshPath Market,Email,3708,Retail,37
+2025-06-03,SilverLine Systems,Content,2607,Technology,29
+2025-06-04,Archer Associates,Events,10467,Professional Services,22
+2025-06-05,Evergreen Partners,Meta,2724,Professional Services,51
+2025-06-05,Radiant Consulting,Email,3335,Professional Services,37
+2025-06-06,DuraTech Manufacturing,Referral,3623,Manufacturing,31
+2025-06-06,QuarterMoon Market,Referral,6201,Retail,34
+2025-06-07,Archer Associates,Meta,2058,Professional Services,45
+2025-06-07,RapidStack Tech,Referral,3083,Technology,28
+2025-06-08,Vertex Software,Google Ads,2556,Technology,58
+2025-06-08,FirstResponse Medical,Email,4309,Healthcare,42
+2025-06-09,Harbor Strategy Group,Meta,2413,Professional Services,57
+2025-06-13,CyberVault Security,Email,2741,Technology,19
+2025-06-14,BioStar Health,Content,2361,Healthcare,61
+2025-06-14,JetStream Analytics,Referral,3845,Technology,29
+2025-06-15,GreenField Health,Email,1912,Healthcare,29
+2025-06-15,CodeWave Technologies,Events,10498,Technology,39
+2025-06-16,Mosaic Partners,Content,2253,Professional Services,47
+2025-06-17,Bolt & Beam Co,Google Ads,2691,Manufacturing,48
+2025-06-17,LuxeHome Retail,Events,10723,Retail,39
+2025-06-17,Granite Advisory,Referral,3575,Professional Services,35
+2025-06-18,KeyLogic AI,Google Ads,3640,Technology,56
+2025-06-18,Jade Mountain Trading,Google Ads,3047,Retail,43
+2025-06-19,Granite Advisory,Google Ads,1698,Professional Services,45
+2025-06-19,Maple & Stone,Google Ads,2830,Retail,62
+2025-06-19,FreshPath Market,Meta,2051,Retail,23
+2025-06-20,SynApps Digital,Google Ads,3679,Technology,52
+2025-06-20,MindBridge Tech,Events,9163,Technology,35
+2025-06-21,JunctionPoint Mfg,Meta,1630,Manufacturing,40
+2025-06-21,AppSphere Global,Email,4276,Technology,39
+2025-06-21,FreshPath Market,Events,9934,Retail,39
+2025-06-22,Golden Gate Goods,Google Ads,2891,Retail,70
+2025-06-23,OrchardView Trading,Events,7735,Retail,40
+2025-06-24,Silverlake Goods,Email,2958,Retail,35
+2025-06-24,Pixel Forge Studios,Referral,4633,Technology,34
+2025-06-26,Compass Advisory,Google Ads,1798,Professional Services,73
+2025-06-26,ByteCraft Systems,Google Ads,2315,Technology,63
+2025-06-26,TerraNode Labs,Content,3040,Technology,69
+2025-06-27,KitchenCraft Co,Google Ads,2204,Retail,63
+2025-06-27,NeuralPath Inc,Events,11094,Technology,33
+2025-06-27,DuraTech Manufacturing,Content,3267,Manufacturing,51
+2025-07-02,Bridgepoint Consulting,Google Ads,3348,Professional Services,41
+2025-07-02,KitchenCraft Co,Meta,2490,Retail,27
+2025-07-03,Ember & Oak,Events,10889,Retail,22
+2025-07-04,Compass Advisory,Google Ads,2176,Professional Services,31
+2025-07-04,FusionPoint Tech,Content,2679,Technology,30
+2025-07-05,Urban Harvest Co,Google Ads,3571,Retail,55
+2025-07-05,Coastal Trading Co,Email,4146,Retail,38
+2025-07-06,DocuHealth Systems,Google Ads,2777,Healthcare,56
+2025-07-06,InnoCare Systems,Email,2907,Healthcare,65
+2025-07-06,Maple & Stone,Events,10064,Retail,22
+2025-07-08,Mosaic Partners,Events,13176,Professional Services,36
+2025-07-10,Oakwood Strategy,Google Ads,2380,Professional Services,58
+2025-07-10,Insight Partners LLC,Google Ads,2520,Professional Services,48
+2025-07-11,BioStar Health,Google Ads,3728,Healthcare,33
+2025-07-11,GreenField Health,Google Ads,2232,Healthcare,51
+2025-07-11,DataPulse Systems,Content,3220,Technology,82
+2025-07-13,PrecisionCraft Mfg,Google Ads,3003,Manufacturing,50
+2025-07-13,SilverLine Systems,Meta,2966,Technology,37
+2025-07-13,OptimalHealth Tech,Meta,2792,Healthcare,51
+2025-07-16,KeyLogic AI,Google Ads,2614,Technology,64
+2025-07-16,Northstar Advisory,Email,2611,Professional Services,40
+2025-07-16,Pinnacle Advisory,Referral,5143,Professional Services,21
+2025-07-16,FirstResponse Medical,Referral,6089,Healthcare,34
+2025-07-17,CarePath Solutions,Email,5258,Healthcare,37
+2025-07-17,ForgePoint Mfg,Content,2907,Manufacturing,88
+2025-07-17,Landmark Consulting,Referral,4117,Professional Services,16
+2025-07-18,Eclipse Industrial,Content,3230,Manufacturing,42
+2025-07-18,Bridgepoint Consulting,Referral,1800,Professional Services,33
+2025-07-20,GraniTech Industries,Events,10566,Manufacturing,41
+2025-07-22,LatheMaster Co,Google Ads,1854,Manufacturing,52
+2025-07-22,Luminary Tech,Meta,2631,Technology,78
+2025-07-22,Urban Harvest Co,Email,3163,Retail,31
+2025-07-23,TimberLine Retail,Meta,2424,Retail,38
+2025-07-24,Mosaic Partners,Meta,2014,Professional Services,49
+2025-07-24,TimberLine Retail,Email,3815,Retail,43
+2025-07-25,OrchardView Trading,Events,9093,Retail,27
+2025-07-26,PeakFlow Digital,Email,3396,Technology,51
+2025-07-26,Vertex Software,Content,2791,Technology,43
+2025-07-27,Vertex Software,Meta,2133,Technology,89
+2025-07-27,Silverlake Goods,Email,3765,Retail,37
+2025-07-27,DataPulse Systems,Referral,3636,Technology,25
+2025-07-28,Atlas Manufacturing,Events,12029,Manufacturing,33
+2025-08-01,BioStar Health,Google Ads,2906,Healthcare,62
+2025-08-02,UrbanRoot Market,Google Ads,2551,Retail,51
+2025-08-03,InnoStack Inc,Email,3998,Technology,22
+2025-08-05,Luminary Tech,Google Ads,1471,Technology,51
+2025-08-09,Streamline AI,Meta,1630,Technology,69
+2025-08-09,LatheMaster Co,Email,2932,Manufacturing,26
+2025-08-10,CodeWave Technologies,Meta,2872,Technology,56
+2025-08-11,Silverlake Goods,Google Ads,3066,Retail,50
+2025-08-11,Catalyst Group,Meta,2931,Professional Services,75
+2025-08-11,PrismView Solutions,Email,4594,Technology,33
+2025-08-11,Sterling Advisory Group,Content,2734,Professional Services,46
+2025-08-12,JetStream Analytics,Meta,2213,Technology,61
+2025-08-12,OmniCore Solutions,Content,5362,Technology,29
+2025-08-13,RedBarn Trading,Events,12195,Retail,37
+2025-08-14,TrueNorth Digital,Events,8025,Technology,37
+2025-08-14,Streamline AI,Referral,5024,Technology,31
+2025-08-15,NorthPoint Market,Google Ads,3666,Retail,77
+2025-08-15,DataPulse Systems,Content,3125,Technology,67
+2025-08-17,OrchardView Trading,Google Ads,3387,Retail,62
+2025-08-17,KeySteel Industries,Referral,5457,Manufacturing,10
+2025-08-19,Radiant Consulting,Google Ads,3605,Professional Services,48
+2025-08-19,Oakwood Strategy,Meta,3382,Professional Services,61
+2025-08-19,Urban Harvest Co,Email,3913,Retail,37
+2025-08-19,Blackwood Associates,Referral,6774,Professional Services,40
+2025-08-19,VitaLink Health,Referral,6989,Healthcare,22
+2025-08-21,Landmark Consulting,Email,3104,Professional Services,40
+2025-08-21,DataPulse Systems,Events,10197,Technology,29
+2025-08-21,KineCare Medical,Content,3528,Healthcare,69
+2025-08-22,Apex Consulting,Email,5383,Professional Services,15
+2025-08-23,CoreForge Industries,Events,8488,Manufacturing,29
+2025-08-25,CloudBridge Inc,Google Ads,2547,Technology,37
+2025-08-25,Archer Associates,Events,9936,Professional Services,40
+2025-08-26,Vertex Software,Meta,1832,Technology,56
+2025-08-26,Golden Gate Goods,Meta,3254,Retail,43
+2025-08-26,Granite Advisory,Referral,4013,Professional Services,30
+2025-08-27,Archer Associates,Content,2807,Professional Services,34
+2025-08-28,HyperLoop Digital,Google Ads,2401,Technology,48
+2025-08-28,NeuralPath Inc,Email,3721,Technology,42
+2025-08-28,Apex Consulting,Events,13091,Professional Services,29
+2025-09-01,SilverLine Systems,Meta,2523,Technology,56
+2025-09-01,JourneyHealth,Email,2312,Healthcare,50
+2025-09-01,Pixel Forge Studios,Email,2638,Technology,36
+2025-09-01,IronClad Software,Events,6569,Technology,56
+2025-09-01,Bridgepoint Consulting,Events,9716,Professional Services,52
+2025-09-01,BioStar Health,Content,2907,Healthcare,46
+2025-09-01,Urban Harvest Co,Referral,5646,Retail,31
+2025-09-02,Apex Consulting,Email,3862,Professional Services,56
+2025-09-02,OrchardView Trading,Events,10831,Retail,72
+2025-09-03,Vanguard Advisors,Google Ads,3822,Professional Services,76
+2025-09-03,Ember & Oak,Google Ads,2371,Retail,19
+2025-09-03,Pixel Forge Studios,Meta,2218,Technology,59
+2025-09-03,TimberLine Retail,Events,9669,Retail,28
+2025-09-03,Keystone Advisory,Content,2298,Professional Services,50
+2025-09-03,DocuHealth Systems,Content,3745,Healthcare,48
+2025-09-04,CloudBridge Inc,Google Ads,3774,Technology,53
+2025-09-04,NeuralPath Inc,Meta,1806,Technology,41
+2025-09-04,Maple & Stone,Meta,3474,Retail,60
+2025-09-04,Catalyst Group,Meta,3726,Professional Services,64
+2025-09-04,FusionPoint Tech,Events,8698,Technology,49
+2025-09-04,TimberLine Retail,Referral,4324,Retail,22
+2025-09-05,Catalyst Group,Google Ads,2585,Professional Services,30
+2025-09-05,PrismView Solutions,Email,3154,Technology,54
+2025-09-05,FusionPoint Tech,Content,2707,Technology,98
+2025-09-06,CoreForge Industries,Meta,2307,Manufacturing,65
+2025-09-06,ForgePoint Mfg,Email,2495,Manufacturing,39
+2025-09-07,Healix Technologies,Email,3140,Healthcare,20
+2025-09-07,NexaTech Solutions,Referral,4836,Technology,29
+2025-09-08,BioStar Health,Google Ads,3526,Healthcare,25
+2025-09-08,HealthBridge Solutions,Google Ads,3406,Healthcare,29
+2025-09-08,TrueNorth Digital,Google Ads,3536,Technology,41
+2025-09-08,Atlas Manufacturing,Meta,2136,Manufacturing,49
+2025-09-08,MetalWorks Manufacturing,Referral,2619,Manufacturing,25
+2025-09-09,PrecisionCraft Mfg,Meta,1808,Manufacturing,33
+2025-09-09,NorthPoint Market,Events,8797,Retail,34
+2025-09-09,CoreForge Industries,Events,10068,Manufacturing,29
+2025-09-09,DocuHealth Systems,Events,7909,Healthcare,43
+2025-09-09,Blackwood Associates,Content,3966,Professional Services,50
+2025-09-09,CyberVault Security,Content,3481,Technology,48
+2025-09-10,Paradigm Consulting,Google Ads,2473,Professional Services,87
+2025-09-10,Sterling Advisory Group,Google Ads,3319,Professional Services,60
+2025-09-10,Paradigm Consulting,Content,2664,Professional Services,65
+2025-09-11,IronEdge Co,Google Ads,2391,Manufacturing,53
+2025-09-11,ClearView Medical,Google Ads,3829,Healthcare,71
+2025-09-11,Bridgepoint Consulting,Meta,1907,Professional Services,56
+2025-09-11,Apex Consulting,Email,3358,Professional Services,27
+2025-09-11,Catalyst Group,Events,10860,Professional Services,55
+2025-09-11,Harbor Point Retail,Events,8393,Retail,13
+2025-09-12,DataLens Corp,Google Ads,2362,Technology,47
+2025-09-12,Elevation Strategy,Meta,1337,Professional Services,53
+2025-09-13,ForgePoint Mfg,Meta,1816,Manufacturing,54
+2025-09-13,Harbor Strategy Group,Meta,2286,Professional Services,40
+2025-09-13,UrbanRoot Market,Meta,2791,Retail,45
+2025-09-13,DataPulse Systems,Email,4082,Technology,25
+2025-09-13,CarePath Solutions,Content,2823,Healthcare,56
+2025-09-14,JourneyHealth,Google Ads,1200,Healthcare,59
+2025-09-14,Radiant Consulting,Events,11514,Professional Services,54
+2025-09-15,NeuralPath Inc,Google Ads,3161,Technology,49
+2025-09-15,BioStar Health,Meta,3062,Healthcare,50
+2025-09-15,NexaTech Solutions,Events,12053,Technology,27
+2025-09-15,Catalyst Group,Events,9529,Professional Services,28
+2025-09-15,ByteCraft Systems,Events,10333,Technology,33
+2025-09-15,Bolt & Beam Co,Content,2924,Manufacturing,55
+2025-09-15,KeySteel Industries,Content,2219,Manufacturing,59
+2025-09-16,Bridgepoint Consulting,Meta,2689,Professional Services,34
+2025-09-18,UrbanRoot Market,Meta,2758,Retail,62
+2025-09-18,Pixel Forge Studios,Events,9486,Technology,34
+2025-09-18,KeySteel Industries,Events,9014,Manufacturing,28
+2025-09-19,HyperLoop Digital,Events,10017,Technology,46
+2025-09-19,PineGrove Retail,Events,8273,Retail,46
+2025-09-20,AppSphere Global,Events,13151,Technology,50
+2025-09-22,Catalyst Group,Google Ads,1685,Professional Services,65
+2025-09-22,IronClad Software,Email,3807,Technology,24
+2025-09-23,TrueNorth Digital,Meta,1792,Technology,28
+2025-09-23,CyberVault Security,Email,2869,Technology,48
+2025-09-23,IronEdge Co,Events,9655,Manufacturing,35
+2025-09-23,DataLens Corp,Referral,3951,Technology,40
+2025-09-23,AppSphere Global,Referral,3728,Technology,39
+2025-09-23,Bolt & Beam Co,Referral,4488,Manufacturing,18
+2025-09-24,ForgePoint Mfg,Meta,1279,Manufacturing,50
+2025-09-24,OrchardView Trading,Email,2931,Retail,22
+2025-09-24,Northstar Advisory,Events,6380,Professional Services,39
+2025-09-25,VitaLink Health,Events,8786,Healthcare,52
+2025-09-25,Ivory Lane Co,Content,2945,Retail,54
+2025-09-26,ByteCraft Systems,Events,9772,Technology,7
+2025-09-26,Summit Partners LP,Events,9807,Professional Services,29
+2025-09-27,Apex Consulting,Events,9755,Professional Services,14
+2025-09-27,FreshPath Market,Content,1234,Retail,35
+2025-09-27,FreshPath Market,Content,1633,Retail,85
+2025-09-28,JetStream Analytics,Referral,3466,Technology,31
+2025-10-01,Summit Partners LP,Meta,2147,Professional Services,70
+2025-10-01,Denali Strategy,Email,2727,Professional Services,32
+2025-10-02,HealthBridge Solutions,Meta,1660,Healthcare,37
+2025-10-03,GridScale Computing,Email,2412,Technology,32
+2025-10-04,Paradigm Consulting,Content,3663,Professional Services,59
+2025-10-05,PineGrove Retail,Google Ads,1843,Retail,34
+2025-10-05,FusionPoint Tech,Events,6580,Technology,67
+2025-10-06,Oakwood Strategy,Meta,1657,Professional Services,60
+2025-10-07,FirstResponse Medical,Content,3582,Healthcare,56
+2025-10-08,Meridian Partners,Email,3256,Professional Services,37
+2025-10-09,Catalyst Group,Meta,2477,Professional Services,65
+2025-10-09,PrismView Solutions,Events,9694,Technology,43
+2025-10-13,Ivory Lane Co,Email,3670,Retail,33
+2025-10-13,BrightLeaf Retail,Events,10515,Retail,36
+2025-10-13,TrueNorth Digital,Referral,3356,Technology,21
+2025-10-14,Sterling Advisory Group,Meta,1453,Professional Services,37
+2025-10-14,Sterling Advisory Group,Meta,2490,Professional Services,61
+2025-10-15,InnoStack Inc,Google Ads,2409,Technology,56
+2025-10-16,Ironworks Industrial,Google Ads,2547,Manufacturing,68
+2025-10-16,HyperLoop Digital,Referral,5841,Technology,33
+2025-10-17,KeyLogic AI,Google Ads,2876,Technology,58
+2025-10-18,QuarterMoon Market,Google Ads,1810,Retail,29
+2025-10-18,DataLens Corp,Events,10252,Technology,44
+2025-10-18,HardLine Manufacturing,Events,9629,Manufacturing,51
+2025-10-18,VectorWave Inc,Referral,5088,Technology,29
+2025-10-19,Luminary Tech,Google Ads,3005,Technology,49
+2025-10-20,VectorWave Inc,Content,1974,Technology,60
+2025-10-20,OmniCore Solutions,Referral,5351,Technology,23
+2025-10-21,NexaTech Solutions,Meta,3185,Technology,30
+2025-10-21,Harbor Point Retail,Content,3524,Retail,68
+2025-10-22,Sterling Advisory Group,Email,1858,Professional Services,42
+2025-10-22,TimberLine Retail,Events,10213,Retail,38
+2025-10-24,NovaCare Health,Referral,4977,Healthcare,30
+2025-10-25,KeySteel Industries,Google Ads,2512,Manufacturing,51
+2025-10-25,Beacon Analytics,Google Ads,1200,Technology,62
+2025-10-25,Oakwood Strategy,Google Ads,2657,Professional Services,44
+2025-10-25,UrbanRoot Market,Events,12036,Retail,43
+2025-10-25,FusionPoint Tech,Referral,4853,Technology,37
+2025-10-26,AcuCare Solutions,Google Ads,2007,Healthcare,37
+2025-10-27,UrbanRoot Market,Google Ads,1820,Retail,53
+2025-10-27,Ember & Oak,Email,3368,Retail,46
+2025-10-27,Frontier Consulting,Content,2634,Professional Services,106
+2025-11-01,Beacon Analytics,Events,7323,Technology,23
+2025-11-02,VectorWave Inc,Email,3021,Technology,37
+2025-11-02,ClearView Medical,Events,8131,Healthcare,59
+2025-11-04,Evergreen Partners,Google Ads,1425,Professional Services,72
+2025-11-04,FirstResponse Medical,Meta,3028,Healthcare,57
+2025-11-04,DataPulse Systems,Meta,2473,Technology,62
+2025-11-04,Northstar Advisory,Events,8808,Professional Services,63
+2025-11-05,Ironworks Industrial,Google Ads,2144,Manufacturing,38
+2025-11-05,PineGrove Retail,Meta,1411,Retail,39
+2025-11-07,PrecisionCraft Mfg,Events,8452,Manufacturing,17
+2025-11-07,PrismView Solutions,Content,3391,Technology,73
+2025-11-08,QuarterMoon Market,Meta,2915,Retail,47
+2025-11-09,Harbor Strategy Group,Email,3434,Professional Services,54
+2025-11-09,Streamline AI,Referral,5500,Technology,19
+2025-11-10,Golden Gate Goods,Google Ads,3571,Retail,47
+2025-11-12,JetStream Analytics,Email,4197,Technology,53
+2025-11-15,Quantum Logic Corp,Google Ads,2920,Technology,51
+2025-11-15,Blackwood Associates,Email,3704,Professional Services,50
+2025-11-15,GridScale Computing,Referral,5505,Technology,20
+2025-11-16,KeyLogic AI,Google Ads,2180,Technology,49
+2025-11-16,Catalyst Group,Meta,2163,Professional Services,37
+2025-11-16,DocuHealth Systems,Email,4379,Healthcare,42
+2025-11-16,SilverLine Systems,Events,7901,Technology,33
+2025-11-16,Ironworks Industrial,Referral,4534,Manufacturing,41
+2025-11-17,VitaLink Health,Email,2572,Healthcare,29
+2025-11-18,Bridgepoint Consulting,Content,4073,Professional Services,47
+2025-11-19,Vanguard Advisors,Google Ads,1906,Professional Services,38
+2025-11-19,QuarterMoon Market,Email,4248,Retail,44
+2025-11-19,Radiant Consulting,Referral,7231,Professional Services,22
+2025-11-20,Silverlake Goods,Email,4109,Retail,29
+2025-11-21,Vanguard Advisors,Events,8911,Professional Services,42
+2025-11-22,Insight Partners LLC,Content,3871,Professional Services,63
+2025-11-24,Ironworks Industrial,Google Ads,3367,Manufacturing,80
+2025-11-24,CarePath Solutions,Google Ads,4027,Healthcare,69
+2025-11-24,PeakFlow Digital,Meta,3442,Technology,57
+2025-11-27,ForgePoint Mfg,Google Ads,2277,Manufacturing,64
+2025-11-28,Keystone Advisory,Referral,6459,Professional Services,19
+2025-12-01,Keystone Advisory,Meta,1908,Professional Services,53
+2025-12-01,SilverLine Systems,Events,8999,Technology,45
+2025-12-01,KitchenCraft Co,Referral,4958,Retail,32
+2025-12-03,PeakFlow Digital,Google Ads,1785,Technology,41
+2025-12-03,Harbor Point Retail,Events,8086,Retail,39
+2025-12-05,NexaTech Solutions,Email,3919,Technology,35
+2025-12-06,Silverlake Goods,Meta,1994,Retail,60
+2025-12-06,GridScale Computing,Referral,4655,Technology,28
+2025-12-07,Beacon Analytics,Email,4011,Technology,42
+2025-12-07,DataLens Corp,Events,12576,Technology,33
+2025-12-08,Eclipse Industrial,Google Ads,3504,Manufacturing,45
+2025-12-08,NeuralPath Inc,Email,4105,Technology,29
+2025-12-08,Bridgepoint Consulting,Events,12468,Professional Services,60
+2025-12-09,UpLink Solutions,Google Ads,3521,Technology,49
+2025-12-09,Healix Technologies,Google Ads,4481,Healthcare,46
+2025-12-09,UpLink Solutions,Events,9052,Technology,29
+2025-12-10,NeuralPath Inc,Email,4947,Technology,36
+2025-12-10,LuxeHome Retail,Referral,2859,Retail,36
+2025-12-12,Oakwood Strategy,Content,2186,Professional Services,70
+2025-12-12,TimberLine Retail,Content,2135,Retail,62
+2025-12-16,UpLink Solutions,Google Ads,2960,Technology,62
+2025-12-17,BioStar Health,Google Ads,1537,Healthcare,47
+2025-12-17,GridScale Computing,Meta,3316,Technology,75
+2025-12-17,Bridgepoint Consulting,Referral,1800,Professional Services,27
+2025-12-18,RedBarn Trading,Google Ads,2229,Retail,68
+2025-12-18,Urban Harvest Co,Meta,2046,Retail,40
+2025-12-18,Archer Associates,Referral,3823,Professional Services,16
+2025-12-19,Blackwood Associates,Email,3462,Professional Services,39
+2025-12-21,ByteCraft Systems,Google Ads,2464,Technology,85
+2025-12-22,VectorWave Inc,Email,4383,Technology,41
+2025-12-23,JetStream Analytics,Events,12416,Technology,39
+2025-12-24,Catalyst Group,Google Ads,3873,Professional Services,61
+2025-12-24,ForgePoint Mfg,Email,2570,Manufacturing,44
+2025-12-24,MedCore Systems,Content,2557,Healthcare,20
+2025-12-25,Evergreen Partners,Meta,1442,Professional Services,60
+2025-12-27,Agile Horizon,Google Ads,2736,Technology,61
+2025-12-27,Healix Technologies,Meta,2316,Healthcare,42
+2025-12-27,Frontier Consulting,Email,2820,Professional Services,32
+2025-12-28,Streamline AI,Content,1416,Technology,49

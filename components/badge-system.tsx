@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useGame, useSkin } from '@/components/game-provider'
+import { worlds } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { playSound } from '@/lib/sounds'
 
@@ -236,6 +237,60 @@ export function BadgeToast() {
             skin.isDark ? 'text-white' : 'text-[var(--color-ink)]'
           )}>
             {def.name}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Toast notification for newly unlocked worlds
+export function WorldUnlockToast() {
+  const { worldUnlockToastQueue, dismissWorldUnlockToast } = useGame()
+  const skin = useSkin()
+
+  const currentWorldId = worldUnlockToastQueue[0]
+  const worldDef = currentWorldId ? worlds.find((w) => w.id === currentWorldId) : null
+
+  useEffect(() => {
+    if (!currentWorldId) return
+    if (skin.sounds.badgeEarned) playSound(skin.sounds.badgeEarned)
+    const timer = setTimeout(dismissWorldUnlockToast, 4000)
+    return () => clearTimeout(timer)
+  }, [currentWorldId, dismissWorldUnlockToast, skin.sounds.badgeEarned])
+
+  if (!worldDef) return null
+
+  return (
+    <div className="fixed top-16 left-4 z-[60] badge-toast-enter">
+      <div
+        className="flex items-center gap-3 px-4 py-3 shadow-lg min-w-[240px]"
+        style={skin.isDark ? {
+          background: 'var(--mario-dark)',
+          border: '3px solid var(--mario-coin)',
+        } : {
+          background: 'white',
+          border: '1px solid var(--color-border)',
+          borderRadius: '2px',
+        }}
+      >
+        <div style={skin.isDark ? { color: 'var(--mario-coin)' } : { color: 'var(--color-brand-orange, #E07A1B)' }}>
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+        </div>
+        <div>
+          <p className={cn(
+            'text-[10px] font-heading font-semibold uppercase tracking-wider',
+            skin.isDark ? 'text-white/50' : 'text-[var(--color-faint)]'
+          )}>
+            World Unlocked!
+          </p>
+          <p className={cn(
+            'text-sm font-heading font-bold',
+            skin.isDark ? 'text-white' : 'text-[var(--color-ink)]'
+          )}>
+            {worldDef.name}
           </p>
         </div>
       </div>

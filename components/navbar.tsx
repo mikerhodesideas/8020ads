@@ -142,8 +142,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ARCADE NAVBAR - Mario HUD style */}
-      {skin.navLayout === 'dark-hud' ? (
+      {/* ARCADE NAVBAR - Mario HUD style (commented out - always use light bar now) */}
+      {/* skin.navLayout === 'dark-hud' ? ( */}
+      {false ? (
         <nav className={cn("sticky top-0 z-50 border-b", skin.skinClass)} style={{ background: 'var(--world-dark)', borderBottomColor: 'var(--nav-border, #333)' }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <Link
@@ -151,13 +152,13 @@ export default function Navbar() {
               className="font-heading font-bold text-lg tracking-tight text-white"
               onClick={() => { if (isPlaying) resetGame() }}
             >
-              <span style={{ color: 'var(--world-accent)' }}>8020skill</span>
-              <span className="text-white/80"> The AI Game</span>
+              <span style={{ color: 'var(--world-accent)' }}>AI demos.</span>
+              <span className="text-white/80"> See it. Then try it.</span>
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
               {/* Character sprite in navbar */}
-              {world && worldSprites[world] && (
+              {world && worldSprites[world as string] && (
                 <div
                   className="w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0"
                   style={{
@@ -167,7 +168,7 @@ export default function Navbar() {
                   }}
                 >
                   <img
-                    src={worldSprites[world]}
+                    src={worldSprites[world as string]}
                     alt=""
                     className="w-full h-full object-cover"
                     style={{ imageRendering: 'pixelated' }}
@@ -277,7 +278,7 @@ export default function Navbar() {
                     : 'text-white/60 hover:text-white'
                 )}
               >
-                Course
+                Free Cowork Course
               </Link>
 
               {/* How it works */}
@@ -300,14 +301,11 @@ export default function Navbar() {
         <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[var(--color-border)]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
             <Link
-              href="/"
+              href={isPlaying ? '/play' : '/'}
               className="font-heading font-bold text-lg tracking-tight"
-              onClick={() => {
-                if (isPlaying) resetGame()
-              }}
             >
-              <span className="text-[var(--color-brand-orange)]">8020skill</span>
-              <span className="text-[var(--color-ink)]"> The AI Game</span>
+              <span className="text-[var(--color-brand-orange)]">AI demos.</span>
+              <span className="text-[var(--color-ink)]"> See it. Then try it.</span>
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
@@ -417,7 +415,7 @@ export default function Navbar() {
                     : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                 )}
               >
-                Course
+                Free Cowork Course
               </Link>
 
               {/* How it works */}

@@ -5,11 +5,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { SkinConfig } from '@/lib/skin-config'
+import type { PlayerType, WorldId } from '@/lib/game-data'
+
+const WORLD_DISPLAY: Record<string, { name: string; desc: string }> = {
+  arcade: { name: 'Super Mario', desc: 'Pixel art, retro vibes' },
+  'red-alert': { name: 'Red Alert', desc: 'Military command' },
+  'clair-obscur': { name: 'Clair Obscur', desc: 'Art deco elegance' },
+  tetris: { name: 'Tetris', desc: 'Bold blocks, neon' },
+  zelda: { name: 'Legend of Zelda', desc: 'Medieval quest' },
+  'elder-scrolls': { name: 'Elder Scrolls', desc: 'Nordic constellations' },
+}
 
 interface LevelTransitionProps {
   fromLevel: number // 1, 2, or 3
   onContinue: () => void
   skin: SkinConfig
+  currentRole?: PlayerType
+  onSwitchRole?: (role: PlayerType) => void
+  currentWorld?: WorldId
+  unlockedWorlds?: Set<string>
+  onSwitchWorld?: (world: WorldId) => void
 }
 
 const CONNECTORS = [
@@ -20,7 +35,14 @@ const CONNECTORS = [
 
 const MORE_CONNECTORS = ['HubSpot', 'Asana', 'ClickUp', 'Slack', 'Excel', 'Outlook']
 
-export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransitionProps) {
+const ROLE_OPTIONS: { id: PlayerType; title: string; desc: string }[] = [
+  { id: 'agency', title: 'Agency Owner', desc: 'Client reporting, competitor analysis' },
+  { id: 'employee', title: 'Agency Employee', desc: 'Campaign management, search terms' },
+  { id: 'freelancer', title: 'Freelancer', desc: 'Solo client work, prospecting' },
+  { id: 'business', title: 'Business Owner', desc: 'Inbox, meetings, financials' },
+]
+
+export function LevelTransition({ fromLevel, onContinue, skin, currentRole, onSwitchRole, currentWorld, unlockedWorlds, onSwitchWorld }: LevelTransitionProps) {
   const isDark = skin.isDark
   const [visible, setVisible] = useState(false)
 
@@ -37,10 +59,12 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
   const cardBg = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.5)'
   const bandBg = isDark ? 'rgba(10, 10, 20, 0.75)' : 'rgba(40, 20, 0, 0.7)'
 
+  const otherRoles = ROLE_OPTIONS.filter(r => r.id !== currentRole)
+
   return (
     <div
       className={cn(
-        'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-700',
+        'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-700 overflow-y-auto',
         visible ? 'opacity-100' : 'opacity-0'
       )}
     >
@@ -54,11 +78,9 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
             className="object-cover"
             priority
           />
-          {/* Slight overall darken so the band reads well */}
           <div className="absolute inset-0" style={{ backgroundColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)' }} />
         </>
       ) : (
-        /* Fallback when no image */
         <div
           className="absolute inset-0"
           style={{
@@ -72,14 +94,14 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
       <div
         className="absolute inset-x-0 flex items-center justify-center"
         style={{
-          top: '15%',
-          bottom: '15%',
-          background: `linear-gradient(to bottom, transparent, ${bandBg} 12%, ${bandBg} 88%, transparent)`,
+          top: '8%',
+          bottom: '8%',
+          background: `linear-gradient(to bottom, transparent, ${bandBg} 8%, ${bandBg} 92%, transparent)`,
         }}
       />
 
       {/* Content over the band */}
-      <div className="relative z-10 max-w-lg w-full mx-6 flex flex-col items-center gap-5 px-8">
+      <div className="relative z-10 max-w-lg w-full mx-6 flex flex-col items-center gap-5 px-8 py-12">
         {fromLevel === 1 && (
           <>
             <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center leading-snug text-white drop-shadow-lg">
@@ -161,6 +183,65 @@ export function LevelTransition({ fromLevel, onContinue, skin }: LevelTransition
             <p className="text-xs sm:text-sm text-center text-white/80">
               Plus a critical lesson on staying safe with AI.
             </p>
+
+            {/* World switching option */}
+            {onSwitchWorld && unlockedWorlds && unlockedWorlds.size > 1 && (
+              <div className="w-full mt-4 pt-4" style={{ borderTop: `1px solid ${borderColor}` }}>
+                <p className="text-sm text-center text-white/90 font-bold mb-1">
+                  You&apos;ve unlocked new game worlds!
+                </p>
+                <p className="text-xs text-center text-white/50 mb-3">
+                  Same demos, completely different visual style. Try one:
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {Array.from(unlockedWorlds)
+                    .filter(w => w !== currentWorld && w !== 'gallery' && WORLD_DISPLAY[w])
+                    .map(w => (
+                      <button
+                        key={w}
+                        onClick={() => onSwitchWorld(w as WorldId)}
+                        className="p-3 text-left transition-all duration-150 hover:scale-[1.02]"
+                        style={{
+                          border: `1px solid ${borderColor}`,
+                          borderRadius: '2px',
+                          backgroundColor: cardBg,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <p className="text-xs font-heading font-bold text-white">{WORLD_DISPLAY[w].name}</p>
+                        <p className="text-[10px] text-white/40 mt-1 leading-tight">{WORLD_DISPLAY[w].desc}</p>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {/* Role switching option */}
+            {onSwitchRole && otherRoles.length > 0 && (
+              <div className="w-full mt-4 pt-4" style={{ borderTop: `1px solid ${borderColor}` }}>
+                <p className="text-sm text-center text-white/70 mb-3">
+                  Or replay the demos from a different perspective:
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {otherRoles.map(role => (
+                    <button
+                      key={role.id}
+                      onClick={() => onSwitchRole(role.id)}
+                      className="p-3 text-left transition-all duration-150 hover:scale-[1.02]"
+                      style={{
+                        border: `1px solid ${borderColor}`,
+                        borderRadius: '2px',
+                        backgroundColor: cardBg,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <p className="text-xs font-heading font-bold text-white">{role.title}</p>
+                      <p className="text-[10px] text-white/40 mt-1 leading-tight">{role.desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         )}
 

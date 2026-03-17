@@ -4,14 +4,15 @@ import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { useGame, useSkin } from '@/components/game-provider'
-import { getLevels, DEMO_SKILLS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS, type PlayerType, type Demo } from '@/lib/game-data'
-import DragFile from './drag-file'
+import { getLevels, DEMO_SKILLS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS, getDemoUrl, type PlayerType, type Demo } from '@/lib/game-data'
+// DragFile moved to TryItYourself component
 import GlossaryTip from './glossary-tip'
 import { demoContent } from './demo-content'
 import { cn } from '@/lib/utils'
 import { track } from '@/lib/tracking'
-import { playSound, startProgressTick, stopProgressTick, playStarReveal, startBackgroundMusic, stopBackgroundMusic } from '@/lib/sounds'
+import { playSound, startProgressTick, stopProgressTick, playStarReveal, startBackgroundMusic, stopBackgroundMusic, type SoundRef } from '@/lib/sounds'
 import { useTransition } from '@/components/transition-overlay'
+import TryItYourself from './try-it-yourself'
 
 type QuestPhase = 'briefing' | 'running-before' | 'skill-unlock' | 'setup-guide' | 'celebration'
 
@@ -100,13 +101,9 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   const [showTryThis, setShowTryThis] = useState(false)
   const [copied, setCopied] = useState(false)
   const [justCompleted, setJustCompleted] = useState(false)
-  const [downloadedItems, setDownloadedItems] = useState<Set<string>>(new Set())
-  const [coworkDismissed, setCoworkDismissed] = useState(true) // default true to avoid flash
+  // downloadedItems and coworkDismissed moved to TryItYourself component
 
-  // Check localStorage for Cowork card dismissal
-  useEffect(() => {
-    setCoworkDismissed(localStorage.getItem('cowork-card-dismissed') === '1')
-  }, [])
+  // Cowork card dismissal moved to TryItYourself component
 
 
   const animFrameRef = useRef<number>(0)
@@ -273,7 +270,13 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   }
 
   const handleNext = () => {
-    const path = nextDemo ? `/play/${nextDemo.id}` : '/play'
+    let path = '/play'
+    if (nextDemo) {
+      path = getDemoUrl(nextDemo.id)
+    } else if (level && level.id === 3 && level.demos.every(d => completed.has(d.id))) {
+      // All Level 3 demos done - go straight to victory
+      path = '/victory'
+    }
     if (skin.useTransitions) {
       navigateWithTransition(path)
     } else {
@@ -646,29 +649,30 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
         {/* === SETUP GUIDE PHASE (Level 3) === */}
         {effectivePhase === 'setup-guide' && SETUP_GUIDES[demoId] && (
           <div className="quest-phase-in">
-            <div className="max-w-2xl mx-auto">
-              <p className="text-xs font-bold uppercase tracking-widest font-heading text-[var(--world-text-muted)] mb-6 text-center">
+            <div style={{ maxWidth: 1200, margin: '0 auto', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif' }}>
+              <p className="font-bold uppercase tracking-widest text-center mb-8" style={{ fontSize: 14, letterSpacing: 3, color: 'var(--world-text-muted)' }}>
                 Setup Required
               </p>
               <div
-                className="p-4 sm:p-6 md:p-8 rounded-[2px] border-2 mb-8"
+                className="rounded-[2px] border-2 mb-10"
                 style={{
                   background: 'var(--world-card-bg)',
                   borderColor: 'var(--world-accent)',
+                  padding: '32px 40px',
                 }}
               >
-                <h3 className="text-lg font-heading font-bold mb-4 text-[var(--world-text)]">
+                <h3 className="font-bold mb-6" style={{ fontSize: 28, color: 'var(--world-text)', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif' }}>
                   {SETUP_GUIDES[demoId].title}
                 </h3>
-                <ol className="space-y-3 mb-6">
+                <ol style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
                   {SETUP_GUIDES[demoId].instructions.map((step, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 text-sm text-[var(--world-text-secondary)]"
+                      style={{ display: 'flex', alignItems: 'flex-start', gap: 14, fontSize: 17, color: 'var(--world-text-secondary)', lineHeight: 1.5 }}
                     >
                       <span
-                        className="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold font-heading shrink-0 mt-0.5 text-white"
-                        style={{ background: 'var(--world-accent)' }}
+                        className="inline-flex items-center justify-center shrink-0 text-white font-bold"
+                        style={{ width: 32, height: 32, borderRadius: '50%', fontSize: 14, background: 'var(--world-accent)', marginTop: 1 }}
                       >
                         {i + 1}
                       </span>
@@ -676,19 +680,25 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                     </li>
                   ))}
                 </ol>
-                <p className="text-xs text-[var(--world-text-muted)] text-center">
-                  [SCREENSHOT: {SETUP_GUIDES[demoId].title} flow]
-                </p>
+                <img
+                  src="/images/lessons/plugin-install.jpg"
+                  alt="Cowork Customize screen showing Browse Plugins"
+                  style={{ width: '100%', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 2 }}
+                />
               </div>
               <div className="flex justify-center">
                 <button
                   onClick={handleSetupContinue}
                   className={cn(
-                    'inline-flex items-center gap-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-base font-heading font-bold rounded-[2px] text-white transition-all duration-300',
+                    'inline-flex items-center gap-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 font-bold rounded-[2px] text-white transition-all duration-300',
                     accentBg, accentHover,
                     'hover:shadow-lg active:scale-[0.97]'
                   )}
-                  style={isDark ? { border: '3px solid var(--world-accent-border)' } : undefined}
+                  style={{
+                    fontSize: 18,
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
+                    ...(isDark ? { border: '3px solid var(--world-accent-border)' } : {}),
+                  }}
                 >
                   Got it, run the demo
                   <span className="text-xl leading-none">&#9889;</span>
@@ -749,16 +759,95 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             {/* After reaction text */}
             {demo.afterReaction && (
               <p className={cn(
-                'text-center text-sm sm:text-base font-semibold mb-6 quest-fade-in max-w-3xl mx-auto',
+                'text-center text-sm sm:text-base font-semibold mb-2 quest-fade-in max-w-3xl mx-auto',
                 'text-[var(--world-text-secondary)]'
               )}>
                 {demo.afterReaction}
               </p>
             )}
+            {level && level.id === 2 && demoContent[demo.id] && (
+              <p className="text-center text-xs mb-6 text-[var(--world-text-muted)]">
+                Scroll down to see the full sample output.
+              </p>
+            )}
 
-            {/* Result display (all demos) */}
+            {/* Post-demo connector guide - shown ABOVE Your Turn for Level 3 */}
+            {(showTryThis || done) && POST_DEMO_GUIDES[demo.id] && (
+              <div
+                className="mt-6 p-6 sm:p-8 rounded-[2px] max-w-5xl mx-auto quest-phase-in"
+                style={{
+                  background: 'var(--world-card-bg)',
+                  border: '2px solid var(--world-accent)',
+                }}
+              >
+                <h3 className="text-lg font-heading font-bold mb-4 text-[var(--world-text)]">
+                  {POST_DEMO_GUIDES[demo.id].title}
+                </h3>
+                <ol className="space-y-2 mb-6">
+                  {POST_DEMO_GUIDES[demo.id].instructions.map((step, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-[var(--world-text-secondary)]"
+                    >
+                      <span
+                        className="inline-flex items-center justify-center w-6 h-6 sm:w-5 sm:h-5 rounded-full text-[10px] font-bold font-heading shrink-0 mt-0.5 text-white"
+                        style={{ background: 'var(--world-accent)' }}
+                      >
+                        {i + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ))}
+                </ol>
+                <p className="text-xs font-bold uppercase tracking-widest font-heading mb-3 text-[var(--world-text-muted)]">
+                  Cowork connects to everything you already use
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {POST_DEMO_GUIDES[demo.id].connectors.map((name) => (
+                    <span
+                      key={name}
+                      className="px-3 py-1 text-xs font-heading font-medium rounded-[2px]"
+                      style={{
+                        background: 'var(--world-selection-bg)',
+                        color: 'var(--world-text)',
+                        border: '1px solid var(--world-data-border)',
+                      }}
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Try It Yourself */}
+            {(showTryThis || done) && (
+              <TryItYourself
+                demo={demo}
+                skill={skill}
+                level={level!}
+                isDark={isDark}
+                skin={skin}
+                copied={copied}
+                done={done}
+                justCompleted={justCompleted}
+                onCopyPrompt={copyToClipboard}
+                onMarkComplete={handleMarkComplete}
+                onNext={handleNext}
+                nextLabel={nextDemo
+                  ? 'Next demo'
+                  : level!.demos.every(d => completed.has(d.id))
+                    ? `${skin.levelLabel} complete!`
+                    : 'Back to map'}
+              />
+            )}
+
+            {/* Sample output - below the fold, after Your Turn */}
             {demoContent[demo.id] && (
-              <div className="quest-phase-in mx-auto max-w-5xl mb-4">
+              <div className="quest-phase-in mx-auto max-w-5xl mt-8 mb-4">
+                <p className="text-xs font-bold uppercase tracking-widest font-heading text-[var(--world-text-muted)] mb-3 text-center">
+                  Sample output
+                </p>
                 <div className={cn(
                   'border-2 rounded-[2px] overflow-hidden max-h-[60vh] sm:max-h-[70vh] md:max-h-[700px] overflow-y-hidden',
                   'border-[var(--world-accent)]'
@@ -767,291 +856,11 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 </div>
               </div>
             )}
-
-            {/* Post-celebration guidance: nudge user to the "Now Do It" section */}
-            {(showTryThis || done) && (
-              <div className="mt-6 mb-2 text-center quest-phase-in">
-                <button
-                  onClick={() => {
-                    const el = document.getElementById('try-it-yourself')
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  }}
-                  className="inline-flex flex-col items-center gap-1 group transition-opacity hover:opacity-80"
-                >
-                  <span
-                    className="text-sm font-heading font-semibold"
-                    style={{ color: 'var(--world-accent)' }}
-                  >
-                    {level && level.id >= 3 ? 'Now try it with your own data' : 'Try it yourself'}
-                  </span>
-                  <span
-                    className="text-lg animate-bounce"
-                    style={{ color: 'var(--world-accent)' }}
-                  >
-                    &#8595;
-                  </span>
-                </button>
-              </div>
-            )}
-
-            {(showTryThis || done) && (
-              <div id="try-it-yourself" className="mt-4 max-w-5xl mx-auto quest-phase-in scroll-mt-4">
-                {/* Post-demo connector guide (Demo 7) */}
-                {POST_DEMO_GUIDES[demo.id] && (
-                  <div
-                    className="p-6 sm:p-8 rounded-[2px] mb-6"
-                    style={{
-                      background: 'var(--world-card-bg)',
-                      border: '2px solid var(--world-accent)',
-                    }}
-                  >
-                    <h3 className="text-lg font-heading font-bold mb-4 text-[var(--world-text)]">
-                      {POST_DEMO_GUIDES[demo.id].title}
-                    </h3>
-                    <ol className="space-y-2 mb-6">
-                      {POST_DEMO_GUIDES[demo.id].instructions.map((step, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-3 text-sm text-[var(--world-text-secondary)]"
-                        >
-                          <span
-                            className="inline-flex items-center justify-center w-6 h-6 sm:w-5 sm:h-5 rounded-full text-[10px] font-bold font-heading shrink-0 mt-0.5 text-white"
-                            style={{ background: 'var(--world-accent)' }}
-                          >
-                            {i + 1}
-                          </span>
-                          {step}
-                        </li>
-                      ))}
-                    </ol>
-                    <p className="text-xs font-bold uppercase tracking-widest font-heading mb-3 text-[var(--world-text-muted)]">
-                      Cowork connects to everything you already use
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {POST_DEMO_GUIDES[demo.id].connectors.map((name) => (
-                        <span
-                          key={name}
-                          className="px-3 py-1 text-xs font-heading font-medium rounded-[2px]"
-                          style={{
-                            background: 'var(--world-selection-bg)',
-                            color: 'var(--world-text)',
-                            border: '1px solid var(--world-data-border)',
-                          }}
-                        >
-                          {name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {/* Big CTA section */}
-                <div
-                  className="p-4 sm:p-6 md:p-8 lg:p-10 rounded-[2px] text-center"
-                  style={{
-                    background: 'var(--world-selection-bg)',
-                    border: '2px solid var(--world-accent)',
-                  }}
-                >
-                  <p className="text-xs font-bold uppercase tracking-widest font-heading mb-3 text-[var(--world-text-muted)]">
-                    {skin.tryThisPrefix}
-                  </p>
-                  <h2 className="text-2xl sm:text-3xl font-heading font-bold mb-2" style={{ color: 'var(--world-accent)' }}>
-                    {level && level.id >= 3 ? 'Now do it with your own data' : 'Try it yourself'}
-                  </h2>
-                  <p className="text-sm text-[var(--world-text-secondary)] mb-4 max-w-xl mx-auto">
-                    {skill
-                      ? 'Install the skill, download the data file, and paste the prompt.'
-                      : demo.dragFile
-                        ? 'Download the file, drag it into Cowork, and paste the prompt.'
-                        : 'Copy the prompt, open Cowork, and paste it in.'
-                    }
-                  </p>
-                  {level && level.id < 3 && (
-                    <p className="text-xs text-[var(--world-text-muted)] mb-8 max-w-lg mx-auto">
-                      We&apos;ve created sample data for you to try this out. In Level 3, you&apos;ll connect your own accounts.
-                    </p>
-                  )}
-                  {level && level.id >= 3 && <div className="mb-4" />}
-
-                  {/* Cowork install prompt - shows once, dismissible */}
-                  {!coworkDismissed && (
-                    <div
-                      className="mb-6 p-5 rounded-[2px] text-left"
-                      style={{
-                        background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.03)',
-                        border: isDark ? '1px solid rgba(255,255,255,0.15)' : '1px solid rgba(0,0,0,0.1)',
-                      }}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <p className="text-sm font-heading font-bold text-[var(--world-text)] mb-1.5">
-                            Got Cowork installed?
-                          </p>
-                          <p className="text-xs text-[var(--world-text-secondary)] mb-3 leading-relaxed">
-                            You&apos;ll need the Claude desktop app with Cowork mode to try these demos with your own data. It&apos;s free and takes about two minutes to set up.
-                          </p>
-                          <div className="flex flex-wrap items-center gap-3">
-                            <a
-                              href="https://claude.ai/download"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-heading font-semibold rounded-[2px] text-white transition-colors"
-                              style={{ background: 'var(--world-accent)' }}
-                            >
-                              Download Cowork &#8599;
-                            </a>
-                            <a
-                              href="/course/1-3"
-                              className="text-xs font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)] underline transition-colors"
-                            >
-                              Step-by-step walkthrough
-                            </a>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => {
-                            localStorage.setItem('cowork-card-dismissed', '1')
-                            setCoworkDismissed(true)
-                          }}
-                          className="text-xs font-heading text-[var(--world-text-muted)] hover:text-[var(--world-text)] transition-colors shrink-0 pt-0.5"
-                          title="I already have Cowork"
-                        >
-                          Already installed &#10005;
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Skill zip download (Level 2) */}
-                  {demo.skillZip && (
-                    <div className="mb-4">
-                      <p className={cn(
-                        'text-xs font-bold uppercase tracking-widest font-heading mb-2 text-left',
-                        'text-[var(--world-text-muted)]'
-                      )}>
-                        1. Download and install the skill
-                      </p>
-                      <a
-                        href={demo.skillZip.path}
-                        download={demo.skillZip.name}
-                        className="flex items-center gap-4 px-6 py-4 border-2 rounded-[2px] transition-all text-left"
-                        style={{
-                          borderColor: downloadedItems.has(demo.skillZip.path)
-                            ? (isDark ? 'rgba(16,185,129,0.6)' : '#10b981')
-                            : 'var(--world-download-border)',
-                          borderStyle: downloadedItems.has(demo.skillZip.path) ? 'solid' : 'dashed',
-                          background: downloadedItems.has(demo.skillZip.path)
-                            ? (isDark ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.05)')
-                            : 'var(--world-download-bg)',
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!downloadedItems.has(demo.skillZip!.path)) {
-                            e.currentTarget.style.background = 'var(--world-download-hover-bg)'
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!downloadedItems.has(demo.skillZip!.path)) {
-                            e.currentTarget.style.background = 'var(--world-download-bg)'
-                          }
-                        }}
-                        onClick={() => {
-                          if (skin.sounds.skillDownload) playSound(skin.sounds.skillDownload)
-                          setDownloadedItems(prev => new Set(prev).add(demo.skillZip!.path))
-                        }}
-                      >
-                        <span className="text-2xl shrink-0">
-                          {downloadedItems.has(demo.skillZip.path) ? '\u2713' : '\uD83D\uDCE6'}
-                        </span>
-                        <span
-                          className="text-base font-medium truncate font-heading"
-                          style={{
-                            color: downloadedItems.has(demo.skillZip.path)
-                              ? (isDark ? '#6ee7b7' : '#059669')
-                              : 'var(--world-download-text)',
-                          }}
-                        >
-                          {downloadedItems.has(demo.skillZip.path) ? `${demo.skillZip.name} - Downloaded` : demo.skillZip.name}
-                        </span>
-                        <span
-                          className="ml-auto text-sm font-heading font-bold shrink-0 px-4 py-2 rounded-[2px] text-white"
-                          style={{
-                            background: downloadedItems.has(demo.skillZip.path)
-                              ? (isDark ? '#059669' : '#10b981')
-                              : 'var(--world-download-badge-bg)',
-                          }}
-                        >
-                          {downloadedItems.has(demo.skillZip.path) ? '\u2713 Done' : '\u2193 Download'}
-                        </span>
-                      </a>
-                      <p
-                        className="text-xs mt-1"
-                        style={{ color: 'var(--world-download-subtext)' }}
-                      >
-                        In Cowork: Customize &gt; Skills &gt; + &gt; Upload this file
-                      </p>
-                    </div>
-                  )}
-
-                  <ContextBox
-                    label={demo.skillZip ? (demo.dragFile ? '3. Paste the prompt' : '2. Paste the prompt') : 'Prompt'}
-                    text={demo.tryThis}
-                    borderColor={'var(--world-accent)'}
-                    bgColor={'var(--world-prompt-bg)'}
-                    onCopy={() => copyToClipboard(demo.tryThis)}
-                    copied={copied}
-                  />
-
-                  {demo.dragFile && (
-                    <div className="mt-4">
-                      {demo.skillZip && (
-                        <p className={cn(
-                          'text-xs font-bold uppercase tracking-widest font-heading mb-2 text-left',
-                          'text-[var(--world-text-muted)]'
-                        )}>
-                          2. Download the data file
-                        </p>
-                      )}
-                      <DragFile file={demo.dragFile} />
-                    </div>
-                  )}
-
-                  <div className="flex justify-center mt-8">
-                    <div className="relative">
-                      {justCompleted && <ConfettiBurst />}
-                      <button
-                        onClick={handleMarkComplete}
-                        disabled={done}
-                        className={cn(
-                          'relative inline-flex items-center gap-3 px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 text-lg font-heading font-bold rounded-[2px] transition-all duration-300',
-                          done
-                            ? isDark
-                              ? 'border-2 border-emerald-500 text-emerald-400 cursor-default'
-                              : 'bg-emerald-50 text-emerald-700 border-2 border-emerald-300 cursor-default'
-                            : cn(accentBg, 'text-white', accentHover, 'hover:shadow-lg active:scale-[0.97] cta-pulse')
-                        )}
-                        style={done && isDark ? { background: 'rgba(16,185,129,0.1)' } : isDark && !done ? { border: '3px solid var(--world-accent-border)' } : undefined}
-                      >
-                        {done ? (
-                          <>
-                            <span className="text-emerald-500">&#10003;</span>
-                            Demo Complete
-                          </>
-                        ) : (
-                          <>
-                            Copy Prompt &amp; Mark Complete
-                            <span className="text-xl leading-none">&#9733;</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         )}
 
-        {/* Bottom navigation - hidden during celebration until demo is marked complete */}
+        {/* Bottom navigation */}
+        {/* Hide entirely during celebration phase until demo is marked complete */}
         {(effectivePhase !== 'celebration' || done) && (
           <div className="flex items-center justify-between mt-10 pt-6 border-t border-[var(--world-text-muted)]">
             <button
@@ -1060,16 +869,24 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             >
               &#8592; Back to map
             </button>
-            <button
-              onClick={handleNext}
-              className={cn(
-                'inline-flex items-center gap-2 px-5 py-2 text-white text-sm font-heading font-semibold rounded-[2px] transition-colors',
-                accentBg, accentHover
-              )}
-            >
-              {nextDemo ? 'Next demo' : `${skin.levelLabel} complete!`}
-              <span>&#8594;</span>
-            </button>
+            {/* Only show next/complete button AFTER demo is done.
+                During briefing, "Start Now" is the primary CTA - no competing buttons. */}
+            {done && (
+              <button
+                onClick={handleNext}
+                className={cn(
+                  'inline-flex items-center gap-2 px-5 py-2 text-white text-sm font-heading font-semibold rounded-[2px] transition-colors',
+                  accentBg, accentHover
+                )}
+              >
+                {nextDemo
+                  ? 'Next demo'
+                  : level.demos.every(d => completed.has(d.id))
+                    ? `${skin.levelLabel} complete!`
+                    : 'Back to map'}
+                <span>&#8594;</span>
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -1167,10 +984,32 @@ function SkillUnlockCard({
   installed: boolean
   shrinking: boolean
   onInstall: () => void
-  skin: { skillUnlockLabel: string; installLabel: string; installedLabel: string; skillUnlockIcon: string; showGlossaryTips: boolean; isDark: boolean }
+  skin: { skillUnlockLabel: string; installLabel: string; installedLabel: string; skillUnlockIcon: string; showGlossaryTips: boolean; isDark: boolean; sounds: { skillUnlock?: SoundRef | null; skillDownload?: SoundRef | null } }
   skillZip?: { name: string; path: string }
 }) {
   const isDark = skin.isDark
+  const [downloaded, setDownloaded] = useState(false)
+
+  const handleCardClick = () => {
+    if (downloaded || installed) return
+    // Trigger zip download
+    if (skillZip) {
+      const a = document.createElement('a')
+      a.href = skillZip.path
+      a.download = skillZip.name
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+    }
+    // Sound fires immediately on click
+    if (skin.sounds?.skillDownload) playSound(skin.sounds.skillDownload as SoundRef)
+    setDownloaded(true)
+    // Brief green flash then move on
+    setTimeout(() => {
+      onInstall()
+    }, 1000)
+  }
+
   return (
     <div
       className={cn(
@@ -1180,17 +1019,36 @@ function SkillUnlockCard({
           : 'left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 skill-card-grow',
         shrinking && (!isDark ? 'skill-card-shrink-gallery' : 'skill-card-shrink-arcade')
       )}
+      onClick={handleCardClick}
+      style={{ cursor: downloaded ? 'default' : 'pointer' }}
     >
       <div className={!isDark ? 'w-[calc(100vw-2rem)] sm:w-80 md:w-96' : 'w-[calc(100vw-2rem)] sm:w-80'}>
         <div
-          className="border-[3px] p-4 sm:p-6 md:p-8 rounded-[2px] shadow-2xl"
+          className="border-[3px] p-4 sm:p-6 md:p-8 rounded-[2px] transition-all duration-500"
           style={{
-            background: isDark ? 'rgba(20, 30, 50, 0.95)' : '#faf6ef',
+            background: downloaded
+              ? (isDark ? 'rgba(20, 60, 30, 0.98)' : '#eef7ee')
+              : (isDark ? 'rgba(20, 30, 50, 0.98)' : '#faf6ef'),
             backdropFilter: isDark ? 'blur(8px)' : undefined,
-            borderColor: isDark ? 'var(--world-accent)' : 'var(--world-skill-card-border)',
+            borderColor: downloaded
+              ? '#22c55e'
+              : (isDark ? 'var(--world-accent)' : 'var(--world-skill-card-border)'),
+            boxShadow: isDark
+              ? '0 0 40px 10px var(--world-skill-card-glow), 0 0 80px 20px var(--world-skill-card-glow)'
+              : '0 25px 50px -12px rgb(0 0 0 / 0.25)',
           }}
         >
-          {!installed ? (
+          {downloaded ? (
+            <div className="flex flex-col items-center justify-center py-6">
+              <span className="text-4xl mb-3" style={{ color: '#22c55e' }}>&#10003;</span>
+              <p className="text-lg font-heading font-bold mb-1" style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}>
+                Skill Downloaded
+              </p>
+              <p className="text-xs" style={{ color: isDark ? 'rgba(255,255,255,0.7)' : '#888' }}>
+                In Cowork: Customize &gt; Skills &gt; + &gt; Upload
+              </p>
+            </div>
+          ) : (
             <>
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">
@@ -1198,7 +1056,7 @@ function SkillUnlockCard({
                 </span>
                 <span
                   className="text-xs font-bold uppercase tracking-widest font-heading"
-                  style={{ color: 'var(--world-accent2)' }}
+                  style={{ color: isDark ? '#ffffff' : 'var(--world-accent2)' }}
                 >
                   {skin.skillUnlockLabel}
                 </span>
@@ -1211,40 +1069,14 @@ function SkillUnlockCard({
                 {skill.name}
               </h3>
 
-              {/* Install button - prominent, near the top */}
-              <button
-                onClick={() => {
-                  if (skillZip) {
-                    const a = document.createElement('a')
-                    a.href = skillZip.path
-                    a.download = skillZip.name
-                    document.body.appendChild(a)
-                    a.click()
-                    document.body.removeChild(a)
-                  }
-                  onInstall()
-                }}
-                className={cn(
-                  'w-full font-heading font-bold rounded-[2px] text-white transition-all mb-5',
-                  isDark ? 'py-3.5 text-base power-pulse' : 'py-2.5 text-sm'
-                )}
-                style={{ background: 'var(--world-accent2)' }}
-              >
-                {skin.installLabel}
-              </button>
-
-              {/* Skill zip download */}
+              {/* Skill zip indicator */}
               {skillZip && (
-                <a
-                  href={skillZip.path}
-                  download={skillZip.name}
-                  className="flex items-center gap-3 px-4 py-3 border border-dashed rounded-[2px] mb-4 transition-colors"
+                <div
+                  className="flex items-center gap-3 px-4 py-3 border border-dashed rounded-[2px] mb-4"
                   style={{
                     borderColor: 'var(--world-skill-download-border)',
                     background: 'var(--world-skill-download-bg)',
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'var(--world-skill-download-hover-bg)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'var(--world-skill-download-bg)'}
                 >
                   <span className="text-lg shrink-0">&#128230;</span>
                   <span
@@ -1255,19 +1087,19 @@ function SkillUnlockCard({
                   </span>
                   <span
                     className="ml-auto text-xs font-heading font-bold"
-                    style={{ color: isDark ? 'rgba(255,255,255,0.5)' : '#888' }}
+                    style={{ color: isDark ? 'rgba(255,255,255,0.8)' : '#888' }}
                   >
                     &#8595;
                   </span>
-                </a>
+                </div>
               )}
 
-              <ul className="space-y-1.5 mb-4">
+              <ul className="space-y-1.5 mb-5">
                 {skill.capabilities.map((cap, i) => (
                   <li
                     key={i}
                     className="flex items-center gap-2 text-sm"
-                    style={{ color: isDark ? 'rgba(255,255,255,0.75)' : '#555' }}
+                    style={{ color: isDark ? 'rgba(255,255,255,0.9)' : '#555' }}
                   >
                     <span className="text-xs" style={{ color: 'var(--world-accent)' }}>+</span>
                     {cap}
@@ -1275,21 +1107,13 @@ function SkillUnlockCard({
                 ))}
               </ul>
 
-              {/* Install instructions */}
               <p
-                className="text-xs text-center"
-                style={{ color: isDark ? 'rgba(255,255,255,0.4)' : '#999' }}
+                className="text-sm font-heading font-bold text-center py-2"
+                style={{ color: isDark ? '#ffffff' : 'var(--world-accent2)' }}
               >
-                In Cowork: Customize &gt; Skills &gt; + &gt; Upload
+                Tap anywhere to download
               </p>
             </>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-4">
-              <span className="text-4xl mb-3" style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}>&#10003;</span>
-              <p className="text-lg font-heading font-bold" style={{ color: isDark ? '#ffffff' : '#1a1a2e' }}>
-                {skin.installedLabel}
-              </p>
-            </div>
           )}
         </div>
       </div>

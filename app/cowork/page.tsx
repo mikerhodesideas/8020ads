@@ -75,7 +75,7 @@ function CoworkContent() {
       <section className="px-6 pb-10">
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-[var(--color-border)] divide-y sm:divide-y-0 sm:divide-x divide-[var(--color-border)]">
           <a
-            href="https://claude.ai/download"
+            href="https://claude.com/download"
             target="_blank"
             rel="noopener noreferrer"
             className="p-6 hover:bg-[var(--color-cream)] transition-colors group"

@@ -6,100 +6,879 @@
     <title>Thunderbolt Electricals - Licensed Melbourne Electrician</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; color: #1a1a2e; line-height: 1.6; background: #fff; }
 
-        /* Header */
-        .topbar { background: #0f172a; color: #94a3b8; font-size: 13px; padding: 8px 0; text-align: center; }
-        .topbar span { margin: 0 16px; }
-        .topbar strong { color: #f59e0b; }
-        header { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
-        .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
-        .logo { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
-        .logo span { color: #f59e0b; }
-        nav a { color: #475569; text-decoration: none; font-size: 14px; font-weight: 500; margin-left: 28px; }
-        nav a:hover { color: #f59e0b; }
-        .nav-cta { background: #f59e0b; color: #0f172a !important; padding: 10px 20px; font-weight: 600; border: none; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-        /* Hero */
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 80px 24px; }
-        .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .hero h1 { font-size: 44px; font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
-        .hero h1 span { color: #f59e0b; }
-        .hero p { font-size: 18px; color: #cbd5e1; margin-bottom: 32px; line-height: 1.7; }
-        .hero-actions { display: flex; gap: 12px; }
-        .btn-primary { background: #f59e0b; color: #0f172a; padding: 14px 28px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; display: inline-block; border-radius: 2px; }
-        .btn-secondary { background: transparent; color: white; padding: 14px 28px; font-size: 16px; font-weight: 600; border: 2px solid #475569; cursor: pointer; text-decoration: none; display: inline-block; border-radius: 2px; }
-        .trust-row { display: flex; gap: 24px; margin-top: 32px; }
-        .trust-item { display: flex; align-items: center; gap: 8px; color: #94a3b8; font-size: 14px; }
-        .trust-item .check { color: #22c55e; font-weight: bold; }
-        .hero-stats { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 40px; }
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .stat { text-align: center; }
-        .stat .number { font-size: 36px; font-weight: 800; color: #f59e0b; }
-        .stat .label { font-size: 13px; color: #94a3b8; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        /* ---- Top Bar ---- */
+        .topbar {
+            background: #0a0f1a;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 10px 0;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .topbar-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .topbar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .emergency-badge {
+            background: #dc2626;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 1px;
+        }
+        .topbar-phone {
+            color: #f1f5f9;
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
 
-        /* Services */
-        .services { padding: 80px 24px; background: #f8fafc; }
-        .services-inner { max-width: 1100px; margin: 0 auto; }
-        .section-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #f59e0b; margin-bottom: 8px; }
-        .section-title { font-size: 36px; font-weight: 800; color: #0f172a; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .section-subtitle { font-size: 16px; color: #64748b; margin-bottom: 48px; max-width: 500px; }
-        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .service-card { background: white; border: 1px solid #e2e8f0; padding: 32px 24px; border-radius: 2px; }
-        .service-card:hover { border-color: #f59e0b; }
-        .service-icon { width: 48px; height: 48px; background: #fef3c7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 24px; border-radius: 2px; }
-        .service-card h3 { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-        .service-card p { font-size: 14px; color: #64748b; margin-bottom: 16px; }
-        .service-price { font-size: 14px; font-weight: 700; color: #f59e0b; }
+        /* ---- Header ---- */
+        header {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1px;
+        }
+        .logo-mark svg {
+            width: 18px;
+            height: 18px;
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .logo-text span {
+            font-weight: 400;
+            color: #64748b;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        nav a {
+            color: #475569;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 22px 16px;
+            letter-spacing: 0.2px;
+            transition: color 0.15s;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover {
+            color: #0f172a;
+            border-bottom-color: #f59e0b;
+        }
+        .nav-cta {
+            background: #0f172a;
+            color: #fff !important;
+            padding: 10px 22px !important;
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            border-radius: 2px;
+            border-bottom: none !important;
+            margin-left: 12px;
+            letter-spacing: 0.2px;
+            transition: background 0.15s;
+        }
+        .nav-cta:hover {
+            background: #1e293b;
+            border-bottom-color: transparent !important;
+        }
 
-        /* Social proof */
-        .proof { padding: 80px 24px; background: white; }
-        .proof-inner { max-width: 1100px; margin: 0 auto; }
-        .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-        .testimonial-card { border: 1px solid #e2e8f0; padding: 28px; border-radius: 2px; }
-        .stars { color: #f59e0b; font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
-        .testimonial-card blockquote { font-size: 15px; color: #334155; line-height: 1.6; margin-bottom: 16px; font-style: italic; }
-        .testimonial-author { font-size: 13px; font-weight: 600; color: #0f172a; }
-        .testimonial-location { font-size: 12px; color: #94a3b8; }
+        /* ---- Hero ---- */
+        .hero {
+            background: #0f172a;
+            color: white;
+            padding: 96px 32px 88px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(160deg, rgba(15,23,42,1) 0%, rgba(30,41,59,1) 100%);
+        }
+        .hero-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 72px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #f59e0b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: #f59e0b;
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: #f59e0b;
+        }
+        .hero-description {
+            font-size: 17px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            max-width: 480px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .btn-primary {
+            background: #f59e0b;
+            color: #0f172a;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 2px;
+            letter-spacing: 0.3px;
+            transition: background 0.15s;
+        }
+        .btn-primary:hover { background: #eab308; }
+        .btn-primary svg { width: 16px; height: 16px; }
+        .btn-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #334155;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 2px;
+            letter-spacing: 0.3px;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .btn-secondary:hover {
+            border-color: #64748b;
+            color: #fff;
+        }
+        .trust-row {
+            display: flex;
+            gap: 28px;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .trust-check {
+            width: 18px;
+            height: 18px;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1px;
+            flex-shrink: 0;
+        }
+        .trust-check svg {
+            width: 10px;
+            height: 10px;
+            color: #22c55e;
+        }
 
-        /* Why us */
-        .why-us { padding: 80px 24px; background: #0f172a; color: white; }
-        .why-inner { max-width: 1100px; margin: 0 auto; }
-        .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 48px; }
-        .why-item { text-align: center; }
-        .why-icon { font-size: 32px; margin-bottom: 12px; }
-        .why-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-        .why-item p { font-size: 13px; color: #94a3b8; }
+        /* Hero Stats */
+        .hero-stats-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .stats-header {
+            padding: 20px 28px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .stats-header-text {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .stat {
+            padding: 28px;
+            position: relative;
+        }
+        .stat:nth-child(1) { border-right: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.06); }
+        .stat-number {
+            font-size: 40px;
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-number .accent { color: #f59e0b; }
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .stats-footer {
+            padding: 16px 28px;
+            background: rgba(245, 158, 11, 0.05);
+            border-top: 1px solid rgba(245, 158, 11, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .google-stars {
+            display: flex;
+            gap: 2px;
+        }
+        .google-stars svg {
+            width: 14px;
+            height: 14px;
+            fill: #f59e0b;
+        }
+        .stats-footer-text {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .stats-footer-text strong {
+            color: #f1f5f9;
+        }
 
-        /* Areas */
-        .areas { padding: 60px 24px; background: #f8fafc; }
-        .areas-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
-        .area-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
-        .area-tag { background: white; border: 1px solid #e2e8f0; padding: 6px 14px; font-size: 13px; color: #475569; border-radius: 2px; }
+        /* ---- Services ---- */
+        .services {
+            padding: 96px 32px;
+            background: #fff;
+        }
+        .services-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+        .section-header {
+            margin-bottom: 56px;
+        }
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #f59e0b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: #f59e0b;
+        }
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 520px;
+            line-height: 1.6;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: #e2e8f0;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+        .service-card {
+            background: #fff;
+            padding: 36px 32px;
+            position: relative;
+            transition: background 0.15s;
+        }
+        .service-card:hover {
+            background: #fafafa;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f59e0b;
+            transition: width 0.25s;
+        }
+        .service-card:hover::before {
+            width: 100%;
+        }
+        .service-icon-wrap {
+            width: 44px;
+            height: 44px;
+            background: #fef9ee;
+            border: 1px solid #fde68a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+        .service-icon-wrap svg {
+            width: 20px;
+            height: 20px;
+            color: #d97706;
+        }
+        .service-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .service-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .service-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .service-arrow {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1px;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .service-card:hover .service-arrow {
+            border-color: #f59e0b;
+            background: #fef9ee;
+        }
+        .service-arrow svg {
+            width: 12px;
+            height: 12px;
+            color: #94a3b8;
+        }
+        .service-card:hover .service-arrow svg { color: #d97706; }
 
-        /* CTA */
-        .final-cta { padding: 80px 24px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); text-align: center; }
-        .final-cta h2 { font-size: 36px; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
-        .final-cta p { font-size: 18px; color: #451a03; margin-bottom: 32px; }
-        .final-cta .phone { font-size: 48px; font-weight: 800; color: #0f172a; display: block; margin-bottom: 16px; text-decoration: none; }
-        .final-cta .email-link { color: #451a03; font-size: 16px; }
+        /* ---- Social Proof ---- */
+        .proof {
+            padding: 96px 32px;
+            background: #f8fafc;
+        }
+        .proof-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+        .proof-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 56px;
+        }
+        .proof-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .proof-rating-stars {
+            display: flex;
+            gap: 3px;
+        }
+        .proof-rating-stars svg {
+            width: 20px;
+            height: 20px;
+            fill: #f59e0b;
+        }
+        .proof-rating-text {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .proof-rating-text strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 32px;
+            border-radius: 2px;
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 32px;
+            right: 32px;
+            height: 1px;
+            background: #f59e0b;
+        }
+        .t-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 16px;
+            padding-top: 4px;
+        }
+        .t-stars svg {
+            width: 14px;
+            height: 14px;
+            fill: #f59e0b;
+        }
+        .testimonial-card blockquote {
+            font-size: 15px;
+            color: #334155;
+            line-height: 1.65;
+            margin-bottom: 24px;
+            font-style: normal;
+        }
+        .t-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .t-avatar {
+            width: 36px;
+            height: 36px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .t-author-info { line-height: 1.3; }
+        .t-author-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .t-author-location {
+            font-size: 12px;
+            color: #94a3b8;
+        }
 
-        /* Footer */
-        footer { background: #0f172a; color: #64748b; padding: 32px 24px; text-align: center; font-size: 13px; }
-        footer a { color: #94a3b8; text-decoration: none; }
+        /* ---- Why Us ---- */
+        .why-us {
+            padding: 96px 32px;
+            background: #0f172a;
+            color: #fff;
+            position: relative;
+        }
+        .why-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+        .why-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .why-header .section-label::before { display: none; }
+        .why-header .section-label { justify-content: center; }
+        .why-header .section-title { color: #f8fafc; }
+        .why-header .section-subtitle { color: #94a3b8; margin: 0 auto; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2px;
+        }
+        .why-item {
+            background: #0f172a;
+            padding: 40px 28px;
+            text-align: center;
+        }
+        .why-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            background: rgba(245, 158, 11, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border-radius: 2px;
+        }
+        .why-icon-wrap svg {
+            width: 22px;
+            height: 22px;
+            color: #f59e0b;
+        }
+        .why-item h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+        .why-item p {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ---- Areas ---- */
+        .areas {
+            padding: 80px 32px;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+        }
+        .areas-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+        .areas-content .section-title {
+            font-size: 32px;
+        }
+        .areas-content .section-subtitle {
+            margin-top: 12px;
+        }
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .area-tag {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            border-radius: 1px;
+            text-align: center;
+            transition: border-color 0.15s;
+        }
+        .area-tag:hover {
+            border-color: #cbd5e1;
+        }
+        .area-tag.highlight {
+            background: #fef9ee;
+            border-color: #fde68a;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        /* ---- CTA ---- */
+        .final-cta {
+            padding: 88px 32px;
+            background: #f59e0b;
+            text-align: center;
+            position: relative;
+        }
+        .final-cta-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .cta-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #92400e;
+            margin-bottom: 16px;
+        }
+        .final-cta h2 {
+            font-size: 44px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            line-height: 1.05;
+        }
+        .final-cta .cta-sub {
+            font-size: 17px;
+            color: #78350f;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .cta-phone-wrap {
+            margin-bottom: 20px;
+        }
+        .cta-phone {
+            font-size: 44px;
+            font-weight: 800;
+            color: #0f172a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: inline-block;
+            border-bottom: 3px solid rgba(15,23,42,0.2);
+            padding-bottom: 4px;
+            transition: border-color 0.15s;
+        }
+        .cta-phone:hover {
+            border-color: #0f172a;
+        }
+        .cta-email {
+            font-size: 15px;
+            color: #92400e;
+        }
+        .cta-email a {
+            color: #78350f;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(120,53,15,0.3);
+        }
+        .cta-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 36px;
+            padding-top: 36px;
+            border-top: 1px solid rgba(15,23,42,0.1);
+        }
+        .cta-badge {
+            font-size: 12px;
+            font-weight: 600;
+            color: #78350f;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cta-badge svg {
+            width: 14px;
+            height: 14px;
+            color: #92400e;
+        }
+
+        /* ---- Footer ---- */
+        footer {
+            background: #0a0f1a;
+            color: #475569;
+            padding: 0;
+        }
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 48px 32px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        .footer-brand .logo-text {
+            font-size: 18px;
+            color: #f1f5f9;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .footer-brand .logo-text span { color: #475569; }
+        .footer-brand p {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .footer-license {
+            font-size: 11px;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .footer-col h5 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 13px;
+            color: #475569;
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color 0.15s;
+        }
+        .footer-col a:hover { color: #f59e0b; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 20px 32px;
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-bottom p {
+            font-size: 12px;
+            color: #334155;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Top Bar -->
     <div class="topbar">
-        <span><strong>24/7 Emergency Service</strong></span>
-        <span>Lic. No. EC12345</span>
-        <span>Serving Melbourne since 2003</span>
-        <span><strong>0412 345 678</strong></span>
+        <div class="topbar-inner">
+            <div class="topbar-left">
+                <span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Serving Melbourne since 2003
+                </span>
+                <span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 8h18"/><path d="M7 4v4"/><path d="M11 4v4"/></svg>
+                    Lic. EC12345
+                </span>
+            </div>
+            <div class="topbar-right">
+                <span class="emergency-badge">24/7 Emergency</span>
+                <a href="tel:0412345678" class="topbar-phone">0412 345 678</a>
+            </div>
+        </div>
     </div>
 
+    <!-- Header -->
     <header>
         <div class="header-inner">
-            <div class="logo">Thunderbolt<span>.</span></div>
+            <a class="logo" href="#">
+                <div class="logo-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <div class="logo-text">Thunderbolt <span>Electricals</span></div>
+            </a>
             <nav>
                 <a href="#">Services</a>
                 <a href="#">About</a>
@@ -110,139 +889,259 @@
         </div>
     </header>
 
+    <!-- Hero -->
     <section class="hero">
         <div class="hero-inner">
             <div>
-                <h1>Melbourne's most reliable <span>electrician</span></h1>
-                <p>Licensed, insured, and on time. From emergency repairs to full home rewiring, Thunderbolt Electricals has been keeping Melbourne's lights on for over 20 years.</p>
+                <div class="hero-label">Licensed Melbourne Electrician</div>
+                <h1>Melbourne's most trusted <em>electrician</em></h1>
+                <p class="hero-description">Licensed, insured, and on time. From emergency repairs to full home rewiring, we've been keeping Melbourne's lights on for over 20 years.</p>
                 <div class="hero-actions">
-                    <a href="tel:0412345678" class="btn-primary">Call 0412 345 678</a>
-                    <a href="#" class="btn-secondary">Get a Free Quote</a>
+                    <a href="tel:0412345678" class="btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Call 0412 345 678
+                    </a>
+                    <a href="#" class="btn-secondary">Request a Quote</a>
                 </div>
                 <div class="trust-row">
-                    <div class="trust-item"><span class="check">&#10003;</span> Licensed EC12345</div>
-                    <div class="trust-item"><span class="check">&#10003;</span> Fully insured</div>
-                    <div class="trust-item"><span class="check">&#10003;</span> Same-day service</div>
+                    <div class="trust-item">
+                        <div class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        Licensed EC12345
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        Fully insured
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        Same-day service
+                    </div>
                 </div>
             </div>
-            <div class="hero-stats">
+            <div class="hero-stats-card">
+                <div class="stats-header">
+                    <div class="stats-header-text">Thunderbolt by the numbers</div>
+                </div>
                 <div class="stat-grid">
                     <div class="stat">
-                        <div class="number">20+</div>
-                        <div class="label">Years Experience</div>
+                        <div class="stat-number">20<span class="accent">+</span></div>
+                        <div class="stat-label">Years</div>
                     </div>
                     <div class="stat">
-                        <div class="number">4,700+</div>
-                        <div class="label">Jobs Completed</div>
+                        <div class="stat-number">4,700<span class="accent">+</span></div>
+                        <div class="stat-label">Jobs Done</div>
                     </div>
                     <div class="stat">
-                        <div class="number">4.9</div>
-                        <div class="label">Google Rating</div>
+                        <div class="stat-number">4.9<span class="accent">/5</span></div>
+                        <div class="stat-label">Google Rating</div>
                     </div>
                     <div class="stat">
-                        <div class="number">24/7</div>
-                        <div class="label">Emergency Service</div>
+                        <div class="stat-number">24<span class="accent">/7</span></div>
+                        <div class="stat-label">Emergency</div>
                     </div>
+                </div>
+                <div class="stats-footer">
+                    <div class="google-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="stats-footer-text"><strong>4.9</strong> from 320+ Google reviews</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Services -->
     <section class="services">
         <div class="services-inner">
-            <div class="section-label">What we do</div>
-            <div class="section-title">Electrical services for every need</div>
-            <div class="section-subtitle">From a single light fitting to a full home rewire. Fixed pricing, no surprises.</div>
+            <div class="section-header">
+                <div class="section-label">What we do</div>
+                <div class="section-title">Electrical services for every need</div>
+                <div class="section-subtitle">From a single light fitting to a full home rewire. Fixed pricing, no surprises.</div>
+            </div>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">&#9889;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
                     <h3>House Rewiring</h3>
                     <p>Complete rewiring for older homes. We bring your wiring up to current Australian standards with minimal disruption.</p>
-                    <div class="service-price">From $2,500</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $2,500</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">&#9748;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M12 22v-6"/><path d="M6 8h12l-2 8H8L6 8z"/><path d="M8 16h8"/></svg>
+                    </div>
                     <h3>Hot Water Systems</h3>
                     <p>Electric hot water system installation and replacement. Energy-efficient options to reduce your bills.</p>
-                    <div class="service-price">From $800</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $800</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">&#127744;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4"/><path d="M12 19v4"/><path d="M4.22 4.22l2.83 2.83"/><path d="M16.95 16.95l2.83 2.83"/><path d="M1 12h4"/><path d="M19 12h4"/><path d="M4.22 19.78l2.83-2.83"/><path d="M16.95 7.05l2.83-2.83"/></svg>
+                    </div>
                     <h3>Ceiling Fans</h3>
                     <p>Stay cool in summer, warm in winter. Professional installation of ceiling fans in any room.</p>
-                    <div class="service-price">From $150</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $150</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">&#9878;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M12 7V4"/><path d="M8 7V5"/><path d="M16 7V5"/><path d="M2 13h20"/></svg>
+                    </div>
                     <h3>Switchboard Upgrades</h3>
                     <p>Safety switches and RCDs to protect your family. Essential for homes with older switchboards.</p>
-                    <div class="service-price">From $450</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $450</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">&#128161;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+                    </div>
                     <h3>LED Lighting</h3>
                     <p>Cut your lighting costs by up to 80%. We design and install LED solutions for homes and businesses.</p>
-                    <div class="service-price">From $50/light</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $50/light</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">&#128680;</div>
+                    <div class="service-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
                     <h3>Emergency Call Out</h3>
                     <p>Power out? Sparks? Burning smell? We're available 24/7 for electrical emergencies across Melbourne.</p>
-                    <div class="service-price">From $180</div>
+                    <div class="service-meta">
+                        <div class="service-price">From $180</div>
+                        <div class="service-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Social Proof -->
     <section class="proof">
         <div class="proof-inner">
-            <div class="section-label">What customers say</div>
-            <div class="section-title">Trusted by thousands of Melbourne homes</div>
+            <div class="proof-header">
+                <div>
+                    <div class="section-label">What customers say</div>
+                    <div class="section-title">Trusted by thousands of Melbourne homes</div>
+                </div>
+                <div class="proof-rating">
+                    <div class="proof-rating-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f59e0b"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f59e0b"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f59e0b"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f59e0b"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f59e0b"/></svg>
+                    </div>
+                    <div class="proof-rating-text"><strong>4.9</strong> on Google</div>
+                </div>
+            </div>
             <div class="testimonials">
                 <div class="testimonial-card">
-                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="t-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
                     <blockquote>"Bruce fixed our switchboard in no time. Explained everything clearly, cleaned up after himself, and the price was exactly what he quoted. Top bloke!"</blockquote>
-                    <div class="testimonial-author">Margaret T.</div>
-                    <div class="testimonial-location">Kew</div>
+                    <div class="t-author">
+                        <div class="t-avatar">MT</div>
+                        <div class="t-author-info">
+                            <div class="t-author-name">Margaret T.</div>
+                            <div class="t-author-location">Kew</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="t-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
                     <blockquote>"They showed up when they said they would. That's rare for a tradie! The LED upgrade has already saved us money on our power bill. Highly recommend."</blockquote>
-                    <div class="testimonial-author">Dave S.</div>
-                    <div class="testimonial-location">Richmond</div>
+                    <div class="t-author">
+                        <div class="t-avatar">DS</div>
+                        <div class="t-author-info">
+                            <div class="t-author-name">Dave S.</div>
+                            <div class="t-author-location">Richmond</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="t-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
                     <blockquote>"Not the cheapest but definitely the best. Bruce found a wiring issue the previous sparky missed completely. Worth every cent for the peace of mind."</blockquote>
-                    <div class="testimonial-author">Jenny L.</div>
-                    <div class="testimonial-location">Hawthorn</div>
+                    <div class="t-author">
+                        <div class="t-avatar">JL</div>
+                        <div class="t-author-info">
+                            <div class="t-author-name">Jenny L.</div>
+                            <div class="t-author-location">Hawthorn</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Why Us -->
     <section class="why-us">
         <div class="why-inner">
-            <div class="section-label" style="color:#f59e0b;">The Thunderbolt difference</div>
-            <div class="section-title" style="color:white;">Why 4,700+ customers choose us</div>
+            <div class="why-header">
+                <div class="section-label">The Thunderbolt difference</div>
+                <div class="section-title">Why 4,700+ customers choose us</div>
+                <div class="section-subtitle">We hold ourselves to a higher standard than most tradies. Here's what that looks like.</div>
+            </div>
             <div class="why-grid">
                 <div class="why-item">
-                    <div class="why-icon">&#128737;</div>
+                    <div class="why-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
                     <h4>Licensed &amp; Insured</h4>
                     <p>Fully licensed (EC12345) and comprehensively insured. Your home is protected.</p>
                 </div>
                 <div class="why-item">
-                    <div class="why-icon">&#9200;</div>
+                    <div class="why-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
                     <h4>On Time, Every Time</h4>
                     <p>We give you a 30-minute arrival window and stick to it. Your time matters.</p>
                 </div>
                 <div class="why-item">
-                    <div class="why-icon">&#128176;</div>
+                    <div class="why-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
                     <h4>Fixed Pricing</h4>
                     <p>No hourly rates, no surprises. You know the cost before we start any work.</p>
                 </div>
                 <div class="why-item">
-                    <div class="why-icon">&#128736;</div>
+                    <div class="why-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
                     <h4>Clean &amp; Tidy</h4>
                     <p>We leave your home cleaner than we found it. That's our guarantee.</p>
                 </div>
@@ -250,39 +1149,100 @@
         </div>
     </section>
 
+    <!-- Service Areas -->
     <section class="areas">
         <div class="areas-inner">
-            <div class="section-label">Service areas</div>
-            <div class="section-title">Covering Melbourne's inner east and beyond</div>
-            <div class="area-tags">
-                <span class="area-tag">Kew</span>
-                <span class="area-tag">Hawthorn</span>
-                <span class="area-tag">Richmond</span>
-                <span class="area-tag">Camberwell</span>
-                <span class="area-tag">Balwyn</span>
-                <span class="area-tag">Surrey Hills</span>
-                <span class="area-tag">Canterbury</span>
-                <span class="area-tag">Box Hill</span>
-                <span class="area-tag">Glen Iris</span>
-                <span class="area-tag">Malvern</span>
-                <span class="area-tag">Brighton</span>
-                <span class="area-tag">Prahran</span>
-                <span class="area-tag">South Yarra</span>
-                <span class="area-tag">Toorak</span>
-                <span class="area-tag">+ surrounding suburbs</span>
+            <div class="areas-content">
+                <div class="section-label">Service areas</div>
+                <div class="section-title">Melbourne's inner east and beyond</div>
+                <div class="section-subtitle">Covering all eastern suburbs. For areas not listed, give us a call.</div>
+            </div>
+            <div class="area-grid">
+                <div class="area-tag highlight">Kew</div>
+                <div class="area-tag highlight">Hawthorn</div>
+                <div class="area-tag highlight">Richmond</div>
+                <div class="area-tag">Camberwell</div>
+                <div class="area-tag">Balwyn</div>
+                <div class="area-tag">Surrey Hills</div>
+                <div class="area-tag">Canterbury</div>
+                <div class="area-tag">Box Hill</div>
+                <div class="area-tag">Glen Iris</div>
+                <div class="area-tag">Malvern</div>
+                <div class="area-tag">Brighton</div>
+                <div class="area-tag">Prahran</div>
+                <div class="area-tag">South Yarra</div>
+                <div class="area-tag">Toorak</div>
+                <div class="area-tag">+ more</div>
             </div>
         </div>
     </section>
 
+    <!-- CTA -->
     <section class="final-cta">
-        <h2>Ready to get it sorted?</h2>
-        <p>Free quotes for all non-emergency work. Same-day emergency service available.</p>
-        <a href="tel:0412345678" class="phone">0412 345 678</a>
-        <div class="email-link">or email bruce@thunderboltelectricals.com.au</div>
+        <div class="final-cta-inner">
+            <div class="cta-label">Ready to get started?</div>
+            <h2>Let's get it sorted</h2>
+            <p class="cta-sub">Free quotes for all non-emergency work. Same-day emergency service available across Melbourne.</p>
+            <div class="cta-phone-wrap">
+                <a href="tel:0412345678" class="cta-phone">0412 345 678</a>
+            </div>
+            <div class="cta-email">or email <a href="mailto:bruce@thunderboltelectricals.com.au">bruce@thunderboltelectricals.com.au</a></div>
+            <div class="cta-badges">
+                <div class="cta-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Licensed EC12345
+                </div>
+                <div class="cta-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Fully Insured
+                </div>
+                <div class="cta-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Same-Day Service
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Thunderbolt Electricals. ABN 12 345 678 901. Licensed Electrical Contractor EC12345.</p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo-text">Thunderbolt <span>Electricals</span></div>
+                <p>Melbourne's trusted electrician since 2003. Licensed, insured, and committed to quality work at fair prices.</p>
+                <div class="footer-license">ABN 12 345 678 901</div>
+            </div>
+            <div class="footer-col">
+                <h5>Services</h5>
+                <a href="#">House Rewiring</a>
+                <a href="#">Hot Water Systems</a>
+                <a href="#">Ceiling Fans</a>
+                <a href="#">Switchboard Upgrades</a>
+                <a href="#">LED Lighting</a>
+                <a href="#">Emergency Call Out</a>
+            </div>
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="#">About Us</a>
+                <a href="#">Our Team</a>
+                <a href="#">Reviews</a>
+                <a href="#">Service Areas</a>
+                <a href="#">Gallery</a>
+            </div>
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <a href="tel:0412345678">0412 345 678</a>
+                <a href="mailto:bruce@thunderboltelectricals.com.au">bruce@thunderbolt...</a>
+                <a href="#">Melbourne, VIC</a>
+                <a href="#">Mon-Sat: 7am-6pm</a>
+                <a href="#">Emergency: 24/7</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Thunderbolt Electricals. All rights reserved. Licensed Electrical Contractor EC12345.</p>
+            <p>Privacy Policy</p>
+        </div>
     </footer>
+
 </body>
 </html>

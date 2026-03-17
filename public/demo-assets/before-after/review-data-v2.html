@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Intelligence Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400&family=Nunito+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --display: 'Fraunces', Georgia, serif;
+    --ui: 'Nunito Sans', system-ui, sans-serif;
+    --paper: #F9F6F0;
+    --linen: #F0EBE1;
+    --warm-white: #FFFDF8;
+    --ink: #2C2418;
+    --brown: #6B5B4A;
+    --muted: #9C8E7E;
+    --red: #BF3B30;
+    --orange: #C97B2A;
+    --sage: #5B8A5A;
+    --stone: #A5A09A;
+    --blue: #4A7B9D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ui);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4C9B8' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .page {
+    max-width: 1300px;
+    margin: 0 0 0 auto;
+    padding: 20px 20px 80px 30px;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .header-date {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header-sources {
+    display: flex;
+    gap: 8px;
+  }
+
+  .source-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    background: var(--linen);
+    color: var(--brown);
+    border: 1px solid rgba(107, 91, 74, 0.15);
+  }
+
+  .header h1 {
+    font-family: var(--display);
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
+  .header-desc {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.6;
+  }
+
+  /* ---- TIME SELECTOR ---- */
+  .time-selector {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+
+  .ts-btn {
+    font-family: var(--ui);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 22px;
+    border: 1.5px solid var(--linen);
+    background: transparent;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .ts-btn:hover {
+    border-color: var(--brown);
+  }
+
+  .ts-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ---- OVERVIEW CARDS ---- */
+  .overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .ov-card {
+    background: var(--warm-white);
+    padding: 24px 22px;
+    border: 1px solid var(--linen);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ov-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+
+  .ov-card.ov-red::before { background: var(--red); }
+  .ov-card.ov-orange::before { background: var(--orange); }
+  .ov-card.ov-sage::before { background: var(--sage); }
+
+  .ov-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .ov-value {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .ov-red .ov-value { color: var(--red); }
+  .ov-orange .ov-value { color: var(--orange); }
+  .ov-sage .ov-value { color: var(--sage); }
+
+  .ov-detail {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--brown);
+    line-height: 1.4;
+  }
+
+  /* ---- TABS ---- */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--linen);
+    margin-bottom: 36px;
+  }
+
+  .tab-btn {
+    font-family: var(--ui);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+  }
+
+  .tab-btn:hover {
+    color: var(--brown);
+  }
+
+  .tab-btn.active {
+    color: var(--ink);
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* ---- SECTION HEADERS ---- */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--linen);
+  }
+
+  .section-hint {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ---- KPI STRIP ---- */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--linen);
+    border: 1px solid var(--linen);
+    margin-bottom: 36px;
+  }
+
+  .kpi-cell {
+    background: var(--warm-white);
+    padding: 18px 16px;
+    text-align: center;
+  }
+
+  .kpi-val {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- SPEND BAR ---- */
+  .spend-bar-wrap {
+    margin-bottom: 36px;
+  }
+
+  .spend-bar {
+    display: flex;
+    height: 36px;
+    overflow: hidden;
+    border: 1px solid var(--linen);
+  }
+
+  .spend-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    transition: opacity 0.2s;
+    cursor: default;
+    position: relative;
+  }
+
+  .spend-seg:hover {
+    opacity: 0.85;
+  }
+
+  .spend-seg .seg-label {
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .spend-legend {
+    display: flex;
+    gap: 18px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .spend-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--brown);
+  }
+
+  .spend-legend-dot {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ---- CHART CONTAINER ---- */
+  .chart-container {
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 24px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .chart-title {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .chart-canvas-wrap {
+    position: relative;
+    height: 280px;
+  }
+
+  .chart-canvas-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  /* ---- CHANNEL HEALTH ---- */
+  .channel-health {
+    margin-bottom: 36px;
+  }
+
+  .ch-row {
+    display: grid;
+    grid-template-columns: 140px 18px 1fr 100px 100px 100px;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .ch-row:last-child {
+    border-bottom: none;
+  }
+
+  .ch-name {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .ch-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    justify-self: center;
+  }
+
+  .ch-dot.green { background: var(--sage); }
+  .ch-dot.yellow { background: var(--orange); }
+  .ch-dot.red { background: var(--red); }
+
+  .ch-bar-wrap {
+    height: 8px;
+    background: var(--linen);
+    position: relative;
+  }
+
+  .ch-bar {
+    height: 100%;
+    transition: width 0.6s ease;
+  }
+
+  .ch-stat {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--brown);
+    text-align: right;
+  }
+
+  .ch-stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--stone);
+    text-align: right;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  /* ---- INSIGHT CARDS ---- */
+  .insight-cards {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .insight-card {
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 28px 28px 24px;
+    position: relative;
+  }
+
+  .insight-card.featured {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .insight-card:not(.featured) {
+    border-left: 3px solid var(--sage);
+  }
+
+  .insight-card:not(.featured):nth-child(2) {
+    border-left-color: var(--orange);
+  }
+
+  .insight-card:not(.featured):nth-child(3) {
+    border-left-color: var(--red);
+  }
+
+  .insight-card:not(.featured):nth-child(4) {
+    border-left-color: var(--blue);
+  }
+
+  .insight-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .featured .insight-num {
+    color: var(--stone);
+  }
+
+  .insight-card:not(.featured) .insight-num {
+    color: var(--muted);
+  }
+
+  .insight-finding {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .insight-evidence {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .featured .insight-evidence {
+    color: var(--stone);
+  }
+
+  .insight-card:not(.featured) .insight-evidence {
+    color: var(--brown);
+  }
+
+  /* ---- ACTION PLAN ---- */
+  .action-plan {
+    margin-top: 8px;
+  }
+
+  .action-plan h2 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .action-plan-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--brown);
+    margin-bottom: 28px;
+  }
+
+  .ap-steps {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .ap-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .ap-step:last-child { border-bottom: none; }
+
+  .ap-num {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--ink);
+    min-width: 32px;
+    line-height: 1.2;
+  }
+
+  .ap-priority {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .ap-priority.critical {
+    color: var(--red);
+    background: rgba(191,59,48,0.08);
+    border: 1px solid rgba(191,59,48,0.2);
+  }
+
+  .ap-priority.high {
+    color: var(--orange);
+    background: rgba(201,123,42,0.08);
+    border: 1px solid rgba(201,123,42,0.2);
+  }
+
+  .ap-priority.medium {
+    color: var(--sage);
+    background: rgba(91,138,90,0.08);
+    border: 1px solid rgba(91,138,90,0.2);
+  }
+
+  .ap-priority.low {
+    color: var(--blue);
+    background: rgba(74,123,157,0.08);
+    border: 1px solid rgba(74,123,157,0.2);
+  }
+
+  .ap-body {
+    flex: 1;
+  }
+
+  .ap-title {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .ap-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .ap-meta {
+    display: flex;
+    gap: 16px;
+  }
+
+  .ap-meta span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .ap-meta strong {
+    color: var(--brown);
+    font-weight: 700;
+  }
+
+  /* ---- TIME TO INSIGHT ---- */
+  .time-viz {
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 32px;
+    margin-top: 40px;
+  }
+
+  .time-viz h3 {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .tv-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .tv-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brown);
+    min-width: 140px;
+    text-align: right;
+  }
+
+  .tv-track {
+    flex: 1;
+    height: 28px;
+    background: var(--linen);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tv-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    width: 0;
+  }
+
+  .tv-fill.slow {
+    background: var(--red);
+    animation: growSlow 1.2s 0.5s ease forwards;
+  }
+
+  .tv-fill.fast {
+    background: var(--sage);
+    animation: growFast 0.6s 1.4s ease forwards;
+  }
+
+  @keyframes growSlow { to { width: 100%; } }
+  @keyframes growFast { to { width: 3.5%; min-width: 56px; } }
+
+  .tv-note {
+    text-align: center;
+    margin-top: 16px;
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--brown);
+  }
+
+  .tv-note span {
+    color: var(--sage);
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  /* ---- DEEP DIVE ---- */
+  .deep-dive {
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    padding: 28px;
+    margin-bottom: 36px;
+  }
+
+  .dd-title {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .dd-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--brown);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .dd-callout {
+    background: rgba(191,59,48,0.06);
+    border-left: 3px solid var(--red);
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    padding-top: 24px;
+    border-top: 2px solid var(--linen);
+  }
+
+  .footer-line {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .footer-line span {
+    color: var(--sage);
+  }
+
+  .footer-note {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .fade-up:nth-child(2) { animation-delay: 0.08s; }
+  .fade-up:nth-child(3) { animation-delay: 0.16s; }
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-meta">
+      <span class="header-date">March 5, 2026</span>
+      <div class="header-sources">
+        <span class="source-tag">marketing-spend.csv</span>
+        <span class="source-tag">lead-pipeline.csv</span>
+        <span class="source-tag">closed-deals.csv</span>
+      </div>
+    </div>
+    <h1>Marketing Intelligence Report</h1>
+    <p class="header-desc">Cross-referencing 12 months of spend, pipeline, and revenue data across 6 channels to surface what's actually working.</p>
+  </header>
+
+  <!-- TIME SELECTOR -->
+  <div class="time-selector">
+    <button class="ts-btn" onclick="setQ(this,'Q1')">Q1</button>
+    <button class="ts-btn" onclick="setQ(this,'Q2')">Q2</button>
+    <button class="ts-btn" onclick="setQ(this,'Q3')">Q3</button>
+    <button class="ts-btn" onclick="setQ(this,'Q4')">Q4</button>
+    <button class="ts-btn active" onclick="setQ(this,'FY')">Full Year</button>
+  </div>
+
+  <!-- OVERVIEW CARDS -->
+  <div class="overview">
+    <div class="ov-card ov-red fade-up">
+      <div class="ov-label">Best ROI Channel</div>
+      <div class="ov-value">Email</div>
+      <div class="ov-detail">8.2x return on spend</div>
+    </div>
+    <div class="ov-card ov-orange fade-up">
+      <div class="ov-label">Fastest Growing</div>
+      <div class="ov-value">Events</div>
+      <div class="ov-detail">+41% QoQ lead growth</div>
+    </div>
+    <div class="ov-card ov-sage fade-up">
+      <div class="ov-label">Needs Attention</div>
+      <div class="ov-value">Google Ads</div>
+      <div class="ov-detail">Diminishing returns above $14K/mo</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="showTab('channels',this)">Channel Analysis</button>
+    <button class="tab-btn" onclick="showTab('insights',this)">Cross-File Insights</button>
+    <button class="tab-btn" onclick="showTab('actions',this)">Action Plan</button>
+  </div>
+
+  <!-- ===== OVERVIEW TAB ===== -->
+  <div id="tab-overview" class="tab-content active">
+
+    <!-- KPI Strip -->
+    <div class="kpi-strip">
+      <div class="kpi-cell">
+        <div class="kpi-val">$487K</div>
+        <div class="kpi-label">Total Spend</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val">$2.14M</div>
+        <div class="kpi-label">Revenue</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val">4.4x</div>
+        <div class="kpi-label">ROAS</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val">2,847</div>
+        <div class="kpi-label">Leads</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val">18.3%</div>
+        <div class="kpi-label">Close Rate</div>
+      </div>
+      <div class="kpi-cell">
+        <div class="kpi-val">$4,112</div>
+        <div class="kpi-label">Avg Deal</div>
+      </div>
+    </div>
+
+    <!-- Spend Distribution Bar -->
+    <div class="section-head">
+      <h2>Financial Summary</h2>
+      <span class="section-line"></span>
+      <span class="section-hint">Spend Allocation</span>
+    </div>
+
+    <div class="spend-bar-wrap">
+      <div class="spend-bar">
+        <div class="spend-seg" style="width:32.03%;background:#BF3B30"><span class="seg-label">Google $156K</span></div>
+        <div class="spend-seg" style="width:22.18%;background:#C97B2A"><span class="seg-label">Meta $108K</span></div>
+        <div class="spend-seg" style="width:14.78%;background:#5B8A5A"><span class="seg-label">Events $72K</span></div>
+        <div class="spend-seg" style="width:12.57%;background:#4A7B9D"><span class="seg-label">Content $61K</span></div>
+        <div class="spend-seg" style="width:9.86%;background:#9C8E7E"><span class="seg-label">Referral $48K</span></div>
+        <div class="spend-seg" style="width:8.62%;background:#6B5B4A"><span class="seg-label">Email $42K</span></div>
+      </div>
+      <div class="spend-legend">
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#BF3B30"></div>Google Ads</div>
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#C97B2A"></div>Meta</div>
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#5B8A5A"></div>Events</div>
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#4A7B9D"></div>Content</div>
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#9C8E7E"></div>Referral</div>
+        <div class="spend-legend-item"><div class="spend-legend-dot" style="background:#6B5B4A"></div>Email</div>
+      </div>
+    </div>
+
+    <!-- Revenue vs Spend Chart -->
+    <div class="chart-container">
+      <div class="chart-title">Monthly Revenue vs Spend</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="revenueSpendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Channel Health -->
+    <div class="section-head">
+      <h2>Channel Health</h2>
+      <span class="section-line"></span>
+      <span class="section-hint">Performance Matrix</span>
+    </div>
+
+    <div class="channel-health">
+      <div class="ch-row" style="border-bottom:none;padding-bottom:4px">
+        <div class="ch-stat-label" style="text-align:left">Channel</div>
+        <div></div>
+        <div class="ch-stat-label" style="text-align:left">Relative ROAS</div>
+        <div class="ch-stat-label">ROAS</div>
+        <div class="ch-stat-label">Leads</div>
+        <div class="ch-stat-label">Spend</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Email</div>
+        <div class="ch-dot green"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:100%;background:var(--sage)"></div></div>
+        <div class="ch-stat">8.2x</div>
+        <div class="ch-stat">521</div>
+        <div class="ch-stat">$42K</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Referral</div>
+        <div class="ch-dot green"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:74%;background:var(--sage)"></div></div>
+        <div class="ch-stat">6.1x</div>
+        <div class="ch-stat">190</div>
+        <div class="ch-stat">$48K</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Events</div>
+        <div class="ch-dot green"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:70%;background:var(--sage)"></div></div>
+        <div class="ch-stat">5.7x</div>
+        <div class="ch-stat">312</div>
+        <div class="ch-stat">$72K</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Meta</div>
+        <div class="ch-dot yellow"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:50%;background:var(--orange)"></div></div>
+        <div class="ch-stat">4.1x</div>
+        <div class="ch-stat">634</div>
+        <div class="ch-stat">$108K</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Google Ads</div>
+        <div class="ch-dot yellow"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:46%;background:var(--orange)"></div></div>
+        <div class="ch-stat">3.8x</div>
+        <div class="ch-stat">892</div>
+        <div class="ch-stat">$156K</div>
+      </div>
+      <div class="ch-row">
+        <div class="ch-name">Content</div>
+        <div class="ch-dot yellow"></div>
+        <div class="ch-bar-wrap"><div class="ch-bar" style="width:39%;background:var(--orange)"></div></div>
+        <div class="ch-stat">3.2x</div>
+        <div class="ch-stat">298</div>
+        <div class="ch-stat">$61.2K</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== CHANNEL ANALYSIS TAB ===== -->
+  <div id="tab-channels" class="tab-content">
+
+    <!-- Bubble Chart -->
+    <div class="chart-container">
+      <div class="chart-title">Channel Efficiency: Spend vs Leads vs ROAS</div>
+      <div class="chart-canvas-wrap" style="height:320px">
+        <canvas id="bubbleChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Side by side charts -->
+    <div class="chart-row">
+      <div class="chart-container" style="margin-bottom:0">
+        <div class="chart-title">Lead Distribution by Channel</div>
+        <div class="chart-canvas-wrap" style="height:260px">
+          <canvas id="leadDoughnut"></canvas>
+        </div>
+      </div>
+      <div class="chart-container" style="margin-bottom:0">
+        <div class="chart-title">Cost per Lead by Channel</div>
+        <div class="chart-canvas-wrap" style="height:260px">
+          <canvas id="cplBar"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deep Dive -->
+    <div class="section-head" style="margin-top:36px">
+      <h2>Deep Dive</h2>
+      <span class="section-line"></span>
+      <span class="section-hint">Diminishing Returns</span>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Google Ads: Spend vs Marginal CPA</div>
+      <div class="chart-canvas-wrap" style="height:260px">
+        <canvas id="diminishingChart"></canvas>
+      </div>
+    </div>
+
+    <div class="deep-dive" style="border:none;background:transparent;padding:0">
+      <div class="dd-callout">
+        <strong>Finding:</strong> Google Ads shows clear diminishing returns above $14K/month. CPA increases 34% when monthly spend exceeds this threshold, while lead quality (measured by close rate) drops from 21% to 14%. Recommend capping Google Ads at $13K/month and reallocating the surplus to Email and Events.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== CROSS-FILE INSIGHTS TAB ===== -->
+  <div id="tab-insights" class="tab-content">
+
+    <div class="section-head">
+      <h2>Cross-File Intelligence</h2>
+      <span class="section-line"></span>
+      <span class="section-hint">Correlations Across Datasets</span>
+    </div>
+
+    <div class="insight-cards">
+
+      <div class="insight-card featured">
+        <div class="insight-num">Cross-File Insight #1</div>
+        <div class="insight-finding">Email's 8.2x ROAS is being throttled by under-investment. At just 8.6% of total spend, it generates 18.3% of all leads and 24.1% of closed revenue.</div>
+        <div class="insight-evidence">Evidence: marketing-spend.csv shows $42K allocated to email. lead-pipeline.csv shows 521 leads attributed. closed-deals.csv shows $344K in email-sourced revenue, with a 26.1% close rate (vs 18.3% portfolio average).</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-num">Cross-File Insight #2</div>
+        <div class="insight-finding">Events leads close at 2.3x the rate of paid channels, and their average deal size is $5,840 vs $3,420 for Google Ads.</div>
+        <div class="insight-evidence">Evidence: closed-deals.csv shows 71 event-sourced deals with avg value $5,840. Google Ads shows 170 deals at avg $3,420. Event leads also move through pipeline 18 days faster per lead-pipeline.csv stage timestamps.</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-num">Cross-File Insight #3</div>
+        <div class="insight-finding">Q3 spend spike ($48K in August) delivered the highest revenue month ($218K) but with a 6-week lag, not the expected 2-week window.</div>
+        <div class="insight-evidence">Evidence: marketing-spend.csv August total $48K (13% above monthly average). Revenue peaked in October at $234K per closed-deals.csv, not August. lead-pipeline.csv confirms the pipeline build time averaged 42 days for Q3 leads.</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-num">Cross-File Insight #4</div>
+        <div class="insight-finding">Cutting email spend by 15% in Q4 (from $4.2K to $3.1K/mo) preceded a $26K revenue drop in the following quarter. The compound effect cost 6.3x the savings.</div>
+        <div class="insight-evidence">Evidence: marketing-spend.csv shows email budget reduced Oct-Dec. closed-deals.csv shows email-sourced revenue dropped from $98K (Q3) to $72K (Q4). lead-pipeline.csv shows new email leads fell 31% in Q4, compounding into Q1 pipeline thinning.</div>
+      </div>
+
+    </div>
+
+    <!-- Email spend lag chart -->
+    <div class="chart-container">
+      <div class="chart-title">Email: Spend Reduction vs Revenue Impact (6-week lag)</div>
+      <div class="chart-canvas-wrap" style="height:260px">
+        <canvas id="emailLagChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== ACTION PLAN TAB ===== -->
+  <div id="tab-actions" class="tab-content">
+
+    <div class="action-plan">
+      <h2>Recommended Actions</h2>
+      <p class="action-plan-sub">Prioritized by expected revenue impact, based on cross-file analysis of spend, pipeline, and closed deals.</p>
+
+      <ol class="ap-steps">
+        <li class="ap-step">
+          <div class="ap-num">1</div>
+          <div class="ap-priority critical">Critical</div>
+          <div class="ap-body">
+            <div class="ap-title">Double email marketing budget to $84K/year</div>
+            <div class="ap-desc">Email has the highest ROAS (8.2x) and close rate (26.1%) but receives the smallest allocation. Doubling spend could yield an additional $344K in revenue based on current conversion patterns.</div>
+            <div class="ap-meta">
+              <span>Impact: <strong>+$344K revenue</strong></span>
+              <span>Timeline: <strong>6-8 weeks to ramp</strong></span>
+            </div>
+          </div>
+        </li>
+        <li class="ap-step">
+          <div class="ap-num">2</div>
+          <div class="ap-priority critical">Critical</div>
+          <div class="ap-body">
+            <div class="ap-title">Cap Google Ads at $13K/month</div>
+            <div class="ap-desc">Diminishing returns above $14K/month increase CPA by 34% and reduce close rate. Redirect the $2-3K monthly savings to higher-performing channels.</div>
+            <div class="ap-meta">
+              <span>Impact: <strong>Save $36K/year, improve blended CPA</strong></span>
+              <span>Timeline: <strong>Immediate</strong></span>
+            </div>
+          </div>
+        </li>
+        <li class="ap-step">
+          <div class="ap-num">3</div>
+          <div class="ap-priority high">High</div>
+          <div class="ap-body">
+            <div class="ap-title">Increase event investment by 25%</div>
+            <div class="ap-desc">Events produce leads with 2.3x higher close rates and 71% larger deal sizes. Q3 event-driven growth (+41% QoQ) validates further investment.</div>
+            <div class="ap-meta">
+              <span>Impact: <strong>+$118K revenue potential</strong></span>
+              <span>Timeline: <strong>Next quarter event calendar</strong></span>
+            </div>
+          </div>
+        </li>
+        <li class="ap-step">
+          <div class="ap-num">4</div>
+          <div class="ap-priority medium">Medium</div>
+          <div class="ap-body">
+            <div class="ap-title">Build referral program incentive structure</div>
+            <div class="ap-desc">Referral delivers 6.1x ROAS with minimal spend ($48K). A structured program with incentives could 3x referral volume without proportionally increasing cost.</div>
+            <div class="ap-meta">
+              <span>Impact: <strong>+$88K revenue potential</strong></span>
+              <span>Timeline: <strong>4-6 weeks to design and launch</strong></span>
+            </div>
+          </div>
+        </li>
+        <li class="ap-step">
+          <div class="ap-num">5</div>
+          <div class="ap-priority low">Low</div>
+          <div class="ap-body">
+            <div class="ap-title">Shift content strategy toward lead capture</div>
+            <div class="ap-desc">Content generates 298 leads at 3.2x ROAS. Adding gated resources and nurture sequences could improve conversion without increasing spend.</div>
+            <div class="ap-meta">
+              <span>Impact: <strong>+15-20% content lead conversion</strong></span>
+              <span>Timeline: <strong>Ongoing optimization</strong></span>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <!-- Time to Insight -->
+      <div class="time-viz">
+        <h3>Time to Insight</h3>
+        <div class="tv-row">
+          <span class="tv-label">Manual analysis</span>
+          <div class="tv-track"><div class="tv-fill slow">~4 hours</div></div>
+        </div>
+        <div class="tv-row">
+          <span class="tv-label">Cowork</span>
+          <div class="tv-track"><div class="tv-fill fast">8s</div></div>
+        </div>
+        <div class="tv-note">Analysis completed <span>1,800x faster</span></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-line">3 CSV files. 6 channels. <span>8 seconds.</span></div>
+    <div class="footer-note">Marketing Intelligence Skill</div>
+  </footer>
+
+</div>
+
+<script>
+// Tab switching
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+
+  // Initialize charts on first view
+  if (id === 'overview' && !window._overviewInit) initOverviewCharts();
+  if (id === 'channels' && !window._channelsInit) initChannelCharts();
+  if (id === 'insights' && !window._insightsInit) initInsightCharts();
+}
+
+// Time selector (cosmetic)
+function setQ(btn, q) {
+  document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// Chart.js global defaults
+Chart.defaults.font.family = "'Nunito Sans', system-ui, sans-serif";
+Chart.defaults.color = '#6B5B4A';
+Chart.defaults.scale = Chart.defaults.scale || {};
+
+const warmColors = {
+  red: '#BF3B30',
+  orange: '#C97B2A',
+  sage: '#5B8A5A',
+  blue: '#4A7B9D',
+  stone: '#9C8E7E',
+  brown: '#6B5B4A',
+  linen: '#F0EBE1',
+  paper: '#F9F6F0',
+  ink: '#2C2418'
+};
+
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const revenue = [156,162,171,178,185,192,201,218,234,221,208,198];
+const spend = [38,39,40,41,42,41,43,48,44,42,36,38];
+
+const channelData = [
+  { name: 'Google Ads', spend: 156, leads: 892, roas: 3.8, color: warmColors.red },
+  { name: 'Meta', spend: 108, leads: 634, roas: 4.1, color: warmColors.orange },
+  { name: 'Email', spend: 42, leads: 521, roas: 8.2, color: warmColors.brown },
+  { name: 'Events', spend: 72, leads: 312, roas: 5.7, color: warmColors.sage },
+  { name: 'Content', spend: 61.2, leads: 298, roas: 3.2, color: warmColors.blue },
+  { name: 'Referral', spend: 48, leads: 190, roas: 6.1, color: warmColors.stone }
+];
+
+function chartGridOpts() {
+  return {
+    color: 'rgba(208, 199, 186, 0.4)',
+    drawBorder: false
+  };
+}
+
+function initOverviewCharts() {
+  window._overviewInit = true;
+  const ctx = document.getElementById('revenueSpendChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: 'Revenue ($K)',
+          data: revenue,
+          borderColor: warmColors.sage,
+          backgroundColor: 'rgba(91,138,90,0.08)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointRadius: 3,
+          pointBackgroundColor: warmColors.sage,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2
+        },
+        {
+          label: 'Spend ($K)',
+          data: spend,
+          borderColor: warmColors.red,
+          backgroundColor: 'rgba(191,59,48,0.06)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointRadius: 3,
+          pointBackgroundColor: warmColors.red,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: {
+            boxWidth: 12,
+            boxHeight: 2,
+            padding: 20,
+            font: { size: 12, weight: '600' }
+          }
+        },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          titleFont: { family: "'Fraunces', Georgia, serif", weight: '700' },
+          bodyFont: { size: 13 },
+          padding: 12,
+          cornerRadius: 2,
+          callbacks: {
+            label: function(c) { return c.dataset.label + ': $' + c.raw + 'K'; }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 12, weight: '600' } }
+        },
+        y: {
+          grid: chartGridOpts(),
+          ticks: {
+            font: { size: 11 },
+            callback: function(v) { return '$' + v + 'K'; }
+          },
+          border: { display: false }
+        }
+      }
+    }
+  });
+}
+
+function initChannelCharts() {
+  window._channelsInit = true;
+
+  // Bubble chart
+  const bubbleCtx = document.getElementById('bubbleChart').getContext('2d');
+  new Chart(bubbleCtx, {
+    type: 'bubble',
+    data: {
+      datasets: channelData.map(ch => ({
+        label: ch.name,
+        data: [{ x: ch.spend, y: ch.leads, r: ch.roas * 4 }],
+        backgroundColor: ch.color + '55',
+        borderColor: ch.color,
+        borderWidth: 2
+      }))
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: { boxWidth: 10, boxHeight: 10, padding: 14, font: { size: 11, weight: '600' } }
+        },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          cornerRadius: 2,
+          padding: 12,
+          callbacks: {
+            label: function(c) {
+              var d = channelData[c.datasetIndex];
+              return d.name + ': $' + d.spend + 'K spend, ' + d.leads + ' leads, ' + d.roas + 'x ROAS';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Spend ($K)', font: { size: 12, weight: '600' } },
+          grid: chartGridOpts(),
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v + 'K'; } }
+        },
+        y: {
+          title: { display: true, text: 'Leads Generated', font: { size: 12, weight: '600' } },
+          grid: chartGridOpts(),
+          border: { display: false }
+        }
+      }
+    }
+  });
+
+  // Lead distribution doughnut
+  const doughnutCtx = document.getElementById('leadDoughnut').getContext('2d');
+  new Chart(doughnutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: channelData.map(c => c.name),
+      datasets: [{
+        data: channelData.map(c => c.leads),
+        backgroundColor: channelData.map(c => c.color + 'CC'),
+        borderColor: '#FFFDF8',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { boxWidth: 10, boxHeight: 10, padding: 10, font: { size: 11, weight: '500' } }
+        },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          cornerRadius: 2,
+          padding: 12,
+          callbacks: {
+            label: function(c) {
+              var pct = ((c.raw / 2847) * 100).toFixed(1);
+              return c.label + ': ' + c.raw + ' leads (' + pct + '%)';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Cost per lead bar chart
+  const cplCtx = document.getElementById('cplBar').getContext('2d');
+  var cplData = channelData.map(c => ({
+    name: c.name,
+    cpl: Math.round((c.spend * 1000) / c.leads),
+    color: c.color
+  })).sort((a,b) => a.cpl - b.cpl);
+
+  new Chart(cplCtx, {
+    type: 'bar',
+    data: {
+      labels: cplData.map(c => c.name),
+      datasets: [{
+        data: cplData.map(c => c.cpl),
+        backgroundColor: cplData.map(c => c.color + 'BB'),
+        borderColor: cplData.map(c => c.color),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          cornerRadius: 2,
+          padding: 12,
+          callbacks: {
+            label: function(c) { return 'CPL: $' + c.raw; }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: chartGridOpts(),
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v; }, font: { size: 11 } }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 12, weight: '600' } }
+        }
+      }
+    }
+  });
+
+  // Diminishing returns scatter
+  const dimCtx = document.getElementById('diminishingChart').getContext('2d');
+  var dimData = [
+    {x:8, y:142}, {x:9, y:148}, {x:10, y:155}, {x:11, y:162},
+    {x:12, y:170}, {x:13, y:178}, {x:14, y:198}, {x:15, y:224},
+    {x:16, y:258}, {x:17, y:289}
+  ];
+
+  new Chart(dimCtx, {
+    type: 'scatter',
+    data: {
+      datasets: [
+        {
+          label: 'Efficient zone',
+          data: dimData.filter(d => d.x <= 14),
+          backgroundColor: warmColors.sage + 'AA',
+          borderColor: warmColors.sage,
+          pointRadius: 6,
+          pointBorderWidth: 2
+        },
+        {
+          label: 'Diminishing returns',
+          data: dimData.filter(d => d.x > 14),
+          backgroundColor: warmColors.red + 'AA',
+          borderColor: warmColors.red,
+          pointRadius: 6,
+          pointBorderWidth: 2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: { boxWidth: 10, boxHeight: 10, padding: 14, font: { size: 11, weight: '600' } }
+        },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          cornerRadius: 2,
+          padding: 12,
+          callbacks: {
+            label: function(c) { return '$' + c.raw.x + 'K spend: $' + c.raw.y + ' CPA'; }
+          }
+        },
+        annotation: undefined
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Monthly Spend ($K)', font: { size: 12, weight: '600' } },
+          grid: chartGridOpts(),
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v + 'K'; } }
+        },
+        y: {
+          title: { display: true, text: 'Cost per Acquisition ($)', font: { size: 12, weight: '600' } },
+          grid: chartGridOpts(),
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v; } }
+        }
+      }
+    }
+  });
+}
+
+function initInsightCharts() {
+  window._insightsInit = true;
+
+  // Email lag chart
+  var emailCtx = document.getElementById('emailLagChart').getContext('2d');
+  var emailSpend = [4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 4.2, 3.1, 3.1, 3.1];
+  var emailRev = [28, 30, 29, 31, 30, 32, 30, 28, 27, 26, 22, 18];
+
+  new Chart(emailCtx, {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: 'Email Revenue ($K)',
+          data: emailRev,
+          borderColor: warmColors.sage,
+          backgroundColor: 'rgba(91,138,90,0.08)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointRadius: 3,
+          pointBackgroundColor: warmColors.sage,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Email Spend ($K/mo)',
+          data: emailSpend,
+          borderColor: warmColors.red,
+          borderWidth: 2,
+          borderDash: [6, 3],
+          tension: 0,
+          pointRadius: 3,
+          pointBackgroundColor: warmColors.red,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          fill: false,
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          align: 'end',
+          labels: { boxWidth: 12, boxHeight: 2, padding: 20, font: { size: 12, weight: '600' } }
+        },
+        tooltip: {
+          backgroundColor: warmColors.ink,
+          cornerRadius: 2,
+          padding: 12
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 12, weight: '600' } }
+        },
+        y: {
+          position: 'left',
+          title: { display: true, text: 'Revenue ($K)', font: { size: 11, weight: '600' } },
+          grid: chartGridOpts(),
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v + 'K'; } }
+        },
+        y1: {
+          position: 'right',
+          title: { display: true, text: 'Spend ($K/mo)', font: { size: 11, weight: '600' } },
+          grid: { display: false },
+          border: { display: false },
+          ticks: { callback: function(v) { return '$' + v.toFixed(1) + 'K'; } },
+          min: 0,
+          max: 6
+        }
+      }
+    }
+  });
+}
+
+// Initialize overview charts on load
+window.addEventListener('load', function() {
+  setTimeout(initOverviewCharts, 100);
+});
+</script>
+
+</body>
+</html>
