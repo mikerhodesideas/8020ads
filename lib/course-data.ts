@@ -272,8 +272,6 @@ When Cowork creates something, it creates an actual file on your computer. Not a
 
 Ask Cowork to "create a summary document from these notes" and you'll find a new file in your project folder. Something like \`meeting-summary.md\` or \`summary.txt\`. You can open it in Word, Notion, Google Docs, whatever you normally use.
 
-> [SCREENSHOT: A project folder showing a newly created file from Cowork]
-
 ## Where they appear
 
 New files appear in your **project folder**. That's the folder Cowork is currently pointed at. If you're not sure which folder that is, ask: "What folder are we working in?"

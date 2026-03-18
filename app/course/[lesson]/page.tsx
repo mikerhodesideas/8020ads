@@ -255,84 +255,136 @@ export default function LessonPage() {
     .trim()
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
-      {/* Header */}
-      <div className="mb-8 sm:mb-10">
-        {currentModule && (
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-brand-orange)] mb-2 font-heading">
-            Module {currentModule.id}: {currentModule.title}
-          </p>
-        )}
-        <h1 className="text-2xl sm:text-3xl font-bold font-heading leading-tight text-[var(--color-ink)]">
-          {lesson.title}
-        </h1>
-      </div>
-
-      {/* CTA for final lesson */}
-      {lessonId === '4-3' && (
-        <div className="mb-10">
-          <a
-            href="https://8020brain.com/ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-bold rounded-[2px] transition-colors"
-            onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'top' } })}
-          >
-            Join Ads to AI
-            <span>&#8594;</span>
-          </a>
-        </div>
-      )}
-
-      {/* Lesson content */}
-      <article className="prose-lesson">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{contentWithoutTitle}</ReactMarkdown>
-      </article>
-
-      {/* Bottom navigation */}
-      <div className="flex items-center justify-between mt-12 pt-6 border-t border-[var(--color-border)]">
-        {safePrev ? (
-          <Link
-            href={`/course/${safePrev.id}`}
-            className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
-          >
-            &#8592; {safePrev.title}
-          </Link>
-        ) : (
+    <div className="min-h-[calc(100vh-3.5rem)] flex max-w-6xl mx-auto">
+      {/* Sidebar - hidden on mobile */}
+      <aside className="hidden lg:block w-64 shrink-0 border-r border-[var(--color-border)] py-8 pr-4 pl-6">
+        <div className="sticky top-[3.5rem] max-h-[calc(100vh-3.5rem)] overflow-y-auto pb-8">
           <Link
             href="/course"
-            className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
+            className="text-xs font-heading font-semibold text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors mb-6 block"
           >
             &#8592; All lessons
           </Link>
+          <nav className="space-y-5">
+            {modules.map((mod) => {
+              const modLocked = mod.id >= 3 && !level1Done
+              return (
+                <div key={mod.id}>
+                  <p className={`text-[10px] font-bold uppercase tracking-widest mb-1.5 font-heading ${modLocked ? 'text-[var(--color-faint)]' : 'text-[var(--color-brand-orange)]'}`}>
+                    Module {mod.id}
+                  </p>
+                  <ul className="space-y-0.5">
+                    {mod.lessons.map((l) => {
+                      const isCurrent = l.id === lessonId
+                      return (
+                        <li key={l.id}>
+                          {modLocked ? (
+                            <span className="block text-xs py-1 text-[var(--color-faint)] cursor-default">
+                              {l.title}
+                            </span>
+                          ) : (
+                            <Link
+                              href={`/course/${l.id}`}
+                              className={`block text-xs py-1 transition-colors ${
+                                isCurrent
+                                  ? 'text-[var(--color-ink)] font-semibold border-l-2 border-[var(--color-brand-orange)] pl-2 -ml-[2px]'
+                                  : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
+                              }`}
+                            >
+                              {l.title}
+                            </Link>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )
+            })}
+          </nav>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <div className="flex-1 min-w-0 px-4 sm:px-6 lg:px-10 py-8 sm:py-12 max-w-3xl">
+        {/* Header */}
+        <div className="mb-8 sm:mb-10">
+          {currentModule && (
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-brand-orange)] mb-2 font-heading">
+              Module {currentModule.id}: {currentModule.title}
+            </p>
+          )}
+          <h1 className="text-2xl sm:text-3xl font-bold font-heading leading-tight text-[var(--color-ink)]">
+            {lesson.title}
+          </h1>
+        </div>
+
+        {/* CTA for final lesson */}
+        {lessonId === '4-3' && (
+          <div className="mb-10">
+            <a
+              href="https://8020brain.com/ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-bold rounded-[2px] transition-colors"
+              onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'top' } })}
+            >
+              Join Ads to AI
+              <span>&#8594;</span>
+            </a>
+          </div>
         )}
-        {safeNext ? (
-          <Link
-            href={`/course/${safeNext.id}`}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
-          >
-            Next lesson
-            <span>&#8594;</span>
-          </Link>
-        ) : lessonId === '4-3' ? (
-          <a
-            href="https://8020brain.com/ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
-            onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'bottom' } })}
-          >
-            Join Ads to AI
-            <span>&#8594;</span>
-          </a>
-        ) : (
-          <Link
-            href="/course"
-            className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
-          >
-            Back to course
-          </Link>
-        )}
+
+        {/* Lesson content */}
+        <article className="prose-lesson">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{contentWithoutTitle}</ReactMarkdown>
+        </article>
+
+        {/* Bottom navigation */}
+        <div className="flex items-center justify-between mt-12 pt-6 border-t border-[var(--color-border)]">
+          {safePrev ? (
+            <Link
+              href={`/course/${safePrev.id}`}
+              className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
+            >
+              &#8592; {safePrev.title}
+            </Link>
+          ) : (
+            <Link
+              href="/course"
+              className="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors font-heading"
+            >
+              &#8592; All lessons
+            </Link>
+          )}
+          {safeNext ? (
+            <Link
+              href={`/course/${safeNext.id}`}
+              className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+            >
+              Next lesson
+              <span>&#8594;</span>
+            </Link>
+          ) : lessonId === '4-3' ? (
+            <a
+              href="https://8020brain.com/ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+              onClick={() => track({ eventType: 'cta_join_clicked', metadata: { lesson: '4-3', position: 'bottom' } })}
+            >
+              Join Ads to AI
+              <span>&#8594;</span>
+            </a>
+          ) : (
+            <Link
+              href="/course"
+              className="inline-flex items-center gap-2 px-5 py-2 bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange-hover)] text-white text-sm font-heading font-semibold rounded-[2px] transition-colors"
+            >
+              Back to course
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   )
