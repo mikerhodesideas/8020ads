@@ -123,12 +123,12 @@ export default function WorldChooser() {
               disabled={!classicUnlocked}
               className={cn(
                 'w-full py-3 px-5 rounded-[2px]',
-                'border border-[var(--color-border)]',
+                'border',
                 'transition-all duration-300',
                 'flex items-center justify-center gap-3',
                 classicUnlocked
-                  ? 'hover:border-[var(--color-muted)] bg-white hover:bg-[var(--color-cream)] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
-                  : 'bg-white/50 cursor-not-allowed opacity-40'
+                  ? 'quest-glow bg-white hover:bg-[var(--color-cream)] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]'
+                  : 'border-[var(--color-border)] bg-white/50 cursor-not-allowed opacity-40'
               )}
             >
               {!classicUnlocked && (

@@ -106,7 +106,7 @@ export default function LevelMap() {
       {completed.size === 0 && (
         <div className="fixed bottom-16 left-0 right-0 z-[25] flex justify-center pointer-events-none">
           <div className="px-4 py-2 text-sm font-medium text-white/70 bg-black/50 backdrop-blur-sm" style={{ borderRadius: '2px' }}>
-            Click any card to start your first demo
+            Start with the glowing card
           </div>
         </div>
       )}

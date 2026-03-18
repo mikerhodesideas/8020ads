@@ -18,6 +18,7 @@ function DemoNode({
   stars,
   onClick,
   iconImage,
+  isRecommended,
 }: {
   demo: { id: number; icon: string; demoType: DemoType; title: string; subtitle: string }
   index: number
@@ -26,6 +27,7 @@ function DemoNode({
   stars: number
   onClick: () => void
   iconImage?: string
+  isRecommended?: boolean
 }) {
   return (
     <button
@@ -36,7 +38,9 @@ function DemoNode({
         !done && 'node-entrance',
         done
           ? 'bg-[#f0fdf4] border-l-[3px] border-l-[#22c55e] border-t border-r border-b border-t-gray-100 border-r-gray-100 border-b-gray-100'
-          : 'bg-white border-[var(--color-border)] hover:border-[var(--color-brand-orange)] hover:shadow-lg hover:-translate-y-1',
+          : isRecommended
+            ? 'bg-white quest-glow hover:shadow-lg hover:-translate-y-1'
+            : 'bg-white border-[var(--color-border)] hover:border-[var(--color-brand-orange)] hover:shadow-lg hover:-translate-y-1',
         'cursor-pointer'
       )}
       style={{
@@ -220,6 +224,20 @@ export default function GalleryMap({
   const currentDemoIds = levels.filter(l => !l.comingSoon).flatMap(l => l.demos.map(d => d.id))
   const roleCompletedCount = currentDemoIds.filter(id => completed.has(id)).length
 
+  // Find the recommended next demo (first uncompleted in first unlocked level)
+  const recommendedNextId = (() => {
+    for (let i = 0; i < levels.length; i++) {
+      const level = levels[i]
+      if (level.comingSoon) continue
+      const isLocked = i > 0 && !isLevelComplete(i)
+      if (isLocked) continue
+      for (const demo of level.demos) {
+        if (!completed.has(demo.id)) return demo.id
+      }
+    }
+    return null
+  })()
+
   return (
     <div
       className={cn(
@@ -354,6 +372,7 @@ export default function GalleryMap({
                                 done={done}
                                 isGallery={true}
                                 stars={choiceScores[demo.id] || 0}
+                                isRecommended={demo.id === recommendedNextId}
                                 onClick={() =>
                                   router.push(getDemoUrl(demo.id))
                                 }

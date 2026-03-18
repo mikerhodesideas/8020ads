@@ -801,6 +801,16 @@ h1, h2, h3, h4, h5, h6 {
   animation: character-bounce 1.2s ease-in-out infinite;
 }
 
+@keyframes quest-glow {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(214, 76, 0, 0.1); }
+  50% { box-shadow: 0 0 18px 4px rgba(214, 76, 0, 0.22); }
+}
+
+.quest-glow {
+  animation: quest-glow 2.5s ease-in-out infinite;
+  border-color: #D64C00;
+}
+
 @keyframes path-draw {
   0% { stroke-dashoffset: var(--path-length, 1000); }
   100% { stroke-dashoffset: 0; }
