@@ -15,6 +15,7 @@ interface TryItYourselfProps {
   copied: boolean
   done: boolean
   justCompleted: boolean
+  skillAlreadyDownloaded?: boolean
   onCopyPrompt: (text: string) => void
   onMarkComplete: () => void
   onNext?: () => void
@@ -95,8 +96,15 @@ export default function TryItYourself({
   onMarkComplete,
   onNext,
   nextLabel,
+  skillAlreadyDownloaded,
 }: TryItYourselfProps) {
-  const [downloadedItems, setDownloadedItems] = useState<Set<string>>(new Set())
+  const [downloadedItems, setDownloadedItems] = useState<Set<string>>(() => {
+    const initial = new Set<string>()
+    if (skillAlreadyDownloaded && demo.skillZip) {
+      initial.add(demo.skillZip.path)
+    }
+    return initial
+  })
   const [coworkDismissed, setCoworkDismissed] = useState(true)
   const [showWalkthrough, setShowWalkthrough] = useState(false)
   const [promptCopied, setPromptCopied] = useState(false)

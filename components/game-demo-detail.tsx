@@ -838,6 +838,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
                 copied={copied}
                 done={done}
                 justCompleted={justCompleted}
+                skillAlreadyDownloaded={skillInstalled}
                 onCopyPrompt={copyToClipboard}
                 onMarkComplete={handleMarkComplete}
                 onNext={handleNext}
