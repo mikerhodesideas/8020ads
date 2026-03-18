@@ -73,7 +73,7 @@ const defaultState: GameState = {
   promptChoices: {},
   choiceScores: {},
   openedGlossary: new Set(),
-  unlockedWorlds: new Set(['arcade']),
+  unlockedWorlds: new Set(['arcade', 'gallery']),
 }
 
 const GameContext = createContext<GameContextType>({
@@ -109,7 +109,7 @@ function loadState(): GameState {
   if (typeof window === 'undefined') return { ...defaultState }
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), unlockedWorlds: new Set(['arcade']) }
+    if (!raw) return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), unlockedWorlds: new Set(['arcade', 'gallery']) }
     const parsed = JSON.parse(raw)
     return {
       type: parsed.type || null,
@@ -125,10 +125,10 @@ function loadState(): GameState {
       promptChoices: parsed.promptChoices || {},
       choiceScores: parsed.choiceScores || {},
       openedGlossary: new Set(parsed.openedGlossary || []),
-      unlockedWorlds: new Set(parsed.unlockedWorlds || ['arcade']),
+      unlockedWorlds: new Set([...(parsed.unlockedWorlds || ['arcade']), 'gallery']),
     }
   } catch {
-    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), openedGlossary: new Set(), unlockedWorlds: new Set(['arcade']) }
+    return { ...defaultState, completed: new Set(), skills: new Set(), worldsVisited: new Set(), replays: new Set(), beforeAfterViews: new Set(), openedGlossary: new Set(), unlockedWorlds: new Set(['arcade', 'gallery']) }
   }
 }
 
@@ -200,7 +200,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     replays: new Set(),
     beforeAfterViews: new Set(),
     openedGlossary: new Set(),
-    unlockedWorlds: new Set(['arcade']),
+    unlockedWorlds: new Set(['arcade', 'gallery']),
   })
   const [loaded, setLoaded] = useState(false)
   const [badgeToastQueue, setBadgeToastQueue] = useState<string[]>([])
@@ -274,7 +274,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const l2Done = Array.from(state.completed).filter((id) => ALL_LEVEL_2_IDS.has(id)).length >= 3
     const l3Done = Array.from(state.completed).filter((id) => ALL_LEVEL_3_IDS.has(id)).length >= 3
 
-    const shouldUnlock = new Set(['arcade'])
+    const shouldUnlock = new Set(['arcade', 'gallery'])
     if (l1Done) shouldUnlock.add('zelda')
     if (l2Done) ALL_WORLD_IDS.forEach((w) => shouldUnlock.add(w))
 
@@ -353,7 +353,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       promptChoices: {},
       choiceScores: {},
       openedGlossary: new Set(),
-      unlockedWorlds: new Set(['arcade']),
+      unlockedWorlds: new Set(['arcade', 'gallery']),
     }
     setState(fresh)
     setBadgeToastQueue([])

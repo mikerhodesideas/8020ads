@@ -396,7 +396,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             )}>
               {demo.icon} {demo.title}
             </h1>
-            <p className={cn('text-sm mt-1', 'text-[var(--world-text-secondary)]')}>
+            <p className={cn('text-sm mt-1 skin-body-text', 'text-[var(--world-text-secondary)]')}>
               {demo.subtitle}
             </p>
           </div>
@@ -1189,7 +1189,7 @@ function SkillUnlockCard({
                 className="text-sm font-heading font-bold text-center py-2"
                 style={{ color: isDark ? '#ffffff' : 'var(--world-accent2)' }}
               >
-                Tap anywhere to download
+                Click here to download
               </p>
             </>
           )}
@@ -1256,7 +1256,7 @@ function ContextBox({
           </span>
         )}
       </div>
-      <p className="text-sm leading-relaxed text-[var(--world-text)]">{text}</p>
+      <p className="text-sm leading-relaxed text-[var(--world-text)] skin-body-text">{text}</p>
     </div>
   )
 }
@@ -1335,7 +1335,7 @@ function DemoDataPreview({ demo }: { demo: Demo }) {
             {demo.dataLabel}
           </p>
         )}
-        <div className="space-y-2 text-sm text-[var(--color-muted)] leading-relaxed">
+        <div className="space-y-2 text-sm text-[var(--color-muted)] leading-relaxed skin-body-text">
           {demo.dataText.map((line, i) => (
             <p key={i} className={cn(!line && 'h-2')}>
               {line}

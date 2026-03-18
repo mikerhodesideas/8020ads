@@ -42,8 +42,6 @@ const avatars = [
 export default function SetupPage() {
   const router = useRouter()
   const { setType, setWorld, markProofComplete } = useGame()
-  const [selectedAvatar, setSelectedAvatar] = useState<PlayerType | null>(null)
-  const [avatarsLocked, setAvatarsLocked] = useState(false)
 
   useEffect(() => {
     let source = 'direct'
@@ -57,26 +55,10 @@ export default function SetupPage() {
   }, [])
 
   const handleAvatarSelect = (typeId: PlayerType) => {
-    if (avatarsLocked) return
     track({ eventType: 'avatar_selected', avatarType: typeId })
     setType(typeId)
     markProofComplete()
-    setSelectedAvatar(typeId)
-    setAvatarsLocked(true)
-    setTimeout(() => setAvatarsLocked(false), 2500)
-    // Scroll aggressively to the choice section
-    setTimeout(() => {
-      document.getElementById('path-choice')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 150)
-  }
-
-  const handleContinueStandard = () => {
     setWorld('gallery')
-    router.push('/play')
-  }
-
-  const handleUnlockGame = () => {
-    setWorld('arcade')
     router.push('/play')
   }
 
@@ -118,7 +100,7 @@ export default function SetupPage() {
         </div>
 
         {/* Header */}
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ marginBottom: 12 }}>
           <h1 style={{
             fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
             fontSize: 36,
@@ -128,252 +110,64 @@ export default function SetupPage() {
             letterSpacing: -0.5,
             marginBottom: 8,
           }}>
-            Ready to try it yourself?
+            Pick your role. We&apos;ll show you what AI can do for it.
           </h1>
-          <p style={{ fontSize: 16, color: '#555', lineHeight: 1.5 }}>
-            So we can show you the most relevant demos, which best describes you?
+          <p style={{ fontSize: 17, color: '#555', lineHeight: 1.5 }}>
+            Each demo uses real files from your world. Pick the one closest to your day job.
           </p>
         </div>
 
         {/* Avatar selection */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" style={{ maxWidth: 1200 }}>
-          {avatars.map((a) => {
-            const isSelected = selectedAvatar === a.id
-            const isLocked = avatarsLocked && !isSelected
-            return (
-              <button
-                key={a.id}
-                onClick={() => handleAvatarSelect(a.id)}
-                disabled={isLocked}
-                className={cn(
-                  'group relative text-left overflow-hidden',
-                  'border',
-                  'rounded-[2px] transition-all duration-300 ease-out',
-                  'aspect-[3/4]',
-                  'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]',
-                  isLocked
-                    ? 'opacity-40 cursor-default'
-                    : 'cursor-pointer',
-                  isSelected
-                    ? 'border-[var(--color-brand-orange)] shadow-lg -translate-y-1'
-                    : 'border-[var(--color-border)] hover:shadow-lg hover:-translate-y-1'
-                )}
-              >
-                <Image
-                  src={a.image}
-                  alt={a.title}
-                  fill
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                <div className="absolute top-0 inset-x-0 h-[3px]" style={{ backgroundColor: a.accent }} />
-                {isSelected && (
-                  <div className="absolute top-3 right-3">
-                    <span style={{
-                      background: '#D64C00',
-                      color: '#fff',
-                      fontSize: 10,
-                      fontWeight: 700,
-                      padding: '3px 8px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}>Selected</span>
-                  </div>
-                )}
-                <div className="absolute inset-x-0 bottom-0 px-4 sm:px-5 pb-4 sm:pb-5">
-                  <h3 className="text-base sm:text-lg font-bold mb-1 font-heading text-white leading-tight">
-                    {a.title}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs text-white/70 leading-relaxed mb-3">
-                    {a.desc}
-                  </p>
-                  <div
-                    className={cn(
-                      'inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2',
-                      'text-white text-[10px] sm:text-xs font-semibold',
-                      'rounded-[2px] transition-all duration-200',
-                      'group-hover:gap-3',
-                      'font-heading'
-                    )}
-                    style={{ backgroundColor: isSelected ? '#D64C00' : a.accent }}
-                  >
-                    {isSelected ? 'Selected' : 'Select'}
-                    <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                      &#8594;
-                    </span>
-                  </div>
-                </div>
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Path choice - appears after avatar selection */}
-        {selectedAvatar && (
-          <div id="path-choice" style={{ marginTop: 48, paddingTop: 40, borderTop: '1px solid #E8E4DF' }}>
-            <h2 style={{
-              fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-              fontSize: 28,
-              fontWeight: 800,
-              color: '#1a1a2e',
-              marginBottom: 8,
-            }}>
-              You&apos;re about to see something most people don&apos;t believe until they watch it happen.
-            </h2>
-            <p style={{ fontSize: 16, color: '#555', marginBottom: 8, lineHeight: 1.6 }}>
-              Three real tasks. Real files. AI does them in seconds, not hours. You&apos;ll drag in the file, see the result, then try it yourself with your own data.
-            </p>
-            <p style={{ fontSize: 14, color: '#888', marginBottom: 32 }}>
-              Pick how you want to experience it:
-            </p>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              {/* Standard path */}
-              <button
-                onClick={handleContinueStandard}
-                style={{
-                  textAlign: 'left',
-                  background: '#fff',
-                  border: '1px solid #E8E4DF',
-                  padding: '28px',
-                  cursor: 'pointer',
-                  transition: 'border-color 0.15s, box-shadow 0.15s',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = '#D64C00'
-                  e.currentTarget.style.boxShadow = '0 2px 12px rgba(214, 76, 0, 0.08)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = '#E8E4DF'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                <div style={{
-                  fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-                  fontSize: 20,
-                  fontWeight: 700,
-                  color: '#1a1a2e',
-                  marginBottom: 12,
-                }}>
-                  Straight to the demos
-                </div>
-                <p style={{ fontSize: 14, color: '#555', lineHeight: 1.6, marginBottom: 12, flex: 1 }}>
-                  Clean, minimal interface. Watch AI handle real business tasks in seconds, compare the before and after, then try it yourself with your own files. No distractions, no game mechanics. Just the proof.
+          {avatars.map((a) => (
+            <button
+              key={a.id}
+              onClick={() => handleAvatarSelect(a.id)}
+              className={cn(
+                'group relative text-left overflow-hidden',
+                'border border-[var(--color-border)]',
+                'rounded-[2px] transition-all duration-300 ease-out',
+                'cursor-pointer block',
+                'aspect-[3/4]',
+                'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]',
+                'hover:shadow-lg hover:-translate-y-1'
+              )}
+            >
+              <Image
+                src={a.image}
+                alt={a.title}
+                fill
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute top-0 inset-x-0 h-[3px]" style={{ backgroundColor: a.accent }} />
+              <div className="absolute inset-x-0 bottom-0 px-4 sm:px-5 pb-4 sm:pb-5">
+                <h3 className="text-base sm:text-lg font-bold mb-1 font-heading text-white leading-tight">
+                  {a.title}
+                </h3>
+                <p className="text-[10px] sm:text-xs text-white/70 leading-relaxed mb-3">
+                  {a.desc}
                 </p>
-                <div style={{ marginBottom: 16, border: '1px solid #E8E4DF', overflow: 'hidden' }}>
-                  <Image
-                    src="/images/skills-preview.jpg"
-                    alt="Skills demo preview"
-                    width={520}
-                    height={140}
-                    style={{ width: '100%', height: 'auto', display: 'block' }}
-                  />
-                </div>
-                <p style={{ fontSize: 13, color: '#888', lineHeight: 1.5, marginBottom: 20 }}>
-                  6 demos across 3 levels. About 10 minutes total.
-                </p>
-                <span style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8,
-                  fontSize: 20,
-                  fontWeight: 700,
-                  color: '#fff',
-                  background: '#D64C00',
-                  fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-                  padding: '16px 32px',
-                  width: '100%',
-                  textAlign: 'center',
-                }}>
-                  Start the demos &rarr;
-                </span>
-              </button>
-
-              {/* Game path - Super Mario themed */}
-              <button
-                onClick={handleUnlockGame}
-                style={{
-                  textAlign: 'left',
-                  background: '#1a1a2e',
-                  border: '2px solid #f59e0b',
-                  padding: 0,
-                  cursor: 'pointer',
-                  transition: 'box-shadow 0.15s, border-color 0.15s',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.boxShadow = '0 4px 24px rgba(245, 158, 11, 0.25)'
-                  e.currentTarget.style.borderColor = '#fbbf24'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.boxShadow = 'none'
-                  e.currentTarget.style.borderColor = '#f59e0b'
-                }}
-              >
-                {/* Game banner image */}
-                <div style={{
-                  width: '100%',
-                  height: 180,
-                  backgroundImage: 'url(/images/game-banner.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center 30%',
-                  position: 'relative',
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 48,
-                    background: 'linear-gradient(transparent, #1a1a2e)',
-                  }} />
-                </div>
-
-                <div style={{ padding: '16px 28px 28px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <div style={{
-                    fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: '#fbbf24',
-                    marginBottom: 12,
-                    textShadow: '0 1px 8px rgba(245, 158, 11, 0.3)',
-                  }}>
-                    Play the game version
-                  </div>
-                  <p style={{ fontSize: 14, color: '#cbd5e1', lineHeight: 1.6, marginBottom: 8, flex: 1 }}>
-                    Same demos, but wrapped in a Super Mario-style game. Complete levels, unlock badges, and choose from 6 different themed worlds including Zelda, Tetris, and Red Alert. Business tools have never been this fun.
-                  </p>
-                  <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.5, marginBottom: 20 }}>
-                    6 demos across 3 levels. Choose your world.
-                  </p>
-                  <span style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: '#1a1a2e',
-                    background: '#fbbf24',
-                    fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-                    padding: '16px 32px',
-                    width: '100%',
-                    textAlign: 'center',
-                  }}>
-                    Let&apos;s-a go! &rarr;
+                <div
+                  className={cn(
+                    'inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2',
+                    'text-white text-[10px] sm:text-xs font-semibold',
+                    'rounded-[2px] transition-all duration-200',
+                    'group-hover:gap-3',
+                    'font-heading'
+                  )}
+                  style={{ backgroundColor: a.accent }}
+                >
+                  Select
+                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+                    &#8594;
                   </span>
                 </div>
-              </button>
-            </div>
-          </div>
-        )}
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )

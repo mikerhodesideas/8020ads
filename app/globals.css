@@ -704,7 +704,14 @@ h1, h2, h3, h4, h5, h6 {
   --world-progress-fill: var(--mario-block);
 }
 
-/* Arcade: pixel font for headings, terminal font for body text */
+/* Arcade: readable sans-serif for all body text */
+.skin-arcade {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Arcade: pixel font for headings and styled labels only */
 .skin-arcade h1,
 .skin-arcade h2,
 .skin-arcade h3,
@@ -723,13 +730,6 @@ h1, h2, h3, h4, h5, h6 {
 .skin-arcade h4,
 .skin-arcade h5,
 .skin-arcade h6 { font-size: 0.75rem !important; line-height: 1.4 !important; }
-
-/* Arcade body text uses VT323 terminal font as secondary, bumped for readability */
-.skin-arcade {
-  font-family: var(--font-terminal), 'VT323', 'Courier New', monospace;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
 /* Data preview cards in arcade should use readable sans-serif, not game font */
 .skin-arcade [class*="data-preview"],
 .skin-arcade .prose,
