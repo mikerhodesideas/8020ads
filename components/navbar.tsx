@@ -285,17 +285,17 @@ export default function Navbar() {
                 Free Cowork Course
               </Link>
 
-              {/* How it works */}
+              {/* FAQ */}
               <Link
-                href="/how-it-works"
+                href="/faq"
                 className={cn(
                   'text-xs sm:text-sm font-heading font-medium transition-colors',
-                  pathname === '/how-it-works'
+                  pathname === '/faq'
                     ? 'text-white'
                     : 'text-white/60 hover:text-white'
                 )}
               >
-                How It Works
+                FAQ
               </Link>
             </div>
           </div>
@@ -428,17 +428,17 @@ export default function Navbar() {
                 Free Cowork Course
               </Link>
 
-              {/* How it works */}
+              {/* FAQ */}
               <Link
-                href="/how-it-works"
+                href="/faq"
                 className={cn(
                   'text-xs sm:text-sm font-heading font-medium transition-colors',
-                  pathname === '/how-it-works'
+                  pathname === '/faq'
                     ? 'text-[var(--color-brand-orange)]'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                 )}
               >
-                How It Works
+                FAQ
               </Link>
             </div>
           </div>

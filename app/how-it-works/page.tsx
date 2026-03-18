@@ -507,10 +507,10 @@ export default function HowItWorksPage() {
               Learn about Ads to AI
             </a>
             <Link
-              href="/"
+              href="/faq"
               className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold font-heading rounded-[2px] transition-colors border border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:border-[var(--color-ink)]"
             >
-              &#8592; Back to demo
+              Read the FAQ
             </Link>
           </div>
         </div>
