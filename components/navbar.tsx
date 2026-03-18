@@ -7,6 +7,7 @@ import { useGame, useSkin } from '@/components/game-provider'
 import { DEMO_SKILLS, DEMO_TIME_SAVED, ALL_LEVEL_1_IDS, ALL_LEVEL_2_IDS, ALL_LEVEL_3_IDS } from '@/lib/game-data'
 import { cn } from '@/lib/utils'
 import { isMuted, toggleMute, playSound, getVolume, setVolume } from '@/lib/sounds'
+import WorldSwitcher from '@/components/world-switcher'
 
 const typeLabels: Record<string, string> = {
   agency: 'Agency Owner',
@@ -47,6 +48,7 @@ export default function Navbar() {
   const { type, world, skills, completed, resetGame } = useGame()
   const skin = useSkin()
   const [panelOpen, setPanelOpen] = useState(false)
+  const [worldSwitcherOpen, setWorldSwitcherOpen] = useState(false)
   const [soundMuted, setSoundMuted] = useState(true)
   const [volume, setVol] = useState(0.7)
   const [showVolume] = useState(true)
@@ -157,15 +159,17 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
-              {/* Character sprite in navbar */}
+              {/* Character sprite in navbar - opens world switcher */}
               {world && worldSprites[world as string] && (
-                <div
-                  className="w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0"
+                <button
+                  onClick={() => setWorldSwitcherOpen(true)}
+                  className="w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
                   style={{
                     borderRadius: '50%',
                     border: '2px solid var(--world-accent)',
                     boxShadow: '0 0 6px rgba(255,215,0,0.3)',
                   }}
+                  title="Switch world"
                 >
                   <img
                     src={worldSprites[world as string]}
@@ -173,7 +177,7 @@ export default function Navbar() {
                     className="w-full h-full object-cover"
                     style={{ imageRendering: 'pixelated' }}
                   />
-                </div>
+                </button>
               )}
 
               {/* World indicator */}
@@ -309,14 +313,16 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-4 sm:gap-6">
-              {/* Character sprite in navbar */}
+              {/* Character sprite in navbar - opens world switcher */}
               {world && worldSprites[world] && (
-                <div
-                  className="hidden sm:block w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0"
+                <button
+                  onClick={() => setWorldSwitcherOpen(true)}
+                  className="hidden sm:block w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
                   style={{
                     borderRadius: '50%',
                     border: '2px solid var(--world-accent)',
                   }}
+                  title="Switch world"
                 >
                   <img
                     src={worldSprites[world]}
@@ -324,7 +330,7 @@ export default function Navbar() {
                     className="w-full h-full object-cover"
                     style={{ imageRendering: 'pixelated' }}
                   />
-                </div>
+                </button>
               )}
 
               {/* Breadcrumb context */}
@@ -336,9 +342,13 @@ export default function Navbar() {
                   {world && (
                     <>
                       <span className="text-[var(--color-border)]">/</span>
-                      <span className="font-semibold text-amber-700">
+                      <button
+                        onClick={() => setWorldSwitcherOpen(true)}
+                        className="font-semibold text-amber-700 hover:text-[var(--color-brand-orange)] transition-colors cursor-pointer"
+                        title="Switch world"
+                      >
                         {worldLabels[world]}
-                      </span>
+                      </button>
                     </>
                   )}
                 </div>
@@ -434,6 +444,9 @@ export default function Navbar() {
           </div>
         </nav>
       )}
+
+      {/* World switcher slide-out panel */}
+      <WorldSwitcher open={worldSwitcherOpen} onClose={() => setWorldSwitcherOpen(false)} />
 
       {/* Skill inventory slide-out panel */}
       {panelOpen && (

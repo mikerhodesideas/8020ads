@@ -394,20 +394,8 @@ export default function TetrisMap({
           </div>
         )}
 
-        {/* Bottom nav: start over + stats */}
-        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
-          <button
-            onClick={() => router.push('/')}
-            className="text-xs transition-colors duration-300"
-            style={{
-              color: 'rgba(255, 255, 255, 0.4)',
-              fontFamily: "'Courier New', monospace",
-              letterSpacing: '0.05em',
-              textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-            }}
-          >
-            Start over
-          </button>
+        {/* Bottom nav: stats */}
+        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-end">
           <TetrisStatsWidget
             completedCount={Math.min(completed.size, availableDemoCount)}
             availableCount={availableDemoCount}

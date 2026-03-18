@@ -276,8 +276,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     const shouldUnlock = new Set(['arcade'])
     if (l1Done) shouldUnlock.add('zelda')
-    if (l2Done) shouldUnlock.add('red-alert')
-    if (l3Done) ALL_WORLD_IDS.forEach((w) => shouldUnlock.add(w))
+    if (l2Done) ALL_WORLD_IDS.forEach((w) => shouldUnlock.add(w))
 
     // Find newly unlocked worlds
     const newlyUnlocked = Array.from(shouldUnlock).filter((w) => !state.unlockedWorlds.has(w))

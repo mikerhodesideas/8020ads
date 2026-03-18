@@ -65,7 +65,7 @@ export default function ProofLanding() {
           color: '#999',
           marginBottom: 56,
         }}>
-          These results are with zero setup. One little &lsquo;trick&rsquo; makes it so much better.
+          Every result below is real. No cherry-picking. No editing. Just raw AI output.
         </p>
 
         {/* Proof cards */}
@@ -139,7 +139,7 @@ export default function ProofLanding() {
                 }}>
                   {isCompleted ? 'Demo completed' : (
                     <>
-                      See the proof
+                      {demo.cardCta}
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D64C00" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>
@@ -186,10 +186,7 @@ export default function ProofLanding() {
         padding: '40px 24px 80px',
       }}>
         <p style={{ fontSize: 14, color: '#888' }}>
-          Already have Cowork?{' '}
-          <Link href="/setup" style={{ color: '#D64C00', fontWeight: 600, textDecoration: 'none' }}>
-            Try it with your own files
-          </Link>
+          Join hundreds of business owners automating their work with AI.
         </p>
       </div>
     </div>

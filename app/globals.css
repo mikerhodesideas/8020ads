@@ -350,6 +350,14 @@ h1, h2, h3, h4, h5, h6 {
   animation: slide-in-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.world-switcher-backdrop {
+  animation: fade-in-bg 0.2s ease-out forwards;
+}
+
+.world-switcher-slide {
+  animation: slide-in-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 /* ============ SKILL PULSE ============ */
 
 @keyframes skill-count-pulse {
@@ -587,7 +595,7 @@ h1, h2, h3, h4, h5, h6 {
   --world-text-muted: #888;
 
   /* Button & overlay vars */
-  --world-overlay-bg: rgba(0, 0, 0, 0.40);
+  --world-overlay-bg: rgba(0, 0, 0, 0.20);
   --world-hover-copy: brightness(0.97);
   --world-btn-shadow: 0 4px 12px rgba(180, 130, 10, 0.2);
   --world-download-border: var(--color-brand-orange);
@@ -661,7 +669,7 @@ h1, h2, h3, h4, h5, h6 {
   --world-text-muted: rgba(255, 255, 255, 0.4);
 
   /* Button & overlay vars */
-  --world-overlay-bg: rgba(0, 0, 0, 0.60);
+  --world-overlay-bg: rgba(0, 0, 0, 0.10);
   --world-hover-copy: brightness(1);
   --world-btn-shadow: 0 0 20px 6px rgba(255, 215, 0, 0.3);
   --world-download-border: var(--mario-coin);
@@ -1589,7 +1597,7 @@ nav.skin-elder-scrolls { box-shadow: 0 1px 8px rgba(201, 168, 76, 0.2); }
   color: var(--zelda-text);
 
   /* World immersion vars */
-  --page-bg: linear-gradient(to bottom, #F0E8D0, #E5DCBF);
+  --page-bg: linear-gradient(to bottom, rgba(240, 232, 208, 0.85), rgba(229, 220, 191, 0.85));
   --world-accent: #5C7A2E;
   --world-accent2: #1A4A15;
   --world-accent3: #1A4A15;

@@ -340,14 +340,8 @@ export default function MarioMap({
           </div>
         )}
 
-        {/* Bottom nav: start over + stats */}
-        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
-          <button
-            onClick={() => router.push('/')}
-            className="text-xs text-white/40 hover:text-white/70 transition-colors font-heading"
-          >
-            Start over
-          </button>
+        {/* Bottom nav: stats */}
+        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-end">
           <MarioStatsWidget
             completedCount={Math.min(completed.size, availableDemoCount)}
             availableCount={availableDemoCount}

@@ -442,13 +442,7 @@ export default function GalleryMap({
             </div>
           )}
 
-          <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
-            <button
-              onClick={() => router.push('/')}
-              className="text-xs text-[var(--color-faint)] hover:text-[var(--color-muted)] transition-colors font-heading"
-            >
-              Start over
-            </button>
+          <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-end">
             <StatsWidget
               isGallery={true}
               completedCount={roleCompletedCount}

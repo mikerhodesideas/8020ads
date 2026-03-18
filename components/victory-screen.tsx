@@ -100,19 +100,50 @@ const CONNECTOR_ECOSYSTEM = [
   'ClickUp', 'Slack', 'Excel', 'Outlook', 'Notion',
 ]
 
-const BOSS_LETTER = `Hi [Boss Name],
+const BOSS_LETTER = `Subject: Proposal \u2014 Ads to AI Membership for AI Scouting
 
-I've been exploring a tool called Cowork (Claude Desktop's agentic mode) that could save our team significant time on repetitive tasks.
+Hi [Manager's Name],
 
-In a 15-minute demo, I saw it:
-- Redesign a website from a single HTML file (under a minute)
-- Triage an entire inbox with priority sorting and draft replies (8 seconds)
-- Build an interactive campaign dashboard with charts from a CSV (15 seconds)
-- Extract action items from meeting notes into a trackable dashboard (10 seconds)
+I'm writing to request support for an Ads to AI community membership. I want to propose something slightly different from a typical training request.
 
-The tool works with skills (uploadable instruction sets) that turn it from a general assistant into a specialist. There's a community called Ads to AI that provides training and ready-made skills.
+You've probably noticed AI is changing how marketing teams operate. The question isn't whether to adopt it \u2014 it's who figures out the right path first, us or our competitors.
 
-I'd love 15 minutes to show you what I found. Would [suggest a time] work?`
+That's where I come in.
+
+The Scout role
+
+Organisations that adopt AI well tend to follow a pattern: someone on the team runs ahead, experiments, builds the routes that work, and brings back proven methods for everyone else to implement. I want to be that person for us.
+
+The Ads to AI community is where serious marketers and Google Ads professionals are doing exactly this \u2014 sharing what works, building tools, and documenting the paths. Joining gives me access to that intelligence and the skills to apply it across our work.
+
+What the membership includes:
+
+- The 8020brain system \u2014 a personal AI infrastructure for research, decision making, planning, and execution (works with Claude, ChatGPT, Gemini, and any code editor)
+- Courses covering automated reporting, AI analysis, and building autonomous systems
+- All Google Ads scripts (ready-to-use automation tools)
+- Monthly Q&A calls with practitioners navigating the same challenges
+- 1:1 strategy call
+- Active community of marketers at the frontier of AI adoption
+
+Business impact:
+
+- Automate repetitive research, reporting, and monitoring tasks \u2014 freeing time for higher-value work
+- Build custom tools tailored to our specific needs, without outsourcing
+- Apply AI to decision making across campaigns, content, and strategy \u2014 not just one channel
+- Surface insights we're currently missing or spending too long to find
+- Stay ahead of how AI is reshaping marketing before our competitors do
+
+Investment: \u20AC799/year
+
+What I'll bring back:
+
+I'll document what I learn, share the tools I build, and create simple guides for the team \u2014 turning my experiments into paths others can follow without the trial-and-error.
+
+This isn't just professional development. It's us getting an early read on where marketing is heading, at a relatively low cost, with someone already on the payroll doing the legwork.
+
+Happy to discuss further.
+
+[Your name]`
 
 export default function VictoryScreen() {
   const router = useRouter()

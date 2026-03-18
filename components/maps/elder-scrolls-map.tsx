@@ -389,21 +389,8 @@ export default function ElderScrollsMap({
           </div>
         )}
 
-        {/* Bottom nav: start over + stats */}
-        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-between">
-          <button
-            onClick={() => router.push('/')}
-            className="text-xs transition-colors duration-300"
-            style={{
-              color: 'var(--es-star-white)',
-              fontFamily: "'Cinzel', serif",
-              letterSpacing: '0.05em',
-              opacity: 0.4,
-              textShadow: '0 1px 4px rgba(0,0,0,0.7)',
-            }}
-          >
-            Start over
-          </button>
+        {/* Bottom nav: stats */}
+        <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-end">
           <ElderScrollsStatsWidget
             completedCount={Math.min(completed.size, availableDemoCount)}
             availableCount={availableDemoCount}

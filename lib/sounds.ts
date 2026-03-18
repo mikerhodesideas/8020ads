@@ -58,7 +58,11 @@ export function isMuted(): boolean { return muted }
 export function toggleMute(): void {
   muted = !muted
   if (typeof window !== 'undefined') localStorage.setItem('arcade-sound-muted', String(muted))
-  if (muted) stopAmbient()
+  if (muted) {
+    stopAmbient()
+    stopBackgroundMusic()
+    stopProgressTick()
+  }
 }
 
 export function getVolume(): number { return masterVolume }
@@ -1147,11 +1151,11 @@ const BG_MUSIC_CONFIG: Record<string, { tracks: string[]; volume: number }> = {
   'arcade': {
     tracks: [
       '/sounds/mario/bg-overworld.mp3',
-      '/sounds/mario/bg-underground.mp3',
+      '/sounds/mario/bg-bonus.mp3',
       '/sounds/mario/bg-starman.mp3',
       '/sounds/mario/bg-athletic.mp3',
+      '/sounds/mario/bg-underground.mp3',
       '/sounds/mario/bg-castle.mp3',
-      '/sounds/mario/bg-bonus.mp3',
     ],
     volume: 0.14,  // 12-15% - bouncy chiptune
   },

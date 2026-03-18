@@ -89,6 +89,12 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
   const skin = useSkin()
 
   const [phase, setPhase] = useState<QuestPhase>('briefing')
+  const [, setDevTick2] = useState(0)
+  useEffect(() => {
+    const h = () => setDevTick2(t => t + 1)
+    window.addEventListener('__dev_tuning', h)
+    return () => window.removeEventListener('__dev_tuning', h)
+  }, [])
   const [progressPct, setProgressPct] = useState(0)
   const [progressLabel, setProgressLabel] = useState('')
   const [showBeforeResult] = useState(false)
@@ -301,7 +307,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
         skin.backgroundEffect === 'grid-lines' && 'bg-effect-grid-lines',
         skin.backgroundEffect === 'nebula' && 'bg-effect-nebula',
       )}
-      style={{ background: 'var(--page-bg)' }}
+      style={{ background: (effectivePhase === 'skill-unlock' && skin.isDark) ? 'transparent' : 'var(--page-bg)' }}
     >
       {/* Arcade: pixel star background */}
       {skin.backgroundEffect === 'pixel-stars' && <PixelStars />}
@@ -317,8 +323,8 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
               objectFit: 'cover',
               objectPosition: 'center center',
               opacity: skin.id === 'clair-obscur' ? 0.08
-                : skin.id === 'arcade' ? 0.15
-                : skin.id === 'zelda' ? 0.15
+                : skin.id === 'arcade' ? 0.45
+                : skin.id === 'zelda' ? 0.5
                 : skin.id === 'elder-scrolls' ? 0.15
                 : skin.id === 'tetris' ? 0.12
                 : 0.2,
@@ -328,7 +334,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             className="absolute inset-0"
             style={{
               background: skin.id === 'arcade'
-                ? 'radial-gradient(ellipse at center 40%, transparent 10%, rgba(26, 26, 46, 0.7) 100%)'
+                ? 'radial-gradient(ellipse at center 40%, transparent 30%, rgba(26, 26, 46, 0.3) 100%)'
                 : skin.id === 'clair-obscur'
                 ? 'none'
                 : skin.id === 'zelda'
@@ -354,11 +360,11 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
             borderRight: '1px solid rgba(197, 165, 90, 0.2)',
           }
           : skin.id === 'zelda' ? {
-            background: 'rgba(240, 232, 208, 0.92)',
+            background: effectivePhase === 'skill-unlock' ? 'transparent' : 'rgba(240, 232, 208, 0.92)',
             marginTop: '1rem',
             marginBottom: '2rem',
-            borderLeft: '1px solid rgba(218, 165, 32, 0.15)',
-            borderRight: '1px solid rgba(218, 165, 32, 0.15)',
+            borderLeft: effectivePhase === 'skill-unlock' ? 'none' : '1px solid rgba(218, 165, 32, 0.15)',
+            borderRight: effectivePhase === 'skill-unlock' ? 'none' : '1px solid rgba(218, 165, 32, 0.15)',
           }
           : undefined
         }
@@ -632,7 +638,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
           <>
             <div
               className="fixed inset-0 z-30 quest-fade-in"
-              style={{ background: 'var(--world-overlay-bg)' }}
+              style={{ background: `rgba(0, 0, 0, ${(window as any).__dev_overlay ?? 0})` }}
             />
             <SkillUnlockCard
               skill={skill}
@@ -642,6 +648,7 @@ export default function GameDemoDetail({ demoId }: GameDemoDetailProps) {
               skin={skin}
               skillZip={demo.skillZip}
             />
+            {/* <SkillCardDebugPanel /> */}
           </>,
           document.body
         )}
@@ -972,6 +979,71 @@ function ProcessingBar({
   )
 }
 
+function SkillCardDebugPanel() {
+  const [, setTick] = useState(0)
+  const rerender = () => setTick(t => t + 1)
+
+  const w = typeof window !== 'undefined' ? window as any : {} as any
+  const vals = {
+    overlay: w.__dev_overlay ?? 0,
+    cardBg: w.__dev_cardBg ?? 1,
+    glowAlpha: w.__dev_glowAlpha ?? 1,
+    glowSize: w.__dev_glowSize ?? 21,
+    border: w.__dev_border ?? 0,
+    blur: w.__dev_blur ?? 0,
+  }
+
+  const set = (key: string, v: number) => { (window as any)[`__dev_${key}`] = v; rerender(); window.dispatchEvent(new Event('__dev_tuning')) }
+
+  const sliders: [string, string, number, number, number][] = [
+    ['overlay', 'Overlay darkness', 0, 1, 0.01],
+    ['cardBg', 'Card bg opacity', 0, 1, 0.01],
+    ['glowAlpha', 'Glow brightness', 0, 1, 0.01],
+    ['glowSize', 'Glow size (px)', 0, 200, 1],
+    ['border', 'Border opacity', 0, 1, 0.01],
+    ['blur', 'Backdrop blur (px)', 0, 30, 1],
+  ]
+
+  return (
+    <div
+      className="fixed z-50 bottom-4 right-4"
+      style={{
+        background: 'rgba(0,0,0,0.9)',
+        border: '1px solid #555',
+        borderRadius: 4,
+        padding: 12,
+        width: 260,
+        fontFamily: 'system-ui, sans-serif',
+        fontSize: 11,
+        color: '#fff',
+      }}
+      onClick={e => e.stopPropagation()}
+    >
+      <div style={{ fontWeight: 700, marginBottom: 8, fontSize: 12, color: '#D64C00' }}>DEV: Card Tuning</div>
+      {sliders.map(([key, label, min, max, step]) => (
+        <div key={key} style={{ marginBottom: 6 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+            <span>{label}</span>
+            <span style={{ fontWeight: 700, color: '#D64C00' }}>{(vals as any)[key]}</span>
+          </div>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            step={step}
+            value={(vals as any)[key]}
+            onChange={e => set(key, parseFloat(e.target.value))}
+            style={{ width: '100%', accentColor: '#D64C00' }}
+          />
+        </div>
+      ))}
+      <div style={{ marginTop: 8, fontSize: 10, color: '#888' }}>
+        Values update live. Copy your final values.
+      </div>
+    </div>
+  )
+}
+
 function SkillUnlockCard({
   skill,
   installed,
@@ -989,6 +1061,12 @@ function SkillUnlockCard({
 }) {
   const isDark = skin.isDark
   const [downloaded, setDownloaded] = useState(false)
+  const [, setDevTick] = useState(0)
+  useEffect(() => {
+    const h = () => setDevTick(t => t + 1)
+    window.addEventListener('__dev_tuning', h)
+    return () => window.removeEventListener('__dev_tuning', h)
+  }, [])
 
   const handleCardClick = () => {
     if (downloaded || installed) return
@@ -1027,14 +1105,14 @@ function SkillUnlockCard({
           className="border-[3px] p-4 sm:p-6 md:p-8 rounded-[2px] transition-all duration-500"
           style={{
             background: downloaded
-              ? (isDark ? 'rgba(20, 60, 30, 0.98)' : '#eef7ee')
-              : (isDark ? 'rgba(20, 30, 50, 0.98)' : '#faf6ef'),
-            backdropFilter: isDark ? 'blur(8px)' : undefined,
+              ? (isDark ? 'rgba(20, 60, 30, 0.92)' : '#eef7ee')
+              : (isDark ? `rgba(15, 20, 35, ${(typeof window !== 'undefined' && (window as any).__dev_cardBg) ?? 1})` : '#faf6ef'),
+            backdropFilter: isDark ? `blur(${(typeof window !== 'undefined' && (window as any).__dev_blur) ?? 0}px)` : undefined,
             borderColor: downloaded
               ? '#22c55e'
-              : (isDark ? 'var(--world-accent)' : 'var(--world-skill-card-border)'),
+              : (isDark ? `rgba(255, 255, 255, ${(typeof window !== 'undefined' && (window as any).__dev_border) ?? 0})` : 'var(--world-skill-card-border)'),
             boxShadow: isDark
-              ? '0 0 40px 10px var(--world-skill-card-glow), 0 0 80px 20px var(--world-skill-card-glow)'
+              ? `0 0 ${(typeof window !== 'undefined' && (window as any).__dev_glowSize) ?? 21}px ${((typeof window !== 'undefined' && (window as any).__dev_glowSize) ?? 21) / 2}px rgba(255, 255, 255, ${(typeof window !== 'undefined' && (window as any).__dev_glowAlpha) ?? 1})`
               : '0 25px 50px -12px rgb(0 0 0 / 0.25)',
           }}
         >

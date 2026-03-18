@@ -322,17 +322,21 @@ export default function ProofPage({ demo }: ProofPageProps) {
         }}>
           <div style={{ flex: 1, minWidth: 200 }}>
             <p style={{ fontSize: 16, fontWeight: 700, color: '#1a1a2e', marginBottom: 4 }}>
-              Want to try this with your own files?
+              Want to try this with your own {demo.type === 'inbox' ? 'inbox' : demo.type === 'website' ? 'website' : 'data'}?
             </p>
-            <p style={{ fontSize: 13, color: '#888' }}>
+            <p style={{ fontSize: 13, color: '#888', marginBottom: 2 }}>
               You need a{' '}
               <a href="https://claude.com/pricing/" target="_blank" rel="noopener noreferrer" style={{ color: '#D64C00', textDecoration: 'none', fontWeight: 600 }}
                 onClick={() => track({ eventType: 'setup_requirements_clicked', metadata: { requirement: 'claude_subscription' } })}
               >Claude subscription</a>
-              {' '}and{' '}
+              {' '}(free to try) and{' '}
               <a href="https://claude.com/download" target="_blank" rel="noopener noreferrer" style={{ color: '#D64C00', textDecoration: 'none', fontWeight: 600 }}
                 onClick={() => track({ eventType: 'setup_requirements_clicked', metadata: { requirement: 'cowork_install' } })}
-              >Cowork installed</a>.
+              >Cowork</a>
+              {' '}(Anthropic's desktop app for Claude).
+            </p>
+            <p style={{ fontSize: 12, color: '#aaa' }}>
+              Takes about 2 minutes to set up.
             </p>
           </div>
           {isMobile ? (
@@ -346,7 +350,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
                 fontWeight: 700, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
               }}
             >
-              Show me how
+              Try it free
             </button>
           ) : (
             <Link
@@ -360,7 +364,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
               onMouseEnter={e => { e.currentTarget.style.background = '#FF6B1A' }}
               onMouseLeave={e => { e.currentTarget.style.background = '#D64C00' }}
             >
-              Show me how
+              Try it free
             </Link>
           )}
         </div>

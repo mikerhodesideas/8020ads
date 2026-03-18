@@ -5,6 +5,7 @@ export interface ProofDemo {
   // Card content (homepage)
   cardHeadline: string
   cardSubtext: string
+  cardCta: string
   // Proof page content
   proofHeadline: string
   proofHow: string
@@ -25,8 +26,9 @@ export const PROOF_DEMOS: Record<ProofType, ProofDemo> = {
     type: 'inbox',
     cardHeadline: '50 emails by 9am Monday',
     cardSubtext: 'Your inbox is a war zone. AI can triage it in seconds.',
+    cardCta: 'Watch it triage 50 emails',
     proofHeadline: 'Monday morning. 50 emails. Sorted before your coffee goes cold.',
-    proofHow: 'You drag one file into Cowork. It reads every email, ranks them by urgency, flags what needs a reply, and tells you exactly where to start. The whole thing takes seconds.',
+    proofHow: 'You drag one file into Cowork (Anthropic\'s desktop app for Claude). It reads every email, ranks them by urgency, flags what needs a reply, and tells you exactly where to start. The whole thing takes seconds.',
     beforeLabel: 'What ChatGPT gives you',
     afterLabel: 'What Cowork builds',
     beforeFile: '/demo-assets/before-after/before-triage.html',
@@ -40,8 +42,9 @@ export const PROOF_DEMOS: Record<ProofType, ProofDemo> = {
     type: 'website',
     cardHeadline: "Your website hasn't been updated since...",
     cardSubtext: "You know it needs work. You just don't have 40 hours to do it.",
+    cardCta: 'Watch a 47-second redesign',
     proofHeadline: 'One URL in. A full redesign out. No designer required.',
-    proofHow: "You paste your website URL into Cowork. It looks at what you have, asks a couple of questions about what you want, and builds a completely new design. You talk, it builds.",
+    proofHow: "You paste your website URL into Cowork (Anthropic's desktop app for Claude). It looks at what you have, asks a couple of questions about what you want, and builds a completely new design. You talk, it builds.",
     beforeLabel: 'Before',
     afterLabel: 'After Cowork',
     beforeFile: '/demo-assets/before-after/before-website.html',
@@ -55,8 +58,9 @@ export const PROOF_DEMOS: Record<ProofType, ProofDemo> = {
     type: 'data',
     cardHeadline: 'Three spreadsheets. Zero insights.',
     cardSubtext: 'The data is there. The connections between them are not.',
+    cardCta: 'Watch 3 spreadsheets connect',
     proofHeadline: 'Three spreadsheets you never had time to connect. Now they talk to each other automatically.',
-    proofHow: 'You drag three CSV files into Cowork. It reads all of them, spots the connections between them, and builds a fully interactive dashboard with insights that would normally take hours to piece together.',
+    proofHow: 'You drag three CSV files into Cowork (Anthropic\'s desktop app for Claude). It reads all of them, spots the connections between them, and builds a fully interactive dashboard with insights that would normally take hours to piece together.',
     beforeLabel: 'What ChatGPT gives you',
     afterLabel: 'What Cowork builds',
     beforeFile: '/demo-assets/before-after/before-data-leadgen.html',
