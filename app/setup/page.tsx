@@ -43,6 +43,7 @@ export default function SetupPage() {
   const router = useRouter()
   const { setType, setWorld, markProofComplete } = useGame()
   const [selectedAvatar, setSelectedAvatar] = useState<PlayerType | null>(null)
+  const [avatarsLocked, setAvatarsLocked] = useState(false)
 
   useEffect(() => {
     let source = 'direct'
@@ -56,14 +57,17 @@ export default function SetupPage() {
   }, [])
 
   const handleAvatarSelect = (typeId: PlayerType) => {
+    if (avatarsLocked) return
     track({ eventType: 'avatar_selected', avatarType: typeId })
     setType(typeId)
     markProofComplete()
     setSelectedAvatar(typeId)
-    // Scroll to the choice section
+    setAvatarsLocked(true)
+    setTimeout(() => setAvatarsLocked(false), 2500)
+    // Scroll aggressively to the choice section
     setTimeout(() => {
-      document.getElementById('path-choice')?.scrollIntoView({ behavior: 'smooth' })
-    }, 100)
+      document.getElementById('path-choice')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 150)
   }
 
   const handleContinueStandard = () => {
@@ -135,17 +139,21 @@ export default function SetupPage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" style={{ maxWidth: 1200 }}>
           {avatars.map((a) => {
             const isSelected = selectedAvatar === a.id
+            const isLocked = avatarsLocked && !isSelected
             return (
               <button
                 key={a.id}
                 onClick={() => handleAvatarSelect(a.id)}
+                disabled={isLocked}
                 className={cn(
                   'group relative text-left overflow-hidden',
                   'border',
                   'rounded-[2px] transition-all duration-300 ease-out',
-                  'cursor-pointer block',
                   'aspect-[3/4]',
                   'focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]',
+                  isLocked
+                    ? 'opacity-40 cursor-default'
+                    : 'cursor-pointer',
                   isSelected
                     ? 'border-[var(--color-brand-orange)] shadow-lg -translate-y-1'
                     : 'border-[var(--color-border)] hover:shadow-lg hover:-translate-y-1'
@@ -268,13 +276,18 @@ export default function SetupPage() {
                   6 demos across 3 levels. About 10 minutes total.
                 </p>
                 <span style={{
-                  display: 'inline-flex',
+                  display: 'flex',
                   alignItems: 'center',
-                  gap: 6,
-                  fontSize: 14,
+                  justifyContent: 'center',
+                  gap: 8,
+                  fontSize: 20,
                   fontWeight: 700,
-                  color: '#D64C00',
+                  color: '#fff',
+                  background: '#D64C00',
                   fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+                  padding: '16px 32px',
+                  width: '100%',
+                  textAlign: 'center',
                 }}>
                   Start the demos &rarr;
                 </span>
@@ -341,13 +354,18 @@ export default function SetupPage() {
                     6 demos across 3 levels. Choose your world.
                   </p>
                   <span style={{
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: 6,
-                    fontSize: 14,
+                    justifyContent: 'center',
+                    gap: 8,
+                    fontSize: 20,
                     fontWeight: 700,
-                    color: '#fbbf24',
+                    color: '#1a1a2e',
+                    background: '#fbbf24',
                     fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+                    padding: '16px 32px',
+                    width: '100%',
+                    textAlign: 'center',
                   }}>
                     Let&apos;s-a go! &rarr;
                   </span>
