@@ -28,16 +28,16 @@ function useAnimatedCounter(target: number, duration: number = 1200): number {
 }
 
 const BONUS_SKILLS = [
+  { name: 'On-Page SEO Scorer', description: 'Score any URL against SEO best practices and AI-readiness criteria.' },
+  { name: 'GEO Content Auditor', description: 'Audit content for AI citation potential across ChatGPT, Perplexity, and Google AI Overviews.' },
+  { name: 'Meta Campaign Auditor', description: 'Full Meta Ads account audit from exported CSV data with scored HTML report.' },
+  { name: 'Form Optimization Auditor', description: 'Analyze web form structure, field composition, and UX to estimate abandonment risk.' },
   { name: 'Content Repurposer', description: 'Turn one blog post into platform-specific content for LinkedIn, X, email, and more.' },
-  { name: 'Meeting Intelligence', description: 'Extract action items, decisions, and follow-ups from rough meeting notes.' },
-  { name: 'Search Term Analyzer', description: 'Classify search terms by intent, flag waste, and generate negative keyword lists.' },
+  { name: 'Client Onboarding Kit', description: 'Generate onboarding checklists, intake questionnaires, and kickoff agendas from a brief.' },
   { name: 'CSV Analyzer', description: 'Run real statistical analysis on any CSV with Python-powered charts and insights.' },
-  { name: 'Email Drafter', description: 'Draft replies in your tone using context from previous conversations.' },
-  { name: 'Weekly Report Builder', description: 'Pull data from multiple sources into a formatted weekly summary, ready to send.' },
-  { name: 'Competitor Monitor', description: 'Track competitor websites and ads, get alerts when something changes.' },
-  { name: 'Client Onboarder', description: 'Generate onboarding checklists and welcome packs from a single intake form.' },
-  { name: 'Proposal Generator', description: 'Turn call notes into a polished proposal with scope, timeline, and pricing.' },
-  { name: 'Morning Briefing', description: 'Start your day with a summary of today\'s meetings, priority emails, and task list.' },
+  { name: 'Reply Drafter', description: 'Draft replies in your tone, auto-detecting platform (email, LinkedIn, community).' },
+  { name: 'Search Term Analyzer', description: 'Classify search terms by intent, flag waste, and generate negative keyword lists.' },
+  { name: 'Landing Page Auditor', description: 'Audit landing pages against CRO best practices with scored evaluation and prioritized fixes.' },
 ]
 
 const LEVEL_LEARNINGS = [
