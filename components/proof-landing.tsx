@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { PROOF_DEMOS, PROOF_TYPES } from '@/lib/proof-data'
 import { track } from '@/lib/tracking'
@@ -28,57 +29,86 @@ export default function ProofLanding() {
       <style>{`
         @media (max-width: 639px) {
           .proof-landing-hero h1 { font-size: 32px !important; }
-          .proof-landing-hero { padding-top: 48px !important; }
           .proof-card-grid {
             grid-template-columns: 1fr !important;
           }
-          .level-preview-grid {
-            grid-template-columns: 1fr !important;
-            gap: 8px !important;
-          }
           .trust-bar {
             flex-direction: column !important;
-            gap: 8px !important;
           }
-          .trust-bar .trust-divider {
-            display: none !important;
+          .trust-bar > div {
+            border-right: none !important;
+            border-bottom: 1px solid #E8E4DF;
+          }
+          .trust-bar > div:last-child {
+            border-bottom: none;
           }
         }
       `}</style>
-      {/* Hero */}
+      {/* Dark hero zone with background image */}
       <section className="proof-landing-hero" style={{
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#1a1a2e',
+      }}>
+        <Image
+          src="/images/bg.png"
+          alt=""
+          fill
+          style={{ objectFit: 'cover', opacity: 0.35 }}
+          sizes="100vw"
+          priority
+        />
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(26,26,46,0.92), rgba(26,26,46,0.55), transparent)',
+        }} />
+        <div style={{
+          position: 'relative',
+          maxWidth: 960,
+          margin: '0 auto',
+          padding: '80px 24px 60px',
+          textAlign: 'center',
+        }}>
+          <h1 style={{
+            fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+            fontSize: 46,
+            fontWeight: 800,
+            color: '#fff',
+            lineHeight: 1.1,
+            letterSpacing: -1,
+            marginBottom: 14,
+          }}>
+            ChatGPT gives you text.<br />This gives you finished work.
+          </h1>
+          <p style={{
+            fontSize: 18,
+            color: 'rgba(255,255,255,0.7)',
+            marginBottom: 10,
+            letterSpacing: 0.2,
+          }}>
+            Skills built for your industry. You just use them.
+          </p>
+          <p style={{
+            fontSize: 15,
+            color: 'rgba(255,255,255,0.45)',
+            marginBottom: 0,
+          }}>
+            Nothing is staged. Pick a demo. See what it actually does.
+          </p>
+        </div>
+      </section>
+
+      {/* Orange accent divider */}
+      <div style={{ height: 4, background: '#D64C00' }} />
+
+      {/* Content zone */}
+      <section style={{
         maxWidth: 960,
         margin: '0 auto',
-        padding: '80px 24px 40px',
+        padding: '40px 24px 0',
         textAlign: 'center',
       }}>
-        <h1 style={{
-          fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
-          fontSize: 46,
-          fontWeight: 800,
-          color: '#1a1a2e',
-          lineHeight: 1.1,
-          letterSpacing: -1,
-          marginBottom: 14,
-        }}>
-          ChatGPT gives you text.<br />This gives you finished work.
-        </h1>
-        <p style={{
-          fontSize: 18,
-          color: '#555',
-          marginBottom: 10,
-          letterSpacing: 0.2,
-        }}>
-          Skills built for your industry. You just use them.
-        </p>
-        <p style={{
-          fontSize: 15,
-          color: '#999',
-          marginBottom: 32,
-        }}>
-          Every result below is real. No cherry-picking. No editing. Just raw AI output.
-        </p>
-
         {/* Completion reward teaser */}
         <p style={{
           fontSize: 13,
