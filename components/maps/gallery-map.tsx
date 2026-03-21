@@ -35,7 +35,6 @@ function DemoNode({
       className={cn(
         'relative text-left p-5 rounded-[2px] transition-all duration-300 group',
         'border focus:outline-none',
-        !done && 'node-entrance',
         done
           ? 'bg-[#f0fdf4] border-l-[3px] border-l-[#22c55e] border-t border-r border-b border-t-gray-100 border-r-gray-100 border-b-gray-100'
           : isRecommended
@@ -43,9 +42,6 @@ function DemoNode({
             : 'bg-white border-[var(--color-border)] hover:border-[var(--color-brand-orange)] hover:shadow-lg hover:-translate-y-1',
         'cursor-pointer'
       )}
-      style={{
-        animationDelay: `${index * 150}ms`,
-      }}
     >
       <div className="flex items-center justify-between mb-3 h-7">
         <span
@@ -461,17 +457,6 @@ export default function GalleryMap({
             </div>
           )}
 
-          <div className="relative z-20 pb-4 pt-6 px-4 flex items-center justify-end">
-            <StatsWidget
-              isGallery={true}
-              completedCount={roleCompletedCount}
-              availableCount={availableDemoCount}
-              skillCount={skills.size}
-              timeSaved={totalTimeSaved}
-              expanded={statsExpanded}
-              onToggle={() => setStatsExpanded((p) => !p)}
-            />
-          </div>
         </div>
       </div>
 
