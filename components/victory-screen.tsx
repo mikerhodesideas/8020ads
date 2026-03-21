@@ -161,6 +161,33 @@ export default function VictoryScreen() {
   const skin = useSkin()
   const [letterOpen, setLetterOpen] = useState(false)
   const [copyConfirm, setCopyConfirm] = useState(false)
+  const [skillPackEmail, setSkillPackEmail] = useState('')
+  const [skillPackSubmitting, setSkillPackSubmitting] = useState(false)
+  const [skillPackSubmitted, setSkillPackSubmitted] = useState(false)
+
+  const handleSkillPackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSkillPackSubmitting(true)
+    try {
+      await fetch('https://script.google.com/macros/s/AKfycbzlTFZ3XPRjgSRNbnYsXJxJlEsJ6Z0b0vGsQIgJrTxofJb59COeLu-5RPFdndrRXPHUow/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: skillPackEmail,
+          timestamp: new Date().toISOString(),
+          source: '8020skill - Skill Pack Claim',
+          avatarType: type || 'unknown',
+        }),
+      })
+      setSkillPackSubmitted(true)
+      track({ eventType: 'skill_pack_claimed', metadata: { email: skillPackEmail, avatarType: type } })
+    } catch (err) {
+      console.error('Failed to submit skill pack email:', err)
+    } finally {
+      setSkillPackSubmitting(false)
+    }
+  }
 
   const isLight = skin.victoryLayout === 'light-elegant'
   const isDark = skin.victoryLayout === 'dark-celebration'
@@ -341,26 +368,46 @@ export default function VictoryScreen() {
             SKILL PACK: the big reward
             ════════════════════════════════════════ */}
         <div className="v-s3 mb-12 p-6 sm:p-8" style={{ background: cardBg, border: `2px solid ${accent}` }}>
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-heading font-extrabold mb-1" style={{ color: textPrimary }}>
-                Your Free Skill Pack
-              </h2>
-              <p className="text-sm font-heading" style={{ color: textSecondary }}>
-                10 Cowork skills + a course on building your own. Worth $99.
-              </p>
-            </div>
-            <a
-              href="/skill-pack"
-              onClick={() => track({ eventType: 'skill_pack_claimed' })}
-              className="inline-flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm text-white transition-opacity hover:opacity-90 flex-shrink-0 self-start"
-              style={{ background: accent }}
-            >
-              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 2v8" /><path d="M4 7l3 3 3-3" /><path d="M2 12h10" />
-              </svg>
-              Claim your free skill pack
-            </a>
+          <div className="mb-6">
+            <h2 className="text-xl sm:text-2xl font-heading font-extrabold mb-1" style={{ color: textPrimary }}>
+              Your Free Skill Pack
+            </h2>
+            <p className="text-sm font-heading mb-4" style={{ color: textSecondary }}>
+              10 Cowork skills + a course on building your own. Worth $99.
+            </p>
+            {skillPackSubmitted ? (
+              <div className="flex items-center gap-3 px-4 py-3" style={{ background: `${accent}15`, border: `1px solid ${accent}40` }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                <span className="text-sm font-heading font-semibold" style={{ color: textPrimary }}>
+                  You're in. We'll email you when the skill pack is ready to download.
+                </span>
+              </div>
+            ) : (
+              <form onSubmit={handleSkillPackSubmit} className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  required
+                  placeholder="Your email address"
+                  value={skillPackEmail}
+                  onChange={e => setSkillPackEmail(e.target.value)}
+                  className="flex-1 px-4 py-3 text-sm font-heading border focus:outline-none focus:ring-2"
+                  style={{ borderColor: subtleBorder, color: textPrimary, background: 'transparent', focusRingColor: accent } as React.CSSProperties}
+                />
+                <button
+                  type="submit"
+                  disabled={skillPackSubmitting}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 font-heading font-bold text-sm text-white transition-opacity hover:opacity-90 flex-shrink-0 disabled:opacity-50"
+                  style={{ background: accent }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 2v8" /><path d="M4 7l3 3 3-3" /><path d="M2 12h10" />
+                  </svg>
+                  {skillPackSubmitting ? 'Sending...' : 'Claim your free skill pack'}
+                </button>
+              </form>
+            )}
           </div>
 
           <div className="v-skill-grid grid grid-cols-2 gap-x-8 gap-y-1">
