@@ -169,16 +169,13 @@ export default function VictoryScreen() {
     e.preventDefault()
     setSkillPackSubmitting(true)
     try {
-      await fetch('https://script.google.com/macros/s/AKfycbzlTFZ3XPRjgSRNbnYsXJxJlEsJ6Z0b0vGsQIgJrTxofJb59COeLu-5RPFdndrRXPHUow/exec', {
-        method: 'POST',
+      const params = new URLSearchParams()
+      params.append('tab', 'skill-pack')
+      params.append('email', skillPackEmail)
+      params.append('feature', '[SKILL-PACK] avatar=' + (type || 'unknown'))
+      await fetch(`https://script.google.com/macros/s/AKfycbxM-7kMQaAmqsdp9AhI9tyLh13XUBmG17-QpvtIv_bej9cgJv9rOIaD27Z-ymYg5bboyg/exec?${params.toString()}`, {
+        method: 'GET',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: skillPackEmail,
-          timestamp: new Date().toISOString(),
-          source: '8020skill - Skill Pack Claim',
-          avatarType: type || 'unknown',
-        }),
       })
       setSkillPackSubmitted(true)
       track({ eventType: 'skill_pack_claimed', metadata: { email: skillPackEmail, avatarType: type } })
