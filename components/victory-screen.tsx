@@ -373,7 +373,7 @@ export default function VictoryScreen() {
               Your Free Skill Pack
             </h2>
             <p className="text-sm font-heading mb-4" style={{ color: textSecondary }}>
-              10 Cowork skills + a course on building your own. Worth $99.
+              Enter your email to get 10 Cowork skills + a course on building your own. Worth $99.
             </p>
             {skillPackSubmitted ? (
               <div className="flex items-center gap-3 px-4 py-3" style={{ background: `${accent}15`, border: `1px solid ${accent}40` }}>
@@ -381,7 +381,7 @@ export default function VictoryScreen() {
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
                 <span className="text-sm font-heading font-semibold" style={{ color: textPrimary }}>
-                  You're in. We'll email you when the skill pack is ready to download.
+                  On the way. We'll email those to you in the next 24 hours.
                 </span>
               </div>
             ) : (
