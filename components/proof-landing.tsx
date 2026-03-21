@@ -32,6 +32,17 @@ export default function ProofLanding() {
           .proof-card-grid {
             grid-template-columns: 1fr !important;
           }
+          .level-preview-grid {
+            grid-template-columns: 1fr !important;
+            gap: 8px !important;
+          }
+          .trust-bar {
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+          .trust-bar .trust-divider {
+            display: none !important;
+          }
         }
       `}</style>
       {/* Hero */}
@@ -58,23 +69,109 @@ export default function ProofLanding() {
           marginBottom: 10,
           letterSpacing: 0.2,
         }}>
-          Pick a task. See what comes back. Then try it yourself.
+          Skills built for your industry. You just use them.
         </p>
         <p style={{
           fontSize: 15,
           color: '#999',
-          marginBottom: 56,
+          marginBottom: 32,
         }}>
           Every result below is real. No cherry-picking. No editing. Just raw AI output.
         </p>
 
-        {/* Proof cards */}
-        <div className="proof-card-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 20,
-          maxWidth: 960,
+        {/* Completion reward teaser */}
+        <p style={{
+          fontSize: 13,
+          color: '#D64C00',
+          fontWeight: 600,
+          marginBottom: 20,
         }}>
+          Complete all 3 levels and get 10 free skills + a course on building your own
+        </p>
+
+        {/* Tab-style levels container */}
+        <div style={{
+          border: '1px solid #E8E4DF',
+          background: '#fff',
+          maxWidth: 960,
+          overflow: 'hidden',
+        }}>
+          {/* Tab row */}
+          <div style={{
+            display: 'flex',
+            borderBottom: '1px solid #E8E4DF',
+          }}>
+            <div style={{
+              flex: 1,
+              padding: '16px 24px',
+              textAlign: 'center',
+              borderBottom: '3px solid #D64C00',
+              marginBottom: -1,
+              borderRight: '1px solid #E8E4DF',
+            }}>
+              <div style={{
+                fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase' as const,
+                color: '#D64C00',
+                marginBottom: 2,
+              }}>Level 1</div>
+              <div style={{ fontSize: 13, color: '#555' }}>
+                See what AI does with just a file
+              </div>
+            </div>
+            <div style={{
+              flex: 1,
+              padding: '16px 24px',
+              textAlign: 'center',
+              background: '#f4f3f1',
+              opacity: 0.5,
+              borderRight: '1px solid #E8E4DF',
+            }}>
+              <div style={{
+                fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase' as const,
+                color: '#999',
+                marginBottom: 2,
+              }}>Level 2</div>
+              <div style={{ fontSize: 13, color: '#aaa' }}>
+                One sentence. Finished work.
+              </div>
+            </div>
+            <div style={{
+              flex: 1,
+              padding: '16px 24px',
+              textAlign: 'center',
+              background: '#f4f3f1',
+              opacity: 0.5,
+            }}>
+              <div style={{
+                fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase' as const,
+                color: '#999',
+                marginBottom: 2,
+              }}>Level 3</div>
+              <div style={{ fontSize: 13, color: '#aaa' }}>
+                Connected to your real tools
+              </div>
+            </div>
+          </div>
+
+          {/* Tab content: proof cards */}
+          <div style={{ padding: '28px 24px' }}>
+            <div className="proof-card-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 20,
+            }}>
           {PROOF_TYPES.map((type, i) => {
             const demo = PROOF_DEMOS[type]
             const isCompleted = completedProofs.has(type)
@@ -177,13 +274,53 @@ export default function ProofLanding() {
               </Link>
             )
           })}
+            </div>
+          </div>
+
+          {/* Unlock hint */}
+          <div style={{
+            textAlign: 'center',
+            padding: 20,
+            fontSize: 13,
+            color: '#aaa',
+            fontStyle: 'italic',
+            borderTop: '1px solid #eee',
+          }}>
+            Complete Level 1 to unlock Levels 2 &amp; 3
+          </div>
         </div>
       </section>
+
+      {/* Trust line */}
+      <div style={{
+        maxWidth: 960,
+        margin: '0 auto',
+        padding: '32px 24px 0',
+      }}>
+        <div className="trust-bar" style={{
+          display: 'flex',
+          background: '#fff',
+          border: '1px solid #E8E4DF',
+        }}>
+          <div style={{ flex: 1, textAlign: 'center', padding: '18px 16px', borderRight: '1px solid #E8E4DF' }}>
+            <strong style={{ fontFamily: 'var(--font-oxanium), system-ui, sans-serif', color: '#1a1a2e', fontSize: 20, fontWeight: 800, display: 'block', lineHeight: 1.25, marginBottom: 2 }}>It drafts.</strong>
+            <span style={{ fontSize: 14, color: '#555' }}>You review.</span>
+          </div>
+          <div style={{ flex: 1, textAlign: 'center', padding: '18px 16px', borderRight: '1px solid #E8E4DF' }}>
+            <strong style={{ fontFamily: 'var(--font-oxanium), system-ui, sans-serif', color: '#1a1a2e', fontSize: 20, fontWeight: 800, display: 'block', lineHeight: 1.25, marginBottom: 2 }}>It suggests.</strong>
+            <span style={{ fontSize: 14, color: '#555' }}>You decide.</span>
+          </div>
+          <div style={{ flex: 1, textAlign: 'center', padding: '18px 16px' }}>
+            <span style={{ fontSize: 14, color: '#555', display: 'block', marginBottom: 2 }}>Nothing goes out</span>
+            <strong style={{ fontFamily: 'var(--font-oxanium), system-ui, sans-serif', color: '#1a1a2e', fontSize: 20, fontWeight: 800 }}>without your approval.</strong>
+          </div>
+        </div>
+      </div>
 
       {/* Bottom line */}
       <div style={{
         textAlign: 'center',
-        padding: '40px 24px 80px',
+        padding: '32px 24px 80px',
       }}>
         <p style={{ fontSize: 14, color: '#888' }}>
           Join hundreds of business owners automating their work with AI.

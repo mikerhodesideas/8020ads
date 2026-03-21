@@ -47,6 +47,7 @@ const PAGES = [
   { path: '/setup', label: 'Setup' },
   { path: '/course', label: 'Course' },
   { path: '/how-it-works', label: 'How' },
+  { path: '/faq', label: 'FAQ' },
 ]
 
 export default function DevTools() {
@@ -247,6 +248,15 @@ export default function DevTools() {
             {/* Quick Actions */}
             <Section title="Actions">
               <Row>
+                <Btn label="Victory" onClick={() => {
+                  if (!type) setType('agency')
+                  if (!world) setWorld('gallery')
+                  PROOFS.forEach(p => markProofCompleted(p.id))
+                  Object.values(levelDemos).flat().forEach(id => {
+                    if (!completed.has(id)) markComplete(id)
+                  })
+                  setTimeout(() => router.push('/victory'), 50)
+                }} />
                 <Btn label="Reset Game" onClick={() => { resetGame(); router.push('/'); }} danger />
               </Row>
             </Section>

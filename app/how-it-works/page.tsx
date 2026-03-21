@@ -351,6 +351,77 @@ export default function HowItWorksPage() {
 
 
       {/* ═══════════════════════════════════════════
+          SECTION 5b — TRUST / CONTROL
+          ═══════════════════════════════════════════ */}
+      <section className="px-4 sm:px-6 py-14 sm:py-20 bg-white">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: '#1B8C3A' }}>
+            You stay in control
+          </p>
+          <h2 className="text-xl sm:text-2xl font-bold font-heading text-[var(--color-ink)] mb-6">
+            It drafts. You review. You send.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="p-5 border border-[var(--color-border)]" style={{ borderLeft: '3px solid #1B8C3A' }}>
+              <p className="text-sm font-bold font-heading text-[var(--color-ink)] mb-1">It drafts</p>
+              <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                Reports, emails, analysis. It does the heavy lifting.
+              </p>
+            </div>
+            <div className="p-5 border border-[var(--color-border)]" style={{ borderLeft: '3px solid #1B8C3A' }}>
+              <p className="text-sm font-bold font-heading text-[var(--color-ink)] mb-1">You review</p>
+              <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                Everything lands in front of you before anyone else sees it.
+              </p>
+            </div>
+            <div className="p-5 border border-[var(--color-border)]" style={{ borderLeft: '3px solid #1B8C3A' }}>
+              <p className="text-sm font-bold font-heading text-[var(--color-ink)] mb-1">You send</p>
+              <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                Nothing goes out without your approval. It&apos;s your assistant, not your replacement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SECTION 5c — PLAIN ENGLISH TRANSLATION
+          ═══════════════════════════════════════════ */}
+      <section className="px-4 sm:px-6 py-14 sm:py-20">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs font-semibold tracking-widest uppercase mb-3 text-center" style={{ color: '#D64C00' }}>
+            In plain English
+          </p>
+          <h2 className="text-xl sm:text-2xl font-bold font-heading text-[var(--color-ink)] mb-2 text-center">
+            Think of it like a car.
+          </h2>
+          <p className="text-sm text-[var(--color-muted)] leading-relaxed mb-8 text-center max-w-lg mx-auto">
+            You don&apos;t need to know how the engine works. You don&apos;t change your own oil. Someone already built it. You just drive.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <div className="p-5 bg-white border border-[var(--color-border)]" style={{ borderLeft: `3px solid ${TREKKER_COLOR}` }}>
+              <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: TREKKER_COLOR }}>
+                Trekkers = Drivers
+              </p>
+              <p className="text-sm text-[var(--color-ink)] font-bold font-heading mb-1">Your team</p>
+              <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                They open Cowork, type what they need, and get results. No coding, no prompt engineering. They never see the engine.
+              </p>
+            </div>
+            <div className="p-5 bg-white border border-[var(--color-border)]" style={{ borderLeft: `3px solid ${SCOUT_COLOR}` }}>
+              <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: SCOUT_COLOR }}>
+                Scouts = Mechanics
+              </p>
+              <p className="text-sm text-[var(--color-ink)] font-bold font-heading mb-1">The builder</p>
+              <p className="text-xs text-[var(--color-muted)] leading-relaxed">
+                Someone who builds the skills, wires up the connections, and keeps everything running. That could be you, or someone on your team.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
           SECTION 6 — DEMO CONNECTION (context-aware)
           ═══════════════════════════════════════════ */}
       <section className="px-4 sm:px-6 py-14 sm:py-20">

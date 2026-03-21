@@ -117,6 +117,85 @@ export default function SetupPage() {
           </p>
         </div>
 
+        {/* Journey preview */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 16,
+          marginBottom: 32,
+        }}>
+          <div style={{
+            padding: '16px 20px',
+            background: '#FEF7F2',
+            borderLeft: '3px solid #D64C00',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '1px',
+              textTransform: 'uppercase' as const,
+              color: '#D64C00',
+              marginBottom: 4,
+            }}>Level 1: Raw AI</div>
+            <p style={{ fontSize: 14, color: '#555', lineHeight: 1.5 }}>
+              Drag in a file, type a prompt, see what comes back. No setup needed.
+            </p>
+          </div>
+          <div style={{
+            padding: '16px 20px',
+            background: '#EEFBF0',
+            borderLeft: '3px solid #1B8C3A',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '1px',
+              textTransform: 'uppercase' as const,
+              color: '#1B8C3A',
+              marginBottom: 4,
+            }}>Level 2: Skills</div>
+            <p style={{ fontSize: 14, color: '#555', lineHeight: 1.5 }}>
+              Same tasks, but with skills installed. One sentence, finished work.
+            </p>
+          </div>
+          <div style={{
+            padding: '16px 20px',
+            background: '#EFF4FF',
+            borderLeft: '3px solid #2563EB',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-oxanium), system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '1px',
+              textTransform: 'uppercase' as const,
+              color: '#2563EB',
+              marginBottom: 4,
+            }}>Level 3: Connected</div>
+            <p style={{ fontSize: 14, color: '#555', lineHeight: 1.5 }}>
+              Real tools, real data, real safety. See the full system in action.
+            </p>
+          </div>
+        </div>
+
+        {/* Reward callout */}
+        <div style={{
+          padding: '12px 20px',
+          background: '#fff',
+          border: '1px solid #E8E4DF',
+          borderLeft: '3px solid #D64C00',
+          marginBottom: 32,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+        }}>
+          <span style={{ fontSize: 14, color: '#555' }}>
+            Complete all 3 levels and get <strong style={{ color: '#D64C00' }}>10 free skills + a course on building your own</strong>, worth $99.
+          </span>
+        </div>
+
         {/* Avatar selection */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" style={{ maxWidth: 1200 }}>
           {avatars.map((a) => (

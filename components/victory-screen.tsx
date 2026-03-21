@@ -28,28 +28,22 @@ function useAnimatedCounter(target: number, duration: number = 1200): number {
 }
 
 const BONUS_SKILLS = [
-  { name: 'Content Repurposer', description: 'Turn one blog post into platform-specific content for LinkedIn, X, email, and more.', path: '/demo-assets/skills/content-repurposer.zip' },
-  { name: 'Meeting Intelligence', description: 'Extract action items, decisions, and follow-ups from rough meeting notes.', path: '/demo-assets/skills/meeting-intelligence.zip' },
-  { name: 'Search Term Analyzer', description: 'Classify search terms by intent, flag waste, and generate negative keyword lists.', path: '/demo-assets/skills/search-term-analyzer.zip' },
-  { name: 'CSV Analyzer', description: 'Run real statistical analysis on any CSV with Python-powered charts and insights.', path: '/demo-assets/skills/csv-analyzer.zip' },
+  { name: 'Content Repurposer', description: 'Turn one blog post into platform-specific content for LinkedIn, X, email, and more.' },
+  { name: 'Meeting Intelligence', description: 'Extract action items, decisions, and follow-ups from rough meeting notes.' },
+  { name: 'Search Term Analyzer', description: 'Classify search terms by intent, flag waste, and generate negative keyword lists.' },
+  { name: 'CSV Analyzer', description: 'Run real statistical analysis on any CSV with Python-powered charts and insights.' },
+  { name: 'Email Drafter', description: 'Draft replies in your tone using context from previous conversations.' },
+  { name: 'Weekly Report Builder', description: 'Pull data from multiple sources into a formatted weekly summary, ready to send.' },
+  { name: 'Competitor Monitor', description: 'Track competitor websites and ads, get alerts when something changes.' },
+  { name: 'Client Onboarder', description: 'Generate onboarding checklists and welcome packs from a single intake form.' },
+  { name: 'Proposal Generator', description: 'Turn call notes into a polished proposal with scope, timeline, and pricing.' },
+  { name: 'Morning Briefing', description: 'Start your day with a summary of today\'s meetings, priority emails, and task list.' },
 ]
 
 const LEVEL_LEARNINGS = [
-  {
-    level: 1,
-    summary: 'You saw what Cowork does with just a file and a prompt',
-    detail: 'No setup, no skills, no configuration. Drag a file, type a prompt, get a result.',
-  },
-  {
-    level: 2,
-    summary: 'Skills transformed every output',
-    detail: 'Same tool, but with specialized instructions. The difference between generic AI and purpose-built automation.',
-  },
-  {
-    level: 3,
-    summary: 'Real tools. Real data. Real safety.',
-    detail: 'Connected to live services, evaluated with plugins, and defended against hidden threats.',
-  },
+  { level: 1, tag: 'Raw AI', detail: 'Drag a file, type a prompt, get a result.' },
+  { level: 2, tag: 'Skills', detail: 'One sentence. Finished work.' },
+  { level: 3, tag: 'Connected', detail: 'Real tools. Real data. Real safety.' },
 ]
 
 const AVATAR_CTA: Record<string, {
@@ -66,8 +60,6 @@ const AVATAR_CTA: Record<string, {
     primaryLabel: 'Join Ads to AI',
     primaryHref: 'https://ads2ai.com',
     pitch: "Inside Ads to AI, you'll build skills that make you indispensable. Skills for audits, reporting, campaign builds, and more. Plus a brain system that runs your freelance business.",
-    secondaryLabel: 'Book a Strategy Call',
-    secondaryHref: 'https://cal.com/ideas/a2ai',
   },
   employee: {
     headline: 'Show your boss what AI can do for the team',
@@ -94,11 +86,6 @@ const AVATAR_CTA: Record<string, {
     secondaryHref: 'https://cal.com/ideas/a2ai',
   },
 }
-
-const CONNECTOR_ECOSYSTEM = [
-  'Gmail', 'Google Calendar', 'HubSpot', 'Asana',
-  'ClickUp', 'Slack', 'Excel', 'Outlook', 'Notion',
-]
 
 const BOSS_LETTER = `Subject: Proposal \u2014 Ads to AI Membership for AI Scouting
 
@@ -145,6 +132,29 @@ Happy to discuss further.
 
 [Your name]`
 
+// Simple SVG connector logos
+function GmailLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><path d="M20 18h-2V9.25L12 13 6 9.25V18H4V6h1.2l6.8 4.25L18.8 6H20v12z" fill="#EA4335"/><path d="M3 6l9 6 9-6v12H3z" fill="none" stroke="#EA4335" strokeWidth="0"/><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="#666" strokeWidth="1.2"/></svg> }
+function CalendarLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="#4285F4" strokeWidth="1.5"/><line x1="3" y1="10" x2="21" y2="10" stroke="#4285F4" strokeWidth="1.5"/><line x1="8" y1="2" x2="8" y2="6" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="#4285F4" strokeWidth="1.5" strokeLinecap="round"/><text x="12" y="17.5" textAnchor="middle" fontSize="7" fontWeight="700" fill="#4285F4">31</text></svg> }
+function HubSpotLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><circle cx="12" cy="12" r="3" fill="none" stroke="#FF7A59" strokeWidth="1.5"/><circle cx="12" cy="5" r="1.5" fill="#FF7A59"/><circle cx="12" cy="19" r="1.5" fill="#FF7A59"/><circle cx="5.5" cy="8.5" r="1.5" fill="#FF7A59"/><circle cx="18.5" cy="8.5" r="1.5" fill="#FF7A59"/><circle cx="5.5" cy="15.5" r="1.5" fill="#FF7A59"/><circle cx="18.5" cy="15.5" r="1.5" fill="#FF7A59"/><line x1="12" y1="6.5" x2="12" y2="9" stroke="#FF7A59" strokeWidth="1"/><line x1="12" y1="15" x2="12" y2="17.5" stroke="#FF7A59" strokeWidth="1"/></svg> }
+function SlackLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><path d="M6 15a2 2 0 01-2-2 2 2 0 012-2h2v2a2 2 0 01-2 2zm3-2a2 2 0 012-2 2 2 0 012 2v5a2 2 0 01-2 2 2 2 0 01-2-2v-5z" fill="#E01E5A"/><path d="M11 6a2 2 0 01-2-2 2 2 0 012-2 2 2 0 012 2v2h-2zm2 3a2 2 0 012-2 2 2 0 012 2 2 2 0 01-2 2h-5a2 2 0 01-2-2 2 2 0 012-2h3z" fill="#36C5F0"/><path d="M18 11a2 2 0 012 2 2 2 0 01-2 2h-2v-2a2 2 0 012-2zm-3 2a2 2 0 01-2 2 2 2 0 01-2-2V8a2 2 0 012-2 2 2 0 012 2v5z" fill="#2EB67D"/><path d="M13 20a2 2 0 012-2 2 2 0 012 2 2 2 0 01-2 2h-2v-2zm-2-3a2 2 0 01-2 2H4a2 2 0 01-2-2 2 2 0 012-2h5a2 2 0 012 2z" fill="#ECB22E"/></svg> }
+function ExcelLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><rect x="4" y="3" width="16" height="18" rx="1" fill="none" stroke="#217346" strokeWidth="1.5"/><path d="M8 8l3.5 4L8 16M12.5 8L16 12l-3.5 4" stroke="#217346" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg> }
+function NotionLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><path d="M4 4.5A1.5 1.5 0 015.5 3h9l5.5 5v11.5a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 19.5v-15z" fill="none" stroke="#333" strokeWidth="1.3"/><path d="M14 3v5h5" fill="none" stroke="#333" strokeWidth="1.3"/><line x1="8" y1="12" x2="16" y2="12" stroke="#333" strokeWidth="1" opacity="0.5"/><line x1="8" y1="15" x2="14" y2="15" stroke="#333" strokeWidth="1" opacity="0.5"/></svg> }
+function AsanaLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><circle cx="12" cy="7" r="3.5" fill="none" stroke="#F06A6A" strokeWidth="1.5"/><circle cx="6" cy="16" r="3.5" fill="none" stroke="#F06A6A" strokeWidth="1.5"/><circle cx="18" cy="16" r="3.5" fill="none" stroke="#F06A6A" strokeWidth="1.5"/></svg> }
+function OutlookLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><rect x="3" y="5" width="18" height="14" rx="1" fill="none" stroke="#0078D4" strokeWidth="1.5"/><path d="M3 5l9 7 9-7" fill="none" stroke="#0078D4" strokeWidth="1.5"/></svg> }
+function ClickUpLogo() { return <svg viewBox="0 0 24 24" className="w-8 h-8"><path d="M5 16l7-5 7 5" fill="none" stroke="#7B68EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M5 11l7-5 7 5" fill="none" stroke="#7B68EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/></svg> }
+
+const CONNECTORS = [
+  { name: 'Gmail', Logo: GmailLogo },
+  { name: 'Calendar', Logo: CalendarLogo },
+  { name: 'HubSpot', Logo: HubSpotLogo },
+  { name: 'Slack', Logo: SlackLogo },
+  { name: 'Asana', Logo: AsanaLogo },
+  { name: 'ClickUp', Logo: ClickUpLogo },
+  { name: 'Excel', Logo: ExcelLogo },
+  { name: 'Outlook', Logo: OutlookLogo },
+  { name: 'Notion', Logo: NotionLogo },
+]
+
 export default function VictoryScreen() {
   const router = useRouter()
   const { completed, skills, totalTimeSaved, totalStars, maxStars, isLevelComplete, resetGame, type } = useGame()
@@ -155,7 +165,6 @@ export default function VictoryScreen() {
   const isLight = skin.victoryLayout === 'light-elegant'
   const isDark = skin.victoryLayout === 'dark-celebration'
 
-  // AI Readiness Score calculation
   const readinessScore = useMemo(() => {
     const demoPoints = completed.size * 8
     const skillPoints = Math.min(skills.size * 2, 16)
@@ -166,19 +175,15 @@ export default function VictoryScreen() {
     return Math.min(demoPoints + skillPoints + levelBonus, 100)
   }, [completed.size, skills.size, isLevelComplete])
 
-  const animatedScore = useAnimatedCounter(readinessScore, 1500)
-
+  const animatedScore = useAnimatedCounter(readinessScore, 2000)
   const scoreLabel = useMemo(() => {
-    if (readinessScore >= 90) return 'AI-First Ready. You get it.'
-    if (readinessScore >= 70) return 'AI-Amplified. Almost there.'
-    if (readinessScore >= 50) return 'AI-Assisted. Good foundation.'
-    return 'Getting Started. Keep exploring.'
+    if (readinessScore >= 90) return 'AI-First Ready'
+    if (readinessScore >= 70) return 'AI-Amplified'
+    if (readinessScore >= 50) return 'AI-Assisted'
+    return 'Getting Started'
   }, [readinessScore])
 
-  // Weekly time projection
-  const weeklyTimeSaved = totalTimeSaved * 5
 
-  // Play fanfare on mount + track victory
   useEffect(() => {
     track({ eventType: 'victory_reached', avatarType: type })
     if (skin.sounds.victory) {
@@ -187,303 +192,226 @@ export default function VictoryScreen() {
     }
   }, [skin.sounds.victory, type])
 
-  const handlePlayAgain = () => {
-    router.push('/play')
-  }
-
-  const handleStartOver = () => {
-    resetGame()
-    router.push('/')
-  }
-
   const handleCopyLetter = () => {
     navigator.clipboard.writeText(BOSS_LETTER)
     setCopyConfirm(true)
     setTimeout(() => setCopyConfirm(false), 2000)
   }
 
-  // Card styling based on skin layout
-  const cardClass = cn(
-    'w-full p-5 border-[3px]',
-    isLight
-      ? 'bg-[var(--world-card-bg)] border-[var(--world-data-border)] rounded-[2px]'
-      : 'border-[var(--world-accent)]'
-  )
-  const cardStyle = isDark ? {
-    background: 'var(--world-card-bg)',
-    borderColor: 'var(--world-accent)',
-  } : undefined
-
-  const headingClass = cn(
-    'text-xs font-heading font-semibold uppercase tracking-wider text-center mb-4',
-    isLight ? 'text-[var(--world-text-muted)]' : 'text-[var(--world-text-muted)]'
-  )
-
-  const primaryBtnClass = cn(
-    'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm transition-all duration-200',
-    isLight
-      ? 'bg-[var(--world-accent)] text-white hover:opacity-90 rounded-[2px]'
-      : 'text-white rounded-[2px]'
-  )
-  const primaryBtnStyle = isDark ? {
-    background: 'var(--world-accent2)',
-    border: '3px solid var(--world-accent-border)',
-  } : undefined
-
-  const secondaryBtnClass = cn(
-    'w-full sm:w-auto flex-1 text-center px-6 py-3 font-heading font-bold text-sm border-[3px] transition-all duration-200',
-    isLight
-      ? 'border-[var(--world-data-border)] text-[var(--world-text)] hover:bg-[var(--world-selection-bg)] rounded-[2px]'
-      : 'rounded-[2px]'
-  )
-  const secondaryBtnStyle = isDark ? {
-    borderColor: 'var(--world-accent)',
-    color: 'var(--world-accent)',
-  } : undefined
-
-  // Firework/celebration particles for dark themes
-  const fireworks = useMemo(() => {
-    if (isLight) return []
-    const colors = ['var(--world-accent)', 'var(--world-accent2)', 'var(--world-accent3)', '#FFFFFF', 'var(--world-accent)']
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: 10 + Math.random() * 80,
-      delay: Math.random() * 3,
-      colorIndex: i % colors.length,
-      size: 3 + Math.random() * 4,
-    }))
-  }, [isLight])
-
-  const particleColors = ['var(--world-accent)', 'var(--world-accent2)', 'var(--world-accent3)', '#FFFFFF', 'var(--world-accent)']
+  const accent = 'var(--world-accent)'
+  const textPrimary = 'var(--world-text)'
+  const textSecondary = 'var(--world-text-secondary)'
+  const textMuted = 'var(--world-text-muted)'
+  const pageBg = isDark ? 'var(--world-dark)' : '#FAFAF8'
+  const cardBg = isLight ? 'white' : 'var(--world-card-bg)'
+  const borderColor = isLight ? 'var(--world-data-border)' : 'var(--world-accent)'
+  const subtleBorder = isLight ? '#E8E4DF' : 'var(--world-text-muted)'
 
   return (
-    <div
-      className={cn(
-        'page-enter min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden',
-        skin.skinClass
-      )}
-      style={{
-        background: isDark ? 'var(--world-dark)' : undefined,
-      }}
-    >
-      {/* Dark theme: starfield background + fireworks */}
-      {isDark && (
-        <>
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {Array.from({ length: 40 }, (_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  width: 1 + Math.random() * 2,
-                  height: 1 + Math.random() * 2,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  opacity: 0.3 + Math.random() * 0.5,
-                  background: 'var(--world-text)',
-                }}
-              />
-            ))}
+    <div className={cn('page-enter min-h-screen relative overflow-hidden', skin.skinClass)} style={{ background: pageBg }}>
+      <style>{`
+        @keyframes v-float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.02); } }
+        @keyframes v-fade-up { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes v-scale-pop { from { opacity:0; transform:scale(0.7); } to { opacity:1; transform:scale(1); } }
+        @keyframes v-confetti {
+          0% { transform: translateY(-20px) rotate(0deg); opacity:1; }
+          100% { transform: translateY(105vh) rotate(720deg); opacity:0; }
+        }
+        @keyframes v-pulse-glow { 0%,100% { opacity:0.3; } 50% { opacity:0.8; } }
+        @keyframes v-draw-ring { from { stroke-dashoffset: 327; } }
+        .v-hero-img { animation: v-scale-pop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.1s both, v-float 5s ease-in-out 1.5s infinite; }
+        .v-hero-h1 { animation: v-fade-up 0.6s ease-out 0.3s both; }
+        .v-hero-sub { animation: v-fade-up 0.5s ease-out 0.45s both; }
+        .v-hero-stats { animation: v-fade-up 0.5s ease-out 0.6s both; }
+        .v-s1 { animation: v-fade-up 0.5s ease-out 0.8s both; }
+        .v-s2 { animation: v-fade-up 0.5s ease-out 0.95s both; }
+        .v-s3 { animation: v-fade-up 0.5s ease-out 1.1s both; }
+        .v-s4 { animation: v-fade-up 0.5s ease-out 1.25s both; }
+        .v-s5 { animation: v-fade-up 0.5s ease-out 1.4s both; }
+        .v-s6 { animation: v-fade-up 0.5s ease-out 1.55s both; }
+        .v-confetti-piece { position:fixed; top:-20px; pointer-events:none; z-index:50; animation: v-confetti linear forwards; }
+        .v-connector:hover { transform: scale(1.15); }
+        .v-connector { transition: transform 0.2s ease; }
+        @media (max-width: 768px) {
+          .v-level-grid { grid-template-columns: 1fr !important; }
+          .v-skill-grid { grid-template-columns: 1fr !important; }
+          .v-stat-row { flex-wrap: wrap; gap: 24px !important; }
+        }
+      `}</style>
+
+      {/* Confetti */}
+      {Array.from({ length: 40 }, (_, i) => {
+        const colors = ['#D64C00','#1B8C3A','#2563EB','#D97706','#7C3AED','#EC4899','#F59E0B']
+        const w = 5 + Math.random() * 10
+        const h = 3 + Math.random() * 8
+        return <div key={i} className="v-confetti-piece" style={{
+          left: `${2 + Math.random() * 96}%`, background: colors[i % colors.length],
+          width: w, height: h, animationDuration: `${3 + Math.random() * 4}s`,
+          animationDelay: `${Math.random() * 2.5}s`, borderRadius: Math.random() > 0.5 ? '50%' : 0,
+        }} />
+      })}
+
+      {/* Dark theme stars */}
+      {isDark && <div className="absolute inset-0 pointer-events-none">{Array.from({ length: 60 }, (_, i) => (
+        <div key={i} className="absolute" style={{
+          width: 1 + Math.random() * 2, height: 1 + Math.random() * 2,
+          left: `${Math.random()*100}%`, top: `${Math.random()*100}%`,
+          background: textPrimary, opacity: 0.2 + Math.random() * 0.4,
+          animation: `v-pulse-glow ${2+Math.random()*3}s ease-in-out ${Math.random()*2}s infinite`,
+        }} />
+      ))}</div>}
+
+      <div className="relative z-10" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+
+        {/* ════════════════════════════════════════
+            HERO: Big victory image, full-width feel
+            ════════════════════════════════════════ */}
+        <div className="flex flex-col items-center pt-8 sm:pt-12 pb-10 sm:pb-14">
+          {/* Victory image, large and free */}
+          <div className="v-hero-img relative w-48 h-48 sm:w-64 sm:h-64 mb-6">
+            <Image src={skin.victoryImage} alt={skin.victoryHeading} fill className="object-contain" priority />
           </div>
-          {fireworks.map((fw) => (
-            <div
-              key={fw.id}
-              className="absolute pointer-events-none"
-              style={{
-                left: `${fw.x}%`,
-                bottom: '10%',
-                animation: `firework-rise 2s ease-out ${fw.delay}s infinite`,
-              }}
-            >
-              <div
-                style={{
-                  width: fw.size,
-                  height: fw.size,
-                  background: particleColors[fw.colorIndex],
-                  borderRadius: 0,
-                }}
-              />
+
+          <h1
+            className="v-hero-h1 font-heading font-extrabold text-center"
+            style={{ color: textPrimary, fontSize: 'clamp(32px, 5vw, 56px)', lineHeight: 1.05, letterSpacing: -2 }}
+          >
+            {skin.victoryHeading}
+          </h1>
+          <p className="v-hero-sub text-base sm:text-lg font-heading text-center mt-3 mb-10" style={{ color: textMuted, maxWidth: 500 }}>
+            You completed all 3 levels. You now know more about AI than 95% of business owners.
+          </p>
+
+          {/* Score ring centered, big */}
+          <div className="v-hero-stats flex flex-col items-center mb-10">
+            <div className="relative w-36 h-36 sm:w-44 sm:h-44 mb-4">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="52" fill="none" stroke={subtleBorder} strokeWidth="5" opacity={0.3} />
+                <circle cx="60" cy="60" r="52" fill="none" stroke={accent} strokeWidth="5" strokeLinecap="square"
+                  strokeDasharray={`${2*Math.PI*52}`}
+                  strokeDashoffset={`${2*Math.PI*52*(1-animatedScore/100)}`}
+                  style={{ transition: 'stroke-dashoffset 0.1s ease-out', filter: isDark ? `drop-shadow(0 0 10px ${accent})` : 'none' }}
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="font-heading font-extrabold" style={{ color: accent, fontSize: 'clamp(32px, 4vw, 48px)' }}>
+                  {animatedScore}
+                </span>
+                <span className="text-[10px] font-heading font-bold tracking-widest uppercase" style={{ color: textMuted }}>
+                  {scoreLabel}
+                </span>
+              </div>
             </div>
-          ))}
-        </>
-      )}
 
-      <div className={cn('w-full flex flex-col items-center gap-8 relative z-10', isDark && 'pb-12')} style={{ maxWidth: 900 }}>
-        {/* Victory image */}
-        <div className="w-40 h-40 sm:w-52 sm:h-52 relative victory-image-entrance">
-          <Image
-            src={skin.victoryImage}
-            alt={skin.victoryHeading}
-            fill
-            className="object-contain drop-shadow-2xl"
-          />
-        </div>
+            {/* Stats row, spread out */}
+            <div className="v-stat-row flex items-center gap-10 sm:gap-16">
+              <StatPill label={skin.victorySkillsLabel} value={String(skills.size)} accent={accent} muted={textMuted} />
+              <StatPill label={skin.victoryDemosLabel} value={`${Math.min(completed.size, 9)}/9`} accent={accent} muted={textMuted} />
+              <StatPill label="Stars" value={`${totalStars}/${maxStars}`} accent={accent} muted={textMuted} />
+              <StatPill label="Time saved" value={totalTimeSaved >= 1 ? `~${Math.round(totalTimeSaved)}h` : `~${Math.round(totalTimeSaved * 60)}m`} accent={accent} muted={textMuted} />
+            </div>
+          </div>
 
-        {/* Heading */}
-        <h1
-          className={cn(
-            'text-2xl sm:text-3xl md:text-4xl font-extrabold font-heading text-center victory-shimmer-text'
-          )}
-          style={{ color: isLight ? 'var(--world-text)' : 'var(--world-text)' }}
-        >
-          {skin.victoryHeading}
-        </h1>
-
-        {/* Stats summary */}
-        <div
-          className={cn(cardClass, 'grid grid-cols-2 sm:grid-cols-4 gap-4 victory-stats-entrance')}
-          style={cardStyle}
-        >
-          <StatBlock
-            label={skin.victorySkillsLabel}
-            value={String(skills.size)}
-            isLight={isLight}
-          />
-          <StatBlock
-            label={skin.victoryDemosLabel}
-            value={`${Math.min(completed.size, 9)}/9`}
-            isLight={isLight}
-          />
-          <StatBlock
-            label="Strategy Score"
-            value={`${totalStars}/${maxStars}`}
-            isLight={isLight}
-          />
-          <StatBlock
-            label="Est. Time Saved"
-            value={totalTimeSaved >= 1 ? `~${Math.round(totalTimeSaved)}h` : `~${Math.round(totalTimeSaved * 60)}m`}
-            isLight={isLight}
-          />
-        </div>
-
-        {/* What you learned recap */}
-        <div
-          className={cn(cardClass, 'victory-stats-entrance')}
-          style={cardStyle}
-        >
-          <p className={headingClass}>What You Learned</p>
-          <div className="flex flex-col gap-4">
+          {/* Level recap: 3 columns, clean */}
+          <div className="v-s1 v-level-grid w-full grid grid-cols-3 gap-4 sm:gap-6">
             {LEVEL_LEARNINGS.map((item) => {
               const done = isLevelComplete(item.level)
               return (
-                <div key={item.level} className="flex gap-3 items-start">
-                  <div
-                    className="flex-shrink-0 w-6 h-6 flex items-center justify-center border-[2px] mt-0.5"
-                    style={{
-                      borderColor: done ? 'var(--world-accent)' : (isLight ? 'var(--world-data-border)' : 'var(--world-text-muted)'),
-                      background: done ? (isLight ? 'var(--world-accent)' : 'var(--world-accent)') : 'transparent',
-                      borderRadius: skin.borderRadius,
-                    }}
-                  >
-                    {done && (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={isLight ? 'white' : 'var(--world-dark)'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="3 7 6 10 11 4" />
-                      </svg>
-                    )}
+                <div key={item.level} style={{ opacity: done ? 1 : 0.35 }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-5 h-5 flex items-center justify-center flex-shrink-0" style={{ background: done ? accent : 'transparent', border: `2px solid ${done ? accent : subtleBorder}` }}>
+                      {done && <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 7 6 10 11 4" /></svg>}
+                    </div>
+                    <span className="text-[10px] font-heading font-bold tracking-widest uppercase" style={{ color: done ? accent : textMuted }}>
+                      {skin.levelLabel} {item.level}
+                    </span>
                   </div>
-                  <div>
-                    <p
-                      className={cn(
-                        'font-heading font-bold text-sm',
-                        !done && 'opacity-40'
-                      )}
-                      style={{ color: 'var(--world-text)' }}
-                    >
-                      {skin.levelLabel} {item.level}: {item.summary}
-                    </p>
-                    <p
-                      className={cn(
-                        'text-xs font-heading mt-0.5 leading-relaxed',
-                        !done && 'opacity-30'
-                      )}
-                      style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-                    >
-                      {item.detail}
-                    </p>
-                  </div>
+                  <p className="text-sm font-heading font-bold mb-0.5" style={{ color: textPrimary }}>{item.tag}</p>
+                  <p className="text-xs font-heading" style={{ color: textSecondary }}>{item.detail}</p>
                 </div>
               )
             })}
           </div>
         </div>
 
-        {/* Earned badges */}
-        <div className="w-full victory-badges-entrance">
-          <p className={headingClass}>
-            Achievements
-          </p>
-          <BadgeGrid />
+        {/* Divider */}
+        <div style={{ height: 1, background: subtleBorder, opacity: 0.5, margin: '0 0 48px' }} />
+
+        {/* ════════════════════════════════════════
+            SKILL PACK: the big reward
+            ════════════════════════════════════════ */}
+        <div className="v-s3 mb-12 p-6 sm:p-8" style={{ background: cardBg, border: `2px solid ${accent}` }}>
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-heading font-extrabold mb-1" style={{ color: textPrimary }}>
+                Your Free Skill Pack
+              </h2>
+              <p className="text-sm font-heading" style={{ color: textSecondary }}>
+                10 Cowork skills + a course on building your own. Worth $99.
+              </p>
+            </div>
+            <a
+              href="/skill-pack"
+              onClick={() => track({ eventType: 'skill_pack_claimed' })}
+              className="inline-flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm text-white transition-opacity hover:opacity-90 flex-shrink-0 self-start"
+              style={{ background: accent }}
+            >
+              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 2v8" /><path d="M4 7l3 3 3-3" /><path d="M2 12h10" />
+              </svg>
+              Claim your free skill pack
+            </a>
+          </div>
+
+          <div className="v-skill-grid grid grid-cols-2 gap-x-8 gap-y-1">
+            {BONUS_SKILLS.map((skill, i) => (
+              <div key={skill.name} className="flex items-baseline gap-3 py-2" style={{ borderBottom: `1px solid ${subtleBorder}40` }}>
+                <span className="text-[10px] font-heading font-bold tabular-nums flex-shrink-0" style={{ color: textMuted, minWidth: 18 }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <span className="text-sm font-heading font-bold" style={{ color: textPrimary }}>{skill.name} </span>
+                  <span className="text-xs font-heading" style={{ color: textMuted }}>{skill.description}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-baseline gap-3 mt-4 pt-3" style={{ borderTop: `1px solid ${subtleBorder}` }}>
+            <span className="text-xs font-heading font-bold flex-shrink-0" style={{ color: accent }}>+</span>
+            <div>
+              <span className="text-sm font-heading font-bold" style={{ color: textPrimary }}>Build Your Own Skills </span>
+              <span className="text-xs font-heading" style={{ color: textMuted }}>A short course on creating custom skills. No coding required.</span>
+            </div>
+          </div>
         </div>
 
-        {/* Avatar-specific CTA */}
+        {/* ════════════════════════════════════════
+            AVATAR CTA
+            ════════════════════════════════════════ */}
         {type && AVATAR_CTA[type] && (
-          <div
-            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 victory-stats-entrance')}
-            style={cardStyle}
-          >
-            <h2
-              className="text-lg sm:text-xl font-heading font-bold text-center mb-3"
-              style={{ color: 'var(--world-accent)' }}
-            >
+          <div className="v-s4 mb-12 p-6 sm:p-8" style={{ background: cardBg, border: `1px solid ${subtleBorder}` }}>
+            <h2 className="text-xl sm:text-2xl font-heading font-extrabold mb-2" style={{ color: accent }}>
               {AVATAR_CTA[type].headline}
             </h2>
-            <p
-              className={cn(
-                'text-sm text-center mb-4 font-heading'
-              )}
-              style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-            >
+            <p className="text-sm font-heading mb-6 leading-relaxed" style={{ color: textSecondary, maxWidth: 600 }}>
               {AVATAR_CTA[type].pitch}
             </p>
 
-            {/* Boss letter for employees */}
             {AVATAR_CTA[type].showBossLetter && (
-              <div className="mb-4">
+              <div className="mb-6">
                 <button
                   onClick={() => setLetterOpen(!letterOpen)}
-                  className={cn(
-                    'w-full text-left px-4 py-3 font-heading font-semibold text-sm border-[3px] transition-all duration-200 flex items-center justify-between',
-                    isLight
-                      ? 'border-[var(--world-data-border)] hover:bg-[var(--world-selection-bg)] rounded-[2px]'
-                      : 'rounded-[2px]'
-                  )}
-                  style={isDark ? { borderColor: 'var(--world-accent)', color: 'var(--world-accent)' } : { color: 'var(--world-text)' }}
+                  className="w-full text-left px-4 py-3 font-heading font-semibold text-sm flex items-center justify-between"
+                  style={{ border: `2px solid ${subtleBorder}`, color: textPrimary }}
                 >
-                  <span>{letterOpen ? 'Hide Letter' : 'View Pre-Written Letter'}</span>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={cn('transition-transform', letterOpen && 'rotate-180')}
-                  >
-                    <polyline points="4 6 8 10 12 6" />
-                  </svg>
+                  <span>{letterOpen ? 'Hide Letter' : 'View Pre-Written Letter for Your Boss'}</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cn('transition-transform', letterOpen && 'rotate-180')}><polyline points="4 6 8 10 12 6" /></svg>
                 </button>
                 {letterOpen && (
-                  <div
-                    className={cn(
-                      'mt-0 px-3 py-3 sm:px-4 sm:py-4 border-[3px] border-t-0 font-mono text-xs leading-relaxed whitespace-pre-wrap max-w-full overflow-x-auto',
-                      isLight
-                        ? 'bg-white border-[var(--world-data-border)] rounded-[2px]'
-                        : 'rounded-[2px]'
-                    )}
-                    style={isDark ? {
-                      background: 'rgba(0,0,0,0.3)',
-                      borderColor: 'var(--world-accent)',
-                      color: 'var(--world-text-secondary)',
-                    } : { color: 'var(--world-text)' }}
-                  >
+                  <div className="px-4 py-4 font-mono text-xs leading-relaxed whitespace-pre-wrap border-2 border-t-0" style={{ borderColor: subtleBorder, background: isDark ? 'rgba(0,0,0,0.3)' : '#FAFAF8', color: textSecondary }}>
                     {BOSS_LETTER}
-                    <button
-                      onClick={handleCopyLetter}
-                      className={cn(primaryBtnClass, 'mt-4 block text-xs')}
-                      style={primaryBtnStyle}
-                    >
+                    <button onClick={handleCopyLetter} className="mt-4 px-4 py-2 font-heading font-bold text-xs text-white" style={{ background: accent }}>
                       {copyConfirm ? 'Copied!' : 'Copy Letter'}
                     </button>
                   </div>
@@ -491,36 +419,23 @@ export default function VictoryScreen() {
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               {AVATAR_CTA[type].primaryHref ? (
-                <a
-                  href={AVATAR_CTA[type].primaryHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <a href={AVATAR_CTA[type].primaryHref} target="_blank" rel="noopener noreferrer"
                   onClick={() => track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].primaryLabel, avatarType: type } })}
-                  className={primaryBtnClass}
-                  style={primaryBtnStyle}
-                >
+                  className="text-center px-8 py-3 font-heading font-bold text-sm text-white" style={{ background: accent }}>
                   {AVATAR_CTA[type].primaryLabel}
                 </a>
               ) : (
-                <button
-                  onClick={() => { track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].primaryLabel, avatarType: type } }); setLetterOpen(!letterOpen) }}
-                  className={primaryBtnClass}
-                  style={primaryBtnStyle}
-                >
+                <button onClick={() => { track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].primaryLabel, avatarType: type } }); setLetterOpen(!letterOpen) }}
+                  className="text-center px-8 py-3 font-heading font-bold text-sm text-white" style={{ background: accent }}>
                   {AVATAR_CTA[type].primaryLabel}
                 </button>
               )}
               {AVATAR_CTA[type].secondaryLabel && AVATAR_CTA[type].secondaryHref && (
-                <a
-                  href={AVATAR_CTA[type].secondaryHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <a href={AVATAR_CTA[type].secondaryHref} target="_blank" rel="noopener noreferrer"
                   onClick={() => track({ eventType: 'cta_clicked', metadata: { label: AVATAR_CTA[type].secondaryLabel, avatarType: type } })}
-                  className={secondaryBtnClass}
-                  style={secondaryBtnStyle}
-                >
+                  className="text-center px-8 py-3 font-heading font-bold text-sm" style={{ border: `2px solid ${subtleBorder}`, color: textPrimary }}>
                   {AVATAR_CTA[type].secondaryLabel}
                 </a>
               )}
@@ -528,247 +443,46 @@ export default function VictoryScreen() {
           </div>
         )}
 
-        {/* Join A2AI CTA (for all avatars) */}
+        {/* Extra A2AI nudge */}
         {type && (!AVATAR_CTA[type]?.primaryHref || AVATAR_CTA[type].primaryHref !== 'https://ads2ai.com') && (
-          <div
-            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
-            style={cardStyle}
-          >
-            <p
-              className="text-sm font-heading mb-3"
-              style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-            >
+          <div className="v-s5 mb-12 py-8 text-center">
+            <p className="text-sm font-heading mb-4" style={{ color: textSecondary }}>
               Get access to ready-made skills, training, and a community of people building with AI.
             </p>
-            <a
-              href="https://ads2ai.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <a href="https://ads2ai.com" target="_blank" rel="noopener noreferrer"
               onClick={() => track({ eventType: 'cta_clicked', metadata: { label: 'Join Ads to AI', avatarType: type } })}
-              className={primaryBtnClass}
-              style={primaryBtnStyle}
-            >
+              className="inline-flex px-8 py-3 font-heading font-bold text-sm text-white" style={{ background: accent }}>
               Join Ads to AI
             </a>
           </div>
         )}
 
-        {/* Bonus Skills */}
-        <div
-          className={cn(cardClass, 'victory-stats-entrance')}
-          style={cardStyle}
-        >
-          <p className={headingClass}>
-            Bonus Skills
+        {/* ════════════════════════════════════════
+            CONNECTORS: Real logos, not boxes
+            ════════════════════════════════════════ */}
+        <div className="v-s5 mb-12">
+          <p className="text-[10px] font-heading font-bold tracking-widest uppercase text-center mb-6" style={{ color: textMuted }}>
+            Cowork connects to your tools
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {BONUS_SKILLS.map((skill) => (
-              <div
-                key={skill.name}
-                className={cn(
-                  'p-4 border-[2px] flex flex-col gap-2',
-                  isLight
-                    ? 'bg-[var(--world-card-bg)] border-[var(--world-data-border)] rounded-[2px]'
-                    : 'rounded-[2px]'
-                )}
-                style={isDark ? {
-                  background: 'rgba(255,255,255,0.03)',
-                  borderColor: 'var(--world-text-muted)',
-                } : undefined}
-              >
-                <p
-                  className="font-heading font-bold text-sm"
-                  style={{ color: 'var(--world-text)' }}
-                >
-                  {skill.name}
-                </p>
-                <p
-                  className="text-xs font-heading leading-relaxed"
-                  style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-                >
-                  {skill.description}
-                </p>
-                <a
-                  href={skill.path}
-                  download
-                  onClick={() => track({ eventType: 'skill_downloaded', skillId: skill.name })}
-                  className={cn(
-                    'mt-auto inline-flex items-center gap-1.5 px-3 py-1.5 font-heading font-bold text-xs transition-all duration-200 self-start',
-                    isLight
-                      ? 'bg-[var(--world-accent)] text-white hover:opacity-90 rounded-[2px]'
-                      : 'text-white rounded-[2px]'
-                  )}
-                  style={isDark ? {
-                    background: 'var(--world-accent2)',
-                    border: '2px solid var(--world-accent-border)',
-                  } : undefined}
-                >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 2v7" />
-                    <path d="M3 7l3 3 3-3" />
-                    <path d="M2 11h8" />
-                  </svg>
-                  Download
-                </a>
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
+            {CONNECTORS.map(({ name, Logo }) => (
+              <div key={name} className="v-connector flex flex-col items-center gap-1.5 cursor-default">
+                <Logo />
+                <span className="text-[10px] font-heading" style={{ color: textMuted }}>{name}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Connector Ecosystem */}
-        <div
-          className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
-          style={cardStyle}
-        >
-          <p className={headingClass}>
-            Cowork connects to everything you already use
-          </p>
-          <div className="flex flex-wrap justify-center gap-2 mb-4">
-            {CONNECTOR_ECOSYSTEM.map((name) => (
-              <span
-                key={name}
-                className={cn(
-                  'px-3 py-1.5 text-xs font-heading font-medium border-[2px]',
-                  isLight
-                    ? 'border-[var(--world-data-border)] rounded-[2px]'
-                    : 'rounded-[2px]'
-                )}
-                style={{
-                  color: 'var(--world-text)',
-                  borderColor: isDark ? 'var(--world-text-muted)' : undefined,
-                  background: isDark ? 'rgba(255,255,255,0.03)' : undefined,
-                }}
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-          <p
-            className="text-xs font-heading"
-            style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-          >
-            Inside A2AI, you&apos;ll learn how to connect them all.
-          </p>
-        </div>
 
-        {/* Time Saved section */}
-        {totalTimeSaved > 0 && (
-          <div
-            className={cn(cardClass, 'p-4 sm:p-5 md:p-6 text-center victory-stats-entrance')}
-            style={cardStyle}
-          >
-            <p className={headingClass}>
-              Time Saved
-            </p>
-            <p
-              className="text-xl sm:text-2xl md:text-3xl font-extrabold font-heading"
-              style={{ color: 'var(--world-accent)' }}
-            >
-              <svg className="inline-block mr-2 -mt-1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--world-accent)' }}>
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              {totalTimeSaved >= 1
-                ? `${totalTimeSaved % 1 === 0 ? totalTimeSaved : totalTimeSaved.toFixed(1)} hours`
-                : `${Math.round(totalTimeSaved * 60)} minutes`
-              } this session
-            </p>
-            <p
-              className="text-sm mt-2 font-heading"
-              style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-            >
-              That&apos;s{' '}
-              <span className="font-bold" style={{ color: 'var(--world-text)' }}>
-                {weeklyTimeSaved >= 1
-                  ? `${weeklyTimeSaved % 1 === 0 ? weeklyTimeSaved : weeklyTimeSaved.toFixed(1)} hours`
-                  : `${Math.round(weeklyTimeSaved * 60)} minutes`
-                }
-              </span>
-              {' '}per week if you use them daily.
-            </p>
-            <Link
-              href="/how-it-works"
-              className={cn(primaryBtnClass, 'inline-block mt-4')}
-              style={primaryBtnStyle}
-            >
-              Ready to save this time for real?
-            </Link>
-          </div>
-        )}
-
-        {/* AI Readiness Score */}
-        <div className="w-full flex flex-col items-center victory-stats-entrance">
-          <p className={headingClass}>
-            AI Readiness Score
-          </p>
-          {/* Circular progress */}
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40">
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-              <circle
-                cx="60" cy="60" r="52"
-                fill="none"
-                stroke={isLight ? 'var(--world-data-border)' : 'var(--world-text-muted)'}
-                strokeWidth="8"
-                opacity={0.3}
-              />
-              <circle
-                cx="60" cy="60" r="52"
-                fill="none"
-                stroke="var(--world-accent)"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 52}`}
-                strokeDashoffset={`${2 * Math.PI * 52 * (1 - animatedScore / 100)}`}
-                style={{ transition: 'stroke-dashoffset 0.1s ease-out', filter: isDark ? 'drop-shadow(0 0 6px var(--world-accent))' : 'none' }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span
-                className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-heading"
-                style={{ color: 'var(--world-accent)' }}
-              >
-                {animatedScore}
-              </span>
-              <span
-                className="text-[10px] font-heading"
-                style={{ color: 'var(--world-text-muted)' }}
-              >
-                /100
-              </span>
-            </div>
-          </div>
-          <p
-            className="text-sm font-heading font-semibold mt-3"
-            style={{ color: 'var(--world-text)' }}
-          >
-            {scoreLabel}
-          </p>
-        </div>
-
-        {/* Tagline */}
-        <p
-          className="text-sm text-center font-heading victory-tagline-entrance"
-          style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-        >
-          AI is way more powerful than you realized.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full victory-ctas-entrance">
-          <button
-            onClick={handlePlayAgain}
-            className={secondaryBtnClass}
-            style={secondaryBtnStyle}
-          >
+        {/* ════════════════════════════════════════
+            FOOTER
+            ════════════════════════════════════════ */}
+        <div className="flex items-center justify-center gap-4 pb-16 pt-4">
+          <button onClick={() => router.push('/play')} className="px-6 py-3 font-heading font-bold text-sm" style={{ border: `2px solid ${subtleBorder}`, color: textPrimary }}>
             Back to Map
           </button>
-          <button
-            onClick={handleStartOver}
-            className={cn(
-              'w-full sm:w-auto text-center px-6 py-3 font-heading font-medium text-sm transition-colors'
-            )}
-            style={{ color: 'var(--world-text-muted)' }}
-          >
+          <button onClick={() => { resetGame(); router.push('/') }} className="px-6 py-3 font-heading text-sm" style={{ color: textMuted }}>
             Start Over
           </button>
         </div>
@@ -777,31 +491,11 @@ export default function VictoryScreen() {
   )
 }
 
-function StatBlock({
-  label,
-  value,
-  isLight,
-}: {
-  label: string
-  value: string
-  isLight: boolean
-}) {
+function StatPill({ label, value, accent, muted }: { label: string; value: string; accent: string; muted: string }) {
   return (
     <div className="text-center">
-      <p
-        className="text-xl sm:text-2xl md:text-3xl font-extrabold font-heading"
-        style={{ color: 'var(--world-accent)' }}
-      >
-        {value}
-      </p>
-      <p
-        className={cn(
-          'text-[10px] sm:text-xs font-heading mt-1'
-        )}
-        style={{ color: isLight ? 'var(--world-text-secondary)' : 'var(--world-text-secondary)' }}
-      >
-        {label}
-      </p>
+      <p className="text-xl sm:text-2xl font-heading font-extrabold tabular-nums" style={{ color: accent, lineHeight: 1 }}>{value}</p>
+      <p className="text-[9px] font-heading font-bold tracking-widest uppercase mt-1" style={{ color: muted }}>{label}</p>
     </div>
   )
 }

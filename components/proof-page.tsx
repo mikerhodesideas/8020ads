@@ -210,6 +210,41 @@ export default function ProofPage({ demo }: ProofPageProps) {
         </p>
       </section>
 
+      {/* "You say" prompt */}
+      <section style={{
+        maxWidth: 1200,
+        margin: '0 auto',
+        padding: '0 32px 16px',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          padding: '12px 20px',
+          background: '#fff',
+          border: '1px solid #E8E4DF',
+          borderLeft: '3px solid #D64C00',
+          marginBottom: 16,
+        }}>
+          <span style={{
+            fontSize: 11,
+            fontWeight: 700,
+            color: '#D64C00',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            whiteSpace: 'nowrap',
+          }}>You say:</span>
+          <span style={{
+            fontSize: 15,
+            color: '#1a1a2e',
+            fontWeight: 500,
+            fontStyle: 'italic',
+          }}>
+            &ldquo;{demo.youSay}&rdquo;
+          </span>
+        </div>
+      </section>
+
       {/* The comparison */}
       <section style={{
         maxWidth: 1200,
