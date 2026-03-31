@@ -108,7 +108,7 @@ export default function ZeldaMap({
 }: ZeldaMapProps) {
   const router = useRouter()
   const { navigateWithTransition } = useTransition()
-  const { type, completed, skills, isLevelComplete, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
+  const { type, completed, skills, isLevelComplete, isLevelUnlocked, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
 
   if (!type) return null
 
@@ -116,7 +116,7 @@ export default function ZeldaMap({
   const availableDemoCount = levels.filter(l => !l.comingSoon).reduce((sum, l) => sum + l.demos.length, 0)
 
   // Find the active level (first incomplete, or last if all done)
-  const activeLevelIdx = isLevelComplete(2) ? 2 : isLevelComplete(1) ? 1 : 0
+  const activeLevelIdx = isLevelUnlocked(3) ? 2 : isLevelUnlocked(2) ? 1 : 0
   const activeLevel = levels[activeLevelIdx]
   const activeDemos = activeLevel?.demos || []
 
@@ -133,7 +133,7 @@ export default function ZeldaMap({
   }
 
   // Which background level image to use
-  const bgLevel = isLevelComplete(2) ? 3 : isLevelComplete(1) ? 2 : 1
+  const bgLevel = isLevelUnlocked(3) ? 3 : isLevelUnlocked(2) ? 2 : 1
 
   return (
     <div className="page-enter skin-zelda" style={{ minHeight: 'calc(100vh - 3.5rem)' }}>

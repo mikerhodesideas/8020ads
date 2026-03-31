@@ -86,7 +86,7 @@ export default function MarioMap({
 }: MarioMapProps) {
   const router = useRouter()
   const { navigateWithTransition } = useTransition()
-  const { type, completed, skills, isLevelComplete, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
+  const { type, completed, skills, isLevelComplete, isLevelUnlocked, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
 
   if (!type) return null
 
@@ -94,7 +94,7 @@ export default function MarioMap({
   const availableDemoCount = levels.filter(l => !l.comingSoon).reduce((sum, l) => sum + l.demos.length, 0)
 
   // Find the active level (first incomplete, or last if all done)
-  const activeLevelIdx = isLevelComplete(2) ? 2 : isLevelComplete(1) ? 1 : 0
+  const activeLevelIdx = isLevelUnlocked(3) ? 2 : isLevelUnlocked(2) ? 1 : 0
   const activeLevel = levels[activeLevelIdx]
   const activeDemos = activeLevel?.demos || []
 
@@ -109,7 +109,7 @@ export default function MarioMap({
   }
 
   // Which background level image to use
-  const bgLevel = isLevelComplete(2) ? 3 : isLevelComplete(1) ? 2 : 1
+  const bgLevel = isLevelUnlocked(3) ? 3 : isLevelUnlocked(2) ? 2 : 1
 
   return (
     <div className="page-enter skin-arcade arcade-scanlines" style={{ minHeight: 'calc(100vh - 3.5rem)' }}>
@@ -149,7 +149,7 @@ export default function MarioMap({
           <div className="flex flex-col items-center gap-3">
             {[2, 1, 0].filter(idx => idx !== activeLevelIdx).map((idx, i) => {
               const done = isLevelComplete(idx + 1)
-              const locked = idx > 0 && !isLevelComplete(idx)
+              const locked = idx > 0 && !isLevelUnlocked(idx + 1)
               return (
                 <div key={idx} className="flex items-center gap-3" style={{ animationDelay: `${1 - i * 0.5}s` }}>
                   <div style={{ width: 40 + i * 10, height: 2, background: 'var(--mario-coin)', opacity: done ? 0.5 : 0.2 }} />

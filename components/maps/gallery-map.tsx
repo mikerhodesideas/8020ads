@@ -210,7 +210,7 @@ export default function GalleryMap({
   setStatsExpanded,
 }: GalleryMapProps) {
   const router = useRouter()
-  const { type, completed, skills, isLevelComplete, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
+  const { type, completed, skills, isLevelComplete, isLevelUnlocked, allAvailableComplete, totalTimeSaved, choiceScores } = useGame()
 
   if (!type) return null
 
@@ -225,7 +225,7 @@ export default function GalleryMap({
     for (let i = 0; i < levels.length; i++) {
       const level = levels[i]
       if (level.comingSoon) continue
-      const isLocked = i > 0 && !isLevelComplete(i)
+      const isLocked = i > 0 && !isLevelUnlocked(i + 1)
       if (isLocked) continue
       for (const demo of level.demos) {
         if (!completed.has(demo.id)) return demo.id
@@ -270,7 +270,7 @@ export default function GalleryMap({
 
           <div className="space-y-8 sm:space-y-12">
             {levels.map((level, levelIndex) => {
-              const isLocked = level.comingSoon || (levelIndex > 0 && !isLevelComplete(levelIndex))
+              const isLocked = level.comingSoon || (levelIndex > 0 && !isLevelUnlocked(level.id))
               const levelDoneCount = level.demos.filter((d) =>
                 completed.has(d.id)
               ).length

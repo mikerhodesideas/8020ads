@@ -39,6 +39,7 @@ interface GameContextType extends GameState {
   toggleComplete: (demoId: number) => void
   resetGame: () => void
   isLevelComplete: (levelId: number) => boolean
+  isLevelUnlocked: (levelId: number) => boolean
   // V2-B additions
   installSkill: (skillId: string) => void
   startDemoTimer: (demoId: number) => void
@@ -84,6 +85,7 @@ const GameContext = createContext<GameContextType>({
   toggleComplete: () => {},
   resetGame: () => {},
   isLevelComplete: () => false,
+  isLevelUnlocked: () => false,
   installSkill: () => {},
   startDemoTimer: () => {},
   recordReplay: () => {},
@@ -384,6 +386,25 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [state.completed, state.type]
   )
 
+  // Lenient check: level unlocks when at least 2 of 3 demos in the previous level are done
+  const isLevelUnlocked = useCallback(
+    (levelId: number) => {
+      if (levelId <= 1) return true
+      if (!state.type) return false
+      const prevLevelId = levelId - 1
+      const t = state.type as PlayerType
+      const prevDemos = prevLevelId === 1
+        ? getLevel1Demos(t)
+        : prevLevelId === 2
+          ? getLevel2Demos(t)
+          : []
+      if (prevDemos.length === 0) return false
+      const doneCount = prevDemos.filter((d) => state.completed.has(d.id)).length
+      return doneCount >= 2
+    },
+    [state.completed, state.type]
+  )
+
   const installSkill = useCallback((skillId: string) => {
     setState((prev) => ({
       ...prev,
@@ -509,6 +530,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         toggleComplete,
         resetGame,
         isLevelComplete,
+        isLevelUnlocked,
         installSkill,
         startDemoTimer,
         recordReplay,
