@@ -41,6 +41,7 @@ const vt323 = VT323({
 export const metadata: Metadata = {
   title: '8020skill - ChatGPT gives you text. This gives you finished work.',
   description: 'Pick a task. See what comes back. Then try it yourself.',
+  other: { 'app-version': pkg.version },
   openGraph: {
     title: '8020skill - ChatGPT gives you text. This gives you finished work.',
     description: 'Pick a task. See what comes back. Then try it yourself.',
