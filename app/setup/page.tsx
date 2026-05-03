@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useGame } from '@/components/game-provider'
 import { track } from '@/lib/tracking'
 import { cn } from '@/lib/utils'
+import { allProofsCompleted } from '@/lib/proof-completion'
 import type { PlayerType } from '@/lib/game-data'
 
 const avatars = [
@@ -57,7 +58,7 @@ export default function SetupPage() {
   const handleAvatarSelect = (typeId: PlayerType) => {
     track({ eventType: 'avatar_selected', avatarType: typeId })
     setType(typeId)
-    markProofComplete()
+    if (allProofsCompleted()) markProofComplete()
     setWorld('gallery')
     router.push('/play')
   }
