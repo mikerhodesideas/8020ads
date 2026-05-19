@@ -35,7 +35,7 @@ export default function Home() {
             </Link>
             <nav className="topnav">
               <a href="#next">More demos</a>
-              <Link href="/level-3">Level 3</Link>
+              <Link href="/play">Level map</Link>
             </nav>
           </div>
         </header>
@@ -184,17 +184,17 @@ export default function Home() {
             </div>
             <div className="next-grid">
 
-              <Link href="/level-2" className="next-card reveal r2">
+              <Link href="/world" className="next-card reveal r2">
                 <div className="level-tag"><span className="lvl-num">LV 2</span> More skills</div>
                 <h4>Pick your job role. I&apos;ll show you eight more.</h4>
                 <p>Same shape, different skills, tailored to your work. The one you just ran is already ticked off for you.</p>
                 <div className="next-arrow">Continue <span className="a-glyph">→</span></div>
               </Link>
 
-              <Link href="/level-3" className="next-card reveal r3">
+              <Link href="/world" className="next-card reveal r3">
                 <div className="level-tag"><span className="lvl-num">LV 3</span> Your own data</div>
-                <h4>Connect Cowork to your real spreadsheets.</h4>
-                <p>The same kind of skills, running on your actual numbers, not the dummy data. This is where it stops being a demo.</p>
+                <h4>Connectors, plugins, staying safe.</h4>
+                <p>Hook Cowork into Gmail, calendars, design tools. Same kind of skills, running on your real stuff.</p>
                 <div className="next-arrow">Continue <span className="a-glyph">→</span></div>
               </Link>
 

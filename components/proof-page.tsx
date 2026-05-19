@@ -163,7 +163,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
           <Link
-            href="/level-2"
+            href="/play"
             style={{
               fontSize: 12,
               color: '#888',
