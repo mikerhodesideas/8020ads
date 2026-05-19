@@ -46,20 +46,6 @@ export default function Home() {
       <div className="home-root">
         <div className="home-spine" aria-hidden="true" />
 
-        <header className="topbar">
-          <div className="canvas topbar-inner">
-            <Link href="/" className="wordmark">
-              <span className="num">80</span>
-              <span className="slash">/</span>
-              <span className="num">20</span>
-              <span className="word">skill</span>
-            </Link>
-            <nav className="topnav">
-              <Link href="/play">Level map</Link>
-            </nav>
-          </div>
-        </header>
-
         {/* HERO */}
         <section className="hero">
           <div className="canvas hero-grid">

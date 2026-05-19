@@ -314,7 +314,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-4 sm:gap-6">
               {/* Character sprite in navbar - opens world switcher */}
-              {world && worldSprites[world] && (
+              {world && worldSprites[world] && pathname !== '/' && (
                 <button
                   onClick={() => setWorldSwitcherOpen(true)}
                   className="hidden sm:block w-6 h-6 sm:w-7 sm:h-7 overflow-hidden flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
@@ -334,7 +334,7 @@ export default function Navbar() {
               )}
 
               {/* Breadcrumb context */}
-              {type && (
+              {type && pathname !== '/' && (
                 <div className="hidden sm:flex items-center gap-2 text-xs font-heading">
                   <span className="text-[var(--color-faint)]">
                     {typeLabels[type]}
@@ -355,7 +355,7 @@ export default function Navbar() {
               )}
 
               {/* Skill inventory indicator */}
-              {world && skillCount > 0 && (
+              {world && skillCount > 0 && pathname !== '/' && (
                 <button
                   onClick={() => setPanelOpen(true)}
                   className="relative flex items-center gap-1.5 px-2 py-1 min-h-[44px] rounded-[2px] border transition-all text-xs font-heading font-semibold border-amber-300 text-amber-700 hover:bg-amber-50"
@@ -368,7 +368,8 @@ export default function Navbar() {
                 </button>
               )}
 
-              {/* Sound toggle + volume (light navbar) */}
+              {/* Sound toggle + volume (light navbar) — hidden on the front-door homepage */}
+              {pathname !== '/' && (
               <div className="relative flex items-center gap-1">
                 <button
                   onClick={handleSoundToggle}
@@ -404,6 +405,7 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
+              )}
 
               {/* Map link when in demo */}
               {pathname.startsWith('/play/') && (
