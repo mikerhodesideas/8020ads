@@ -1,20 +1,43 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const PROMPT_TEXT = 'Analyse the CSV I just uploaded using the csv-analyzer skill.'
+const STORAGE_KEY = '8020skill:home:done-steps'
 
 export default function Home() {
+  const [done, setDone] = useState<Set<number>>(new Set())
   const [copied, setCopied] = useState(false)
 
-  const handleCopy = async () => {
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) setDone(new Set(JSON.parse(raw) as number[]))
+    } catch {}
+  }, [])
+
+  const markDone = (step: number) => {
+    setDone(prev => {
+      if (prev.has(step)) return prev
+      const next = new Set(prev)
+      next.add(step)
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...next])) } catch {}
+      return next
+    })
+  }
+
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.preventDefault()
     try {
       await navigator.clipboard.writeText(PROMPT_TEXT)
       setCopied(true)
+      markDone(4)
       setTimeout(() => setCopied(false), 2000)
     } catch {}
   }
+
+  const is = (n: number) => done.has(n)
 
   return (
     <>
@@ -51,58 +74,91 @@ export default function Home() {
           </div>
         </section>
 
-        {/* STEPS — vertical, sequential */}
+        {/* STEPS */}
         <section className="steps">
           <div className="canvas">
 
-            <div id="step-1" className="step-row">
-              <div className="step-num">01</div>
+            {/* STEP 01 — Get Cowork */}
+            <div id="step-1" className={`step-row ${is(1) ? 'done' : ''}`}>
+              <div className="step-num">{is(1) ? '✓' : '01'}</div>
               <div className="step-body">
                 <h3>Get Claude Cowork</h3>
                 <p>The Anthropic desktop app. Free, takes a couple of minutes to install and sign in. This is where you&apos;ll drop the skill and the data.</p>
               </div>
               <div className="step-action">
-                <a href="https://claude.ai/download" className="btn" target="_blank" rel="noopener">Download Cowork ↗</a>
-                <a href="#step-2" className="alt">I already have it →</a>
+                <a
+                  href="https://claude.ai/download"
+                  className="btn"
+                  target="_blank"
+                  rel="noopener"
+                  onClick={() => markDone(1)}
+                >Download Cowork ↗</a>
+                <button
+                  type="button"
+                  className="alt"
+                  onClick={() => markDone(1)}
+                >I already have it →</button>
               </div>
             </div>
 
-            <div id="step-2" className="step-row">
-              <div className="step-num">02</div>
+            {/* STEP 02 — Download skill (entire row clickable) */}
+            <a
+              id="step-2"
+              href="/skills/csv-analyzer.zip"
+              download="csv-analyzer.zip"
+              className={`step-row step-row-link ${is(2) ? 'done' : ''}`}
+              onClick={() => markDone(2)}
+            >
+              <div className="step-num">{is(2) ? '✓' : '02'}</div>
               <div className="step-body">
                 <h3>Download the skill</h3>
                 <p>One small zip. Drop it into Cowork and say &ldquo;install this skill&rdquo;. This file is where the magic lives.</p>
               </div>
               <div className="step-action">
-                <a href="/skills/csv-analyzer.zip" className="btn ghost" download>csv-analyzer.zip ↓</a>
+                <span className={`row-badge ${is(2) ? 'done' : ''}`}>
+                  {is(2) ? '✓ Downloaded' : '↓ csv-analyzer.zip'}
+                </span>
               </div>
-            </div>
+            </a>
 
-            <div id="step-3" className="step-row">
-              <div className="step-num">03</div>
+            {/* STEP 03 — Download data (entire row clickable) */}
+            <a
+              id="step-3"
+              href="/demo-assets/sample-csvs/sales-by-product-ecom.csv"
+              download="sales-by-product-ecom.csv"
+              className={`step-row step-row-link ${is(3) ? 'done' : ''}`}
+              onClick={() => markDone(3)}
+            >
+              <div className="step-num">{is(3) ? '✓' : '03'}</div>
               <div className="step-body">
                 <h3>Download the sample data</h3>
                 <p>So you don&apos;t need to find a spreadsheet. A made-up ecommerce sales export. Drop it into Cowork too.</p>
               </div>
               <div className="step-action">
-                <a href="/demo-assets/sample-csvs/sales-by-product-ecom.csv" className="btn ghost" download>sample.csv ↓</a>
+                <span className={`row-badge ${is(3) ? 'done' : ''}`}>
+                  {is(3) ? '✓ Downloaded' : '↓ sample.csv'}
+                </span>
               </div>
-            </div>
+            </a>
 
-            <div id="step-4" className="step-row step-row-prompt">
-              <div className="step-num">04</div>
+            {/* STEP 04 — Copy prompt */}
+            <div id="step-4" className={`step-row step-row-prompt ${is(4) ? 'done' : ''}`}>
+              <div className="step-num">{is(4) ? '✓' : '04'}</div>
               <div className="step-body">
                 <h3>Copy this prompt, paste it in</h3>
                 <p>One line. Cowork picks up the skill and the CSV, and runs the whole analysis on its own.</p>
-                <div className="prompt">
+                <div
+                  className={`prompt ${is(4) ? 'done' : ''}`}
+                  onClick={handleCopy}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCopy(e as unknown as React.MouseEvent) }}
+                >
                   <span className="cmd-prefix">&gt;</span>
                   <span className="prompt-text">{PROMPT_TEXT}</span>
-                  <button
-                    className={`copy-btn ${copied ? 'copied' : ''}`}
-                    onClick={handleCopy}
-                  >
-                    {copied ? 'Copied' : 'Copy'}
-                  </button>
+                  <span className={`copy-pill ${copied ? 'copied' : ''} ${is(4) ? 'done' : ''}`}>
+                    {copied ? '✓ Copied' : is(4) ? '✓ Done' : 'Click to copy'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -156,8 +212,12 @@ const HOMEPAGE_STYLES = `
     --rule-faint: #E2DEDA;
     --orange: #D64C00;
     --orange-tint: #FFF1E8;
+    --green: #059669;
+    --green-bright: #10b981;
+    --green-tint: rgba(16,185,129,0.07);
     --canvas-max: 1600px;
     --canvas-pad: 48px;
+    --mono: 'SF Mono', 'Monaco', 'Menlo', 'Cascadia Mono', 'Roboto Mono', Consolas, 'Courier New', monospace;
     background: var(--bg);
     color: var(--ink);
     font-family: var(--font-inter), -apple-system, sans-serif;
@@ -241,16 +301,42 @@ const HOMEPAGE_STYLES = `
     padding: 24px 0;
     border-bottom: 1px solid var(--rule-faint);
     scroll-margin-top: 88px;
+    transition: background .15s, border-color .15s;
   }
   .home-root .step-row:last-child { border-bottom: none; }
+
+  /* Clickable rows (steps 2, 3) */
+  .home-root .step-row-link {
+    cursor: pointer;
+    background: linear-gradient(transparent, transparent); /* no-op so transition works */
+  }
+  .home-root .step-row-link:hover {
+    background: var(--orange-tint);
+  }
+  .home-root .step-row-link:hover .row-badge:not(.done) {
+    background: var(--orange);
+    color: #fff;
+    border-color: var(--orange);
+  }
+
+  /* Done state */
+  .home-root .step-row.done {
+    background: var(--green-tint);
+    border-bottom-color: var(--green-bright);
+  }
+  .home-root .step-row.done .step-num { color: var(--green); }
+  .home-root .step-row.done h3 { color: var(--green); }
+
   .home-root .step-num {
     font-family: var(--font-oxanium), sans-serif; font-weight: 700;
     font-size: 76px; line-height: 0.85; color: var(--ink);
     letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
+    transition: color .15s;
   }
   .home-root .step-body h3 {
     font-family: var(--font-oxanium), sans-serif; font-weight: 600; font-size: 24px;
     line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 6px; color: var(--ink);
+    transition: color .15s;
   }
   .home-root .step-body p {
     font-size: 15px; line-height: 1.5; color: var(--ink-mid); max-width: 640px;
@@ -261,14 +347,14 @@ const HOMEPAGE_STYLES = `
     min-width: 220px;
   }
 
-  /* Step 4: prompt block lives in the body column, action column collapses */
+  /* Step 4: prompt block in body column */
   .home-root .step-row-prompt {
     grid-template-columns: 120px minmax(0, 1fr);
     align-items: start;
     padding-top: 28px; padding-bottom: 28px;
   }
 
-  /* Buttons */
+  /* Buttons (step 1) */
   .home-root .btn {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: var(--font-oxanium), sans-serif; font-weight: 600; font-size: 13px;
@@ -278,34 +364,66 @@ const HOMEPAGE_STYLES = `
     transition: background .12s, color .12s, border-color .12s;
   }
   .home-root .btn:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
-  .home-root .btn.ghost { background: transparent; color: var(--ink); }
-  .home-root .btn.ghost:hover { background: var(--ink); color: var(--bg); }
   .home-root .alt {
     font-family: var(--font-oxanium), sans-serif; font-size: 12px; font-weight: 500;
     color: var(--ink-muted); letter-spacing: 0.3px;
-    border-bottom: 1px dotted var(--ink-muted); padding-bottom: 1px;
+    border: none; background: transparent; cursor: pointer;
+    border-bottom: 1px dotted var(--ink-muted); padding: 0 0 1px 0;
   }
   .home-root .alt:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* Row badges (steps 2, 3) */
+  .home-root .row-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-oxanium), sans-serif; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.5px; padding: 11px 18px;
+    border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+    border-radius: 2px; white-space: nowrap;
+    transition: background .12s, color .12s, border-color .12s;
+  }
+  .home-root .row-badge.done {
+    background: var(--green-bright); color: #fff; border-color: var(--green-bright);
+  }
 
   /* Prompt block */
   .home-root .prompt {
     margin-top: 14px;
-    background: var(--ink); color: var(--bg);
-    padding: 14px 110px 14px 16px;
-    font-family: var(--font-terminal), monospace; font-size: 14px;
-    line-height: 1.55; position: relative; border-radius: 2px;
-    max-width: 720px;
+    background: var(--ink); color: #F5F5F0;
+    padding: 18px 22px;
+    font-family: var(--mono);
+    font-size: 17px; font-weight: 500;
+    line-height: 1.5;
+    position: relative;
+    border-radius: 2px;
+    max-width: 900px;
+    cursor: pointer;
+    border: 2px solid var(--ink);
+    transition: border-color .15s, background .15s;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
   }
-  .home-root .prompt .cmd-prefix { color: var(--orange); margin-right: 8px; }
-  .home-root .copy-btn {
-    position: absolute; top: 8px; right: 8px;
-    background: var(--bg); color: var(--ink);
+  .home-root .prompt:hover {
+    border-color: var(--orange);
+  }
+  .home-root .prompt.done {
+    border-color: var(--green-bright);
+  }
+  .home-root .prompt .cmd-prefix {
+    color: var(--orange); font-weight: 700; flex-shrink: 0;
+  }
+  .home-root .prompt .prompt-text {
+    flex: 1; min-width: 0;
+  }
+  .home-root .copy-pill {
+    display: inline-flex; align-items: center; gap: 6px;
     font-family: var(--font-oxanium), sans-serif; font-size: 11px; font-weight: 700;
     letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 6px 14px; border: none; cursor: pointer; border-radius: 2px;
+    padding: 7px 14px; border-radius: 2px;
+    background: var(--orange); color: #fff;
+    flex-shrink: 0;
+    transition: background .12s;
   }
-  .home-root .copy-btn:hover { background: var(--orange); color: #fff; }
-  .home-root .copy-btn.copied { background: var(--orange); color: #fff; }
+  .home-root .copy-pill.copied,
+  .home-root .copy-pill.done { background: var(--green-bright); }
 
   /* THE POINT */
   .home-root .point { padding: 56px 0 48px; border-top: 1px solid var(--rule); }
@@ -341,7 +459,6 @@ const HOMEPAGE_STYLES = `
     border: 1px solid var(--rule-faint);
     border-left: 4px solid var(--orange);
     transition: transform .15s, border-color .15s;
-    position: relative;
   }
   .home-root .next-card:hover { transform: translateY(-2px); border-color: var(--ink); border-left-color: var(--orange); }
   .home-root .next-card .level-tag {
@@ -374,6 +491,7 @@ const HOMEPAGE_STYLES = `
       flex-direction: row; align-items: center; justify-content: flex-start;
       gap: 18px; padding-left: 114px; min-width: 0;
     }
+    .home-root .step-row-link .step-action { padding-left: 114px; }
     .home-root .step-row-prompt { grid-template-columns: 90px minmax(0, 1fr); }
     .home-root .point-grid { grid-template-columns: 1fr; gap: 24px; }
     .home-root .next-grid { grid-template-columns: 1fr; }
@@ -384,5 +502,6 @@ const HOMEPAGE_STYLES = `
     .home-root .step-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
     .home-root .step-num { font-size: 44px; }
     .home-root .step-action { padding-left: 0; flex-direction: column; align-items: flex-start; }
+    .home-root .prompt { font-size: 14px; padding: 14px 16px; }
   }
 `
