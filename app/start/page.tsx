@@ -92,15 +92,24 @@ export default function Home() {
               </div>
             </a>
 
-            {/* STEP 02 — Bring a CSV, or skip it (sample is built into the skill) */}
-            <div id="step-2" className={`step-row ${is(2) ? 'done' : ''}`}>
+            {/* STEP 02 — Bring a CSV, or skip it. The whole row is clickable to mark it done. */}
+            <div
+              id="step-2"
+              className={`step-row step-row-link ${is(2) ? 'done' : ''}`}
+              role="button"
+              tabIndex={0}
+              onClick={() => markDone(2)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); markDone(2) } }}
+            >
               <div className="step-num">{is(2) ? '✓' : '02'}</div>
               <div className="step-body">
                 <h3>Drag in a CSV, or skip it</h3>
                 <p>Drop any spreadsheet from your computer into Cowork. Can&apos;t find one? Skip it. The skill has sample data built in, so it runs either way.</p>
               </div>
               <div className="step-action">
-                <button type="button" className="alt" onClick={() => markDone(2)}>Got it →</button>
+                <span className={`row-badge ${is(2) ? 'done' : ''}`}>
+                  {is(2) ? '✓ Done' : 'Skip it'}
+                </span>
               </div>
             </div>
 
