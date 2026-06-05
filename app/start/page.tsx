@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useGame } from '@/components/game-provider'
+import { track } from '@/lib/tracking'
 
 const PROMPT_TEXT = 'Analyse my data with the csv-analyzer skill.'
 const STORAGE_KEY = '8020skill:home:done-steps'
@@ -78,7 +79,7 @@ export default function Home() {
               href="/skills/csv-analyzer.zip"
               download="csv-analyzer.zip"
               className={`step-row step-row-link ${is(1) ? 'done' : ''}`}
-              onClick={() => markDone(1)}
+              onClick={() => { markDone(1); track({ eventType: 'skill_downloaded', skillId: 'csv-analyzer' }) }}
             >
               <div className="step-num">{is(1) ? '✓' : '01'}</div>
               <div className="step-body">
