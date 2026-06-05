@@ -364,6 +364,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (typeof window !== 'undefined') {
       localStorage.removeItem(STORAGE_KEY)
       localStorage.removeItem('8020skill-completed-proofs')
+      localStorage.removeItem('8020skill:home:done-steps') // also clear the /start page step ticks
     }
   }, [])
 
@@ -386,23 +387,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [state.completed, state.type]
   )
 
-  // Lenient check: level unlocks when at least 2 of 3 demos in the previous level are done
+  // Progression is open: every level is reachable from the start. Level 1 is optional
+  // (it's the "why"), and the map nudges rather than blocks. (Previously this gated a
+  // level behind completing 2 of 3 demos in the prior level, which trapped people.)
   const isLevelUnlocked = useCallback(
-    (levelId: number) => {
-      if (levelId <= 1) return true
-      if (!state.type) return false
-      const prevLevelId = levelId - 1
-      const t = state.type as PlayerType
-      const prevDemos = prevLevelId === 1
-        ? getLevel1Demos(t)
-        : prevLevelId === 2
-          ? getLevel2Demos(t)
-          : []
-      if (prevDemos.length === 0) return false
-      const doneCount = prevDemos.filter((d) => state.completed.has(d.id)).length
-      return doneCount >= 2
-    },
-    [state.completed, state.type]
+    (_levelId: number) => true,
+    []
   )
 
   const installSkill = useCallback((skillId: string) => {

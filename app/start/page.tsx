@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useGame } from '@/components/game-provider'
 
 const PROMPT_TEXT = 'Analyse my data with the csv-analyzer skill.'
 const STORAGE_KEY = '8020skill:home:done-steps'
 
 export default function Home() {
+  const { markComplete } = useGame()
   const [done, setDone] = useState<Set<number>>(new Set())
   const [copied, setCopied] = useState(false)
 
@@ -33,6 +35,7 @@ export default function Home() {
       await navigator.clipboard.writeText(PROMPT_TEXT)
       setCopied(true)
       markDone(3)
+      markComplete(10) // CSV Analyzer = Level 2 demo id 10; tick it on /play
       setTimeout(() => setCopied(false), 2000)
     } catch {}
   }
@@ -148,15 +151,16 @@ export default function Home() {
               <p>Pick the role closest to your work and I&apos;ll walk you through the rest, one demo at a time.</p>
             </div>
             <div className="next-grid">
-              <Link href="/setup" className="next-card">
-                <div className="level-tag"><span className="lvl-num">LV 2</span> More skills</div>
-                <h4>Pick your job role. I&apos;ll show you eight more.</h4>
-                <p>Same shape, different skills, tailored to your work.</p>
+              <Link href="/setup" className="next-card primary">
+                <div className="level-tag light"><span className="lvl-num light">LV 2</span> The rest of the skills</div>
+                <h4>Pick your role, see the other skills for your job.</h4>
+                <p>You&apos;ve already run one (the CSV skill). There are more, tailored to your work.</p>
+                <span className="next-go">See the skills <span aria-hidden="true">&rarr;</span></span>
               </Link>
               <Link href="/setup" className="next-card">
                 <div className="level-tag"><span className="lvl-num">LV 3</span> Your own data</div>
                 <h4>Connectors, plugins, staying safe.</h4>
-                <p>Hook Cowork into Gmail, calendars, design tools. Real stuff.</p>
+                <p>Hook Cowork into Gmail, calendars, and design tools. Real stuff.</p>
               </Link>
             </div>
           </div>
@@ -458,6 +462,20 @@ const HOMEPAGE_STYLES = `
   }
   .home-root .next-card p {
     font-size: 14px; line-height: 1.5; color: var(--ink-mid); margin: 0;
+  }
+  /* Primary "Level 2" card - the obvious next step */
+  .home-root .next-card.primary {
+    background: var(--orange); border-color: var(--orange); border-left-color: var(--ink);
+  }
+  .home-root .next-card.primary:hover { transform: translateY(-2px); border-color: var(--ink); border-left-color: var(--ink); }
+  .home-root .next-card.primary h4 { color: #fff; }
+  .home-root .next-card.primary p { color: rgba(255,255,255,0.85); }
+  .home-root .next-card .level-tag.light { color: rgba(255,255,255,0.85); }
+  .home-root .next-card .level-tag .lvl-num.light { background: #fff; color: var(--orange); }
+  .home-root .next-card .next-go {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+    font-family: var(--font-oxanium), sans-serif; font-weight: 700; font-size: 14px;
+    letter-spacing: 0.3px; color: #fff;
   }
 
   /* Responsive */

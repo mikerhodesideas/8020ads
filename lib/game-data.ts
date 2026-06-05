@@ -974,10 +974,10 @@ const demoCsvAnalyzer: Demo = {
 // Freelancer/Employee get Search Term Analyzer (ads-focused)
 // Agency Owner/Business Owner get CSV Analyzer (general data)
 export function getLevel2Demos(type: PlayerType): Demo[] {
-  const thirdDemo = (type === 'freelancer' || type === 'employee')
-    ? demoSearchTermAnalyzer
-    : demoCsvAnalyzer
-  return [demoContentRepurposer, demoMeetingIntelligence, thirdDemo].map(d => applyOverrides(d, type))
+  // CSV Analyzer (id 10) is the universal third skill for EVERY avatar -- it's the
+  // same skill featured on the /start page, so completing /start ticks it here.
+  // (demoSearchTermAnalyzer, id 6, is no longer part of Level 2.)
+  return [demoContentRepurposer, demoMeetingIntelligence, demoCsvAnalyzer].map(d => applyOverrides(d, type))
 }
 
 // ============================================================
@@ -1252,7 +1252,7 @@ export const DEMO_TIME_SAVED: Record<number, number> = {
 
 // All possible demo IDs per level (includes avatar-specific variants)
 export const ALL_LEVEL_1_IDS = new Set([1, 2, 3])
-export const ALL_LEVEL_2_IDS = new Set([4, 5, 6, 10])
+export const ALL_LEVEL_2_IDS = new Set([4, 5, 10])
 export const ALL_LEVEL_3_IDS = new Set([7, 8, 9])
 
 // Skill IDs per level (for badge tracking)

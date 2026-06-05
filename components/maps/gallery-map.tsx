@@ -258,9 +258,7 @@ export default function GalleryMap({
               3 Levels. 9 Demos.
             </h1>
             <p className="text-sm text-[var(--color-muted)]">
-              {isLevelComplete(1)
-                ? 'Level 1 complete. Level 2 introduces skills.'
-                : 'Complete each level to unlock the next. Start with Level 1.'}
+              Level 1 is optional, it&apos;s the why behind skills. Jump into the Level 2 skills whenever you like.
             </p>
           </div>
 
@@ -319,6 +317,14 @@ export default function GalleryMap({
                         <span className="text-xs text-[var(--color-muted)] hidden sm:inline">
                           {level.subtitle}
                         </span>
+                        {levelIndex === 0 && (
+                          <span
+                            className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-[2px]"
+                            style={{ background: 'rgba(214,76,0,0.1)', color: 'var(--color-brand-orange)' }}
+                          >
+                            Optional
+                          </span>
+                        )}
                       </div>
                       {!isLocked && level.demos.length > 0 && (
                         <div className="text-right flex flex-col items-end gap-1.5">
