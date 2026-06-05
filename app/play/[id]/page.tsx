@@ -1,11 +1,10 @@
-'use client'
+import { DEMO_SKILLS } from '@/lib/game-data'
+import PlayDemoClient from './client'
 
-import { useParams } from 'next/navigation'
-import GameDemoDetail from '@/components/game-demo-detail'
+export function generateStaticParams() {
+  return Object.keys(DEMO_SKILLS).map((id) => ({ id }))
+}
 
-export default function PlayDemoPage() {
-  const params = useParams()
-  const id = parseInt(params.id as string)
-
-  return <GameDemoDetail demoId={id} />
+export default function Page() {
+  return <PlayDemoClient />
 }

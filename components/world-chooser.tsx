@@ -19,7 +19,7 @@ export default function WorldChooser() {
   }
 
   useEffect(() => {
-    if (!type) router.replace('/')
+    if (!type) router.replace('/setup')
   }, [type, router])
 
   if (!type) return null

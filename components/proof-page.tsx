@@ -112,7 +112,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
     </Link>
   ) : (
     <Link
-      href="/setup"
+      href="/start"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -129,7 +129,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
       onMouseEnter={e => { e.currentTarget.style.background = '#FF6B1A' }}
       onMouseLeave={e => { e.currentTarget.style.background = '#D64C00' }}
     >
-      All demos complete. Try it yourself &rarr;
+      Now grab the skill and do it for real &rarr;
     </Link>
   )
 
@@ -150,7 +150,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
           onClose={() => setShowMobileReminder(false)}
           onDismiss={() => {
             setShowMobileReminder(false)
-            router.push('/setup')
+            router.push('/start')
           }}
         />
       )}
@@ -163,7 +163,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
           <Link
-            href="/play"
+            href="/"
             style={{
               fontSize: 12,
               color: '#888',
@@ -173,7 +173,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
               fontWeight: 600,
             }}
           >
-            &larr; All demos
+            &larr; Back
           </Link>
           {nextButton}
         </div>
@@ -389,7 +389,7 @@ export default function ProofPage({ demo }: ProofPageProps) {
             </button>
           ) : (
             <Link
-              href="/setup"
+              href="/start"
               onClick={() => track({ eventType: 'proof_path_chosen', metadata: { proofType: demo.type, path: 'try_yourself' } })}
               style={{
                 background: '#D64C00', color: '#fff', padding: '10px 28px', fontSize: 14,
