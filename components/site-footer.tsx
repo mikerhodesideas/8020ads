@@ -78,6 +78,10 @@ export default function SiteFooter() {
         >
           Reset all demos
         </button>
+        <span style={{ margin: '0 8px' }}>&middot;</span>
+        <a href="#" data-cookie-prefs className="foot-reset" style={{ textDecoration: 'none' }}>
+          Cookie preferences
+        </a>
       </div>
     </footer>
   )
