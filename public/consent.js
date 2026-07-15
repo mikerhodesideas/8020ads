@@ -1,5 +1,5 @@
 /*
- * a2ai-consent v1.0.0 — shared cookie-consent banner + Google Consent Mode v2 loader.
+ * a2ai-consent v1.1.0 — shared cookie-consent banner + Google Consent Mode v2 loader.
  *
  * CANONICAL COPY. Deployed copies live in each site repo's public/ folder:
  *   ads2ai, 8020brain, mikerhodes, 8020agent, 8020skill, 8020members.
@@ -24,6 +24,7 @@
  *     meta: '1234567890',                  // optional: Meta pixel ID
  *     linkedin: '123456',                  // optional: LinkedIn partner ID
  *     refgrow: '996',                      // optional: Refgrow project ID
+ *     openai: 'JLffJ...',                  // optional: OpenAI ads measurement pixel ID
  *     accent: '#D64C00',                   // banner button colour
  *     privacy: '/privacy',                 // privacy policy URL for the banner link
  *     siteName: 'ads2ai.com'               // shown in the banner heading
@@ -116,6 +117,15 @@
     insertScript('https://scripts.refgrowcdn.com/latest.js', { 'data-project-id': projectId });
   }
 
+  function loadOaiq(pixelId) {
+    if (window.oaiq) return;
+    var q = function () { q.q.push(arguments); };
+    q.q = [];
+    window.oaiq = q;
+    insertScript('https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    window.oaiq('init', { pixelId: pixelId });
+  }
+
   function runLoaders() {
     if (state.loadersRun) return;
     state.loadersRun = true;
@@ -124,6 +134,7 @@
     if (CFG.meta) loadMeta(CFG.meta);
     if (CFG.linkedin) loadLinkedIn(CFG.linkedin);
     if (CFG.refgrow) loadRefgrow(CFG.refgrow);
+    if (CFG.openai) loadOaiq(CFG.openai);
   }
 
   /* ---------- consent state ---------- */
