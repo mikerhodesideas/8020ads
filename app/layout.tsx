@@ -61,10 +61,10 @@ export default function RootLayout({
         {/* Consent-gated tracking. consent.js sets Consent Mode v2 defaults, then
             loads the Google Ads tag, Meta pixel, and LinkedIn Insight tag immediately
             for visitors outside the EEA/UK/CH and only after Accept for regulated
-            visitors. GA4 needs a stream for 8020skill.com before adding a G- ID here. */}
+            visitors. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__CONSENT_CONFIG={gtag:['AW-17960620915'],meta:'3162038373979830',linkedin:'189092',privacy:'https://ads2ai.com/privacy',siteName:'8020skill.com'};`,
+            __html: `window.__CONSENT_CONFIG={gtag:['G-7GLEPQ3QBZ','AW-17960620915'],meta:'3162038373979830',linkedin:'189092',privacy:'https://ads2ai.com/privacy',siteName:'8020skill.com'};`,
           }}
         />
         <script src="/consent.js" defer />
