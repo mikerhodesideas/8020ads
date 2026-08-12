@@ -472,7 +472,7 @@ Installing a skill takes about 30 seconds. Here's how.
 
 ## Step 1: Get the skill file
 
-Skills come as zip files. You can download them from the [game demos](/play) (Level 2 has several), or from the Ads to AI community if you're a member. Save the zip file somewhere easy to find. Your desktop works.
+Skills come as zip files. You can download them from the [game demos](/play) (Level 2 has several), or from the Ads2AI community if you're a member. Save the zip file somewhere easy to find. Your desktop works.
 
 The game includes these skills you can download and try:
 
@@ -681,9 +681,9 @@ The skills you've been downloading in this course? Someone built those in the br
 
 If Cowork is where your team gets work done, the brain is where you build the system that makes that work better.
 
-## The Ads to AI community
+## The Ads2AI community
 
-Everything in this course is a starting point. The Ads to AI community is where it goes further:
+Everything in this course is a starting point. The Ads2AI community is where it goes further:
 
 - **A thriving community** of people building with AI, sharing what works, helping each other
 - **The brain system**: a complete AI infrastructure that manages email, content, projects, contacts, and more
@@ -697,7 +697,7 @@ You've already experienced the demos. You've seen what a few skills can do. The 
 
 1. **Play through any game demos you haven't tried.** Each one teaches you something new and lets you download real skills.
 2. **Install a skill and use it on your own files.** The shift from demo data to your actual work is where it clicks.
-3. **Join the Ads to AI community** to get the brain system, 50+ skills, courses, and a community that's building with AI every day.
+3. **Join the Ads2AI community** to get the brain system, 50+ skills, courses, and a community that's building with AI every day.
 `,
       },
     ],
