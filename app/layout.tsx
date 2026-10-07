@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Oxanium, Inter, Cormorant_Garamond, Press_Start_2P, VT323 } from 'next/font/google'
+import localFont from 'next/font/local'
 import Navbar from '@/components/navbar'
 import { GameProvider } from '@/components/game-provider'
 import { TransitionProvider } from '@/components/transition-overlay'
@@ -8,33 +8,35 @@ import DevTools from '@/components/dev-tools'
 import SiteFooter from '@/components/site-footer'
 import './globals.css'
 
-const oxanium = Oxanium({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+// Fonts live in app/fonts so the build never downloads them. Fetching from Google at
+// build time failed deploys whenever Google sent back a bad response.
+const oxanium = localFont({
+  src: './fonts/oxanium-400-800-latin.woff2',
+  weight: '400 800',
   variable: '--font-oxanium',
 })
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+const inter = localFont({
+  src: './fonts/inter-300-700-latin.woff2',
+  weight: '300 700',
   variable: '--font-inter',
 })
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+const cormorant = localFont({
+  src: './fonts/cormorant-garamond-400-700-latin.woff2',
+  weight: '400 700',
   variable: '--font-cormorant',
 })
 
-const pressStart2P = Press_Start_2P({
-  subsets: ['latin'],
-  weight: ['400'],
+const pressStart2P = localFont({
+  src: './fonts/press-start-2p-400-latin.woff2',
+  weight: '400',
   variable: '--font-pixel',
 })
 
-const vt323 = VT323({
-  subsets: ['latin'],
-  weight: ['400'],
+const vt323 = localFont({
+  src: './fonts/vt323-400-latin.woff2',
+  weight: '400',
   variable: '--font-terminal',
 })
 
