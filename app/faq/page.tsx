@@ -128,24 +128,24 @@ const faqSections: FAQSection[] = [
         q: 'Can I build my own skills or do I need a developer?',
         a: [
           'You can build your own. If you\'re comfortable writing clear instructions (even in plain English), you can create skills using Claude Code. You don\'t need to be a programmer, but it helps to be systematic about what you want.',
-          'The Ads to AI community teaches skill-building from scratch, starting with simple ones and working up to complex multi-step workflows.',
+          'The Ads2AI community teaches skill-building from scratch, starting with simple ones and working up to complex multi-step workflows.',
         ],
       },
     ],
   },
   {
     id: 'ads-to-ai',
-    title: 'Ads to AI Community',
+    title: 'Ads2AI Community',
     items: [
       {
-        q: 'What is the Ads to AI community?',
+        q: 'What is the Ads2AI community?',
         a: [
-          'Ads to AI is a membership community that teaches people how to integrate AI into their work, starting with practical tools and building toward running your business with AI.',
+          'Ads2AI is a membership community that teaches people how to integrate AI into their work, starting with practical tools and building toward running your business with AI.',
           'It started in the Google Ads world but has grown well beyond that. Members get access to ready-made skills, courses, live calls, and a community of people going through the same journey.',
         ],
       },
       {
-        q: 'Who is the Ads to AI community for?',
+        q: 'Who is the Ads2AI community for?',
         a: [
           'Business owners, marketers, agency teams, freelancers. Anyone who wants to use AI to get real work done, not just chat with a bot.',
           'You don\'t need to be a Google Ads professional. Many members come from completely different backgrounds. If you\'re curious about AI but tired of hype and want practical, working systems, it\'s for you.',
@@ -325,7 +325,7 @@ export default function FAQPage() {
             Frequently Asked Questions
           </h1>
           <p className="text-base text-[var(--color-muted)] max-w-lg mx-auto leading-relaxed">
-            Everything you need to know about the demos, Cowork, and the Ads to AI community.
+            Everything you need to know about the demos, Cowork, and the Ads2AI community.
           </p>
         </div>
 

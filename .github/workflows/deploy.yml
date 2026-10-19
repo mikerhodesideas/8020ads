@@ -21,6 +21,9 @@ jobs:
           # Retry the download: a dropped connection to npm (ECONNRESET) once failed a deploy
           # and emailed Mike about a blip (2026-10-20). Three tries, 20s apart.
           for i in 1 2 3; do npm ci && break; [ "$i" = 3 ] && exit 1; echo "npm ci failed (try $i), retrying in 20s"; sleep 20; done
+      - name: Run tests
+        run: npm test
+
       - name: Build static export
         run: npx next build
 

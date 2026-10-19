@@ -1,0 +1,37 @@
+#!/bin/bash
+# pre-push: a push to main runs the same checks GitHub runs (npm test, then
+# next build) on a clean checkout of the pushed commit, and refuses the push
+# if either fails. GitHub must never be the first place a mistake is caught.
+#
+# Enabled per clone by `git config core.hooksPath .githooks` (npm install does
+# it via the prepare script).
+
+top="$(git rev-parse --show-toplevel)"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$remote_ref" = refs/heads/main ] || continue
+  [ "$local_sha" = 0000000000000000000000000000000000000000 ] && continue
+  work="$(mktemp -d "${TMPDIR:-/tmp}/8020skill-prepush.XXXXXX")"
+  start=$SECONDS
+  echo "Pre-push: checking ${local_sha:0:7} the way GitHub will (tests, then build)..."
+  git clone --quiet --shared --no-checkout "$top" "$work/src" && git -C "$work/src" checkout --quiet "$local_sha"
+  # An APFS clone of node_modules is instant and avoids Turbopack refusing a
+  # symlink that points outside the project.
+  cp -cR "$top/node_modules" "$work/src/node_modules" 2>/dev/null || ln -s "$top/node_modules" "$work/src/node_modules"
+  step=tests
+  out="$(cd "$work/src" && TZ=UTC npm test 2>&1)"
+  status=$?
+  if [ $status -eq 0 ]; then
+    step=build
+    out="$(cd "$work/src" && TZ=UTC NEXT_TELEMETRY_DISABLED=1 npx next build 2>&1)"
+    status=$?
+  fi
+  rm -rf "$work"
+  if [ $status -ne 0 ]; then
+    echo "$out" | grep -v '^npm notice' | grep -vE '^\s*(at |$)' | tail -25 | sed 's/^/  /'
+    echo "error: push refused. The $step step fails on ${local_sha:0:7}, so GitHub would fail too. Fix it, commit, push again."
+    exit 1
+  fi
+  echo "Pre-push: tests and build green in $((SECONDS - start))s."
+done
+exit 0

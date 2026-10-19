@@ -564,7 +564,7 @@ export default function HowItWorksPage() {
             Start your team&apos;s AI expedition
           </h2>
           <p className="text-sm text-[var(--color-muted)] mb-6 max-w-md mx-auto leading-relaxed">
-            Skills. Structure. A system that sticks. See how the Ads to AI
+            Skills. Structure. A system that sticks. See how the Ads2AI
             community is helping teams move from experiments to execution.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -575,7 +575,7 @@ export default function HowItWorksPage() {
               className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold font-heading text-white rounded-[2px] transition-colors"
               style={{ backgroundColor: '#D64C00' }}
             >
-              Learn about Ads to AI
+              Learn about Ads2AI
             </a>
             <Link
               href="/faq"

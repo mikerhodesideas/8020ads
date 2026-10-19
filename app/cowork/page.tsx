@@ -85,7 +85,7 @@ function CoworkContent() {
               Get Claude Desktop
             </h3>
             <p className="text-xs text-[var(--color-muted)] leading-relaxed mb-3">
-              Download the app. Cowork is built right in — switch to Cowork mode and you're ready.
+              Download the app. Cowork is built right in, so switch to Cowork mode and you're ready.
             </p>
             <span className="text-xs font-heading font-semibold text-[var(--color-brand-orange)] group-hover:text-[var(--color-brand-orange-hover)] transition-colors">
               Download &#8599;

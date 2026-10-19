@@ -421,7 +421,7 @@ export default function GalleryMap({
                   lineHeight: 1.6,
                 }}
               >
-                Imagine your whole team running skills like these every day. Ads to AI gives you the skills, the training, and a community of people building with AI.
+                Imagine your whole team running skills like these every day. Ads2AI gives you the skills, the training, and a community of people building with AI.
               </p>
               <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button
@@ -457,7 +457,7 @@ export default function GalleryMap({
                     fontFamily: '-apple-system, system-ui, sans-serif',
                   }}
                 >
-                  Learn About Ads to AI
+                  Learn About Ads2AI
                 </a>
               </div>
             </div>

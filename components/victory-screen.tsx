@@ -57,15 +57,15 @@ const AVATAR_CTA: Record<string, {
 }> = {
   freelancer: {
     headline: 'Turn Cowork into a service your clients pay for',
-    primaryLabel: 'Join Ads to AI',
+    primaryLabel: 'Join Ads2AI',
     primaryHref: 'https://ads2ai.com',
-    pitch: "Inside Ads to AI, you'll build skills that make you indispensable. Skills for audits, reporting, campaign builds, and more. Plus a brain system that runs your freelance business.",
+    pitch: "Inside Ads2AI, you'll build skills that make you indispensable. Skills for audits, reporting, campaign builds, and more. Plus a brain system that runs your freelance business.",
   },
   employee: {
     headline: 'Show your boss what AI can do for the team',
     primaryLabel: 'Show Your Boss',
-    pitch: "You've seen what one person can do. Imagine your whole team. Ads to AI gives you the skills, the training path, and a letter to present to your manager.",
-    secondaryLabel: 'Join Ads to AI',
+    pitch: "You've seen what one person can do. Imagine your whole team. Ads2AI gives you the skills, the training path, and a letter to present to your manager.",
+    secondaryLabel: 'Join Ads2AI',
     secondaryHref: 'https://ads2ai.com',
     showBossLetter: true,
   },
@@ -73,13 +73,13 @@ const AVATAR_CTA: Record<string, {
     headline: 'Give every team member an AI co-pilot',
     primaryLabel: 'Set Up Your Team',
     primaryHref: 'https://ads2ai.com',
-    pitch: "You just played 9 demos. Your team could run these on real client data tomorrow. Ads to AI includes skills, a brain system, and a setup path for your entire agency.",
+    pitch: "You just played 9 demos. Your team could run these on real client data tomorrow. Ads2AI includes skills, a brain system, and a setup path for your entire agency.",
     secondaryLabel: 'Book a Strategy Call',
     secondaryHref: 'https://cal.com/ideas/a2ai',
   },
   business: {
     headline: 'Your entire business, powered by AI',
-    primaryLabel: 'Join Ads to AI',
+    primaryLabel: 'Join Ads2AI',
     primaryHref: 'https://ads2ai.com',
     pitch: "Email, content, meetings, data analysis, calendar, contacts. The brain system handles all of it. Not just marketing, everything.",
     secondaryLabel: 'Book a Strategy Call',
@@ -87,13 +87,13 @@ const AVATAR_CTA: Record<string, {
   },
 }
 
-const BOSS_LETTER = `Subject: Proposal \u2014 Ads to AI Membership for AI Scouting
+const BOSS_LETTER = `Subject: Proposal: Ads2AI Membership for AI Scouting
 
 Hi [Manager's Name],
 
-I'm writing to request support for an Ads to AI community membership. I want to propose something slightly different from a typical training request.
+I'm writing to request support for an Ads2AI community membership. I want to propose something slightly different from a typical training request.
 
-You've probably noticed AI is changing how marketing teams operate. The question isn't whether to adopt it \u2014 it's who figures out the right path first, us or our competitors.
+You've probably noticed AI is changing how marketing teams operate. The question isn't whether to adopt it. It's who figures out the right path first, us or our competitors.
 
 That's where I come in.
 
@@ -101,11 +101,11 @@ The Scout role
 
 Organisations that adopt AI well tend to follow a pattern: someone on the team runs ahead, experiments, builds the routes that work, and brings back proven methods for everyone else to implement. I want to be that person for us.
 
-The Ads to AI community is where serious marketers and Google Ads professionals are doing exactly this \u2014 sharing what works, building tools, and documenting the paths. Joining gives me access to that intelligence and the skills to apply it across our work.
+The Ads2AI community is where serious marketers and Google Ads professionals are doing exactly this: sharing what works, building tools, and documenting the paths. Joining gives me access to that intelligence and the skills to apply it across our work.
 
 What the membership includes:
 
-- The 8020brain system \u2014 a personal AI infrastructure for research, decision making, planning, and execution (works with Claude, ChatGPT, Gemini, and any code editor)
+- The 8020brain system, a personal AI infrastructure for research, decision making, planning, and execution (works with Claude, ChatGPT, Gemini, and any code editor)
 - Courses covering automated reporting, AI analysis, and building autonomous systems
 - All Google Ads scripts (ready-to-use automation tools)
 - Monthly Q&A calls with practitioners navigating the same challenges
@@ -114,9 +114,9 @@ What the membership includes:
 
 Business impact:
 
-- Automate repetitive research, reporting, and monitoring tasks \u2014 freeing time for higher-value work
+- Automate repetitive research, reporting, and monitoring tasks, freeing time for higher-value work
 - Build custom tools tailored to our specific needs, without outsourcing
-- Apply AI to decision making across campaigns, content, and strategy \u2014 not just one channel
+- Apply AI to decision making across campaigns, content, and strategy, not just one channel
 - Surface insights we're currently missing or spending too long to find
 - Stay ahead of how AI is reshaping marketing before our competitors do
 
@@ -124,7 +124,7 @@ Investment: \u20AC799/year
 
 What I'll bring back:
 
-I'll document what I learn, share the tools I build, and create simple guides for the team \u2014 turning my experiments into paths others can follow without the trial-and-error.
+I'll document what I learn, share the tools I build, and create simple guides for the team, turning my experiments into paths others can follow without the trial-and-error.
 
 This isn't just professional development. It's us getting an early read on where marketing is heading, at a relatively low cost, with someone already on the payroll doing the legwork.
 
@@ -494,9 +494,9 @@ export default function VictoryScreen() {
               Get access to ready-made skills, training, and a community of people building with AI.
             </p>
             <a href="https://ads2ai.com" target="_blank" rel="noopener noreferrer"
-              onClick={() => track({ eventType: 'cta_clicked', metadata: { label: 'Join Ads to AI', avatarType: type } })}
+              onClick={() => track({ eventType: 'cta_clicked', metadata: { label: 'Join Ads2AI', avatarType: type } })}
               className="inline-flex px-8 py-3 font-heading font-bold text-sm text-white" style={{ background: accent }}>
-              Join Ads to AI
+              Join Ads2AI
             </a>
           </div>
         )}

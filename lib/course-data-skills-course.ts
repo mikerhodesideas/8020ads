@@ -1336,7 +1336,7 @@ But if you find yourself wanting more, there's a path forward.
 
 ## The AI Scout Path
 
-There's a community of people who have already pushed past these limits. They call themselves AI Scouts, and they're part of Ads to AI.
+There's a community of people who have already pushed past these limits. They call themselves AI Scouts, and they're part of Ads2AI.
 
 Scouts are business owners, marketers, and operators who use AI to run real parts of their business. Not just chat. Not just skills. Full systems that handle research, reporting, client communication, content creation, and automation.
 
