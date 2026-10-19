@@ -8,12 +8,20 @@
 
 top="$(git rev-parse --show-toplevel)"
 
+# Run under the Node version GitHub uses (setup-node in the workflow), not this
+# Mac's newer default, so a version difference can't hide a failure.
+ci_node="$(grep -m1 -E '^\s*node-version:' "$top/.github/workflows/deploy.yml" | grep -oE '[0-9]+' | head -1)"
+for d in "/opt/homebrew/opt/node@$ci_node/bin" "/usr/local/opt/node@$ci_node/bin"; do
+  [ -n "$ci_node" ] && [ -x "$d/node" ] && { PATH="$d:$PATH"; break; }
+done
+
 while read -r local_ref local_sha remote_ref remote_sha; do
   [ "$remote_ref" = refs/heads/main ] || continue
   [ "$local_sha" = 0000000000000000000000000000000000000000 ] && continue
   work="$(mktemp -d "${TMPDIR:-/tmp}/8020skill-prepush.XXXXXX")"
   start=$SECONDS
-  echo "Pre-push: checking ${local_sha:0:7} the way GitHub will (tests, then build)..."
+  echo "Pre-push: checking ${local_sha:0:7} on node $(node -v) the way GitHub will (tests, then build)..."
+  [ "$(node -v | grep -oE '^v[0-9]+' | tr -d v)" = "$ci_node" ] || echo "Pre-push: warning, GitHub uses node $ci_node (brew install node@$ci_node to match)."
   git clone --quiet --shared --no-checkout "$top" "$work/src" && git -C "$work/src" checkout --quiet "$local_sha"
   # An APFS clone of node_modules is instant and avoids Turbopack refusing a
   # symlink that points outside the project.
